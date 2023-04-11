@@ -1,6 +1,8 @@
-public class StateMachine
+using UnityEngine;
+
+public class StateMachineBase
 {
-    IState currentState;
+    protected IState currentState;
 
     /// <summary>
     /// 상태를 변경하는 함수
