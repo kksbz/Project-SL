@@ -1,4 +1,5 @@
-
+using System;
+[Serializable]
 public class StatusBase
 {
     public string name = default;

@@ -4,6 +4,34 @@ using UnityEngine;
 
 public class EnemyBase : CharacterBase
 {
-    protected EnemyStatus status = new EnemyStatus();
+    [Tooltip("Enemy의 Status")]
+    [SerializeField]
+    protected EnemyStatus status = default;
+    protected EnemyStateMachine stateMachine = default;
+    protected EnemyMoveController moveController = default;
 
+    #region Property
+    public EnemyStatus Status { get { return status; } protected set { status = value; } }
+    public EnemyStateMachine StateMachine { get { return stateMachine; } protected set { stateMachine = value; } }
+    public EnemyMoveController MoveController { get { return moveController; } protected set { moveController = value; } }
+    public List<Transform> Targets { get { return MoveController.Targets; } }
+    #endregion
+
+    protected void Start()
+    {
+        Init();
+    }
+
+    protected void Init()
+    {
+        StateMachine = new EnemyStateMachine();
+        TryGetComponent<EnemyMoveController>(out moveController);
+
+        MoveController.Init();
+    }
+
+    protected void Update()
+    {
+        StateMachine.Update();
+    }
 }

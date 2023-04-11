@@ -1,3 +1,5 @@
+using System;
+[Serializable]
 public class EnemyStatus : StatusBase
 {
     public float detectionRange = default;
