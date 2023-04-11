@@ -9,4 +9,16 @@ public class Test : MonoBehaviour
     {
         
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            List<ItemData> items = ItemManager.Instance.items;
+            foreach (ItemData item in items)
+            {
+                Debug.Log($"{item.itemID}, {item.itemName}, {item.itemType}, {item.description}");
+            }
+        }
+    }
 }

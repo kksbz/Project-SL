@@ -5,51 +5,24 @@ using UnityEngine;
 
 public class CSVReader
 {
-    public static List<ItemData> Read(string fileName)
+    //! CSV파일의 데이터를 파싱하는 함수
+    public static List<string[]> CSVRead(string fileName)
     {
-        List<ItemData> itemDatas = new List<ItemData>();
+        // ','로 나눠진 CSV데이터를 담을 변수 초기화
+        List<string[]> dataRows = new List<string[]>();
+        // csv파일을 TextAtsset으로 형변환
         TextAsset csvData = new TextAsset(fileName);
+        // csv파일에 데이터를 #LE를 기준으로 나눠서 배열에 저장 (#LE가 열의 마지막 값임)
         string[] data = csvData.text.Split("#LE");
-        int a = 1;
-        Debug.Log($"row data: {csvData.text}");
-        for (int i = 0; i < data.Length; i++)
+
+        // #LE값을 제외하기 위해 data.Length - 1 만큼 for문 시작
+        for (int i = 0; i < data.Length - 1; i++)
         {
-            string[] row = data[i].Split(new char[] { ',' });
-            Debug.Log($"{i}: {data[i]}");
-            //string[] row = SplitCSVRow(data[i]);
-            //if(row.Equals("#LE")) { continue; }
-            //foreach(var r in row)
-            //{
-            //    Debug.Log($"{a} {row}");
-            //    a++;
-            //}
-            //ItemData itemData = new ItemData(row);
-            //itemDatas.Add(itemData);
+            // data의 값을 ',' 기준으로 잘라서 배열에 저장
+            string[] rows = data[i].Split(new char[] { ',' });
+            // List에 저장
+            dataRows.Add(rows);
         }
-        return itemDatas;
-    }
-
-    private static string[] SplitCSVRow(string row)
-    {
-        List<string> rowValues = new List<string>();
-        bool inQuotes = false;
-        int startIndex = 0;
-
-        for (int i = 0; i < row.Length; i++)
-        {
-            if (row[i] == '\"')
-            {
-                inQuotes = !inQuotes;
-            }
-            else if (row[i] == ',' && !inQuotes)
-            {
-                rowValues.Add(row.Substring(startIndex, i - startIndex));
-                startIndex = i + 1;
-            }
-        }
-
-        rowValues.Add(row.Substring(startIndex));
-
-        return rowValues.ToArray();
-    }
+        return dataRows;
+    } // CSVRead
 } // CSVReader

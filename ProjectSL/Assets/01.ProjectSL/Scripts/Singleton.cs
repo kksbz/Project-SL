@@ -33,4 +33,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
     }
+
+    //! 매니저 초기화하는 Init함수
+    public virtual void InitManager()
+    {
+        /* Do Nothing */
+    } // InitManager
 }
