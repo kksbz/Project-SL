@@ -34,4 +34,27 @@ public class EnemyBase : CharacterBase
     {
         StateMachine.Update();
     }
+
+    #region StateMachineWarpping
+    public void SetState(IState newState)
+    {
+        StateMachine.SetState(newState);
+    }
+    #endregion
+
+    IEnumerator FindTargetsWithDelay(float delay)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(delay);
+            FindVisibleTargets();
+        }
+    }
+
+    public void FindVisibleTargets()
+    {
+
+    }
+
+
 }
