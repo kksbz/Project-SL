@@ -67,4 +67,9 @@ public class PlayerController : MonoBehaviour
 
         cameraArm.rotation = Quaternion.Euler(x, cameraAngle.y + mouseDelta.x, cameraAngle.z);
     }
+
+    void DebugRay()
+    {
+
+    }
 }
