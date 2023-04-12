@@ -1,8 +1,17 @@
 using UnityEngine;
 
-public class StateMachineBase
+public interface IStateMachine
 {
-    protected IState currentState;
+    IState CurrentState { get; }
+    void SetState(IState newState);
+    void OnEnter();
+    void Update();
+    void OnExit();
+}
+
+public class StateMachineBase : IStateMachine
+{
+    public IState CurrentState { get; protected set; }
 
     /// <summary>
     /// 상태를 변경하는 함수
@@ -10,29 +19,29 @@ public class StateMachineBase
     /// <param name="newState">변경할 상태</param>
     public void SetState(IState newState)
     {
-        if (currentState == null || currentState == default)
+        if (CurrentState == null || CurrentState == default)
         {
-            currentState = newState;
+            CurrentState = newState;
             OnEnter();
         }
         else
         {
             OnExit();
-            currentState = newState;
+            CurrentState = newState;
             OnEnter();
         }
     }
 
     public void OnEnter()
     {
-        currentState.OnEnter();
+        CurrentState.OnEnter();
     }
     public void Update()
     {
-        currentState.Update();
+        CurrentState.Update();
     }
     public void OnExit()
     {
-        currentState.OnExit();
+        CurrentState.OnExit();
     }
 }
