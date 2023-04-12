@@ -9,6 +9,7 @@ public interface IEnemyMoveController : GData.IInitialize
     void Patrol();
     void TargetFollow(Transform newTarget);
     bool IsArrive(float distance);
+    bool IsMissed(float distance);
 }
 
 public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
@@ -73,6 +74,19 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         else
         {
             return true;
+        }
+    }
+
+    public bool IsMissed(float distance)
+    {
+        if (distance < _navMeshAgent.remainingDistance)
+        {
+            Debug.Log($"놓친거 같다...");
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

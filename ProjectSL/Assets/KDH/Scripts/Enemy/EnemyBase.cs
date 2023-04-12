@@ -68,6 +68,10 @@ public class EnemyBase : CharacterBase
     {
         return moveController.IsArrive(distance);
     }
+    public bool IsMissed(float distance)
+    {
+        return moveController.IsMissed(distance);
+    }
     #endregion
 
     #region IEnemyTargetResearch

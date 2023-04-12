@@ -94,7 +94,7 @@ public class Enemy_Dummy_Chase_State : IState
             _target = enemy.ChaseTargets[0];
         }
 
-        enemy.TargetFollow(_target);
+
     }
 
     public void OnExit()
@@ -103,5 +103,10 @@ public class Enemy_Dummy_Chase_State : IState
 
     public void Update()
     {
+        enemy.TargetFollow(_target);
+        if (enemy.IsMissed(enemy.ResearchStatus.detectionRange))
+        {
+            enemy.SetState(new Enemy_Dummy_Patrol_State(enemy));
+        }
     }
 }
