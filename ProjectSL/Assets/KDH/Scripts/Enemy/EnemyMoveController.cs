@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public interface IEnemyMoveController
+public interface IEnemyMoveController : GData.IInitialize
 {
     Queue<Transform> Targets { get; }
-    void Init();
-    void Move();
-    void Stop();
-    bool IsArrive();
+    void Patrol();
+    void TargetFollow(Transform newTarget);
+    bool IsArrive(float distance);
 }
 
 public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
@@ -21,10 +20,6 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     public Transform[] targets;
     public Queue<Transform> Targets { get; private set; }
 
-    private void Start()
-    {
-        Init();
-    }
     public void Init()
     {
         TryGetComponent<NavMeshAgent>(out _navMeshAgent);
@@ -33,9 +28,10 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         {
             Targets.Enqueue(element);
         }
+        _target = Targets.Dequeue();
     }
 
-    public void Move()
+    public void Patrol()
     {
         if (_target == null || _target == default)
         {
@@ -43,27 +39,34 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         }
         else
         {
-            Targets.Enqueue(_target);
-            _target = default;
+            StartCoroutine(MoveDelay(2f));
         }
-        StartCoroutine(MoveDelay(1f));
+    }
+
+    public void TargetFollow(Transform newTarget)
+    {
+        if (newTarget == null || newTarget == default)
+        {
+            /* Do Nothing */
+        }
+        else
+        {
+            _navMeshAgent.SetDestination(newTarget.position);
+        }
     }
 
     IEnumerator MoveDelay(float delay)
     {
+        Targets.Enqueue(_target);
+        _target = default;
         yield return new WaitForSeconds(delay);
         _target = Targets.Dequeue();
-        _navMeshAgent.SetDestination(_target.position);
+        TargetFollow(_target);
     }
 
-    public void Stop()
+    public bool IsArrive(float distance)
     {
-
-    }
-
-    public bool IsArrive()
-    {
-        if (_target == null || _target == default || _stopDistance < _navMeshAgent.remainingDistance)
+        if (_target == null || _target == default || distance < _navMeshAgent.remainingDistance)
         {
             return false;
         }
