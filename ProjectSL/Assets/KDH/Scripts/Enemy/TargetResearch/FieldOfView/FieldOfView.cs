@@ -39,11 +39,11 @@ public class FieldOfView : IFieldOfView
 
     public IEnumerator FieldOfViewCoroutine(float delay)
     {
+        VisibleTargets.Clear();
         while (true)
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
-            Debug.Log($"FOV 탐색 진행");
         }
     }
 
