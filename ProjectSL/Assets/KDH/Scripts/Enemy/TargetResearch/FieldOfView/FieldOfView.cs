@@ -31,7 +31,7 @@ public class FieldOfView : IFieldOfView
     public void Init()
     {
         VisibleTargets = new List<Transform>();
-        _viewRadius = _researchStatus.detectionRange;
+        _viewRadius = _researchStatus.viewRadius;
         _viewAngle = _researchStatus.viewAngle;
         _targetMask = _researchStatus.targetLayerMask;
         _obstacleMask = _researchStatus.obstacleLayerMask;

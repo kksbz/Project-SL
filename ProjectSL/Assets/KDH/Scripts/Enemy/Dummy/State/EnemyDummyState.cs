@@ -104,9 +104,34 @@ public class Enemy_Dummy_Chase_State : IState
     public void Update()
     {
         enemy.TargetFollow(_target);
-        if (enemy.IsMissed(enemy.ResearchStatus.detectionRange))
+        if (enemy.IsMissed(enemy.Status.detectionRange))
         {
             enemy.SetState(new Enemy_Dummy_Patrol_State(enemy));
         }
+        if (enemy.IsArrive(enemy.Status.attackRange))
+        {
+            enemy.SetState(new Enemy_Dummy_Attack_State(enemy));
+        }
+    }
+}
+
+public class Enemy_Dummy_Attack_State : IState
+{
+    EnemyDummy enemy;
+    public Enemy_Dummy_Attack_State(EnemyDummy newEnemy)
+    {
+        enemy = newEnemy;
+    }
+
+    public void OnEnter()
+    {
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void Update()
+    {
     }
 }
