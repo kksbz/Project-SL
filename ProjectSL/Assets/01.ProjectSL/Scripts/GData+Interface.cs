@@ -8,4 +8,9 @@ public static partial class GData
     {
         void Init();
     }
+
+    public interface IDamageable
+    {
+        void TakeDamage(float damage);
+    }
 }

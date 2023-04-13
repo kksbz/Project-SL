@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectSL.Enemy;
 
-public class EnemyBase : CharacterBase
+public class EnemyBase : CharacterBase, GData.IDamageable
 {
     [Tooltip("Enemy의 Status")]
     [SerializeField]
@@ -35,6 +35,7 @@ public class EnemyBase : CharacterBase
     protected virtual void Init()
     {
         StateMachine = new EnemyStateMachine();
+
         TryGetComponent<IEnemyMoveController>(out moveController);
         TryGetComponent<EnemyTargetResearch>(out targetResearch);
         TryGetComponent<IEnemyAnimator>(out animator);
@@ -45,6 +46,8 @@ public class EnemyBase : CharacterBase
         animator.Init();
 
         TargetResearch.Init(ResearchStatus, new FieldOfView(transform, ResearchStatus));
+
+        SetState(new Enemy_Idle_State(this));
     }
 
     protected void StartCoroutines()
@@ -55,6 +58,21 @@ public class EnemyBase : CharacterBase
     {
         StateMachine.Update();
     }
+
+    public void TakeDamage(float damage)
+    {
+        if (Status.currentHp - damage <= 0)
+        {
+            Status.currentHp = 0;
+            SetState(new Enemy_Die_State(this));
+        }
+        else
+        {
+            Status.currentHp -= damage;
+            SetState(new Enemy_Hit_State(this));
+        }
+    }
+
 
     #region StateMachine
     public void SetState(IState newState)
@@ -98,6 +116,7 @@ public class EnemyBase : CharacterBase
     #endregion
 
     #region IEnemyAnimator
+    public AnimatorStateInfo CurrentStateInfo { get { return Animator.CurrentStateInfo; } }
     public void SetTrigger(string parameter)
     {
         Animator.SetTrigger(parameter);

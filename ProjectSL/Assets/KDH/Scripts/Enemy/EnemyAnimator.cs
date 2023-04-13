@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IEnemyAnimator : GData.IInitialize
 {
     Animator Animator { get; }
+    AnimatorStateInfo CurrentStateInfo { get; }
     void SetTrigger(string parameter);
     void SetBool(string parameter, bool value);
     void SetFloat(string parameter, float value);
@@ -15,7 +16,10 @@ public interface IEnemyAnimator : GData.IInitialize
 public class EnemyAnimator : MonoBehaviour, IEnemyAnimator
 {
     private Animator _animator;
+    private AnimatorStateInfo _currentStateInfo;
     public Animator Animator { get { return _animator; } private set { _animator = value; } }
+
+    public AnimatorStateInfo CurrentStateInfo { get { return _animator.GetCurrentAnimatorStateInfo(0); } }
 
     public void Init()
     {
@@ -38,6 +42,4 @@ public class EnemyAnimator : MonoBehaviour, IEnemyAnimator
     {
         Animator.SetInteger(parameter, value);
     }
-
-
 }

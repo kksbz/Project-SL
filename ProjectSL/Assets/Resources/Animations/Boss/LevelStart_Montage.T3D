@@ -1,0 +1,18 @@
+Begin Object Class=/Script/Engine.AnimMontage Name="LevelStart_Montage"
+   Begin Object Class=/Script/Engine.AnimNotify_PlayParticleEffect Name="AnimNotify_PlayParticleEffect_0"
+   End Object
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfo Name="SceneThumbnailInfo_0"
+   End Object
+   Begin Object Name="AnimNotify_PlayParticleEffect_0"
+      SocketName="FX_Heart_Emote"
+   End Object
+   Begin Object Name="SceneThumbnailInfo_0"
+   End Object
+   CompositeSections(0)=(SectionName="Default",LinkedMontage=AnimMontage'"LevelStart_Montage"',SegmentIndex=0,SegmentLength=5.000000,LinkedSequence=AnimSequence'"/Game/ParagonSevarog/Characters/Heroes/Sevarog/Animations/LevelStart.LevelStart"')
+   SlotAnimTracks(0)=(SlotName="UpperBody",AnimTrack=(AnimSegments=((AnimReference=AnimSequence'"/Game/ParagonSevarog/Characters/Heroes/Sevarog/Animations/LevelStart.LevelStart"',AnimEndTime=5.000000))))
+   Notifies(0)=(NotifyName="PlayParticleEffect",Notify=AnimNotify_PlayParticleEffect'"AnimNotify_PlayParticleEffect_0"',EndLink=(LinkValue=2.352852),Guid=119FC1764C98B22A55569D9DCC172548,LinkedMontage=AnimMontage'"LevelStart_Montage"',SegmentIndex=0,SegmentLength=5.000000,LinkValue=2.352852,LinkedSequence=AnimSequence'"/Game/ParagonSevarog/Characters/Heroes/Sevarog/Animations/LevelStart.LevelStart"')
+   SequenceLength=5.000000
+   AnimNotifyTracks(0)=(TrackName="1",TrackColor=(R=0.500000,G=0.500000,B=0.500000,A=1.000000))
+   Skeleton=Skeleton'"/Game/ParagonSevarog/Characters/Heroes/Sevarog/Meshes/Sevarog_Skeleton.Sevarog_Skeleton"'
+   ThumbnailInfo=SceneThumbnailInfo'"SceneThumbnailInfo_0"'
+End Object
