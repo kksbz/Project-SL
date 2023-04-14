@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     private float tempMoveSpeed = 5f;
 
+    public CharacterControlProperty controlProperty = new CharacterControlProperty();
+
     [SerializeField]
     private CharacterController characterController = default;
     // юс╫ц
@@ -38,15 +40,11 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        Vector2 moveInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        Transform cameraArm = cameraController.cameraArm;
-        bool isMove = moveInput.magnitude != 0;
+        Vector3 moveDir = MoveInput();
+
+        bool isMove = moveDir.magnitude != 0;
         if (isMove)
         {
-            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-            Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
-
             if(cameraController.CameraState == ECameraState.DEFAULT)
                 characterBody.forward = moveDir;
             else if(cameraController.CameraState == ECameraState.LOCKON)
@@ -58,10 +56,23 @@ public class PlayerController : MonoBehaviour
         {
 
         }
-        animationController.AxisValue = moveInput;
-        animationController.Speed = Mathf.Ceil(Mathf.Abs(moveInput.x) + Mathf.Abs(moveInput.y) / 2f);
         // Debug.DrawRay(cameraArm.position, new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized, Color.red);
     }   // Move()
+
+    Vector3 MoveInput()
+    {
+        Vector2 moveInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        controlProperty.axisValue = moveInput;
+        controlProperty.speed = Mathf.Ceil(Mathf.Abs(moveInput.x) + Mathf.Abs(moveInput.y) / 2f);
+        Transform cameraArm = cameraController.cameraArm;
+
+        Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+        Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+        Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
+        controlProperty.inputDirection = moveDir;
+        return moveDir;
+
+    }
 
     /*
     void LockOn()

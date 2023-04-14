@@ -9,6 +9,8 @@ public class AnimationController : MonoBehaviour
     [SerializeField]
     private PlayerController playerController;
 
+    private CharacterControlProperty controlProperty;
+
     private float speed;
     private float axisX;
     private float axisY;
@@ -37,7 +39,7 @@ public class AnimationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        controlProperty = playerController.controlProperty;
     }
 
     // Update is called once per frame
@@ -47,10 +49,9 @@ public class AnimationController : MonoBehaviour
     }
     void UpdateAnimationProperties()
     {
-        Debug.Log($"speed {speed}");
-        animator.SetFloat("Speed", speed);
-        animator.SetFloat("Horizontal", axisX);
-        animator.SetFloat("Vertical", axisY);
-        animator.SetBool("IsLockOn", isLockOn);
+        animator.SetFloat("Speed", controlProperty.speed);
+        animator.SetFloat("Horizontal", controlProperty.axisValue.x);
+        animator.SetFloat("Vertical", controlProperty.axisValue.y);
+        animator.SetBool("IsLockOn", controlProperty.isLockOn);
     }
 }

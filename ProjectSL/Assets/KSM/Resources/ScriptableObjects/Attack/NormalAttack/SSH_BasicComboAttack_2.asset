@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33daddba9936d264d858275fd2f22781, type: 3}
+  m_Name: SSH_BasicComboAttack_2
+  m_EditorClassIdentifier: 
+  animatorOV: {fileID: 22100000, guid: 7ea29b547fe7b1a4f9b136f0dd13376e, type: 2}
+  damage: 10

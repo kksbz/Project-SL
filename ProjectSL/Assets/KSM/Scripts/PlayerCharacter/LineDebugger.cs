@@ -59,7 +59,6 @@ public class LineDebugger : MonoBehaviour
     void SetLine_CameraDirection()
     {
         cameraDirectionLine.SetPosition(0, transform.position);
-        Debug.Log($"cameraDir : {cameraDirection}");
         cameraDirectionLine.SetPosition(1, transform.position + cameraDirection);
     }
     void SetLine_InputDirection()

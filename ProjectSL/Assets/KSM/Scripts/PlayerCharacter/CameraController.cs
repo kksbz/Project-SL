@@ -15,8 +15,11 @@ public class CameraController : MonoBehaviour
     public Transform cameraArm;
     private CharacterBase target;
 
+    private PlayerController playerController;
     private CharacterController characterController;
     private AnimationController animationController;
+
+    private CharacterControlProperty controlProperty;
 
     private ECameraState cameraState;
     public ECameraState CameraState
@@ -46,6 +49,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        playerController = GetComponent<PlayerController>();
         characterController = GetComponent<CharacterController>();
         animationController = GetComponent<AnimationController>();
         //onSetPlayerLockOn = new EventHandler_void_GameObject(SetPlayerLockOn);
@@ -56,6 +60,7 @@ public class CameraController : MonoBehaviour
     {
         cameraState = ECameraState.DEFAULT;
         targetsInView = new List<Transform>();
+        controlProperty = playerController.controlProperty;
     }
 
     // Update is called once per frame
@@ -206,7 +211,7 @@ public class CameraController : MonoBehaviour
             return;
         }
         Debug.Log("락온상태로 변경");
-        animationController.IsLockOn = true;
+        controlProperty.isLockOn = true;
         cameraState = ECameraState.LOCKON;
     }
     void ReleasePlayerLockOn()
@@ -217,7 +222,7 @@ public class CameraController : MonoBehaviour
             return;
         }
         target = default;
-        animationController.IsLockOn = true;
+        controlProperty.isLockOn = false;
         cameraState = ECameraState.DEFAULT;
     }
     public bool IsLockOn
