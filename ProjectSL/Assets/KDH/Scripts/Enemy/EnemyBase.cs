@@ -47,7 +47,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
 
         TargetResearch.Init(ResearchStatus, new FieldOfView(transform, ResearchStatus));
 
-        SetState(new Enemy_Idle_State(this));
+        //SetState(new Enemy_Idle_State(this));
     }
 
     protected void StartCoroutines()
