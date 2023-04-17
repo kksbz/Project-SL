@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         // 컴포넌트 초기화
-        characterController = GetComponent<CharacterController>();
+        // characterController = GetComponent<CharacterController>();
         cameraController = GetComponent<CameraController>();
         animationController = GetComponent<AnimationController>();
     }   // Awake()

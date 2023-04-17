@@ -7,6 +7,10 @@ public class CombatController : MonoBehaviour
 {
     private PlayerController playerController;
     private CharacterControlProperty controlProperty;
+
+    // Attack 임시
+    public LayerMask EnemyMask;
+    public float attackRadius;
     
     public List<AttackSO> combo;
     private float lastClickedTime;
@@ -148,6 +152,16 @@ public class CombatController : MonoBehaviour
         AttackStartComboState();
         AttackAnimationPlay();
     }
+    public void AttackCheck()
+    {
+        Debug.LogWarning("Attack Check");
+        Vector3 center = transform.position + transform.forward;
+        Collider[] hitResults = Physics.OverlapSphere(center, attackRadius, EnemyMask);
+        foreach(Collider hitResult in hitResults) 
+        {
+            Debug.LogWarning($"{hitResult.gameObject.name} 맞았음");
 
+        }
+    }
 
 }

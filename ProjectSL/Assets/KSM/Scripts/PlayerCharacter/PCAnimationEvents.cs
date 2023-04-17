@@ -22,4 +22,8 @@ public class PCAnimationEvents : MonoBehaviour
     {
         combatController.Event_SetOffExecuteNextCombo();
     }
+    public void On_TempAttackCheck()
+    {
+        combatController.AttackCheck();
+    }
 }
