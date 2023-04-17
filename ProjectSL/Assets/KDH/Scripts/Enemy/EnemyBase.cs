@@ -13,7 +13,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     protected IStateMachine stateMachine = default;
     protected IEnemyMoveController moveController = default;
     protected IEnemyAnimator animator = default;
-    protected EnemyTargetResearch targetResearch = default;
+    protected IEnemyTargetResearch targetResearch = default;
 
     #region Property
     public EnemyStatus Status { get { return status; } protected set { status = value; } }
@@ -21,7 +21,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     public IStateMachine StateMachine { get { return stateMachine; } protected set { stateMachine = value; } }
     public IEnemyMoveController MoveController { get { return moveController; } protected set { moveController = value; } }
     public IEnemyAnimator Animator { get { return animator; } protected set { animator = value; } }
-    public EnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
+    public IEnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
     public Queue<Transform> PatrolTargets { get { return MoveController.Targets; } }
     public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
     #endregion
@@ -37,7 +37,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
         StateMachine = new EnemyStateMachine();
 
         TryGetComponent<IEnemyMoveController>(out moveController);
-        TryGetComponent<EnemyTargetResearch>(out targetResearch);
+        TryGetComponent<IEnemyTargetResearch>(out targetResearch);
         TryGetComponent<IEnemyAnimator>(out animator);
 
         MoveController.Init();
@@ -104,14 +104,14 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     }
     #endregion
 
-    #region IEnemyTargetResearch
+    #region EnemyTargetResearch
     public IEnumerator FieldOfViewSearch(float delay)
     {
         return TargetResearch.FieldOfViewSearch(delay);
     }
     public bool IsFieldOfViewFind()
     {
-        return TargetResearch.IsFieldOfViewFind();
+        return TargetResearch.IsFieldOfViewFind;
     }
     #endregion
 

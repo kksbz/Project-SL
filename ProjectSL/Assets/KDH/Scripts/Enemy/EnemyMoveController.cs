@@ -96,6 +96,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// <returns></returns>
     public bool IsArrive(float distance)
     {
+        Debug.Log($"test (distance : {distance} / remainingDistance : {_navMeshAgent.remainingDistance})");
         if (_target == null || _target == default || distance < _navMeshAgent.remainingDistance)
         {
             return false;
@@ -113,14 +114,22 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// <returns></returns>
     public bool IsMissed(float distance)
     {
-        if (distance < _navMeshAgent.remainingDistance)
-        {
-            return true;
-        }
-        else
+        if (_target == null || _target == default || _navMeshAgent.remainingDistance < distance)
         {
             return false;
         }
+        else
+        {
+            return true;
+        }
+        // if (distance < _navMeshAgent.remainingDistance)
+        // {
+        //     return true;
+        // }
+        // else
+        // {
+        //     return false;
+        // }
     }
 
 

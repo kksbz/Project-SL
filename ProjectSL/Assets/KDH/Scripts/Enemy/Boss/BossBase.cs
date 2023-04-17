@@ -1,8 +1,30 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
 public class BossBase : EnemyBase
 {
+    public List<BossAttackPattern> BossAttackPatterns { get; protected set; }
+    public bool IsPlayerJoined { get; protected set; }
+    public bool IsIntroPlay { get; protected set; }
     protected override void Init()
     {
         base.Init();
-        SetState(new Boss_Idle_State(this));
+        transform.GetChild(0).transform.rotation = Quaternion.identity;
+    }
+
+    public void OnPlayerJoin()
+    {
+        IsPlayerJoined = true;
+    }
+
+    public void OnIntroPlay()
+    {
+        IsIntroPlay = true;
+    }
+
+    public void OnComplete()
+    {
+
     }
 }

@@ -2,10 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IEnemyTargetResearch
+{
+    EnemyResearchStatus ResearchStatus { get; }
+    IFieldOfView FieldOfView { get; }
+    List<Transform> Targets { get; }
+    void Init(EnemyResearchStatus newResearchStatus, IFieldOfView newFieldOfView);
+    IEnumerator FieldOfViewSearch(float delay);
+    bool IsFieldOfViewFind { get; }
+}
+
 /// <summary>
 /// 플레이어 혹은 적을 인식하기 위한 기능들을 구현할 클래스
 /// </summary>
-public class EnemyTargetResearch : MonoBehaviour
+public class EnemyTargetResearch : MonoBehaviour, IEnemyTargetResearch
 {
     public EnemyResearchStatus ResearchStatus { get; private set; }
     public IFieldOfView FieldOfView { get; private set; }
@@ -24,20 +34,25 @@ public class EnemyTargetResearch : MonoBehaviour
         return FieldOfView.FieldOfViewCoroutine(delay);
     }
 
-    public bool IsFieldOfViewFind()
+    public bool IsFieldOfViewFind
     {
-        foreach (var element in FieldOfView.VisibleTargets)
+        get
         {
-            Debug.Log($"찾은 오브젝트 : {element.name}");
-        }
-        if (0 < FieldOfView.VisibleTargets.Count)
-        {
-            Targets = FieldOfView.VisibleTargets;
-            return true;
-        }
-        else
-        {
-            return false;
+            foreach (var element in FieldOfView.VisibleTargets)
+            {
+                Debug.Log($"찾은 오브젝트 : {element.name}");
+            }
+            if (0 < FieldOfView.VisibleTargets.Count)
+            {
+                Targets = FieldOfView.VisibleTargets;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
+
+
 }
