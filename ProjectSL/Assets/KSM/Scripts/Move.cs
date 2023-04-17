@@ -14,11 +14,12 @@ public class Move : Behavior
     public override void Execute()
     {
         // base.Execute();
-        controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+        Debug.Log($"moveDirection : {moveDirection}");
+        controller.SimpleMove(moveDirection * moveSpeed);
     }
     public override void Undo()
     {
         //base.Undo();
-        controller.Move((moveDirection * -1) * moveSpeed * Time.deltaTime);
+        controller.Move((moveDirection * -1) * moveSpeed);
     }
 }
