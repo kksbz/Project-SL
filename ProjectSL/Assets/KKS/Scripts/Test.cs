@@ -14,11 +14,7 @@ public class Test : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.V))
         {
-            List<ItemData> items = ItemManager.Instance.items;
-            foreach (ItemData item in items)
-            {
-                Debug.Log($"{item.itemID}, {item.itemName}, {item.itemType}, {item.description}");
-            }
+            UiManager.Instance.optionBar.SetActive(!UiManager.Instance.optionBar.activeSelf);
         }
     }
 }

@@ -14,7 +14,6 @@ public class CSVReader
         TextAsset csvData = new TextAsset(fileName);
         // csv파일에 데이터를 #LE를 기준으로 나눠서 배열에 저장 (#LE가 열의 마지막 값임)
         string[] data = csvData.text.Split("#LE");
-
         // #LE값을 제외하기 위해 data.Length - 1 만큼 for문 시작
         for (int i = 0; i < data.Length - 1; i++)
         {
