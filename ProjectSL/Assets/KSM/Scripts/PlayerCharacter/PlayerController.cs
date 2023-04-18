@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private Transform characterBody;
-
+    [SerializeField]
     private CameraController cameraController;
     private AnimationController animationController;
 
@@ -18,11 +19,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private CharacterController characterController = default;
     // 임시
-    
+    private Vector3 moveDir;
+
+
     private void Awake()
     {
         // 컴포넌트 초기화
-        // characterController = GetComponent<CharacterController>();
+        characterController = GetComponent<CharacterController>();
         cameraController = GetComponent<CameraController>();
         animationController = GetComponent<AnimationController>();
     }   // Awake()
@@ -38,10 +41,30 @@ public class PlayerController : MonoBehaviour
         Move();
     }   // Update()
 
+    void OnMove(InputValue value)
+    {
+        Vector2 input = value.Get<Vector2>();
+        Transform cameraArm = cameraController.cameraArm;
+
+        Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+        Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+        if (input != null)
+        {
+            
+            
+            moveDir = lookForward * input.y + lookRight * input.x;
+            controlProperty.inputDirection = moveDir;
+            
+
+            // moveDir = new Vector3(input.x, 0f, input.y);
+            Debug.Log($"SEND_MESSAGE : {input.magnitude}");
+        }
+        controlProperty.axisValue = value.Get<Vector2>();
+        controlProperty.speed = Mathf.Ceil(Mathf.Abs(input.x) + Mathf.Abs(input.y) / 2f);
+    }
+
     void Move()
     {
-        Vector3 moveDir = MoveInput();
-
         bool isMove = moveDir.magnitude != 0;
         if (isMove)
         {
