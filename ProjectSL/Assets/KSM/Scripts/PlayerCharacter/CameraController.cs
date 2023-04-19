@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using Cinemachine;
 
 public enum ECameraState
 {
@@ -13,7 +15,11 @@ public enum ECameraState
 public class CameraController : MonoBehaviour
 {
     public Transform cameraArm;
-    private CharacterBase target;
+    public Transform camera;
+    
+
+    [SerializeField]
+    private Animator cmCamAnimator;
 
     private PlayerController playerController;
     private CharacterController characterController;
@@ -28,6 +34,9 @@ public class CameraController : MonoBehaviour
     }
 
     // { LockOn
+    [Header("Lock On")]
+    [SerializeField]
+    private CharacterBase target;
     [SerializeField]
     private float viewAngle;
     [SerializeField]
@@ -37,6 +46,15 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private List<Transform> targetsInView;
     // } LockOn
+
+    [SerializeField]
+    private Transform targetLocator;
+    [SerializeField]
+    private float crossHairScale;
+    [SerializeField]
+    private Canvas lockOnCanvas;
+    [SerializeField]
+    private Cinemachine.CinemachineTargetGroup targetGroup;
 
     public delegate void EventHandler_void_GameObject(GameObject gObj_);
     public delegate void EventHandler_void();
@@ -80,16 +98,39 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(2))
         {
+            Debug.Log("휠 입력 받나요?");
             switch (cameraState)
             {
                 case ECameraState.DEFAULT:
                     SetPlayerLockOn();
+                    UpdateLockTargets();
                     break;
                 case ECameraState.LOCKON:
                 default:
                     ReleasePlayerLockOn();
+                    UpdateLockTargets();
                     break;
             }
+        }
+    }
+
+    private void UpdateLockTargets()
+    {
+        if (IsLockOn)
+        {
+            targetGroup.AddMember(transform, 0.9f, 0f);
+            targetGroup.AddMember(target.gameObject.transform, 0.6f, 0);
+
+            camera.gameObject.GetComponent<CinemachineController>().LockCamera();
+            camera.gameObject.GetComponent<CinemachineController>().FollowTarget(cameraArm);
+            camera.gameObject.GetComponent<CinemachineController>().SetLookAt(targetGroup.transform);
+        }
+        else
+        {
+            camera.gameObject.GetComponent<CinemachineController>().FreeCamera();
+            //targetGroup.RemoveMember(transform);
+            //targetGroup.RemoveMember(target.gameObject.transform);
+            targetGroup.m_Targets = new CinemachineTargetGroup.Target[0];
         }
     }
     void LookAround()
@@ -99,6 +140,8 @@ public class CameraController : MonoBehaviour
         {
             return;
         }
+        // Legacy Code
+        /*
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         Vector3 cameraAngle = cameraArm.rotation.eulerAngles;
 
@@ -111,8 +154,9 @@ public class CameraController : MonoBehaviour
         {
             x = Mathf.Clamp(x, 335f, 361f);
         }
-
-        cameraArm.rotation = Quaternion.Euler(x, cameraAngle.y + mouseDelta.x, cameraAngle.z);
+        */
+        // cameraArm.rotation = Quaternion.Euler(x, cameraAngle.y + mouseDelta.x, cameraAngle.z);
+        cameraArm.rotation = camera.rotation;
     }
     void LookTarget()
     {
@@ -123,6 +167,7 @@ public class CameraController : MonoBehaviour
         }
         // 임시
         Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - cameraArm.position);
+        // camera.rotation = Quaternion.Lerp(camera.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
         cameraArm.rotation = Quaternion.Lerp(cameraArm.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
         // cameraArm.transform.LookAt(target.transform,);
         Debug.DrawLine(cameraArm.position, target.transform.position, Color.green);
