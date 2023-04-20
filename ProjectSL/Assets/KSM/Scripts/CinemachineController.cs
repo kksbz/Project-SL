@@ -21,6 +21,7 @@ public class CinemachineController : MonoBehaviour
     {
         freelockCamera.Priority = 1;
         lockTargetCamera.Priority = 0;
+        freelockCamera.gameObject.transform.position = transform.position;
     }
     public void SetLookAt(Transform newTargetTR)
     {

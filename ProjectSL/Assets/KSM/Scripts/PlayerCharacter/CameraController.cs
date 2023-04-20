@@ -14,6 +14,9 @@ public enum ECameraState
 
 public class CameraController : MonoBehaviour
 {
+    public GameObject cm_FreeLook;
+    public GameObject cm_LockOn;
+
     public Transform cameraArm;
     public Transform camera;
     
@@ -79,6 +82,10 @@ public class CameraController : MonoBehaviour
         cameraState = ECameraState.DEFAULT;
         targetsInView = new List<Transform>();
         controlProperty = playerController.controlProperty;
+
+        // 커서 안보이게
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -86,6 +93,10 @@ public class CameraController : MonoBehaviour
     {
         SearchTarget();
         InputAction();
+        
+    }
+    private void FixedUpdate()
+    {
         LookAround();
         LookTarget();
     }
@@ -128,8 +139,6 @@ public class CameraController : MonoBehaviour
         else
         {
             camera.gameObject.GetComponent<CinemachineController>().FreeCamera();
-            //targetGroup.RemoveMember(transform);
-            //targetGroup.RemoveMember(target.gameObject.transform);
             targetGroup.m_Targets = new CinemachineTargetGroup.Target[0];
         }
     }
@@ -156,7 +165,7 @@ public class CameraController : MonoBehaviour
         }
         */
         // cameraArm.rotation = Quaternion.Euler(x, cameraAngle.y + mouseDelta.x, cameraAngle.z);
-        cameraArm.rotation = camera.rotation;
+        cameraArm.rotation = ConvertRotationOnlyY(camera.rotation);
     }
     void LookTarget()
     {
@@ -168,8 +177,9 @@ public class CameraController : MonoBehaviour
         // 임시
         Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - cameraArm.position);
         // camera.rotation = Quaternion.Lerp(camera.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
-        cameraArm.rotation = Quaternion.Lerp(cameraArm.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
+        // cameraArm.rotation = Quaternion.Lerp(cameraArm.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
         // cameraArm.transform.LookAt(target.transform,);
+        cameraArm.rotation = ConvertRotationOnlyY(targetRotation);
         Debug.DrawLine(cameraArm.position, target.transform.position, Color.green);
     }
     private Vector3 BoundaryAngle(float angle)
@@ -195,7 +205,7 @@ public class CameraController : MonoBehaviour
             Transform targetTf = targetCol.transform;
             Vector3 direction = (targetTf.position - transform.position).normalized;
             float angle = Vector3.Angle(direction, cameraArm.forward);
-            Debug.Log($"target Angle : {angle}");
+            // Debug.Log($"target Angle : {angle}");
             if (angle < viewAngle * 0.5f)
             {
                 Debug.Log($"angle Checking");
@@ -276,6 +286,14 @@ public class CameraController : MonoBehaviour
         {
             return cameraState == ECameraState.LOCKON;
         }
+    }
+
+    Quaternion ConvertRotationOnlyY(Quaternion targetRotation)
+    {
+        Quaternion newTargetRotation = targetRotation;
+        newTargetRotation.x = 0f;
+        newTargetRotation.z = 0f;
+        return newTargetRotation;
     }
 
 }
