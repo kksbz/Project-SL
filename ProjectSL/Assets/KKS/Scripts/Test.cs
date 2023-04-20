@@ -14,6 +14,8 @@ public class Test : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.V))
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             UiManager.Instance.optionBar.SetActive(!UiManager.Instance.optionBar.activeSelf);
         }
     }

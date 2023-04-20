@@ -46,6 +46,8 @@ public class Inventory : Singleton<Inventory>
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             invenObj.SetActive(false);
             equipSlotPanel.SetActive(true);
             equipInvenPanel.SetActive(false);
