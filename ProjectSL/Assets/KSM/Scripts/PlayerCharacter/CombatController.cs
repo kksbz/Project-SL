@@ -74,7 +74,9 @@ public class CombatController : MonoBehaviour
         {
             if (currentCombo != 0)
                 return;
+            Debug.Log("Before AttackStartComboState");
             AttackStartComboState();
+            Debug.Log("Before AttackAnimationPlay");
             AttackAnimationPlay();
             isAttacking = true;
             controlProperty.isAttacking = true;
@@ -91,6 +93,7 @@ public class CombatController : MonoBehaviour
             return;
         }
         currentCombo = Mathf.Clamp(currentCombo + 1, 1, maxCombo);
+        Debug.Log($"currentCombo = {currentCombo}");
     }
     void AttackEndComboState()
     {
@@ -107,7 +110,6 @@ public class CombatController : MonoBehaviour
             isValid = false;
         if(current >= max)
             isValid = false;
-        //Debug.Log($"isValid = {isValid}");
         return isValid;
     }
     void ExitAttack()
@@ -119,8 +121,10 @@ public class CombatController : MonoBehaviour
     }
     void AttackAnimationPlay()
     {
+        Debug.LogWarning("Attack Animation Play Check");
         animator.runtimeAnimatorController = combo[currentCombo - 1].animatorOV;
         animator.Play("Attack", 4, 0);
+        Debug.LogWarning("Attack Animation Play");
     }
     // 애니메이션 이벤트
     public void Event_SetCanNextCombo()
@@ -162,6 +166,10 @@ public class CombatController : MonoBehaviour
             Debug.LogWarning($"{hitResult.gameObject.name} 맞았음");
 
         }
+    }
+    public void Event_SetApplyRootMotion()
+    {
+
     }
 
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7123e30b6e0d63e4aaa0d4c0bc12ed9b
+guid: 8ea8be9058c3f864799d7403492b58dc
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -29,12 +29,17 @@ ModelImporter:
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - root
     extraUserProperties: []
     clipAnimations: []
     isReadable: 0
   meshes:
-    lODScreenPercentages: []
+    lODScreenPercentages:
+    - 0.25
+    - 0.125
+    - 0.0625
+    - 0.01
     globalScale: 1
     meshCompression: 0
     addColliders: 0
@@ -97,7 +102,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
