@@ -5,6 +5,7 @@ using static ItemData;
 
 public interface IPublicSlot
 {
+    GameObject SlotObj { get; }
     ItemType SlotType { get; set; }
     void AddItem(ItemData _item);
     void RemoveItem();

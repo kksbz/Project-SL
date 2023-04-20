@@ -107,7 +107,7 @@ public class CombatController : MonoBehaviour
             isValid = false;
         if(current >= max)
             isValid = false;
-        Debug.Log($"isValid = {isValid}");
+        //Debug.Log($"isValid = {isValid}");
         return isValid;
     }
     void ExitAttack()

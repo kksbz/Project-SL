@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -14,13 +15,27 @@ public class CSVReader
         TextAsset csvData = new TextAsset(fileName);
         // csv파일에 데이터를 #LE를 기준으로 나눠서 배열에 저장 (#LE가 열의 마지막 값임)
         string[] data = csvData.text.Split("#LE");
-        // #LE값을 제외하기 위해 data.Length - 1 만큼 for문 시작
+        // #마지막줄 공백을 제외하기 위해 data.Length - 1 만큼 for문 시작
         for (int i = 0; i < data.Length - 1; i++)
         {
             // data의 값을 ',' 기준으로 잘라서 배열에 저장
             string[] rows = data[i].Split(new char[] { ',' });
-            // List에 저장
-            dataRows.Add(rows);
+            bool isNullRows = true;
+            foreach (string row in rows)
+            {
+                // 데이터가 비어있는 곳은 제외
+                if (!string.IsNullOrWhiteSpace(row))
+                {
+                    //Debug.Log($"데이터 있는 열 : {data[i]}");
+                    isNullRows = false;
+                    break;
+                }
+            }
+            if (isNullRows == false)
+            {
+                //// List에 저장
+                dataRows.Add(rows);
+            }
         }
         return dataRows;
     } // CSVRead

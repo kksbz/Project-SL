@@ -12,8 +12,9 @@ public class Slot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPointerEx
     [SerializeField] private Image icon; // 슬롯에 표시될 icon
     [SerializeField] private GameObject equipIcon; // 장착여부 표시 icon
     [SerializeField] private TMP_Text quantity; // 수량표시 Text
-    private SelectPanel selectPanel;
+    private SelectPanel selectPanel; // 선택창 패널
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
+    public GameObject SlotObj { get { return gameObject; } }
     [SerializeField] private ItemType slotType; // 슬롯에 담길 아이템타입 제한 변수
     public ItemType SlotType { get { return slotType; } set { slotType = value; } }
     [SerializeField] private ItemData item; // 슬롯에 담길 아이템 변수

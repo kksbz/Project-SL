@@ -5,5 +5,6 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-
-}
+    public GameObject playerLeftArm;
+    public GameObject playerRightArm;
+} // GameManager
