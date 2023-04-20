@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using static ItemData;
 using static UnityEditor.Progress;
@@ -39,19 +38,16 @@ public class Inventory : Singleton<Inventory>
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            // 장비인벤 슬롯 세팅
-            GameObject slot = Instantiate(equipSlotPrefab);
-            EquipSlot equipSlot = slot.GetComponent<EquipSlot>();
-            slot.transform.parent = equipInvenPanel.transform.Find("Scroll View/Viewport/Content").transform;
-            equipSlot.Item = null;
-            // 통합인벤 슬롯 세팅
-            GameObject tSlot = Instantiate(totalSlotPrefab);
-            Slot totalSlot = tSlot.GetComponent<Slot>();
-            tSlot.transform.parent = totalInvenPanel.transform.Find("Scroll View/Viewport/Content").transform;
-            totalSlot.Item = null;
+            DataManager.Instance.SaveData();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            DataManager.Instance.LoadData();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             invenObj.SetActive(false);
             equipSlotPanel.SetActive(true);
             equipInvenPanel.SetActive(false);
@@ -99,7 +95,17 @@ public class Inventory : Singleton<Inventory>
     //! 인벤토리에 아이템 추가하는 함수
     public void AddItem(ItemData item)
     {
-        ItemData itemData = new ItemData(DataManager.Instance.itemDatas[item.itemID - 1]);
+        ItemData itemData = null;
+        foreach (string[] _itemData in DataManager.Instance.itemDatas)
+        {
+            // 아이템데이터 테이블에서 입력받은 ID의 아이템데이터를 가져옴
+            if (int.Parse(_itemData[0]) == item.itemID)
+            {
+                itemData = new ItemData(_itemData);
+            }
+        }
+        Debug.Log($"인벤에 넣기 전 획득한 아이템 : {itemData.itemName}");
+
         // 인벤토리에 같은 아이템이 있는지 체크
         foreach (ItemData _item in inventory)
         {
@@ -120,10 +126,10 @@ public class Inventory : Singleton<Inventory>
         // 인벤토리에 같은 아이템이 없을 경우
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i] == null)
+            if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
             {
                 inventory[i] = item;
-                Debug.Log($"{inventory[i].itemName}");
+                Debug.Log($"인벤토리 빈 슬롯에 추가된 아이템 : {inventory[i].itemName}");
                 return;
             }
         }
@@ -172,7 +178,6 @@ public class Inventory : Singleton<Inventory>
     //! 정해진 itemType을 장비해야하는 슬롯일 경우 장비인벤슬롯에 같은 itemType인 아이템만 보여주는 함수
     public void InitSameTypeEquipSlot(ItemType _itemType)
     {
-        Debug.Log(_itemType);
         List<ItemData> sameTypes = new List<ItemData>();
         foreach (ItemData _item in inventory)
         {
@@ -194,6 +199,61 @@ public class Inventory : Singleton<Inventory>
             {
                 // 캐싱해둔 같은 타입의 아이템을 슬롯에 표시
                 equipSlots[i].Item = sameTypes[i];
+                // 세이브 데이터 로드 시 장비슬롯과 장착슬롯 연동 처리
+                if (equipSlots[i].Item.IsEquip == true)
+                {
+                    switch (equipSlots[i].Item.itemType)
+                    {
+                        case ItemType.WEAPON:
+                            for (int j = 0; j < weaponSlotList.Count; j++)
+                            {
+                                // 무기슬롯의 아이템이 존재할 경우
+                                if (weaponSlotList[j].Item != null)
+                                {
+                                    // 무기슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
+                                    if (weaponSlotList[j].Item.itemID == equipSlots[i].Item.itemID
+                                        && equipSlots[i].Item.IsEquip == true)
+                                    {
+                                        // 슬롯 연동
+                                        equipSlots[i].equipSlot = weaponSlotList[j];
+                                    }
+                                }
+                            }
+                            break;
+                        case ItemType.CONSUMPTION:
+                            for (int j = 0; j < consumptionSlotList.Count; j++)
+                            {
+                                // 소모품슬롯의 아이템이 존재할 경우
+                                if (consumptionSlotList[j].Item != null)
+                                {
+                                    // 소모품슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
+                                    if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
+                                        && equipSlots[i].Item.IsEquip == true)
+                                    {
+                                        // 슬롯 연동
+                                        equipSlots[i].equipSlot = consumptionSlotList[j];
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            for (int j = 0; j < armorSlotList.Count; j++)
+                            {
+                                // 방어구슬롯의 아이템이 존재할 경우
+                                if (armorSlotList[j].Item != null)
+                                {
+                                    // 방어구슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
+                                    if (armorSlotList[j].Item.itemID == equipSlots[i].Item.itemID
+                                        && equipSlots[i].Item.IsEquip == true)
+                                    {
+                                        // 슬롯 연동
+                                        equipSlots[i].equipSlot = armorSlotList[j];
+                                    }
+                                }
+                            }
+                            break;
+                    } // switch
+                }
             }
             else
             {
@@ -251,5 +311,5 @@ public class Inventory : Singleton<Inventory>
                 totalSlots[i].Item = null;
             }
         }
-    } // InitEquipInven
+    } // InitSameTypeTotalSlot
 } // Inventory

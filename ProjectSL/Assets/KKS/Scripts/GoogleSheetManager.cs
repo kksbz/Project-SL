@@ -13,7 +13,6 @@ public class GoogleSheetManager
         UnityWebRequest www = UnityWebRequest.Get(URL);
         yield return www.SendWebRequest();
         string itemDataBase = www.downloadHandler.text;
-
         // URL로 가져온 구글시트의 아이템데이터를 파싱함
         List<string[]> itemDatas = CSVReader.CSVRead(itemDataBase);
         //List<ItemData> items = CSVDataParser.ItemDataParser(itemDatas);

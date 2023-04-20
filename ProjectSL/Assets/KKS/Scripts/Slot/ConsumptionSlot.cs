@@ -12,6 +12,9 @@ public class ConsumptionSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler,
     [SerializeField] private Image icon; // 슬롯에 표시될 icon
     [SerializeField] private TMP_Text quantity; // 수량표시 Text
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
+    public GameObject equipItem; // 슬롯에 장착한 아이템오브젝트
+    public GameObject SlotObj { get { return gameObject; } }
+
     [SerializeField] private ItemType slotType; // 슬롯에 담길 아이템타입 제한 변수
     public ItemType SlotType { get { return slotType; } set { slotType = value; } }
     [SerializeField] private ItemData item; // 슬롯에 담길 아이템 변수
@@ -56,11 +59,20 @@ public class ConsumptionSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler,
     public void AddItem(ItemData _item)
     {
         Item = _item;
+        if (_item != null)
+        {
+            equipItem = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{_item.itemID}"));
+            equipItem.GetComponent<Item>().pickupArea.SetActive(false);
+            equipItem.SetActive(false);
+        }
     } // AddItem
 
     public void RemoveItem()
     {
         Item = null;
+        // 생성된 아이템 파괴
+        Destroy(equipItem);
+        equipItem = null;
     } // RemoveItem
 
     public void OnPointerEnter(PointerEventData eventData)
