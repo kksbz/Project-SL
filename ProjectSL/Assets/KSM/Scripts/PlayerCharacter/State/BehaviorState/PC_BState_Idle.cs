@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PC_BState_Idle : BehaviorStateBase
 {
-    private Move nextMove;
+    private Behavior wait;
     private Transform cameraArm;
     private Transform characterBody;
     public PC_BState_Idle(PlayerController playerController) : base(playerController)
     {
-        nextMove = default;
+        wait = default;
     }
     public override void OnEnterState()
     {
@@ -33,13 +33,13 @@ public class PC_BState_Idle : BehaviorStateBase
 
     void SetMove()
     {
-        nextMove = playerController.nextMove;
+        wait = playerController.wait;
     }   // SetMove()
     void IdleExecute()
     {
-        if(nextMove != null)
+        if(wait != null)
         {
-            nextMove.Execute();
+            wait.Execute();
         }
     }   // IdleExecute()
 }
