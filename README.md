@@ -6,3 +6,4 @@
 2023-04-19 Camera Change to Cinemachine and Lock On      
 2023-04-20 Solve LockOn Jittering Issue Refactoring PlayerCharacter State Pattern      
 2023-04-20 Working Convert Attack to State Pattern and Command Pattern        
+2023-04-21 Refactoring to State Pattern feat Walk and Run     

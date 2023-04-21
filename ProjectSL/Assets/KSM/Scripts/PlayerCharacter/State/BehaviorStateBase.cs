@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BehaviorStateBase
 {
+    // Legacy Code
     protected PlayerController playerController { get; set; }
     public BehaviorStateBase(PlayerController controller)
     {

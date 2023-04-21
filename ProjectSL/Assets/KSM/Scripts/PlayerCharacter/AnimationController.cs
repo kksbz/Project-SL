@@ -15,6 +15,14 @@ public class AnimationController : MonoBehaviour
     private float axisX;
     private float axisY;
     private bool isLockOn;
+
+    // constants layer index
+    public static readonly int LAYERINDEX_BASELAYER     = 0;
+    public static readonly int LAYERINDEX_RUNLAYER      = 1;
+    public static readonly int LAYERINDEX_WALKLAYER     = 2;
+    public static readonly int LAYERINDEX_UPPERLAYER    = 3;
+    public static readonly int LAYERINDEX_ARMLAYER      = 4;
+    public static readonly int LAYERINDEX_FULLLAYER     = 5;
     public float Speed
     {
         set { speed = value; }
@@ -53,5 +61,9 @@ public class AnimationController : MonoBehaviour
         animator.SetFloat("Horizontal", controlProperty.axisValue.x);
         animator.SetFloat("Vertical", controlProperty.axisValue.y);
         animator.SetBool("IsLockOn", controlProperty.isLockOn);
+    }
+    public void SetWeight(int layerIndex, float weight)
+    {
+        animator.SetLayerWeight(layerIndex, weight);
     }
 }

@@ -45,12 +45,12 @@ public class PlayerCharacter : CharacterBase
     // Update is called once per frame
     void Update()
     {
-        SM_Behavior?.UpdateState();
+        // SM_Behavior?.UpdateState();
         // SM_Look?.UpdateState();
     }
     private void FixedUpdate()
     {
-        SM_Behavior?.FixedUpdateState();
+        // SM_Behavior?.FixedUpdateState();
         // SM_Look?.FixedUpdateState();
     }
     private void InitBehaviorStateMachine()
