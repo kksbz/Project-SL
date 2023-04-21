@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using static ItemData;
-using static UnityEditor.Progress;
 
 public class Inventory : Singleton<Inventory>
 {
@@ -38,10 +37,12 @@ public class Inventory : Singleton<Inventory>
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
+            DataManager.Instance.slotNum = 0;
             DataManager.Instance.SaveData();
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
+            DataManager.Instance.slotNum = 0;
             DataManager.Instance.LoadData();
         }
         if (Input.GetKeyDown(KeyCode.Escape))

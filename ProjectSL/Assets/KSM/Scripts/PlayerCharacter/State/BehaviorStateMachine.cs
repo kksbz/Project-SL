@@ -12,6 +12,9 @@ public enum EBehaviorStateName
 
 public class BehaviorStateMachine
 {
+    public BehaviorStateBase _currentState;
+
+    // Legacy Code
     public BehaviorStateBase currentState { get; private set; }
     public EBehaviorStateName currentStateName { get; private set; }
     private Dictionary<EBehaviorStateName, BehaviorStateBase> states = new Dictionary<EBehaviorStateName, BehaviorStateBase>();

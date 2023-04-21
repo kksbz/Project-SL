@@ -15,9 +15,9 @@ public class GoogleSheetManager
         string itemDataBase = www.downloadHandler.text;
         // URL로 가져온 구글시트의 아이템데이터를 파싱함
         List<string[]> itemDatas = CSVReader.CSVRead(itemDataBase);
-        //List<ItemData> items = CSVDataParser.ItemDataParser(itemDatas);
         // 데이터매니저 itemDatas 변수에 파싱된 아이템리스트를 캐싱
         DataManager.Instance.itemDatas = itemDatas;
+        //Debug.Log(itemDataBase);
         Debug.Log("데이터 불러오기 완료");
     } // Start
 } // GoogleSheetManager

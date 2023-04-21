@@ -12,6 +12,7 @@ public class ArmorSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoin
     [SerializeField] private Image equipSlotBg; // 아이템 장착 시 슬롯의 배경 이미지
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     private string invenText;
+    public GameObject equipItem; // 슬롯에 장착한 방어구 아이템 오브젝트
     public GameObject SlotObj { get { return gameObject; } }
 
     [SerializeField] private ItemType slotType; // 슬롯에 담길 아이템타입 제한 변수
@@ -58,11 +59,20 @@ public class ArmorSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoin
     public void AddItem(ItemData _item)
     {
         Item = _item;
+        if (_item != null)
+        {
+            equipItem = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{_item.itemID}"));
+            equipItem.GetComponent<Item>().pickupArea.SetActive(false);
+            equipItem.SetActive(false);
+        }
     } // AddItem
 
     public void RemoveItem()
     {
         Item = null;
+        // 생성된 아이템 파괴
+        Destroy(equipItem);
+        equipItem = null;
     } // RemoveItem
 
     private void ShowInvenText()

@@ -120,7 +120,7 @@ public class CombatController : MonoBehaviour
     }
     void ExitAttack()
     {
-        if(animator.GetCurrentAnimatorStateInfo(4).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(4).IsTag("Attack"))
+        if(animator.GetCurrentAnimatorStateInfo(AnimationController.LAYERINDEX_FULLLAYER).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(AnimationController.LAYERINDEX_FULLLAYER).IsTag("Attack"))
         {
             AttackEndComboState();
             playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.IDLE);
@@ -128,7 +128,7 @@ public class CombatController : MonoBehaviour
     }
     void AttackAnimationPlay()
     {
-        PoseAction poseAction = new PoseAction(animator, "Attack", 4, 0, combo[currentCombo - 1].animatorOV);
+        PoseAction poseAction = new PoseAction(animator, "Attack", AnimationController.LAYERINDEX_FULLLAYER, 0, combo[currentCombo - 1].animatorOV);
         nextAttack = poseAction;
         playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
         // poseAction.Execute();

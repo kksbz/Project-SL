@@ -1396,7 +1396,7 @@ PrefabInstance:
     - target: {fileID: 6471593895145263296, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0000000414542
+      value: -0.00000004145423
       objectReference: {fileID: 0}
     - target: {fileID: 6471593895145263296, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
@@ -1421,12 +1421,12 @@ PrefabInstance:
     - target: {fileID: 6471593895145263296, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000014272489
+      value: -0.0000000142724925
       objectReference: {fileID: 0}
     - target: {fileID: 6471593895145263296, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000007048981
+      value: -0.0000000070489827
       objectReference: {fileID: 0}
     - target: {fileID: 6471593895423147773, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
@@ -1506,12 +1506,12 @@ PrefabInstance:
     - target: {fileID: 6471593895849564945, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000042958323
+      value: -0.000000042958327
       objectReference: {fileID: 0}
     - target: {fileID: 6471593895849564945, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000005094582
+      value: -0.00000005094583
       objectReference: {fileID: 0}
     - target: {fileID: 6471593896471444852, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
@@ -1631,12 +1631,12 @@ PrefabInstance:
     - target: {fileID: 6471593896903876969, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000047619757
+      value: -0.000000046000224
       objectReference: {fileID: 0}
     - target: {fileID: 6471593896903876969, guid: 8949c98172748b74b8f528024471d2b5,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000005443853
+      value: -0.00000005258708
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8949c98172748b74b8f528024471d2b5, type: 3}
@@ -1651,6 +1651,81 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_ActionId
+      value: f54f8b80-5bee-4d07-8b35-72d3c677a759
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_ActionId
+      value: e36cd4a8-5b60-4622-8bbf-c2132d5fa1c8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
+      value: c1701a09-fa87-4de0-ac75-e24e3048b20a
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: ef9f9e2d-6ac1-497d-a193-b98a253a6e78
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
+      value: bff61e09-510c-48fc-ad3b-6eeb9d643ced
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: 40007d38-1b19-4773-a1bc-26a733c2746f
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_ActionName
+      value: PlayerCharacterInput/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_ActionName
+      value: PlayerCharacterInput/Run[/Keyboard/space]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
+      value: PlayerCharacterInput/Walk[/Keyboard/leftAlt]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: PlayerCharacterInput/RightArmAttack[/Mouse/leftButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
+      value: PlayerCharacterInput/LeftArmGuard[/Mouse/rightButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992729853337357025, guid: 690fdfc01be841c4192e76f00620338c,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: PlayerCharacterInput/Roll[/Keyboard/space]
       objectReference: {fileID: 0}
     - target: {fileID: 6992729853337357028, guid: 690fdfc01be841c4192e76f00620338c,
         type: 3}

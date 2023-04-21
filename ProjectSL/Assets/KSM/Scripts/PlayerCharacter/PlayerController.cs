@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetMove();
+        // SetMove();
     }   // Update()
 
     private void FixedUpdate()
@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
         // MoveExecute();
     }   // FixedUpdate()
 
+    /*
     void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"SEND_MESSAGE : {input.magnitude}");
         }
     }
-
+    */
     void SetMove()
     {
         
