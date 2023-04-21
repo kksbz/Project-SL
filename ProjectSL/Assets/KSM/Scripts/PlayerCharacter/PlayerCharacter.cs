@@ -9,6 +9,7 @@ public class PlayerCharacter : CharacterBase
     public CharacterController characterController { get; private set; }
     public PlayerController playerController { get; private set; }
     public CameraController cameraController { get; private set; }
+    public CombatController combatController { get; private set; }
     public AnimationController animationController { get; private set; }
     public Animator animator { get; private set; }
     public CharacterControlProperty controlProperty { get; private set; }
@@ -26,6 +27,7 @@ public class PlayerCharacter : CharacterBase
             characterController = GetComponent<CharacterController>();
             playerController = GetComponent<PlayerController>();
             cameraController = GetComponent<CameraController>();
+            combatController = GetComponent<CombatController>();
             animationController = GetComponent<AnimationController>();
             GameObject ownMeshObj = gameObject.FindChildObj("Mesh");
             animator = ownMeshObj.GetComponent<Animator>();
@@ -43,18 +45,19 @@ public class PlayerCharacter : CharacterBase
     // Update is called once per frame
     void Update()
     {
-        SM_Behavior?.UpdateState();
+        // SM_Behavior?.UpdateState();
         // SM_Look?.UpdateState();
     }
     private void FixedUpdate()
     {
-        SM_Behavior?.FixedUpdateState();
+        // SM_Behavior?.FixedUpdateState();
         // SM_Look?.FixedUpdateState();
     }
     private void InitBehaviorStateMachine()
     {
         SM_Behavior = new BehaviorStateMachine(EBehaviorStateName.IDLE, new PC_BState_Idle(playerController));
         SM_Behavior.AddState(EBehaviorStateName.MOVE, new PC_BState_Move(playerController));
+        SM_Behavior.AddState(EBehaviorStateName.ATTACK, new PC_BState_Attack(playerController, animator, combatController));
     }
     private void InitLookStateMachine()
     {

@@ -987,6 +987,7 @@ GameObject:
   - component: {fileID: 6992729853337357028}
   - component: {fileID: 6992729853337357027}
   - component: {fileID: 6992729853337357026}
+  - component: {fileID: 726502619946719073}
   - component: {fileID: 6992729853337357025}
   m_Layer: 0
   m_Name: PlayerCharacter
@@ -1118,6 +1119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05077696fc8018a41a285cb8e8ff0c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCharacter: {fileID: 0}
   EnemyMask:
     serializedVersion: 2
     m_Bits: 128
@@ -1127,6 +1129,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 10577c0f13c8bdb4ba9119cd8f6a3a6d, type: 2}
   canAttack: 1
   animator: {fileID: 6992729853538122152}
+--- !u!114 &726502619946719073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992729853337357024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c321176329d36b488920b9702ba159e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6992729853337357025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,7 +1169,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
-  m_DefaultActionMap: PlayerActions
+  m_DefaultActionMap: PlayerCharacterInput
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &6992729853377777451
@@ -2610,6 +2624,7 @@ GameObject:
   - component: {fileID: 6992729853538122152}
   - component: {fileID: 6992729853538122154}
   - component: {fileID: 6992729853538122153}
+  - component: {fileID: 289118657387862781}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -2794,6 +2809,24 @@ MonoBehaviour:
   combatController: {fileID: 0}
   playerObjTR: {fileID: 6992729853337357031}
   meshObjTR: {fileID: 0}
+--- !u!114 &289118657387862781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992729854519001019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8749ea8887e804a40aed5070aed655b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6992729854563083711
 GameObject:
   m_ObjectHideFlags: 0

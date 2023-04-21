@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 moveDir;
     public Vector3 inputDir;
     public Move nextMove;
+    public Behavior wait;
     bool isMove;
 
 
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetMove();
+        // SetMove();
     }   // Update()
 
     private void FixedUpdate()
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         // MoveExecute();
     }   // FixedUpdate()
 
+    /*
     void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"SEND_MESSAGE : {input.magnitude}");
         }
     }
-
+    */
     void SetMove()
     {
         
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
-            nextMove = new Move(characterController, moveDir, tempMoveSpeed);
+            wait = new Behavior();
         }
         //controlProperty.axisValue = new Vector2(moveDir.x, moveDir.z);
         //controlProperty.speed = Mathf.Ceil(Mathf.Abs(moveDir.x) + Mathf.Abs(moveDir.z) / 2f);

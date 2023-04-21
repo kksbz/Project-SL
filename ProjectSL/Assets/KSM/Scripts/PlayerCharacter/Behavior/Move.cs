@@ -14,6 +14,7 @@ public class Move : Behavior
     public override void Execute()
     {
         // base.Execute();
+        // Debug.Log($"moveDirection : {moveDirection}");
         controller.SimpleMove(moveDirection * moveSpeed);
     }
     public override void Undo()

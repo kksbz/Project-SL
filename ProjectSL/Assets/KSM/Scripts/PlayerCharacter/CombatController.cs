@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerCharacter playerCharacter;
     private PlayerController playerController;
     private CharacterControlProperty controlProperty;
 
@@ -28,15 +30,21 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    public PoseAction nextAttack;
+
     private void Awake()
     {
+        playerCharacter = GetComponent<PlayerCharacter>();
         playerController = GetComponent<PlayerController>();
+
+        BindingComboAttackEvent();
     }
     // Start is called before the first frame update
     void Start()
     {
         controlProperty = playerController.controlProperty;
         maxCombo = combo.Count;
+
     }
 
     // Update is called once per frame
@@ -74,9 +82,7 @@ public class CombatController : MonoBehaviour
         {
             if (currentCombo != 0)
                 return;
-            Debug.Log("Before AttackStartComboState");
             AttackStartComboState();
-            Debug.Log("Before AttackAnimationPlay");
             AttackAnimationPlay();
             isAttacking = true;
             controlProperty.isAttacking = true;
@@ -117,15 +123,34 @@ public class CombatController : MonoBehaviour
         if(animator.GetCurrentAnimatorStateInfo(4).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(4).IsTag("Attack"))
         {
             AttackEndComboState();
+            playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.IDLE);
         }
     }
     void AttackAnimationPlay()
     {
-        Debug.LogWarning("Attack Animation Play Check");
-        animator.runtimeAnimatorController = combo[currentCombo - 1].animatorOV;
-        animator.Play("Attack", 4, 0);
-        Debug.LogWarning("Attack Animation Play");
+        PoseAction poseAction = new PoseAction(animator, "Attack", 4, 0, combo[currentCombo - 1].animatorOV);
+        nextAttack = poseAction;
+        playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
+        // poseAction.Execute();
     }
+    void BindingComboAttackEvent()
+    {
+        AnimationEventDispatcher aed = gameObject.GetComponentInChildren<AnimationEventDispatcher>();
+        for(int i = 0; i < combo.Count; i++)
+        {
+            for(int j = 0; j < combo[i].animatorOV.animationClips.Length; j++)
+            {
+                AnimationClip attackClip = combo[i].animatorOV.animationClips[j];
+                if(attackClip == null)
+                {
+                    continue;
+                }
+                aed.AddStartAnimationEvent(attackClip);
+                aed.AddEndAnimationEvent(attackClip);
+            }
+        }
+    }
+
     // 애니메이션 이벤트
     public void Event_SetCanNextCombo()
     {
@@ -167,9 +192,4 @@ public class CombatController : MonoBehaviour
 
         }
     }
-    public void Event_SetApplyRootMotion()
-    {
-
-    }
-
 }
