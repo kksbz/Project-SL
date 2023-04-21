@@ -12,7 +12,7 @@ public class ConsumptionSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler,
     [SerializeField] private Image icon; // 슬롯에 표시될 icon
     [SerializeField] private TMP_Text quantity; // 수량표시 Text
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
-    public GameObject equipItem; // 슬롯에 장착한 아이템오브젝트
+    public GameObject equipItem; // 슬롯에 장착한 소모품 아이템 오브젝트
     public GameObject SlotObj { get { return gameObject; } }
 
     [SerializeField] private ItemType slotType; // 슬롯에 담길 아이템타입 제한 변수
