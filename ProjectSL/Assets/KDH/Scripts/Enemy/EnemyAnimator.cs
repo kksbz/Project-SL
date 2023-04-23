@@ -11,6 +11,20 @@ public interface IEnemyAnimator : GData.IInitialize
     void SetFloat(string parameter, float value);
     void SetInt(string parameter, int value);
 
+    /// <summary>
+    /// 반복되는 애니메이션이 한번 종료된 시점에 AnimationEvent로 호출할 함수
+    /// </summary>
+    /// <returns></returns>
+    void AnimationComplete();
+
+    /// <summary>
+    /// 반복되지 않는 애니메이션이 종료된 시점을 확인할 함수
+    /// </summary>
+    /// <returns></returns>
+    bool IsAnimationEnd();
+
+    bool IsAnimationEnd(string animationName);
+
 }
 
 public class EnemyAnimator : MonoBehaviour, IEnemyAnimator
@@ -41,5 +55,39 @@ public class EnemyAnimator : MonoBehaviour, IEnemyAnimator
     public void SetInt(string parameter, int value)
     {
         Animator.SetInteger(parameter, value);
+    }
+
+    public void AnimationComplete()
+    {
+    }
+
+    public bool IsAnimationEnd()
+    {
+        //Debug.Log($"CurrentAnimation NormalizedTime : {CurrentStateInfo.normalizedTime} / IsLoop : {CurrentStateInfo.loop}");
+        if (0.9f <= CurrentStateInfo.normalizedTime && !CurrentStateInfo.loop)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsAnimationEnd(string animationName)
+    {
+        if (!CurrentStateInfo.IsName(animationName))
+        {
+            return false;
+        }
+
+        if (1f <= CurrentStateInfo.normalizedTime && !CurrentStateInfo.loop)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -14,11 +14,14 @@ public class FieldOfView : IFieldOfView
 {
     private Transform _transform;
     private EnemyResearchStatus _researchStatus;
+
     // 시야 영역의 반지름과 시야 각도
     private float _viewRadius;
     private float _viewAngle;
+
     // 마스크 2종
     private LayerMask _targetMask, _obstacleMask;
+
     // Target mask에 ray hit된 transform을 보관하는 리스트
     public List<Transform> VisibleTargets { get; private set; }
 

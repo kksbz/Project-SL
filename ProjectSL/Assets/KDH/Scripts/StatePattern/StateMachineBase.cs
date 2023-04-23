@@ -7,6 +7,7 @@ public interface IStateMachine
     void OnEnter();
     void Update();
     void OnExit();
+    void OnAction();
 }
 
 public class StateMachineBase : IStateMachine
@@ -43,5 +44,10 @@ public class StateMachineBase : IStateMachine
     public void OnExit()
     {
         CurrentState.OnExit();
+    }
+
+    public void OnAction()
+    {
+        CurrentState.OnAction();
     }
 }
