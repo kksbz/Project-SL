@@ -9,6 +9,7 @@ public class CombatController : MonoBehaviour
     private PlayerCharacter playerCharacter;
     private PlayerController playerController;
     private CharacterControlProperty controlProperty;
+    private AnimationEventDispatcher _animEventDispatcher;
 
     // Attack 임시
     public LayerMask EnemyMask;
@@ -19,16 +20,18 @@ public class CombatController : MonoBehaviour
     private float lastComboEnd;
     private int comboCounter = 0;
 
-    public bool canAttack = true;
-    private bool canNextCombo = default;
-    private bool isExecuteImmediateNextCombo = default;
-    private bool isAttacking = false;
+    public bool _canAttack = true;
+    private bool _canNextCombo = default;
+    private bool _isExecuteImmediateNextCombo = default;
+    private bool _isAttacking = false;
     private bool isComboInputOn = default;
-    private int currentCombo = 0;
-    private int maxCombo = default;
+    private int _currentCombo = 0;
+    private int _maxCombo = default;
+
+    public bool IsAttacking { get { return _isAttacking; } }
 
     [SerializeField]
-    private Animator animator;
+    private Animator _animator;
 
     public PoseAction nextAttack;
 
@@ -42,25 +45,30 @@ public class CombatController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _animEventDispatcher = _animator.gameObject.GetComponent<AnimationEventDispatcher>();
         controlProperty = playerController.controlProperty;
-        maxCombo = combo.Count;
+        _maxCombo = combo.Count;
 
+        // 함수 바인딩
+        _animEventDispatcher.onAnimationEnd.AddListener(InitializeAttackProperty);
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Input.GetButtonDown("Fire1"))
         {
             Attack();
         }
         NextAttackCheck();
         ExitAttack();
+        */
     }
-    void Attack()
+    public void Attack()
     {
         // 공격 가능한지
-        if (!canAttack)
+        if (!_canAttack)
             return;
 
         AttackLogic();
@@ -68,11 +76,11 @@ public class CombatController : MonoBehaviour
     void AttackLogic()
     {
         // 연속공격 체크 (콤보)
-        if (isAttacking)
+        if (_isAttacking)
         {
-            if(currentCombo < 1 || currentCombo >= maxCombo)
+            if(_currentCombo < 1 || _currentCombo >= _maxCombo)
                 return;
-            if(canNextCombo)
+            if(_canNextCombo)
             {
                 isComboInputOn = true;
             }
@@ -80,33 +88,33 @@ public class CombatController : MonoBehaviour
         // 첫 공격 체크
         else
         {
-            if (currentCombo != 0)
+            if (_currentCombo != 0)
                 return;
             AttackStartComboState();
             AttackAnimationPlay();
-            isAttacking = true;
+            _isAttacking = true;
             controlProperty.isAttacking = true;
         }
     }
     void AttackStartComboState()
     {
-        canNextCombo = false;
+        _canNextCombo = false;
         isComboInputOn = false;
-        isExecuteImmediateNextCombo = false;
+        _isExecuteImmediateNextCombo = false;
 
-        if (!CheckComboAssert(currentCombo, 0, maxCombo))
+        if (!CheckComboAssert(_currentCombo, 0, _maxCombo))
         {
             return;
         }
-        currentCombo = Mathf.Clamp(currentCombo + 1, 1, maxCombo);
-        Debug.Log($"currentCombo = {currentCombo}");
+        _currentCombo = Mathf.Clamp(_currentCombo + 1, 1, _maxCombo);
+        Debug.Log($"currentCombo = {_currentCombo}");
     }
     void AttackEndComboState()
     {
-        canNextCombo = false;
-        isExecuteImmediateNextCombo = false;
-        currentCombo = 0;
-        isAttacking = false;
+        _canNextCombo = false;
+        _isExecuteImmediateNextCombo = false;
+        _currentCombo = 0;
+        _isAttacking = false;
         controlProperty.isAttacking = false;
     }
     bool CheckComboAssert(int current, int start, int max)
@@ -118,20 +126,16 @@ public class CombatController : MonoBehaviour
             isValid = false;
         return isValid;
     }
-    void ExitAttack()
+    public void ExitAttack()
     {
-        if(animator.GetCurrentAnimatorStateInfo(AnimationController.LAYERINDEX_FULLLAYER).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(AnimationController.LAYERINDEX_FULLLAYER).IsTag("Attack"))
-        {
-            AttackEndComboState();
-            playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.IDLE);
-        }
+        AttackEndComboState();
     }
     void AttackAnimationPlay()
     {
-        PoseAction poseAction = new PoseAction(animator, "Attack", AnimationController.LAYERINDEX_FULLLAYER, 0, combo[currentCombo - 1].animatorOV);
+        PoseAction poseAction = new PoseAction(_animator, "Attack", AnimationController.LAYERINDEX_FULLLAYER, 0, combo[_currentCombo - 1].animatorOV);
         nextAttack = poseAction;
-        playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
-        // poseAction.Execute();
+        // playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
+        poseAction.Execute();
     }
     void BindingComboAttackEvent()
     {
@@ -154,19 +158,19 @@ public class CombatController : MonoBehaviour
     // 애니메이션 이벤트
     public void Event_SetCanNextCombo()
     {
-        canNextCombo = true;
+        _canNextCombo = true;
     }
     public void Event_SetCantNextCombo()
     {
-        canNextCombo = false;
+        _canNextCombo = false;
     }
     public void Event_SetOnExecuteNextCombo()
     {
-        isExecuteImmediateNextCombo= true;
+        _isExecuteImmediateNextCombo= true;
     }
     public void Event_SetOffExecuteNextCombo()
     {
-        isExecuteImmediateNextCombo = false;
+        _isExecuteImmediateNextCombo = false;
     }
     public void NextAttackCheck()
     {
@@ -174,7 +178,7 @@ public class CombatController : MonoBehaviour
         {
             return;
         }
-        if(!isExecuteImmediateNextCombo)
+        if(!_isExecuteImmediateNextCombo)
         {
             return;
         }
@@ -191,5 +195,10 @@ public class CombatController : MonoBehaviour
             Debug.LogWarning($"{hitResult.gameObject.name} 맞았음");
 
         }
+    }
+    public void InitializeAttackProperty(string name)
+    {
+        Debug.Log("InitializeAttackProperty");
+        ExitAttack();
     }
 }

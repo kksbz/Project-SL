@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightArmAttack",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "ef9f9e2d-6ac1-497d-a193-b98a253a6e78",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeftArmGuard",
+                    "name": "Guard",
                     "type": "Button",
                     "id": "bff61e09-510c-48fc-ad3b-6eeb9d643ced",
                     "expectedControlType": "Button",
@@ -200,7 +200,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "RightArmAttack",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -211,7 +211,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "LeftArmGuard",
+                    "action": "Guard",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

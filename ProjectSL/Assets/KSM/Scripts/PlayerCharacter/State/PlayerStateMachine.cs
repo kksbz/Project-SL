@@ -9,6 +9,7 @@ public class PlayerStateMachine : MonoBehaviour
     CharacterController _characterController;
     Animator _animator;
     PlayerInput _playerInput;
+    [SerializeField]
     Transform _characterBody;
 
     // 플레이어 컴포넌트
@@ -29,9 +30,14 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isMovementPressed;
     bool _isRunPressed;
     bool _isWalkPressed;
+    bool _isRollPressed;
 
     // 상수
     int _zero = 0;
+
+    // 공격 입력
+    bool _isAttackPressed;
+    bool _isGuardPressed;
 
     // State Var
     PlayerBaseState _currentState;
@@ -44,11 +50,15 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public AnimationController AnimationController { get { return _animationController; } }
+    public CombatController CombatController { get { return _combatController; } }
     public Animator CharacterAnimator { get { return _animator; } }
     public CharacterControlProperty ControlProperty { get { return _controlProperty; } }
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsWalkPressed { get { return _isWalkPressed; } }
     public bool IsRunPressed { get { return _isRunPressed; } }
+    public bool IsAttackPressed {  get { return _isAttackPressed; } }
+    public bool IsGuardPressed { get { return _isGuardPressed; } }
+    public bool IsRollPressed { get { return _isRollPressed; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -85,10 +95,16 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.Move.started      += OnMovementInput;
         _playerInput.PlayerCharacterInput.Move.canceled     += OnMovementInput;
         _playerInput.PlayerCharacterInput.Move.performed    += OnMovementInput;
-        _playerInput.PlayerCharacterInput.Walk.started  += OnWalk;
-        _playerInput.PlayerCharacterInput.Walk.canceled += OnWalk;
-        _playerInput.PlayerCharacterInput.Run.started   += OnRun;
-        _playerInput.PlayerCharacterInput.Run.canceled  += OnRun;
+        _playerInput.PlayerCharacterInput.Walk.started  += OnWalkInput;
+        _playerInput.PlayerCharacterInput.Walk.canceled += OnWalkInput;
+        _playerInput.PlayerCharacterInput.Run.started   += OnRunInput;
+        _playerInput.PlayerCharacterInput.Run.canceled  += OnRunInput;
+        _playerInput.PlayerCharacterInput.Attack.started += OnAttackInput;
+        _playerInput.PlayerCharacterInput.Attack.canceled+= OnAttackInput;
+        _playerInput.PlayerCharacterInput.Guard.started += OnGuardInput;
+        _playerInput.PlayerCharacterInput.Guard.canceled+= OnGuardInput;
+        _playerInput.PlayerCharacterInput.Roll.started += OnRollInput;
+        _playerInput.PlayerCharacterInput.Roll.canceled += OnRollInput;
         Debug.Log("Player State Machine : 인풋 바인딩");
 
     }
@@ -114,6 +130,8 @@ public class PlayerStateMachine : MonoBehaviour
 
         _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
         _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
+        if (!_isMovementPressed)
+            return;
         Transform cameraArm = _cameraController.cameraArm;
         Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
         Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
@@ -121,11 +139,12 @@ public class PlayerStateMachine : MonoBehaviour
         _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
 
         // 캐릭터 회전 * 임시일수도 있음
+        
         if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed)
             _characterBody.forward = _currentMovement;
         else if (_cameraController.CameraState == ECameraState.LOCKON)
             _characterBody.forward = _cameraController.cameraArm.forward;
-
+        
         _appliedMovement = _currentMovement;
     }
 
@@ -135,25 +154,25 @@ public class PlayerStateMachine : MonoBehaviour
         _currentMovementInput = context.ReadValue<Vector2>();
         _isMovementPressed = _currentMovementInput.x != _zero || _currentMovementInput.y != _zero;
     }
-    void OnRun(InputAction.CallbackContext context)
+    void OnRunInput(InputAction.CallbackContext context)
     {
         _isRunPressed = context.ReadValueAsButton();
     }
-    void OnWalk(InputAction.CallbackContext context)
+    void OnWalkInput(InputAction.CallbackContext context)
     {
         _isWalkPressed = context.ReadValueAsButton();
     }
-    void OnRightArmAction(InputAction.CallbackContext context)
+    void OnAttackInput(InputAction.CallbackContext context)
     {
-
+        _isAttackPressed = context.ReadValueAsButton();
     }
-    void OnLeftArmAction(InputAction.CallbackContext context)
+    void OnGuardInput(InputAction.CallbackContext context)
     {
-
+        _isGuardPressed = context.ReadValueAsButton();
     }
-    void OnRoll(InputAction.CallbackContext context)
+    void OnRollInput(InputAction.CallbackContext context)
     {
-
+        _isRollPressed = context.ReadValueAsButton();
     }
     private void OnEnable()
     {

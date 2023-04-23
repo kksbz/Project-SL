@@ -32,6 +32,14 @@ public class PlayerStateFactory : MonoBehaviour
     {
         return new PlayerAttackState(_context, this);
     }
+    public PlayerBaseState Guard()
+    {
+        return new PlayerGuardState(_context, this);
+    }
+    public PlayerBaseState Roll()
+    {
+        return new PlayerRollState(_context, this);
+    }
     public PlayerBaseState Grounded()
     {
         return new PlayerGroundedState(_context, this);

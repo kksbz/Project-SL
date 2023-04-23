@@ -15,7 +15,6 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        
         CheckSwitchStates();
     }
     public override void FixedUpdateState()
@@ -28,7 +27,10 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-
+        if (Ctx.IsAttackPressed)
+        {
+            SwitchState(Factory.Attack());
+        }
     }
     public override void InitializeSubState()
     {
