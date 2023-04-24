@@ -55,6 +55,11 @@ public class Boss_None_State : IState
             }
         }
     }
+
+    public void OnAction()
+    {
+
+    }
 }
 
 
@@ -79,6 +84,10 @@ public class Boss_Intro_State : IState
 
     public void Update()
     {
+    }
+    public void OnAction()
+    {
+
     }
 }
 
@@ -111,8 +120,139 @@ public class Boss_Idle_State : IState
     {
         if (_boss.IsFieldOfViewFind())
         {
-            _boss.SetState(new Boss_Confrontation_State(_boss));
+            Transform target_ = default;
+            float distance_ = float.MaxValue;
+
+            if (1 < _boss.ChaseTargets.Count)
+            {
+                foreach (var element in _boss.ChaseTargets)
+                {
+                    float newDistance_ = Vector3.Distance(_boss.transform.position, element.position);
+                    if (newDistance_ < distance_)
+                    {
+                        distance_ = newDistance_;
+                        target_ = element;
+                    }
+                }
+            }
+            else
+            {
+                target_ = _boss.ChaseTargets[0];
+            }
+
+            Debug.Log($"target : {target_.name}");
+            _boss.TargetFollow(target_, false);
+
+            _boss.SetState(new Boss_Thought_State(_boss));
         }
+    }
+    public void OnAction()
+    {
+
+    }
+}
+
+/// <summary>
+/// 생각 상태 상황에 따른 동작을 판단할 로직을 작성
+/// </summary>
+public class Boss_Thought_State : IState
+{
+    private BossBase _boss;
+    public Boss_Thought_State(BossBase newBoss)
+    {
+        _boss = newBoss;
+    }
+    public void OnEnter()
+    {
+        _boss.SetStop(true);
+
+        _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
+
+        _boss.StartCoroutine(StateChangedDelay(0.1f));
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void Update()
+    {
+        //  플레이어를 바라보는 동작을 수행할 예정 후에 Lerp를 사용해서 회전을 구현할 예정
+        _boss.transform.LookAt(_boss.MoveController.Target);
+    }
+    public void OnAction()
+    {
+    }
+
+    IEnumerator StateChangedDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        IState newState_ = _boss.Thought();
+
+        if (newState_ == null || newState_ == default)
+        {
+            yield break;
+        }
+
+        _boss.SetState(newState_);
+    }
+}
+
+/// <summary>
+/// 추적 상태 플레이어를 추적함
+/// </summary>
+public class Boss_Chase_State : IState
+{
+    private BossBase _boss;
+    private float _distance = float.MaxValue;
+    private Transform _target = default;
+    public Boss_Chase_State(BossBase newBoss)
+    {
+        _boss = newBoss;
+    }
+    public void OnEnter()
+    {
+        _boss.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+
+        _boss.SetStop(false);
+
+        if (1 < _boss.ChaseTargets.Count)
+        {
+            foreach (var element in _boss.ChaseTargets)
+            {
+                float distance_ = Vector3.Distance(_boss.transform.position, element.position);
+                if (distance_ < _distance)
+                {
+                    _distance = distance_;
+                    _target = element;
+                }
+            }
+        }
+        else
+        {
+            _target = _boss.ChaseTargets[0];
+        }
+
+        _boss.TargetFollow(_target);
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void Update()
+    {
+        _boss.TargetFollow(_target);
+
+        //  플레이어가 공격 범위 내에 들어왔다면 상태 전환
+        if (_boss.IsRangedChecked(_boss.Status.attackRange))
+        {
+            _boss.SetState(new Boss_Thought_State(_boss));
+        }
+    }
+
+    public void OnAction()
+    {
     }
 }
 
@@ -130,7 +270,7 @@ public class Boss_Confrontation_State : IState
     }
     public void OnEnter()
     {
-        _boss.SetTrigger(EnemyDefineData.TRIGGET_MOVE);
+        _boss.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
 
         if (1 < _boss.ChaseTargets.Count)
         {
@@ -170,7 +310,13 @@ public class Boss_Confrontation_State : IState
             _boss.SetState(new Boss_Attack_State(_boss));
         }
     }
+    public void OnAction()
+    {
+
+    }
 }
+
+
 
 /// <summary>
 /// 공격 상태 일정 확률로 정해진 공격 패턴을 수행 시킬 예정
@@ -185,6 +331,7 @@ public class Boss_Attack_State : IState
     public void OnEnter()
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
+        _boss.SetTrigger("Swing1");
     }
 
     public void OnExit()
@@ -198,10 +345,14 @@ public class Boss_Attack_State : IState
             _boss.SetState(new Boss_Idle_State(_boss));
         }
     }
+    public void OnAction()
+    {
+
+    }
 }
 
 /// <summary>
-/// 그로기 상태 우선 상태 제작 후 구현은 미정
+/// 그로기 상태 구현은 미정
 /// </summary>
 public class Boss_Groggy_State : IState
 {
@@ -220,6 +371,10 @@ public class Boss_Groggy_State : IState
 
     public void Update()
     {
+    }
+    public void OnAction()
+    {
+
     }
 }
 
@@ -243,5 +398,9 @@ public class Boss_Die_State : IState
 
     public void Update()
     {
+    }
+    public void OnAction()
+    {
+
     }
 }

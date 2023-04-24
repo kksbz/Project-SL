@@ -12,18 +12,23 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     protected EnemyResearchStatus researchStatus = default;
     protected IStateMachine stateMachine = default;
     protected IEnemyMoveController moveController = default;
-    protected IEnemyAnimator animator = default;
+    protected IEnemyAnimator enemyAnimator = default;
     protected IEnemyTargetResearch targetResearch = default;
+
+    [Tooltip("공격시 활성화 될 공격 범위 콜라이더")]
+    [SerializeField]
+    protected Collider attackCollider = default;
 
     #region Property
     public EnemyStatus Status { get { return status; } protected set { status = value; } }
     public EnemyResearchStatus ResearchStatus { get { return researchStatus; } protected set { researchStatus = value; } }
     public IStateMachine StateMachine { get { return stateMachine; } protected set { stateMachine = value; } }
     public IEnemyMoveController MoveController { get { return moveController; } protected set { moveController = value; } }
-    public IEnemyAnimator Animator { get { return animator; } protected set { animator = value; } }
+    public IEnemyAnimator EnemyAnimator { get { return enemyAnimator; } protected set { enemyAnimator = value; } }
     public IEnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
-    public Queue<Transform> PatrolTargets { get { return MoveController.Targets; } }
+    public List<Transform> PatrolTargets { get { return MoveController.Targets; } }
     public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
+    public Collider AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
     #endregion
 
     protected void Start()
@@ -38,12 +43,12 @@ public class EnemyBase : CharacterBase, GData.IDamageable
 
         TryGetComponent<IEnemyMoveController>(out moveController);
         TryGetComponent<IEnemyTargetResearch>(out targetResearch);
-        TryGetComponent<IEnemyAnimator>(out animator);
+        TryGetComponent<IEnemyAnimator>(out enemyAnimator);
 
         MoveController.Init();
         SetSpeed(Status.currentMoveSpeed);
 
-        animator.Init();
+        EnemyAnimator.Init();
 
         TargetResearch.Init(ResearchStatus, new FieldOfView(transform, ResearchStatus));
 
@@ -59,7 +64,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
         StateMachine.Update();
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (Status.currentHp - damage <= 0)
         {
@@ -73,34 +78,82 @@ public class EnemyBase : CharacterBase, GData.IDamageable
         }
     }
 
+    public virtual IState Thought(Transform newTarget)
+    {
+        return null;
+    }
+
+    public virtual IState Thought()
+    {
+        return null;
+    }
+
+    #region AttackCollider
+    public void SetAttackColliderEnabled(bool newEnabled)
+    {
+        AttackCollider.enabled = newEnabled;
+    }
+    public void NotAttackCOlliderEnabled()
+    {
+        AttackCollider.enabled = !AttackCollider.enabled;
+    }
+    #endregion
+
 
     #region StateMachine
+    public IState CurrentState { get { return StateMachine.CurrentState; } }
+    public IState PreviousState { get { return StateMachine.PreviousState; } }
     public void SetState(IState newState)
     {
         StateMachine.SetState(newState);
     }
+    public void OnAction()
+    {
+        StateMachine.OnAction();
+    }
     #endregion
 
     #region IEnemyMoveController
+    public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
     public void SetSpeed(float newSpeed)
     {
-        moveController.SetSpeed(newSpeed);
+        MoveController.SetSpeed(newSpeed);
+    }
+    public void SetStop(bool isStopped)
+    {
+        MoveController.SetStop(isStopped);
     }
     public void Patrol()
     {
-        moveController.Patrol();
+        MoveController.Patrol();
     }
     public void TargetFollow(Transform newTarget)
     {
-        moveController.TargetFollow(newTarget);
+        MoveController.TargetFollow(newTarget);
+    }
+    public void TargetFollow(Transform newTarget, bool isFollow)
+    {
+        MoveController.TargetFollow(newTarget, isFollow);
+    }
+    public void Warp()
+    {
+        MoveController.Warp();
     }
     public bool IsArrive(float distance)
     {
-        return moveController.IsArrive(distance);
+        return MoveController.IsArrive(distance);
     }
     public bool IsMissed(float distance)
     {
-        return moveController.IsMissed(distance);
+        return MoveController.IsMissed(distance);
+    }
+    public bool IsNavMeshRangeChecked(float ranged)
+    {
+        return MoveController.IsNavMeshRangeChecked(ranged);
+    }
+    public bool IsRangedChecked(float ranged)
+    {
+        return MoveController.IsRangeChecked(ranged);
     }
     #endregion
 
@@ -116,22 +169,30 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     #endregion
 
     #region IEnemyAnimator
-    public AnimatorStateInfo CurrentStateInfo { get { return Animator.CurrentStateInfo; } }
+    public AnimatorStateInfo CurrentStateInfo { get { return EnemyAnimator.CurrentStateInfo; } }
     public void SetTrigger(string parameter)
     {
-        Animator.SetTrigger(parameter);
+        EnemyAnimator.SetTrigger(parameter);
     }
     public void SetBool(string parameter, bool value)
     {
-        Animator.SetBool(parameter, value);
+        EnemyAnimator.SetBool(parameter, value);
     }
     public void SetFloat(string parameter, float value)
     {
-        Animator.SetFloat(parameter, value);
+        EnemyAnimator.SetFloat(parameter, value);
     }
     public void SetInt(string parameter, int value)
     {
-        Animator.SetInt(parameter, value);
+        EnemyAnimator.SetInt(parameter, value);
+    }
+    public bool IsAnimationEnd()
+    {
+        return EnemyAnimator.IsAnimationEnd();
+    }
+    public bool IsAnimationEnd(string animationName)
+    {
+        return EnemyAnimator.IsAnimationEnd(animationName);
     }
     #endregion
 }

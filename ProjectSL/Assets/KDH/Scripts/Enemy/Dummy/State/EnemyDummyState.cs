@@ -27,6 +27,10 @@ public class Enemy_Dummy_Idle_State : IState
             enemy.SetState(new Enemy_Dummy_Patrol_State(enemy));
         }
     }
+    public void OnAction()
+    {
+
+    }
 }
 
 public class Enemy_Dummy_Patrol_State : IState
@@ -62,6 +66,10 @@ public class Enemy_Dummy_Patrol_State : IState
             enemy.SetState(new Enemy_Dummy_Chase_State(enemy));
             Debug.Log($"적 찾음");
         }
+    }
+    public void OnAction()
+    {
+
     }
 }
 
@@ -113,6 +121,10 @@ public class Enemy_Dummy_Chase_State : IState
             enemy.SetState(new Enemy_Dummy_Attack_State(enemy));
         }
     }
+    public void OnAction()
+    {
+
+    }
 }
 
 public class Enemy_Dummy_Attack_State : IState
@@ -133,5 +145,9 @@ public class Enemy_Dummy_Attack_State : IState
 
     public void Update()
     {
+    }
+    public void OnAction()
+    {
+
     }
 }

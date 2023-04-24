@@ -35,6 +35,11 @@ public class Enemy_Idle_State : IState
             enemy.SetState(new Enemy_Patrol_State(enemy));
         }
     }
+
+    public void OnAction()
+    {
+
+    }
 }
 
 public class Enemy_Patrol_State : IState
@@ -71,6 +76,10 @@ public class Enemy_Patrol_State : IState
             enemy.SetState(new Enemy_Chase_State(enemy));
             Debug.Log($"적 찾음");
         }
+    }
+    public void OnAction()
+    {
+
     }
 }
 
@@ -122,6 +131,10 @@ public class Enemy_Chase_State : IState
             enemy.SetState(new Enemy_Attack_State(enemy));
         }
     }
+    public void OnAction()
+    {
+
+    }
 }
 
 public class Enemy_Attack_State : IState
@@ -158,6 +171,10 @@ public class Enemy_Attack_State : IState
             }
         }
     }
+    public void OnAction()
+    {
+
+    }
 }
 
 public class Enemy_Hit_State : IState
@@ -179,6 +196,10 @@ public class Enemy_Hit_State : IState
     public void Update()
     {
     }
+    public void OnAction()
+    {
+
+    }
 }
 
 public class Enemy_Die_State : IState
@@ -199,6 +220,10 @@ public class Enemy_Die_State : IState
 
     public void Update()
     {
+    }
+    public void OnAction()
+    {
+
     }
 }
 
