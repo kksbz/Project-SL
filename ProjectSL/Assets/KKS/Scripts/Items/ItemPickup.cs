@@ -5,6 +5,20 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     public Item item;
+    private bool isEnterPlayer = false;
+
+    private void Update()
+    {
+        if (isEnterPlayer == true)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Pickup();
+                UiManager.Instance.interactionBar.SetActive(false);
+                UiManager.Instance.interactionText.text = null;
+            }
+        }
+    } // Update
 
     private void Pickup()
     {
@@ -16,30 +30,19 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.tag == GData.PLAYER_MARK)
         {
-            UiManager.Instance.InteractionBar.SetActive(true);
-            UiManager.Instance.InteractionText.text = "æ∆¿Ã≈€ »πµÊ : E ≈∞";
+            UiManager.Instance.interactionText.text = "æ∆¿Ã≈€ »πµÊ : E ≈∞";
+            UiManager.Instance.interactionBar.SetActive(true);
+            isEnterPlayer = true;
         }
     } // OnTriggerEnter
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == GData.PLAYER_MARK)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Pickup();
-                UiManager.Instance.InteractionBar.SetActive(false);
-                UiManager.Instance.InteractionText.text = null;
-            }
-        }
-    } // OnTriggerStay
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == GData.PLAYER_MARK)
         {
-            UiManager.Instance.InteractionBar.SetActive(false);
-            UiManager.Instance.InteractionText.text = null;
+            UiManager.Instance.interactionBar.SetActive(false);
+            UiManager.Instance.interactionText.text = null;
+            isEnterPlayer = false;
         }
     } // OnTriggerExit
 } // ItemPickup

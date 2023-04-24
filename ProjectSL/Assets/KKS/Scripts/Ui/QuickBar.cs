@@ -25,7 +25,6 @@ public class QuickBar : MonoBehaviour
             Debug.Log("통합 인벤 선택함");
             inventory.SetActive(true);
             Inventory.Instance.equipSlotPanel.SetActive(false);
-            Inventory.Instance.InitSameTypeTotalSlot(ItemData.ItemType.CONSUMPTION);
             Inventory.Instance.totalInvenPanel.SetActive(true);
             gameObject.SetActive(false);
         });

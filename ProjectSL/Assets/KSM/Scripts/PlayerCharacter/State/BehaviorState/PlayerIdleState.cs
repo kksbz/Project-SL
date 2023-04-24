@@ -28,7 +28,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
         {
-            Debug.Log("Switch Jog State");
+            //Debug.Log("Switch Jog State");
             SwitchState(Factory.Jog());
         }
         else if(Ctx.IsMovementPressed && Ctx.IsRunPressed)

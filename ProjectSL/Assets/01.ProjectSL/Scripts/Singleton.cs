@@ -24,6 +24,12 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (transform.parent != null && transform.root != null)
         {
             DontDestroyOnLoad(this.transform.root.gameObject);

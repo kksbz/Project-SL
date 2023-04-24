@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static ItemData;
@@ -16,7 +15,7 @@ public class ItemTypeController : MonoBehaviour
     private List<string> typeNameToKr = new List<string>(); // 아이템타입 한글로 변환한 리스트
     private Dictionary<ItemType, string> typeDic = new Dictionary<ItemType, string>(); // 딕셔너리로 저장
     private int num = 0;
-
+    public ItemType selectType; // 선택한 아이템타입
     // Start is called before the first frame update
     void Awake()
     {
@@ -31,6 +30,7 @@ public class ItemTypeController : MonoBehaviour
             Debug.Log($"오른쪽 버튼 클릭 : {num}, {typeDic[typeList[num]]}, {typeList[num]}");
             typeText.text = typeDic[typeList[num]];
             Inventory.Instance.InitSameTypeTotalSlot(typeList[num]);
+            selectType = typeList[num];
         });
 
         leftBt.onClick.AddListener(() =>
@@ -43,6 +43,7 @@ public class ItemTypeController : MonoBehaviour
             Debug.Log($"왼쪽 버튼 클릭 : {num}, {typeDic[typeList[num]]}, {typeList[num]}");
             typeText.text = typeDic[typeList[num]];
             Inventory.Instance.InitSameTypeTotalSlot(typeList[num]);
+            selectType = typeList[num];
         });
     } // Start
 

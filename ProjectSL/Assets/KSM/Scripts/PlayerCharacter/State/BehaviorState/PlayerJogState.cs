@@ -22,10 +22,10 @@ public class PlayerJogState : PlayerBaseState
     }
     public override void FixedUpdateState()
     {
-        Debug.Log("JogState FixedUpdateState()");
+        //Debug.Log("JogState FixedUpdateState()");
         if(Ctx.NextBehavior != null)
         {
-            Debug.Log("JogState FixedUpdateState context nextBehavior.Execute()");
+            //Debug.Log("JogState FixedUpdateState context nextBehavior.Execute()");
             Ctx.NextBehavior.Execute();
         }
     }

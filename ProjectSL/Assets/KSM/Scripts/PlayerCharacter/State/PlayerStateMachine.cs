@@ -72,14 +72,14 @@ public class PlayerStateMachine : MonoBehaviour
 
         _controlProperty = _playerController.controlProperty;
 
-        Debug.Log("Player State Machine : 컴포넌트 초기화");
+        //Debug.Log("Player State Machine : 컴포넌트 초기화");
 
         // 스테이트 초기화
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
 
-        Debug.Log("Player State Machine : 스테이트 초기화");
+        //Debug.Log("Player State Machine : 스테이트 초기화");
 
         // 플레이어 입력 콜백 설정
         _playerInput.PlayerCharacterInput.Move.started      += OnMovementInput;
@@ -89,7 +89,7 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.Walk.canceled += OnWalk;
         _playerInput.PlayerCharacterInput.Run.started   += OnRun;
         _playerInput.PlayerCharacterInput.Run.canceled  += OnRun;
-        Debug.Log("Player State Machine : 인풋 바인딩");
+        //Debug.Log("Player State Machine : 인풋 바인딩");
 
     }
     // Start is called before the first frame update

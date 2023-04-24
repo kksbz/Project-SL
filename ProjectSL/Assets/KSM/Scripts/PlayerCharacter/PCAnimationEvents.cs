@@ -32,7 +32,7 @@ public class PCAnimationEvents : MonoBehaviour
     }
     public void OnPCRepositioning()
     {
-        Debug.Log("Player Character Repositioning");
+        //Debug.Log("Player Character Repositioning");
         playerObjTR.position = meshObjTR.position;
         meshObjTR.localPosition = Vector3.zero;
     }

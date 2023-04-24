@@ -18,9 +18,9 @@ public class PC_BState_Attack : BehaviorStateBase
     public override void OnEnterState()
     {
         
-        Debug.Log("Enter Attack State");
+        //Debug.Log("Enter Attack State");
         animator.applyRootMotion = true;
-        Debug.Log($"applyRootMotion : {animator.applyRootMotion}");
+        //Debug.Log($"applyRootMotion : {animator.applyRootMotion}");
         nextAction = combatController.nextAttack;
         nextAction.Execute();
         /* Do Nothing */
@@ -28,7 +28,7 @@ public class PC_BState_Attack : BehaviorStateBase
     public override void OnExitState()
     {
         animator.applyRootMotion = false;
-        Debug.Log("Exit Attack State");
+        //Debug.Log("Exit Attack State");
         /* Do Nothing */
     }
     public override void OnUpdateState()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 
 public class DataManager : Singleton<DataManager>
 {
@@ -13,6 +14,7 @@ public class DataManager : Singleton<DataManager>
     private string wSlot = "무기슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string aSlot = "방어구슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string cSlot = "소모품슬롯"; // json 데이터 파싱할 때 슬롯 구분자
+    private string bonfire = "화톳불리스트"; // json 데이터 파싱할 때 슬롯 구분자
     public override void InitManager()
     {
         StartCoroutine(GoogleSheetManager.InitData());
@@ -33,6 +35,7 @@ public class DataManager : Singleton<DataManager>
         string saveData = null;
         saveData = SaveInventoryData();
         saveData += SaveEquipSlotData();
+        saveData += SaveBonfireList();
         Debug.Log(saveData);
         File.WriteAllText(path + slotNum.ToString(), saveData);
     } // SaveData
@@ -112,9 +115,25 @@ public class DataManager : Singleton<DataManager>
         return SaveEquipSlotData;
     } // SaveEquipSlotData
 
+    //! 화톳불 리스트 저장하는 함수
+    private string SaveBonfireList()
+    {
+        string bonfireData = bonfire + "\n";
+        foreach (BonfireData bonfire in UiManager.Instance.warp.bonfireList)
+        {
+            bonfireData += JsonUtility.ToJson(bonfire) + "\n";
+        }
+        return bonfireData;
+    } // SaveBonfireList
+
     //! 세이브데이터 로드하는 함수
     public void LoadData()
     {
+        // 데이터 로드전 인벤토리 초기화
+        for (int i = 0; i < Inventory.Instance.inventory.Count; i++)
+        {
+            Inventory.Instance.inventory[i] = null;
+        }
         List<string> newItemDatas = new List<string>();
         // 저장된 Json파일을 불러옴
         string data = File.ReadAllText(path + slotNum.ToString());
@@ -196,6 +215,11 @@ public class DataManager : Singleton<DataManager>
         // 소모품 장착 슬롯 데이터 로드
         for (int i = number; i < itemDatas.Length - 1; i++)
         {
+            if (itemDatas[i] == bonfire)
+            {
+                number = i + 1;
+                break;
+            }
             string[] cSlotData = itemDatas[i].Split("번");
             //Debug.Log($"{cSlotData.Length} 인덱스 : {cSlotData[0]} 아이템 : {cSlotData[1]}");
             int cSlotIndex = int.Parse(cSlotData[0]);
@@ -211,5 +235,18 @@ public class DataManager : Singleton<DataManager>
                 }
             }
         }
+
+        //! 화톳불 리스트 데이터 로드
+        for (int i = number; i < itemDatas.Length - 1; i++)
+        {
+            BonfireData bonfire = JsonUtility.FromJson<BonfireData>(itemDatas[i]);
+            // bonfireList에 불러온 화톳불데이터의 이름과 동일한 이름이 존재하지 않는 경우에만 add 및 slot생성
+            if (!UiManager.Instance.warp.bonfireList.Any(b => b.bonfireName == bonfire.bonfireName))
+            {
+                UiManager.Instance.warp.bonfireList.Add(bonfire);
+                UiManager.Instance.warp.CreateWarpSlot(bonfire);
+            }
+        }
+        Debug.Log("저장된 데이터 로드 완료!");
     } // LoadData
 } // DataManager

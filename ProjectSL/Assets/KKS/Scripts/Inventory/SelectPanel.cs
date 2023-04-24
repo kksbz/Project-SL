@@ -16,7 +16,9 @@ public class SelectPanel : MonoBehaviour
     [SerializeField] private Image destroyBtImage;
     [SerializeField] private TMP_Text destroyBtText;
     [SerializeField] private Button cancelBt; // 취소 버튼
+    [SerializeField] private ItemTypeController itemTypeController; // 통합인벤 아이템타입 컨트롤러
     private Slot slot; // 선택한 슬롯
+
     void Awake()
     {
         useBt.onClick.AddListener(() =>
@@ -38,6 +40,7 @@ public class SelectPanel : MonoBehaviour
                 return;
             }
             Inventory.Instance.ThrowItem(slot.Item);
+            Inventory.Instance.InitSameTypeTotalSlot(itemTypeController.selectType);
             gameObject.SetActive(false);
         });
 
@@ -49,7 +52,7 @@ public class SelectPanel : MonoBehaviour
                 return;
             }
             Inventory.Instance.RemoveItem(slot.Item);
-            Inventory.Instance.InitSameTypeTotalSlot(slot.Item.itemType);
+            Inventory.Instance.InitSameTypeTotalSlot(itemTypeController.selectType);
             gameObject.SetActive(false);
         });
 

@@ -13,12 +13,12 @@ public class PC_BState_Idle : BehaviorStateBase
     }
     public override void OnEnterState()
     {
-        Debug.Log("Enter Idle State");
+        //Debug.Log("Enter Idle State");
         /* Do Nothing */ 
     }
     public override void OnExitState()
     {
-        Debug.Log("Exit Idle State");
+        //Debug.Log("Exit Idle State");
         /* Do Nothing */
     }
     public override void OnUpdateState()

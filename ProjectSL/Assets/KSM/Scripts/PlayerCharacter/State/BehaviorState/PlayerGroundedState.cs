@@ -11,7 +11,7 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void EnterState()
     {
-        Debug.Log("Enter Grounded State");
+        //Debug.Log("Enter Grounded State");
     }
     public override void UpdateState()
     {
@@ -24,7 +24,7 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void ExitState()
     {
-        Debug.Log("Exit Grounded State");
+        //Debug.Log("Exit Grounded State");
     }
     public override void CheckSwitchStates()
     {
@@ -34,22 +34,22 @@ public class PlayerGroundedState : PlayerBaseState
     {
         if(!Ctx.IsMovementPressed && !Ctx.IsRunPressed)
         {
-            Debug.Log("GroundedState SetSubState Idle");
+            //Debug.Log("GroundedState SetSubState Idle");
             SetSubState(Factory.Idle());
         }
         else if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
         {
-            Debug.Log("GroundedState SetSubState Jog");
+            //Debug.Log("GroundedState SetSubState Jog");
             SetSubState(Factory.Jog());
         }
         else if(Ctx.IsMovementPressed && Ctx.IsRunPressed)
         {
-            Debug.Log("GroundedState SetSubState Run");
+            //Debug.Log("GroundedState SetSubState Run");
             SetSubState(Factory.Run());
         }
         else if(Ctx.IsMovementPressed && Ctx.IsWalkPressed)
         {
-            Debug.Log("GroundedState SetSubState Walk");
+            //Debug.Log("GroundedState SetSubState Walk");
             SetSubState(Factory.Walk());
         }
     }

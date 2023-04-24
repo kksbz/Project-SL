@@ -15,7 +15,7 @@ public class AnimationEventDispatcher : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        Debug.Log($"{animator.runtimeAnimatorController.animationClips.Length} animation clips.");
+        //Debug.Log($"{animator.runtimeAnimatorController.animationClips.Length} animation clips.");
         for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; i++)
         {
             AnimationClip clip = animator.runtimeAnimatorController.animationClips[i];
@@ -45,12 +45,12 @@ public class AnimationEventDispatcher : MonoBehaviour
 
     public void AnimationStartHandler(string name)
     {
-        Debug.Log($"{name} animation start.");
+        //Debug.Log($"{name} animation start.");
         onAnimationStart?.Invoke(name);
     }
     public void AnimationEndHandler(string name)
     {
-        Debug.Log($"{name} animation end");
+        //Debug.Log($"{name} animation end");
         onAnimationEnd?.Invoke(name);
     }
 }

@@ -99,7 +99,7 @@ public class CombatController : MonoBehaviour
             return;
         }
         currentCombo = Mathf.Clamp(currentCombo + 1, 1, maxCombo);
-        Debug.Log($"currentCombo = {currentCombo}");
+        //Debug.Log($"currentCombo = {currentCombo}");
     }
     void AttackEndComboState()
     {
@@ -183,7 +183,7 @@ public class CombatController : MonoBehaviour
     }
     public void AttackCheck()
     {
-        Debug.LogWarning("Attack Check");
+        //Debug.LogWarning("Attack Check");
         Vector3 center = transform.position + transform.forward;
         Collider[] hitResults = Physics.OverlapSphere(center, attackRadius, EnemyMask);
         foreach(Collider hitResult in hitResults) 

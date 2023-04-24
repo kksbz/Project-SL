@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using static ItemData;
+using static UnityEditor.Progress;
 
 public class Inventory : Singleton<Inventory>
 {
@@ -35,6 +36,10 @@ public class Inventory : Singleton<Inventory>
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            UiManager.Instance.loadingPanel.SetActive(!UiManager.Instance.loadingPanel.activeSelf);
+        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             DataManager.Instance.slotNum = 0;
@@ -58,7 +63,7 @@ public class Inventory : Singleton<Inventory>
     } // Update
 
     //! 슬롯 초기화
-    private void InitSlot()
+    public void InitSlot()
     {
         for (int i = 0; i < weaponSlotList.Count; i++)
         {
@@ -105,7 +110,7 @@ public class Inventory : Singleton<Inventory>
                 itemData = new ItemData(_itemData);
             }
         }
-        Debug.Log($"인벤에 넣기 전 획득한 아이템 : {itemData.itemName}");
+        //Debug.Log($"인벤에 넣기 전 획득한 아이템 : {itemData.itemName}");
 
         // 인벤토리에 같은 아이템이 있는지 체크
         foreach (ItemData _item in inventory)
@@ -123,7 +128,7 @@ public class Inventory : Singleton<Inventory>
                 }
             }
         }
-        Debug.Log($"템획득했소");
+
         // 인벤토리에 같은 아이템이 없을 경우
         for (int i = 0; i < inventory.Count; i++)
         {
@@ -151,12 +156,16 @@ public class Inventory : Singleton<Inventory>
     } // AddItem
 
     //! 아이템 버리는 함수
-    public void ThrowItem(ItemData item)
+    public void ThrowItem(ItemData itemData)
     {
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i] == item)
+            if (inventory[i] == itemData)
             {
+                // 버리는 아이템의 프리팹을 인스턴스하고 아이템데이터 대입
+                GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemData.itemID}"));
+                item.transform.position = GameManager.Instance.player.transform.position;
+                item.GetComponent<Item>().itemData = itemData;
                 inventory[i] = null;
                 return;
             }
@@ -164,11 +173,11 @@ public class Inventory : Singleton<Inventory>
     } // ThrowItem
 
     //! 아이템 파괴하는 함수
-    public void RemoveItem(ItemData item)
+    public void RemoveItem(ItemData itemData)
     {
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i] == item)
+            if (inventory[i] == itemData)
             {
                 inventory[i] = null;
                 return;
@@ -270,7 +279,16 @@ public class Inventory : Singleton<Inventory>
         // NONE이면 모든타입의 아이템을 보여줌
         if (_itemType == ItemType.NONE)
         {
-            // itemID 순으로 정렬
+            // 기존 인벤토리 크기 캐싱
+            int num = inventory.Count;
+            // 인벤토리가 비어있지 않을 경우만 itemID 순으로 정렬
+            inventory = inventory.Where(x => x != null).OrderBy(x => x.itemID).ToList();
+            // null을 제외한 아이템으로 정렬했기 때문에 인벤의 크기가 변경됨 => 기존 크기만큼 나머지 null로 채움
+            for (int i = inventory.Count; i < num; i++)
+            {
+                inventory.Add(null);
+            }
+
             for (int i = 0; i < totalSlots.Count; i++)
             {
                 if (inventory[i] != null)
