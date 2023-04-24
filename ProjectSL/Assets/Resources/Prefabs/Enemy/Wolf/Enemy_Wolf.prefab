@@ -916,7 +916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6135241950977336532
 Transform:
   m_ObjectHideFlags: 0
@@ -965,6 +965,7 @@ MonoBehaviour:
     obstacleLayerMask:
       serializedVersion: 2
       m_Bits: 128
+  attackCollider: {fileID: 0}
 --- !u!114 &6135241949247680257
 MonoBehaviour:
   m_ObjectHideFlags: 0

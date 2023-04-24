@@ -64,7 +64,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
         StateMachine.Update();
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (Status.currentHp - damage <= 0)
         {
@@ -101,6 +101,8 @@ public class EnemyBase : CharacterBase, GData.IDamageable
 
 
     #region StateMachine
+    public IState CurrentState { get { return StateMachine.CurrentState; } }
+    public IState PreviousState { get { return StateMachine.PreviousState; } }
     public void SetState(IState newState)
     {
         StateMachine.SetState(newState);
@@ -112,10 +114,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     #endregion
 
     #region IEnemyMoveController
-    public void SetTarget(Transform newTarget)
-    {
-        MoveController.SetTarget(newTarget);
-    }
+    public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
     public void SetSpeed(float newSpeed)
     {
         MoveController.SetSpeed(newSpeed);
@@ -131,6 +130,14 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     public void TargetFollow(Transform newTarget)
     {
         MoveController.TargetFollow(newTarget);
+    }
+    public void TargetFollow(Transform newTarget, bool isFollow)
+    {
+        MoveController.TargetFollow(newTarget, isFollow);
+    }
+    public void Warp()
+    {
+        MoveController.Warp();
     }
     public bool IsArrive(float distance)
     {

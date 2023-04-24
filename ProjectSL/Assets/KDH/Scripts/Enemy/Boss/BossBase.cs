@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class BossBase : EnemyBase
 {
-    public List<BossAttackPattern> BossAttackPatterns { get; protected set; }
-
     public Transform target;
     public bool IsPlayerJoined { get; protected set; }
     public bool IsIntroPlay { get; protected set; }
@@ -27,7 +25,6 @@ public class BossBase : EnemyBase
 
     public void OnComplete()
     {
-
     }
 
 }

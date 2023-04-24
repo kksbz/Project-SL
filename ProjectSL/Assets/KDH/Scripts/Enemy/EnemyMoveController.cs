@@ -5,12 +5,15 @@ using UnityEngine.AI;
 
 public interface IEnemyMoveController : GData.IInitialize
 {
+    NavMeshAgent NavMeshAgent { get; }
     List<Transform> Targets { get; }
-    void SetTarget(Transform newTarget);
+    Transform Target { get; }
     void SetSpeed(float newSpeed);
     void SetStop(bool isStopped);
     void Patrol();
     void TargetFollow(Transform newTarget);
+    void TargetFollow(Transform newTarget, bool isFollow);
+    void Warp();
     bool IsArrive(float distance);
     bool IsMissed(float distance);
     bool IsNavMeshRangeChecked(float ranged);
@@ -20,16 +23,17 @@ public interface IEnemyMoveController : GData.IInitialize
 public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
 {
     private NavMeshAgent _navMeshAgent = default;
-    private Transform _target = default;
     private int _index;
-    public Transform[] targets;
 
+    public NavMeshAgent NavMeshAgent { get { return _navMeshAgent; } private set { _navMeshAgent = value; } }
 
     /// <summary>
     /// 순찰 지점 List
     /// </summary>
     /// <value></value>
     public List<Transform> Targets { get; private set; }
+    public Transform Target { get; private set; }
+    public Transform[] targets;
 
     /// <summary>
     /// 초기화 함수
@@ -43,23 +47,18 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         {
             Targets.Add(element);
         }
-        _target = Targets[_index];
-    }
-
-    public void SetTarget(Transform newTarget)
-    {
-        _target = newTarget;
+        Target = Targets[_index];
     }
 
     public void SetSpeed(float newSpeed)
     {
-        _navMeshAgent.speed = newSpeed;
+        NavMeshAgent.speed = newSpeed;
     }
 
     public void SetStop(bool isStopped)
     {
-        Debug.Log($"NavMeshAgent isStopped : {_navMeshAgent.isStopped}");
-        _navMeshAgent.isStopped = isStopped;
+        Debug.Log($"NavMeshAgent isStopped : {NavMeshAgent.isStopped}");
+        NavMeshAgent.isStopped = isStopped;
     }
 
     /// <summary>
@@ -67,7 +66,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// </summary>
     public void Patrol()
     {
-        if (_target == null || _target == default)
+        if (Target == null || Target == default)
         {
             /* Do Nothing */
         }
@@ -89,9 +88,39 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         }
         else
         {
-            _target = newTarget;
-            _navMeshAgent.SetDestination(newTarget.position);
+            Target = newTarget;
+            NavMeshAgent.SetDestination(newTarget.position);
         }
+    }
+
+    /// <summary>
+    /// 지정된 대상을 향해서 NavMeshAgent를 사용해서 이동하는 함수 + isStopped를 조정해서 정지를 시키는 동작 수행
+    /// </summary>
+    /// <param name="newTarget"></param>
+    /// <param name="isFollow"></param>
+    public void TargetFollow(Transform newTarget, bool isFollow)
+    {
+        if (newTarget == null || newTarget == default)
+        {
+            /* Do Nothing */
+        }
+        else
+        {
+            Target = newTarget;
+            NavMeshAgent.SetDestination(newTarget.position);
+            NavMeshAgent.isStopped = isFollow;
+        }
+    }
+
+    public void Warp()
+    {
+        float randX_ = Random.Range(transform.position.x - 50f, transform.position.x + 50f);
+        float randY_ = Random.Range(transform.position.z - 50f, transform.position.z + 50f);
+
+        Vector3 randPos = new Vector3(randX_, 0f, randY_);
+        Debug.Log($"Warp Pos : {randPos}");
+
+        NavMeshAgent.Warp(randPos);
     }
 
     /// <summary>
@@ -113,8 +142,8 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
             _index = 0;
         }
         yield return new WaitForSeconds(delay);
-        _target = Targets[_index];
-        TargetFollow(_target);
+        Target = Targets[_index];
+        TargetFollow(Target);
     }
 
     /// <summary>
@@ -124,7 +153,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// <returns></returns>
     public bool IsArrive(float distance)
     {
-        if (_target == null || _target == default || distance < _navMeshAgent.remainingDistance)
+        if (Target == null || Target == default || distance < NavMeshAgent.remainingDistance)
         {
             return false;
         }
@@ -141,7 +170,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// <returns></returns>
     public bool IsMissed(float distance)
     {
-        if (_target == null || _target == default || _navMeshAgent.remainingDistance < distance)
+        if (Target == null || Target == default || NavMeshAgent.remainingDistance < distance)
         {
             return false;
         }
@@ -160,7 +189,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     }
 
     /// <summary>
-    /// 타겟이 범위 내에 있는지 확인하는 함수
+    /// 타겟이 범위 내에 있는지 확인하는 함수 (NavMeshAgent에 RemainingDistance를 사용)
     /// </summary>
     /// <param name="distance"></param>
     /// <returns>
@@ -168,14 +197,14 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// </returns>
     public bool IsNavMeshRangeChecked(float ranged)
     {
-        if (_target == null || _target == default)
+        if (Target == null || Target == default)
         {
             return false;
         }
 
-        Debug.Log($"ranged : {ranged} / remainingDistance : {_navMeshAgent.remainingDistance}");
+        Debug.Log($"ranged : {ranged} / remainingDistance : {NavMeshAgent.remainingDistance}");
 
-        if (ranged < _navMeshAgent.remainingDistance)
+        if (ranged < NavMeshAgent.remainingDistance)
         {
             return false;
         }
@@ -185,14 +214,19 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         }
     }
 
+    /// <summary>
+    /// 타겟이 범위 내에 있는지 확인하는 함수
+    /// </summary>
+    /// <param name="ranged"></param>
+    /// <returns></returns>
     public bool IsRangeChecked(float ranged)
     {
-        if (_target == null || _target == default)
+        if (Target == null || Target == default)
         {
             return false;
         }
 
-        float distance_ = Vector3.Distance(transform.position, _target.position);
+        float distance_ = Vector3.Distance(transform.position, Target.position);
 
         if (ranged < distance_)
         {

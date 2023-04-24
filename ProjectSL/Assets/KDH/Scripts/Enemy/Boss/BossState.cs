@@ -141,7 +141,7 @@ public class Boss_Idle_State : IState
             }
 
             Debug.Log($"target : {target_.name}");
-            _boss.SetTarget(target_);
+            _boss.TargetFollow(target_, false);
 
             _boss.SetState(new Boss_Thought_State(_boss));
         }
@@ -164,18 +164,11 @@ public class Boss_Thought_State : IState
     }
     public void OnEnter()
     {
-        _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
-
         _boss.SetStop(true);
 
-        IState newState_ = _boss.Thought();
+        _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        if (newState_ == null || newState_ == default)
-        {
-            return;
-        }
-
-        _boss.SetState(newState_);
+        _boss.StartCoroutine(StateChangedDelay(0.1f));
     }
 
     public void OnExit()
@@ -184,11 +177,24 @@ public class Boss_Thought_State : IState
 
     public void Update()
     {
-
+        //  플레이어를 바라보는 동작을 수행할 예정 후에 Lerp를 사용해서 회전을 구현할 예정
+        _boss.transform.LookAt(_boss.MoveController.Target);
     }
     public void OnAction()
     {
+    }
 
+    IEnumerator StateChangedDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        IState newState_ = _boss.Thought();
+
+        if (newState_ == null || newState_ == default)
+        {
+            yield break;
+        }
+
+        _boss.SetState(newState_);
     }
 }
 

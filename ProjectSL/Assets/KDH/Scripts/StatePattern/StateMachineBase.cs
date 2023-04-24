@@ -3,6 +3,7 @@ using UnityEngine;
 public interface IStateMachine
 {
     IState CurrentState { get; }
+    IState PreviousState { get; }
     void SetState(IState newState);
     void OnEnter();
     void Update();
@@ -13,6 +14,7 @@ public interface IStateMachine
 public class StateMachineBase : IStateMachine
 {
     public IState CurrentState { get; protected set; }
+    public IState PreviousState { get; protected set; }
 
     /// <summary>
     /// 상태를 변경하는 함수
@@ -28,6 +30,7 @@ public class StateMachineBase : IStateMachine
         else
         {
             OnExit();
+            PreviousState = CurrentState;
             CurrentState = newState;
             OnEnter();
         }
@@ -39,6 +42,7 @@ public class StateMachineBase : IStateMachine
     }
     public void Update()
     {
+        Debug.Log($"Current State : {CurrentState.ToString()}");
         CurrentState.Update();
     }
     public void OnExit()
