@@ -141,7 +141,7 @@ public class CombatController : MonoBehaviour
         {
             return;
         }
-        currentCombo = Mathf.Clamp(currentCombo + 1, 1, maxCombo);
+        _currentCombo = Mathf.Clamp(_currentCombo + 1, 1, _maxCombo);
         //Debug.Log($"currentCombo = {currentCombo}");
     }
     void AttackEndComboState()

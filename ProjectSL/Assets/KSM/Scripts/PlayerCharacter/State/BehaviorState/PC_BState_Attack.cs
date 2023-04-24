@@ -21,7 +21,7 @@ public class PC_BState_Attack : BehaviorStateBase
         //Debug.Log("Enter Attack State");
         animator.applyRootMotion = true;
         //Debug.Log($"applyRootMotion : {animator.applyRootMotion}");
-        nextAction = combatController.nextAttack;
+        // nextAction = combatController.nextAttack;
         nextAction.Execute();
         /* Do Nothing */
     }

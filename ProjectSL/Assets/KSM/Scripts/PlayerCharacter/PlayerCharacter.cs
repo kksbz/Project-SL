@@ -18,10 +18,13 @@ public class PlayerCharacter : CharacterBase
     public LookStateMachine SM_Look { get; private set; }
 
     private static PlayerCharacter instance;
-
+    // {테스트 오른손 왼손 장비
+    public GameObject leftArm;
+    public GameObject rightArm;
+    // }테스트 오른손 왼손 장비
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             characterController = GetComponent<CharacterController>();
@@ -31,10 +34,15 @@ public class PlayerCharacter : CharacterBase
             animationController = GetComponent<AnimationController>();
             GameObject ownMeshObj = gameObject.FindChildObj("Mesh");
             animator = ownMeshObj.GetComponent<Animator>();
+
+            // 테스트용
+            GameManager.Instance.playerLeftArm = leftArm;
+            GameManager.Instance.playerRightArm = rightArm;
+            GameManager.Instance.player = gameObject;
             return;
         }
         DestroyImmediate(gameObject);
-
+        
     }
     // Start is called before the first frame update
     void Start()
