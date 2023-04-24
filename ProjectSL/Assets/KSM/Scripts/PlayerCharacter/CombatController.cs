@@ -9,92 +9,135 @@ public class CombatController : MonoBehaviour
     private PlayerCharacter playerCharacter;
     private PlayerController playerController;
     private CharacterControlProperty controlProperty;
+    private AnimationEventDispatcher _animEventDispatcher;
 
-    // Attack ÀÓ½Ã
+    #region Attack Field
+
     public LayerMask EnemyMask;
     public float attackRadius;
-    
+
     public List<AttackSO> combo;
     private float lastClickedTime;
     private float lastComboEnd;
     private int comboCounter = 0;
 
-    public bool canAttack = true;
-    private bool canNextCombo = default;
-    private bool isExecuteImmediateNextCombo = default;
-    private bool isAttacking = false;
+    public bool _canAttack = true;
+    private bool _canNextCombo = default;
+    private bool _isExecuteImmediateNextCombo = default;
+    private bool _isAttacking = false;
     private bool isComboInputOn = default;
-    private int currentCombo = 0;
-    private int maxCombo = default;
+    private int _currentCombo = 0;
+    private int _maxCombo = default;
+
+    #endregion // Attack Field
+
+    #region Roll Field
+
+    public bool _canDodge = true;
+    private bool _isDodging = false;
+
+    #endregion  // Roll Field
+
+    // Property
+    public bool IsAttacking { get { return _isAttacking; } }
+    public bool IsDodging { get { return _isDodging; } }
 
     [SerializeField]
-    private Animator animator;
+    private Animator _animator;
 
-    public PoseAction nextAttack;
+    [SerializeField]
+    private Transform playerObjTR;
+    [SerializeField]
+    private Transform meshObjTR;
+
+    public PoseAction nextPA;
+
+    private bool _isPlayingRMAnimation = false;
 
     private void Awake()
     {
         playerCharacter = GetComponent<PlayerCharacter>();
         playerController = GetComponent<PlayerController>();
+        playerObjTR = gameObject.transform;
+        meshObjTR = gameObject.FindChildObj("Mesh").transform;
 
         BindingComboAttackEvent();
     }
     // Start is called before the first frame update
     void Start()
     {
+        _animEventDispatcher = _animator.gameObject.GetComponent<AnimationEventDispatcher>();
         controlProperty = playerController.controlProperty;
-        maxCombo = combo.Count;
+        _maxCombo = combo.Count;
 
+        // ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½Îµï¿½
+        _animEventDispatcher.onAnimationStart.AddListener(StartedRootMotionAnimation);
+        _animEventDispatcher.onAnimationEnd.AddListener(EndedRootMotionAnimation);
+
+        _animEventDispatcher.onAnimationEnd.AddListener(InitializeAttackProperty);
+        _animEventDispatcher.onAnimationEnd.AddListener(InitializeDodgeProperty);
+        _animEventDispatcher.onAnimationEnd.AddListener(RootMotionRepositioning);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.LogWarning($"_isAttacking : {_isAttacking}");
+        /*
         if(Input.GetButtonDown("Fire1"))
         {
             Attack();
         }
         NextAttackCheck();
         ExitAttack();
+        */
     }
-    void Attack()
+
+    private void FixedUpdate()
     {
-        // °ø°Ý °¡´ÉÇÑÁö
-        if (!canAttack)
+        RootMotionRepositioning();
+    }
+
+    #region Attack
+
+    public void Attack()
+    {
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (!_canAttack)
             return;
 
         AttackLogic();
     }
     void AttackLogic()
     {
-        // ¿¬¼Ó°ø°Ý Ã¼Å© (ÄÞº¸)
-        if (isAttacking)
+        // ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ Ã¼Å© (ï¿½Þºï¿½)
+        if (_isAttacking)
         {
-            if(currentCombo < 1 || currentCombo >= maxCombo)
+            if (_currentCombo < 1 || _currentCombo >= _maxCombo)
                 return;
-            if(canNextCombo)
+            if (_canNextCombo)
             {
                 isComboInputOn = true;
             }
         }
-        // Ã¹ °ø°Ý Ã¼Å©
+        // Ã¹ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
         else
         {
-            if (currentCombo != 0)
+            if (_currentCombo != 0)
                 return;
             AttackStartComboState();
             AttackAnimationPlay();
-            isAttacking = true;
+            _isAttacking = true;
             controlProperty.isAttacking = true;
         }
     }
     void AttackStartComboState()
     {
-        canNextCombo = false;
+        _canNextCombo = false;
         isComboInputOn = false;
-        isExecuteImmediateNextCombo = false;
+        _isExecuteImmediateNextCombo = false;
 
-        if (!CheckComboAssert(currentCombo, 0, maxCombo))
+        if (!CheckComboAssert(_currentCombo, 0, _maxCombo))
         {
             return;
         }
@@ -103,45 +146,42 @@ public class CombatController : MonoBehaviour
     }
     void AttackEndComboState()
     {
-        canNextCombo = false;
-        isExecuteImmediateNextCombo = false;
-        currentCombo = 0;
-        isAttacking = false;
+        _canNextCombo = false;
+        _isExecuteImmediateNextCombo = false;
+        _currentCombo = 0;
+        Debug.LogWarning("_isAttacking False");
+        _isAttacking = false;
         controlProperty.isAttacking = false;
     }
     bool CheckComboAssert(int current, int start, int max)
     {
         bool isValid = true;
-        if(current < start)
+        if (current < start)
             isValid = false;
-        if(current >= max)
+        if (current >= max)
             isValid = false;
         return isValid;
     }
-    void ExitAttack()
+    public void ExitAttack()
     {
-        if(animator.GetCurrentAnimatorStateInfo(AnimationController.LAYERINDEX_FULLLAYER).normalizedTime > 0.9f && animator.GetCurrentAnimatorStateInfo(AnimationController.LAYERINDEX_FULLLAYER).IsTag("Attack"))
-        {
-            AttackEndComboState();
-            playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.IDLE);
-        }
+        AttackEndComboState();
     }
     void AttackAnimationPlay()
     {
-        PoseAction poseAction = new PoseAction(animator, "Attack", AnimationController.LAYERINDEX_FULLLAYER, 0, combo[currentCombo - 1].animatorOV);
-        nextAttack = poseAction;
-        playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
-        // poseAction.Execute();
+        PoseAction poseAction = new PoseAction(_animator, "Attack", AnimationController.LAYERINDEX_FULLLAYER, 0, combo[_currentCombo - 1].animatorOV);
+        nextPA = poseAction;
+        // playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
+        poseAction.Execute();
     }
     void BindingComboAttackEvent()
     {
         AnimationEventDispatcher aed = gameObject.GetComponentInChildren<AnimationEventDispatcher>();
-        for(int i = 0; i < combo.Count; i++)
+        for (int i = 0; i < combo.Count; i++)
         {
-            for(int j = 0; j < combo[i].animatorOV.animationClips.Length; j++)
+            for (int j = 0; j < combo[i].animatorOV.animationClips.Length; j++)
             {
                 AnimationClip attackClip = combo[i].animatorOV.animationClips[j];
-                if(attackClip == null)
+                if (attackClip == null)
                 {
                     continue;
                 }
@@ -151,30 +191,30 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    // ¾Ö´Ï¸ÞÀÌ¼Ç ÀÌº¥Æ®
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ìºï¿½Æ®
     public void Event_SetCanNextCombo()
     {
-        canNextCombo = true;
+        _canNextCombo = true;
     }
     public void Event_SetCantNextCombo()
     {
-        canNextCombo = false;
+        _canNextCombo = false;
     }
     public void Event_SetOnExecuteNextCombo()
     {
-        isExecuteImmediateNextCombo= true;
+        _isExecuteImmediateNextCombo = true;
     }
     public void Event_SetOffExecuteNextCombo()
     {
-        isExecuteImmediateNextCombo = false;
+        _isExecuteImmediateNextCombo = false;
     }
     public void NextAttackCheck()
     {
-        if(!isComboInputOn)
+        if (!isComboInputOn)
         {
             return;
         }
-        if(!isExecuteImmediateNextCombo)
+        if (!_isExecuteImmediateNextCombo)
         {
             return;
         }
@@ -186,10 +226,121 @@ public class CombatController : MonoBehaviour
         //Debug.LogWarning("Attack Check");
         Vector3 center = transform.position + transform.forward;
         Collider[] hitResults = Physics.OverlapSphere(center, attackRadius, EnemyMask);
-        foreach(Collider hitResult in hitResults) 
+        foreach (Collider hitResult in hitResults)
         {
-            Debug.LogWarning($"{hitResult.gameObject.name} ¸Â¾ÒÀ½");
+            Debug.LogWarning($"{hitResult.gameObject.name} ï¿½Â¾ï¿½ï¿½ï¿½");
 
         }
+    }
+    public void InitializeAttackProperty(string name)
+    {
+        if (!IsAttackAnimation(name))
+            return;
+
+        ExitAttack();
+    }
+
+    #endregion // Attack
+
+    #region Dodge
+
+    public void Roll()
+    {
+        if (!_canDodge)
+            return;
+
+        if(!_isDodging)
+        {
+            DodgeStartState();
+            DodgeAnimationPlay("Roll");
+        }
+    }
+    public void BackStep()
+    {
+        if (!_canDodge)
+            return;
+        if(!_isDodging)
+        {
+            DodgeStartState();
+            DodgeAnimationPlay("BackStep");
+        }
+    }
+
+    void DodgeStartState()
+    {
+        _isDodging = true;
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ todo?
+    }
+    void DodgeEndState()
+    {
+        _isDodging = false;
+    }
+
+    void DodgeAnimationPlay(string dodge)
+    {
+        PoseAction poseAction = new PoseAction(_animator, dodge, AnimationController.LAYERINDEX_FULLLAYER, 0);
+        nextPA = poseAction;
+        // playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
+        poseAction.Execute();
+    }
+
+    public void InitializeDodgeProperty(string name)
+    {
+        if (IsRollAnimation(name) || IsBackStepAnimation(name))
+        {
+            DodgeEndState();
+        }
+    }
+
+    #endregion  // Dodge
+
+    public void RootMotionRepositioning(string name)
+    {
+        if (!IsRootMotionAnimation(name))
+            return;
+
+        Debug.Log("Root Motion Animation Ended, Player Character Repositioning");
+        playerObjTR.position = meshObjTR.position;
+        meshObjTR.localPosition = Vector3.zero;
+
+    }
+    public void RootMotionRepositioning()
+    {
+        if (!_isPlayingRMAnimation)
+            return;
+
+        Debug.LogWarning("Playing Root Motion");
+        transform.position = meshObjTR.position - meshObjTR.localPosition;
+    }
+    private bool IsAttackAnimation(string name)
+    {
+        return name.StartsWith("Attack");
+    }
+    private bool IsRollAnimation(string name)
+    {
+        return name.StartsWith("Roll");
+    }
+    private bool IsBackStepAnimation(string name)
+    {
+        return name.StartsWith("BackStep");
+    }
+    private bool IsRootMotionAnimation(string name)
+    {
+        return name.EndsWith("Rm");
+    }
+
+    public void StartedRootMotionAnimation(string name)
+    {
+        if (!IsRootMotionAnimation(name))
+            return;
+
+        _isPlayingRMAnimation = true;
+    }
+    public void EndedRootMotionAnimation(string name)
+    {
+        if (!IsRootMotionAnimation(name))
+            return;
+
+        _isPlayingRMAnimation = false;
     }
 }

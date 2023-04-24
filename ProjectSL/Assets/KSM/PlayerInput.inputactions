@@ -20,7 +20,7 @@
                     "id": "e36cd4a8-5b60-4622-8bbf-c2132d5fa1c8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.5)",
                     "initialStateCheck": false
                 },
                 {
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightArmAttack",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "ef9f9e2d-6ac1-497d-a193-b98a253a6e78",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeftArmGuard",
+                    "name": "Guard",
                     "type": "Button",
                     "id": "bff61e09-510c-48fc-ad3b-6eeb9d643ced",
                     "expectedControlType": "Button",
@@ -51,12 +51,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Roll",
+                    "name": "Dodge",
                     "type": "Button",
                     "id": "40007d38-1b19-4773-a1bc-26a733c2746f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap(duration=0.5)",
                     "initialStateCheck": false
                 }
             ],
@@ -200,7 +200,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "RightArmAttack",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -211,7 +211,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "LeftArmGuard",
+                    "action": "Guard",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -222,7 +222,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Roll",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

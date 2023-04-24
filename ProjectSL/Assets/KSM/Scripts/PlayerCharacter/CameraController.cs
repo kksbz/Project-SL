@@ -18,6 +18,7 @@ public class CameraController : MonoBehaviour
     public GameObject cm_LockOn;
 
     public Transform cameraArm;
+    public Transform cameraTarget;
     public Transform camera;
     
 
@@ -29,6 +30,8 @@ public class CameraController : MonoBehaviour
     private AnimationController animationController;
 
     private CharacterControlProperty controlProperty;
+
+    private Transform _meshObj;
 
     private ECameraState cameraState;
     public ECameraState CameraState
@@ -73,6 +76,8 @@ public class CameraController : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         characterController = GetComponent<CharacterController>();
         animationController = GetComponent<AnimationController>();
+
+        _meshObj = gameObject.FindChildObj("Mesh").transform;
         //onSetPlayerLockOn = new EventHandler_void_GameObject(SetPlayerLockOn);
         //onReleasePlayerLockOn = new EventHandler_void(ReleasePlayerLockOn);
     }
@@ -93,12 +98,12 @@ public class CameraController : MonoBehaviour
     {
         SearchTarget();
         InputAction();
-        
     }
     private void FixedUpdate()
     {
         LookAround();
         LookTarget();
+        CameraArmFollowMesh();
     }
 
     void InputAction()
@@ -295,5 +300,9 @@ public class CameraController : MonoBehaviour
         newTargetRotation.z = 0f;
         return newTargetRotation;
     }
-
+    void CameraArmFollowMesh()
+    {
+        Vector3 targetPos = new Vector3(_meshObj.position.x, cameraArm.position.y, _meshObj.position.z);
+        cameraArm.position = targetPos;// Vector3.Lerp(cameraArm.position, targetPos, Time.deltaTime * 5f);
+    }
 }

@@ -42,7 +42,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""e36cd4a8-5b60-4622-8bbf-c2132d5fa1c8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.5)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -55,7 +55,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightArmAttack"",
+                    ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""ef9f9e2d-6ac1-497d-a193-b98a253a6e78"",
                     ""expectedControlType"": ""Button"",
@@ -64,7 +64,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""LeftArmGuard"",
+                    ""name"": ""Guard"",
                     ""type"": ""Button"",
                     ""id"": ""bff61e09-510c-48fc-ad3b-6eeb9d643ced"",
                     ""expectedControlType"": ""Button"",
@@ -73,12 +73,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Roll"",
+                    ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""40007d38-1b19-4773-a1bc-26a733c2746f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.5)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -222,7 +222,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""RightArmAttack"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -233,7 +233,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""LeftArmGuard"",
+                    ""action"": ""Guard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -244,7 +244,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""Roll"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -275,9 +275,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerCharacterInput_Move = m_PlayerCharacterInput.FindAction("Move", throwIfNotFound: true);
         m_PlayerCharacterInput_Run = m_PlayerCharacterInput.FindAction("Run", throwIfNotFound: true);
         m_PlayerCharacterInput_Walk = m_PlayerCharacterInput.FindAction("Walk", throwIfNotFound: true);
-        m_PlayerCharacterInput_RightArmAttack = m_PlayerCharacterInput.FindAction("RightArmAttack", throwIfNotFound: true);
-        m_PlayerCharacterInput_LeftArmGuard = m_PlayerCharacterInput.FindAction("LeftArmGuard", throwIfNotFound: true);
-        m_PlayerCharacterInput_Roll = m_PlayerCharacterInput.FindAction("Roll", throwIfNotFound: true);
+        m_PlayerCharacterInput_Attack = m_PlayerCharacterInput.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerCharacterInput_Guard = m_PlayerCharacterInput.FindAction("Guard", throwIfNotFound: true);
+        m_PlayerCharacterInput_Dodge = m_PlayerCharacterInput.FindAction("Dodge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -342,9 +342,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerCharacterInput_Move;
     private readonly InputAction m_PlayerCharacterInput_Run;
     private readonly InputAction m_PlayerCharacterInput_Walk;
-    private readonly InputAction m_PlayerCharacterInput_RightArmAttack;
-    private readonly InputAction m_PlayerCharacterInput_LeftArmGuard;
-    private readonly InputAction m_PlayerCharacterInput_Roll;
+    private readonly InputAction m_PlayerCharacterInput_Attack;
+    private readonly InputAction m_PlayerCharacterInput_Guard;
+    private readonly InputAction m_PlayerCharacterInput_Dodge;
     public struct PlayerCharacterInputActions
     {
         private @PlayerInput m_Wrapper;
@@ -352,9 +352,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerCharacterInput_Move;
         public InputAction @Run => m_Wrapper.m_PlayerCharacterInput_Run;
         public InputAction @Walk => m_Wrapper.m_PlayerCharacterInput_Walk;
-        public InputAction @RightArmAttack => m_Wrapper.m_PlayerCharacterInput_RightArmAttack;
-        public InputAction @LeftArmGuard => m_Wrapper.m_PlayerCharacterInput_LeftArmGuard;
-        public InputAction @Roll => m_Wrapper.m_PlayerCharacterInput_Roll;
+        public InputAction @Attack => m_Wrapper.m_PlayerCharacterInput_Attack;
+        public InputAction @Guard => m_Wrapper.m_PlayerCharacterInput_Guard;
+        public InputAction @Dodge => m_Wrapper.m_PlayerCharacterInput_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCharacterInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -373,15 +373,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
-            @RightArmAttack.started += instance.OnRightArmAttack;
-            @RightArmAttack.performed += instance.OnRightArmAttack;
-            @RightArmAttack.canceled += instance.OnRightArmAttack;
-            @LeftArmGuard.started += instance.OnLeftArmGuard;
-            @LeftArmGuard.performed += instance.OnLeftArmGuard;
-            @LeftArmGuard.canceled += instance.OnLeftArmGuard;
-            @Roll.started += instance.OnRoll;
-            @Roll.performed += instance.OnRoll;
-            @Roll.canceled += instance.OnRoll;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @Guard.started += instance.OnGuard;
+            @Guard.performed += instance.OnGuard;
+            @Guard.canceled += instance.OnGuard;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
         }
 
         private void UnregisterCallbacks(IPlayerCharacterInputActions instance)
@@ -395,15 +395,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
-            @RightArmAttack.started -= instance.OnRightArmAttack;
-            @RightArmAttack.performed -= instance.OnRightArmAttack;
-            @RightArmAttack.canceled -= instance.OnRightArmAttack;
-            @LeftArmGuard.started -= instance.OnLeftArmGuard;
-            @LeftArmGuard.performed -= instance.OnLeftArmGuard;
-            @LeftArmGuard.canceled -= instance.OnLeftArmGuard;
-            @Roll.started -= instance.OnRoll;
-            @Roll.performed -= instance.OnRoll;
-            @Roll.canceled -= instance.OnRoll;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @Guard.started -= instance.OnGuard;
+            @Guard.performed -= instance.OnGuard;
+            @Guard.canceled -= instance.OnGuard;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
         }
 
         public void RemoveCallbacks(IPlayerCharacterInputActions instance)
@@ -435,8 +435,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
-        void OnRightArmAttack(InputAction.CallbackContext context);
-        void OnLeftArmGuard(InputAction.CallbackContext context);
-        void OnRoll(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnGuard(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
     }
 }

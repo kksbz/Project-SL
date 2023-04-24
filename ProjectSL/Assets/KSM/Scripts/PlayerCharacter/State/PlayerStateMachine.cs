@@ -9,29 +9,39 @@ public class PlayerStateMachine : MonoBehaviour
     CharacterController _characterController;
     Animator _animator;
     PlayerInput _playerInput;
+    [SerializeField]
     Transform _characterBody;
 
-    // ÇÃ·¹ÀÌ¾î ÄÄÆ÷³ÍÆ®
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     PlayerCharacter     _playerCharacter;
     PlayerController    _playerController;
     CameraController    _cameraController;
     CombatController    _combatController;
     AnimationController _animationController;
 
-    // ¾Ö´Ï¸ÞÀÌ¼Ç ÄÁÆ®·Ñ º¯¼ö Å¬·¡½º
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
     CharacterControlProperty _controlProperty;
 
 
-    // ¹«ºê ÀÔ·Â
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
     Vector2 _currentMovementInput;
     Vector3 _currentMovement;
     Vector3 _appliedMovement;
     bool _isMovementPressed;
     bool _isRunPressed;
     bool _isWalkPressed;
+    float runPressedRate = 0.5f;
+    
 
-    // »ó¼ö
+    // ï¿½ï¿½ï¿½
     int _zero = 0;
+
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+    bool _isAttackPressed;
+    bool _isGuardPressed;
+    bool _isRollPressed;
+    bool _isBackStepPressed;
+    float _rollPressedRate = 0.5f;
 
     // State Var
     PlayerBaseState _currentState;
@@ -44,11 +54,16 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public AnimationController AnimationController { get { return _animationController; } }
+    public CombatController CombatController { get { return _combatController; } }
     public Animator CharacterAnimator { get { return _animator; } }
     public CharacterControlProperty ControlProperty { get { return _controlProperty; } }
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsWalkPressed { get { return _isWalkPressed; } }
     public bool IsRunPressed { get { return _isRunPressed; } }
+    public bool IsAttackPressed {  get { return _isAttackPressed; } }
+    public bool IsGuardPressed { get { return _isGuardPressed; } }
+    public bool IsRollPressed { get { return _isRollPressed; } }
+    public bool IsBackStepPressed { get { return _isBackStepPressed; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -58,7 +73,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        // ÀÎÇ², ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        // ï¿½ï¿½Ç², ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
         _playerInput = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
         _characterBody = gameObject.FindChildObj("Mesh").transform;
@@ -72,24 +87,35 @@ public class PlayerStateMachine : MonoBehaviour
 
         _controlProperty = _playerController.controlProperty;
 
-        //Debug.Log("Player State Machine : ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­");
+        //Debug.Log("Player State Machine : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­");
 
-        // ½ºÅ×ÀÌÆ® ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
 
-        //Debug.Log("Player State Machine : ½ºÅ×ÀÌÆ® ÃÊ±âÈ­");
+        //Debug.Log("Player State Machine : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­");
 
-        // ÇÃ·¹ÀÌ¾î ÀÔ·Â ÄÝ¹é ¼³Á¤
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ô·ï¿½ ï¿½Ý¹ï¿½ ï¿½ï¿½ï¿½ï¿½
         _playerInput.PlayerCharacterInput.Move.started      += OnMovementInput;
         _playerInput.PlayerCharacterInput.Move.canceled     += OnMovementInput;
         _playerInput.PlayerCharacterInput.Move.performed    += OnMovementInput;
-        _playerInput.PlayerCharacterInput.Walk.started  += OnWalk;
-        _playerInput.PlayerCharacterInput.Walk.canceled += OnWalk;
-        _playerInput.PlayerCharacterInput.Run.started   += OnRun;
-        _playerInput.PlayerCharacterInput.Run.canceled  += OnRun;
-        //Debug.Log("Player State Machine : ÀÎÇ² ¹ÙÀÎµù");
+        _playerInput.PlayerCharacterInput.Walk.started  += OnWalkInput;
+        _playerInput.PlayerCharacterInput.Walk.canceled += OnWalkInput;
+        _playerInput.PlayerCharacterInput.Run.performed   += OnRunInput;
+        _playerInput.PlayerCharacterInput.Run.canceled += OnRunInput;
+        _playerInput.PlayerCharacterInput.Attack.started += OnAttackInput;
+        _playerInput.PlayerCharacterInput.Attack.canceled+= OnAttackInput;
+        _playerInput.PlayerCharacterInput.Guard.started += OnGuardInput;
+        _playerInput.PlayerCharacterInput.Guard.canceled+= OnGuardInput;
+        _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInput;
+        _playerInput.PlayerCharacterInput.Dodge.performed += OnDodgeInput;
+        _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInput;
+        //_playerInput.PlayerCharacterInput.Dodge.started += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Started");
+        //_playerInput.PlayerCharacterInput.Dodge.performed += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Performed");
+        //_playerInput.PlayerCharacterInput.Dodge.canceled += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Canceled"); ;
+        Debug.Log("Player State Machine : ï¿½ï¿½Ç² ï¿½ï¿½ï¿½Îµï¿½");
+        // _playerInput.PlayerCharacterInput.
 
     }
     // Start is called before the first frame update
@@ -114,46 +140,70 @@ public class PlayerStateMachine : MonoBehaviour
 
         _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
         _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
+        if (!_isMovementPressed)
+            return;
         Transform cameraArm = _cameraController.cameraArm;
         Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
         Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
 
         _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
 
-        // Ä³¸¯ÅÍ È¸Àü * ÀÓ½ÃÀÏ¼öµµ ÀÖÀ½
+        Vector3 newDirection = Vector3.zero;
+        // Ä³ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ * ï¿½Ó½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed)
-            _characterBody.forward = _currentMovement;
+            newDirection = _currentMovement;
         else if (_cameraController.CameraState == ECameraState.LOCKON)
-            _characterBody.forward = _cameraController.cameraArm.forward;
+            newDirection = _cameraController.cameraArm.forward;
+
+        SetBodyDirection(newDirection);
 
         _appliedMovement = _currentMovement;
     }
 
-    // ÀÔ·Â ÄÝ¹é ÇÔ¼ö
+    public void SetBodyDirection(Vector3 newBodyDirection)
+    {
+        _characterBody.forward = newBodyDirection;
+    }
+
+    // ï¿½Ô·ï¿½ ï¿½Ý¹ï¿½ ï¿½Ô¼ï¿½
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
         _isMovementPressed = _currentMovementInput.x != _zero || _currentMovementInput.y != _zero;
     }
-    void OnRun(InputAction.CallbackContext context)
+    void OnRunInput(InputAction.CallbackContext context)
     {
         _isRunPressed = context.ReadValueAsButton();
+        Debug.Log($"Run Input : {_isRunPressed}");
     }
-    void OnWalk(InputAction.CallbackContext context)
+    void OnWalkInput(InputAction.CallbackContext context)
     {
         _isWalkPressed = context.ReadValueAsButton();
     }
-    void OnRightArmAction(InputAction.CallbackContext context)
+    void OnAttackInput(InputAction.CallbackContext context)
     {
-
+        _isAttackPressed = context.ReadValueAsButton();
     }
-    void OnLeftArmAction(InputAction.CallbackContext context)
+    void OnGuardInput(InputAction.CallbackContext context)
     {
-
+        _isGuardPressed = context.ReadValueAsButton();
     }
-    void OnRoll(InputAction.CallbackContext context)
+    void OnRollInput(InputAction.CallbackContext context)
     {
-
+        _isRollPressed = context.ReadValueAsButton();
+        Debug.Log($"Roll Input : {_isRollPressed}");
+    }
+    void OnDodgeInput(InputAction.CallbackContext context)
+    {
+        if(_currentMovementInput != Vector2.zero)
+        {
+            _isRollPressed = context.ReadValueAsButton();
+            SetBodyDirection(_currentMovement);
+        }
+        else
+        {
+            _isBackStepPressed = context.ReadValueAsButton();
+        }
     }
     private void OnEnable()
     {

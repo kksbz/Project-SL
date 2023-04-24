@@ -15,10 +15,16 @@ public class PlayerIdleState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        //
+        Ctx.SetMoveDirection();
+        // 임시로 조깅 속도 5 * 나중에 스탯에서 가져올수 있음
+        //Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 5f);
+        //Ctx.NextBehavior = nextMove;
+        //
     }
     public override void FixedUpdateState()
     {
-
+        
     }
     public override void ExitState()
     {
@@ -26,7 +32,15 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
+        /*if(Ctx.IsAttackPressed) // * 스테미너 조건 추가 작업 예상
+        {
+            SwitchState(Factory.Attack());
+        }
+        else */if(Ctx.IsMovementPressed && Ctx.IsRollPressed) // * 스테미너 조건 추가 작업 예상
+        {
+            SwitchState(Factory.Roll());
+        }
+        else if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
         {
             //Debug.Log("Switch Jog State");
             SwitchState(Factory.Jog());

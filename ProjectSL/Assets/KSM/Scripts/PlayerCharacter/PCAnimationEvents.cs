@@ -6,13 +6,16 @@ public class PCAnimationEvents : MonoBehaviour
 {
     [SerializeField]
     private CombatController combatController;
-    [SerializeField]
-    private Transform playerObjTR;
-    [SerializeField]
-    private Transform meshObjTR;
+
+    //private AnimationEventDispatcher _animationEventDispatcher;
+    
+    private void Awake()
+    {
+        //_animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
+    }
     private void Start()
     {
-        meshObjTR = transform;
+        // meshObjTR = transform;
     }
     public void OnSetCanNextCombo()
     {
@@ -29,12 +32,6 @@ public class PCAnimationEvents : MonoBehaviour
     public void OnSetOffExecuteNextCombo()
     {
         combatController.Event_SetOffExecuteNextCombo();
-    }
-    public void OnPCRepositioning()
-    {
-        //Debug.Log("Player Character Repositioning");
-        playerObjTR.position = meshObjTR.position;
-        meshObjTR.localPosition = Vector3.zero;
     }
     public void On_TempAttackCheck()
     {
