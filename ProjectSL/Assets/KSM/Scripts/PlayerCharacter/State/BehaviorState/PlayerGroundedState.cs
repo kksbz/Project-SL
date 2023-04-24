@@ -31,6 +31,10 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Attack());
         }
+        else if(Ctx.IsRollPressed || Ctx.IsBackStepPressed)
+        {
+            SwitchState(Factory.Roll());
+        }
     }
     public override void InitializeSubState()
     {

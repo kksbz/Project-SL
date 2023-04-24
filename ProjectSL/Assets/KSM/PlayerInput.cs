@@ -42,7 +42,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""e36cd4a8-5b60-4622-8bbf-c2132d5fa1c8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.5)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -73,12 +73,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Roll"",
+                    ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""40007d38-1b19-4773-a1bc-26a733c2746f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.5)"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -244,7 +244,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""Roll"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -277,7 +277,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerCharacterInput_Walk = m_PlayerCharacterInput.FindAction("Walk", throwIfNotFound: true);
         m_PlayerCharacterInput_Attack = m_PlayerCharacterInput.FindAction("Attack", throwIfNotFound: true);
         m_PlayerCharacterInput_Guard = m_PlayerCharacterInput.FindAction("Guard", throwIfNotFound: true);
-        m_PlayerCharacterInput_Roll = m_PlayerCharacterInput.FindAction("Roll", throwIfNotFound: true);
+        m_PlayerCharacterInput_Dodge = m_PlayerCharacterInput.FindAction("Dodge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -344,7 +344,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerCharacterInput_Walk;
     private readonly InputAction m_PlayerCharacterInput_Attack;
     private readonly InputAction m_PlayerCharacterInput_Guard;
-    private readonly InputAction m_PlayerCharacterInput_Roll;
+    private readonly InputAction m_PlayerCharacterInput_Dodge;
     public struct PlayerCharacterInputActions
     {
         private @PlayerInput m_Wrapper;
@@ -354,7 +354,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Walk => m_Wrapper.m_PlayerCharacterInput_Walk;
         public InputAction @Attack => m_Wrapper.m_PlayerCharacterInput_Attack;
         public InputAction @Guard => m_Wrapper.m_PlayerCharacterInput_Guard;
-        public InputAction @Roll => m_Wrapper.m_PlayerCharacterInput_Roll;
+        public InputAction @Dodge => m_Wrapper.m_PlayerCharacterInput_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCharacterInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -379,9 +379,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Guard.started += instance.OnGuard;
             @Guard.performed += instance.OnGuard;
             @Guard.canceled += instance.OnGuard;
-            @Roll.started += instance.OnRoll;
-            @Roll.performed += instance.OnRoll;
-            @Roll.canceled += instance.OnRoll;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
         }
 
         private void UnregisterCallbacks(IPlayerCharacterInputActions instance)
@@ -401,9 +401,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Guard.started -= instance.OnGuard;
             @Guard.performed -= instance.OnGuard;
             @Guard.canceled -= instance.OnGuard;
-            @Roll.started -= instance.OnRoll;
-            @Roll.performed -= instance.OnRoll;
-            @Roll.canceled -= instance.OnRoll;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
         }
 
         public void RemoveCallbacks(IPlayerCharacterInputActions instance)
@@ -437,6 +437,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnWalk(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnGuard(InputAction.CallbackContext context);
-        void OnRoll(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
     }
 }

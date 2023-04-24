@@ -30,14 +30,18 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isMovementPressed;
     bool _isRunPressed;
     bool _isWalkPressed;
-    bool _isRollPressed;
+    float runPressedRate = 0.5f;
+    
 
     // 상수
     int _zero = 0;
 
-    // 공격 입력
+    // 전투 입력
     bool _isAttackPressed;
     bool _isGuardPressed;
+    bool _isRollPressed;
+    bool _isBackStepPressed;
+    float _rollPressedRate = 0.5f;
 
     // State Var
     PlayerBaseState _currentState;
@@ -59,6 +63,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsAttackPressed {  get { return _isAttackPressed; } }
     public bool IsGuardPressed { get { return _isGuardPressed; } }
     public bool IsRollPressed { get { return _isRollPressed; } }
+    public bool IsBackStepPressed { get { return _isBackStepPressed; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -97,15 +102,20 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.Move.performed    += OnMovementInput;
         _playerInput.PlayerCharacterInput.Walk.started  += OnWalkInput;
         _playerInput.PlayerCharacterInput.Walk.canceled += OnWalkInput;
-        _playerInput.PlayerCharacterInput.Run.started   += OnRunInput;
-        _playerInput.PlayerCharacterInput.Run.canceled  += OnRunInput;
+        _playerInput.PlayerCharacterInput.Run.performed   += OnRunInput;
+        _playerInput.PlayerCharacterInput.Run.canceled += OnRunInput;
         _playerInput.PlayerCharacterInput.Attack.started += OnAttackInput;
         _playerInput.PlayerCharacterInput.Attack.canceled+= OnAttackInput;
         _playerInput.PlayerCharacterInput.Guard.started += OnGuardInput;
         _playerInput.PlayerCharacterInput.Guard.canceled+= OnGuardInput;
-        _playerInput.PlayerCharacterInput.Roll.started += OnRollInput;
-        _playerInput.PlayerCharacterInput.Roll.canceled += OnRollInput;
+        _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInput;
+        _playerInput.PlayerCharacterInput.Dodge.performed += OnDodgeInput;
+        _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInput;
+        //_playerInput.PlayerCharacterInput.Dodge.started += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Started");
+        //_playerInput.PlayerCharacterInput.Dodge.performed += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Performed");
+        //_playerInput.PlayerCharacterInput.Dodge.canceled += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Canceled"); ;
         Debug.Log("Player State Machine : 인풋 바인딩");
+        // _playerInput.PlayerCharacterInput.
 
     }
     // Start is called before the first frame update
@@ -138,14 +148,21 @@ public class PlayerStateMachine : MonoBehaviour
 
         _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
 
+        Vector3 newDirection = Vector3.zero;
         // 캐릭터 회전 * 임시일수도 있음
-        
         if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed)
-            _characterBody.forward = _currentMovement;
+            newDirection = _currentMovement;
         else if (_cameraController.CameraState == ECameraState.LOCKON)
-            _characterBody.forward = _cameraController.cameraArm.forward;
-        
+            newDirection = _cameraController.cameraArm.forward;
+
+        SetBodyDirection(newDirection);
+
         _appliedMovement = _currentMovement;
+    }
+
+    public void SetBodyDirection(Vector3 newBodyDirection)
+    {
+        _characterBody.forward = newBodyDirection;
     }
 
     // 입력 콜백 함수
@@ -157,6 +174,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnRunInput(InputAction.CallbackContext context)
     {
         _isRunPressed = context.ReadValueAsButton();
+        Debug.Log($"Run Input : {_isRunPressed}");
     }
     void OnWalkInput(InputAction.CallbackContext context)
     {
@@ -173,6 +191,19 @@ public class PlayerStateMachine : MonoBehaviour
     void OnRollInput(InputAction.CallbackContext context)
     {
         _isRollPressed = context.ReadValueAsButton();
+        Debug.Log($"Roll Input : {_isRollPressed}");
+    }
+    void OnDodgeInput(InputAction.CallbackContext context)
+    {
+        if(_currentMovementInput != Vector2.zero)
+        {
+            _isRollPressed = context.ReadValueAsButton();
+            SetBodyDirection(_currentMovement);
+        }
+        else
+        {
+            _isBackStepPressed = context.ReadValueAsButton();
+        }
     }
     private void OnEnable()
     {

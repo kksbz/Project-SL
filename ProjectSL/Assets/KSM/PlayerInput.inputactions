@@ -20,7 +20,7 @@
                     "id": "e36cd4a8-5b60-4622-8bbf-c2132d5fa1c8",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.5)",
                     "initialStateCheck": false
                 },
                 {
@@ -51,12 +51,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Roll",
+                    "name": "Dodge",
                     "type": "Button",
                     "id": "40007d38-1b19-4773-a1bc-26a733c2746f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap(duration=0.5)",
                     "initialStateCheck": false
                 }
             ],
@@ -222,7 +222,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Roll",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

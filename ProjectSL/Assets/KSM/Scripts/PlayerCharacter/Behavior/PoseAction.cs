@@ -23,7 +23,7 @@ public class PoseAction : Behavior
         {
             animator.runtimeAnimatorController = animOV;
         }
-        animator.Play("Attack", layerIndex, normalizeTime);
+        animator.Play(stateName, layerIndex, normalizeTime);
     }
     public override void Undo()
     {
