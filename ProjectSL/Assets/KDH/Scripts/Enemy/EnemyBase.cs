@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectSL.Enemy;
 
-public class EnemyBase : CharacterBase, GData.IDamageable
+public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 {
     [Tooltip("Enemy의 Status")]
     [SerializeField]
@@ -64,6 +64,26 @@ public class EnemyBase : CharacterBase, GData.IDamageable
         StateMachine.Update();
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        GData.IDamageable object_ = other.GetComponent<GData.IDamageable>();
+
+        if (object_ == null || object_ == default)
+        {
+            /*  Do Nothing  */
+        }
+        else
+        {
+            GiveDamage(object_, Status.currentAttackDamage);
+        }
+    }
+
+    public virtual void GiveDamage(GData.IDamageable damageable, float damage)
+    {
+        Debug.Log($"데미지를 입힘 / 대상 : {damageable.ToString()} / 데미지 : {damage}");
+        damageable.TakeDamage(damage);
+    }
+
     public virtual void TakeDamage(float damage)
     {
         if (Status.currentHp - damage <= 0)
@@ -114,6 +134,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     #endregion
 
     #region IEnemyMoveController
+    public Transform Target { get { return MoveController.Target; } }
     public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
     public void SetSpeed(float newSpeed)
     {
@@ -138,6 +159,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     public void Warp()
     {
         MoveController.Warp();
+    }
+    public void Warp(Vector3 newPos)
+    {
+        MoveController.Warp(newPos);
     }
     public bool IsArrive(float distance)
     {

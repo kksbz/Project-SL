@@ -16,6 +16,8 @@ namespace ProjectSL.Enemy
         public const string ANIMATION_TELEPORT = "Teleport";
         public const string TRIGGER_SUBJUGATION = "Subjugation";
         public const string ANIMATION_SUBJUGATION = "Subjugation";
+        public const string TRIGGER_ENRAGE = "Enrage";
+        public const string ANIMATION_ENRAGE = "Enrage";
     }
 }
 

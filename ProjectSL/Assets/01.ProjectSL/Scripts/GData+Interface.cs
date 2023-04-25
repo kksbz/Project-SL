@@ -13,4 +13,9 @@ public static partial class GData
     {
         void TakeDamage(float damage);
     }
+
+    public interface IGiveDamageable
+    {
+        void GiveDamage(IDamageable damageable, float damage);
+    }
 }

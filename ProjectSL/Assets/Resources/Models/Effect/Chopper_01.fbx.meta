@@ -1,11 +1,69 @@
 fileFormatVersion: 2
-guid: 0d19b4043fe61e642923bfbe261cc4c8
+guid: 3ed747c9226ee47eebc908b07221d955
 ModelImporter:
-  serializedVersion: 21300
-  internalIDToNameTable: []
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Chopper01_MissilePods
+    100002: //RootNode
+    100004: Chopper_01_Body
+    100006: Chopper_01_Gun
+    100008: Chopper_01_Guns
+    100010: Chopper_01_HellFirePod
+    100012: Chopper_01_HellFirePod2
+    100014: Chopper_01_MainPropel
+    100016: Chopper_01_MainPropeller
+    100018: Chopper_01_MainProperllerRader
+    100020: Chopper_01_Propel
+    100022: Chopper_01_RockePod
+    100024: Chopper_01_RockePod2
+    100026: Chopper_01_SubPropel
+    100028: Chopper_01_Weapons
+    400000: Chopper01_MissilePods
+    400002: //RootNode
+    400004: Chopper_01_Body
+    400006: Chopper_01_Gun
+    400008: Chopper_01_Guns
+    400010: Chopper_01_HellFirePod
+    400012: Chopper_01_HellFirePod2
+    400014: Chopper_01_MainPropel
+    400016: Chopper_01_MainPropeller
+    400018: Chopper_01_MainProperllerRader
+    400020: Chopper_01_Propel
+    400022: Chopper_01_RockePod
+    400024: Chopper_01_RockePod2
+    400026: Chopper_01_SubPropel
+    400028: Chopper_01_Weapons
+    2100000: Chopper_01_Material
+    2300000: Chopper_01_Body
+    2300002: Chopper_01_Gun
+    2300004: Chopper_01_HellFirePod
+    2300006: Chopper_01_HellFirePod2
+    2300008: Chopper_01_MainPropeller
+    2300010: Chopper_01_MainProperllerRader
+    2300012: Chopper_01_RockePod
+    2300014: Chopper_01_RockePod2
+    2300016: Chopper_01_SubPropel
+    3300000: Chopper_01_Body
+    3300002: Chopper_01_Gun
+    3300004: Chopper_01_HellFirePod
+    3300006: Chopper_01_HellFirePod2
+    3300008: Chopper_01_MainPropeller
+    3300010: Chopper_01_MainProperllerRader
+    3300012: Chopper_01_RockePod
+    3300014: Chopper_01_RockePod2
+    3300016: Chopper_01_SubPropel
+    4300000: Chopper_01_Body
+    4300002: Chopper_01_MainPropeller
+    4300004: Chopper_01_MainProperllerRader
+    4300006: Chopper_01_SubPropel
+    4300008: Chopper_01_RockePod
+    4300010: Chopper_01_HellFirePod
+    4300012: Chopper_01_HellFirePod2
+    4300014: Chopper_01_RockePod2
+    4300016: Chopper_01_Gun
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -14,7 +72,6 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -32,41 +89,32 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 10
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 1
-    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
+    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
-    bakeAxisConversion: 0
     preserveHierarchy: 0
-    skinWeightsMode: 0
-    maxBonesPerVertex: 4
-    minBoneWeight: 0.001
-    optimizeBones: 1
-    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 1
-    secondaryUVMinLightmapResolution: 40
-    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -75,10 +123,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips: []
   importAnimation: 1
+  copyAvatar: 0
   humanDescription:
-    serializedVersion: 3
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -88,18 +136,13 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
-  avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

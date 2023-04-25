@@ -178,7 +178,7 @@ public class Boss_Thought_State : IState
     public void Update()
     {
         //  플레이어를 바라보는 동작을 수행할 예정 후에 Lerp를 사용해서 회전을 구현할 예정
-        _boss.transform.LookAt(_boss.MoveController.Target);
+        _boss.transform.LookAt(_boss.Target);
     }
     public void OnAction()
     {

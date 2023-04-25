@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public static partial class GFunc
 {
-    //! Æ¯Á¤ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ ¼­Ä¡ÇØ¼­ ÄÄÆ÷³ÍÆ®¸¦ Ã£¾ÆÁÖ´Â ÇÔ¼ö
+    //! Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     public static T FindChildComponent<T>(
         this GameObject targetObj_, string objName_) where T : Component
     {
@@ -14,20 +14,20 @@ public static partial class GFunc
         GameObject searchResultObj = default(GameObject);
 
         searchResultObj = targetObj_.FindChildObj(objName_);
-        if(searchResultObj.IsValid())
+        if (searchResultObj.IsValid())
         {
             searchResultComponent = searchResultObj.GetComponent<T>();
         }
         return searchResultComponent;
     }       // FindChildComponent()
 
-    //! Æ¯Á¤ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ ¼­Ä¡ÇØ¼­ Ã£¾ÆÁÖ´Â ÇÔ¼ö
+    //! Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ø¼ï¿½ Ã£ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     public static GameObject FindChildObj(
         this GameObject targetObj_, string objName_)
     {
         GameObject searchResult = default;
         GameObject searchTarget = default;
-        for (int i=0; i< targetObj_.transform.childCount; i++)
+        for (int i = 0; i < targetObj_.transform.childCount; i++)
         {
             searchTarget = targetObj_.transform.GetChild(i).gameObject;
             if (searchTarget.name.Equals(objName_))
@@ -39,7 +39,7 @@ public static partial class GFunc
             {
                 searchResult = FindChildObj(searchTarget, objName_);
 
-                // ¹æ¾î·ÎÁ÷
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (searchResult == null || searchResult == default) { /* Pass */ }
                 else { return searchResult; }
             }
@@ -49,16 +49,16 @@ public static partial class GFunc
     }       // FindChildObj()
 
 
-    //! ¾ÀÀÇ ·çÆ® ¿ÀºêÁ§Æ®¸¦ ¼­Ä¡ÇØ¼­ Ã£¾ÆÁÖ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ø¼ï¿½ Ã£ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     public static GameObject GetRootObj(string objName_)
     {
         Scene activeScene_ = GetActiveScene();
         GameObject[] rootObjs_ = activeScene_.GetRootGameObjects();
 
         GameObject targetObj_ = default;
-        foreach(GameObject rootObj in rootObjs_)
+        foreach (GameObject rootObj in rootObjs_)
         {
-            if(rootObj.name.Equals(objName_))
+            if (rootObj.name.Equals(objName_))
             {
                 targetObj_ = rootObj;
                 return targetObj_;
@@ -69,68 +69,68 @@ public static partial class GFunc
         return targetObj_;
     }       // GetRootObj()
 
-    //! Æ¯Á¤ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ ¸ğµÎ ¸®ÅÏÇÏ´Â ÇÔ¼ö
+    //! Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static List<GameObject> GetChildrenObjs(this GameObject targetObj_)
     {
         List<GameObject> objs_ = new List<GameObject>();
         GameObject searchTarget = default;
-        for(int i = 0; i < targetObj_.transform.childCount; i++)
+        for (int i = 0; i < targetObj_.transform.childCount; i++)
         {
             searchTarget = targetObj_.transform.GetChild(i).gameObject;
             objs_.Add(searchTarget);
         }
-        if (objs_.IsValid()) 
-            { return objs_; }
+        if (objs_.IsValid())
+        { return objs_; }
         else
-            { return default(List<GameObject>); }
+        { return default(List<GameObject>); }
     }   // GetChildrenObjs()
-    //! RectTransform À» Ã£¾Æ¼­ ¸®ÅÏÇÏ´Â ÇÔ¼ö
+    //! RectTransform ï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static RectTransform GetRect(this GameObject obj_)
     {
         return obj_.GetComponentMust<RectTransform>();
     }       // GetRect()
 
-    //! RectTransform ¿¡¼­ sizeDelta¸¦ Ã£¾Æ¼­ ¸®ÅÏÇÏ´Â ÇÔ¼ö
+    //! RectTransform ï¿½ï¿½ï¿½ï¿½ sizeDeltaï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static Vector2 GetRectSizeDelta(this GameObject obj_)
     {
         return obj_.GetComponentMust<RectTransform>().sizeDelta;
     }       // GetRectSizeDelta()
 
-    //! ÇöÀç È°¼ºÈ­ µÇ¾î ÀÖ´Â ¾ÀÀ» Ã£¾ÆÁÖ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     public static Scene GetActiveScene()
     {
         Scene activeScene_ = SceneManager.GetActiveScene();
         return activeScene_;
     }       // GetActiveScene()
 
-    
 
-    //! ÄÄÆ÷³ÍÆ® °¡Á®¿À´Â ÇÔ¼ö
+
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public static T GetComponentMust<T>(this GameObject obj) where T : Component
     {
         T component_ = obj.GetComponent<T>();
 
-        GFunc.Assert(component_.IsValid<T>() != false, 
-            string.Format("{0}¿¡¼­ {1}À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù.",
+        GFunc.Assert(component_.IsValid<T>() != false,
+            string.Format("{0}ï¿½ï¿½ï¿½ï¿½ {1}ï¿½ï¿½(ï¿½ï¿½) Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.",
             obj.name, component_.GetType().Name));
 
         return component_;
     }       // GetComponentMust()
 
-    //! »õ·Î¿î ¿ÀºêÁ§Æ®¸¦ ¸¸µé¾î¼­ ÄÄÆ÷³ÍÆ®¸¦ ¸®ÅÏÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static T CreateObj<T>(string objName) where T : Component
     {
         GameObject newObj = new GameObject(objName);
         return newObj.AddComponent<T>();
     }       // CreateObj()
 
-    //! ¿ÀºêÁ§Æ®¸¦ ÆÄ±«ÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void DestroyObj(this GameObject obj_, float delay = 0.0f)
     {
         Object.Destroy(obj_, delay);
     }
 
-    //! ·ÎÄÃ Æ÷Áö¼ÇÀ» ±âÁØÀ¸·Î µÎ Å¸ÀÏ ¿ÀºêÁ§Æ®ÀÇ À§Ä¡¸¦ ºñ±³ÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static int CompareTileObjToLodalPos2D(GameObject firstObj, GameObject secondObj)
     {
         Vector2 fPos = firstObj.transform.localPosition;
@@ -139,17 +139,17 @@ public static partial class GFunc
         int compareResult = 0;
         if (fPos.y.IsEquals(sPos.y))
         {
-            // x Æ÷Áö¼ÇÀÌ °°À¸¸é °°Àº Å¸ÀÏÀÌ¹Ç·Î 0À» ¸®ÅÏ
+            // x ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (fPos.x.Equals(sPos.x)) { compareResult = 0; }
             else
             {
                 if (fPos.x < sPos.x) { compareResult = -1; }
                 else { compareResult = 1; }
-            }   // else : x Æ÷Áö¼ÇÀÌ ´Ù¸¥ °æ¿ì
+            }   // else : x ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½
             return compareResult;
-        }   // if : y Æ÷Áö¼ÇÀÌ °°Àº °æ¿ì
+        }   // if : y ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-        // y Æ÷Áö¼ÇÀÌ ´Ù¸¥ °æ¿ì ´ë¼Òºñ±³
+        // y ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Òºï¿½
         if (fPos.y < sPos.y) { compareResult = -1; }
         else
         {
@@ -160,25 +160,25 @@ public static partial class GFunc
 
     }
     #region Object Transform Control
-    //! ¿ÀºêÁ§Æ®ÀÇ ·ÎÄÃ ½ºÄÉÀÏÀ» º¯°æÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void SetLocalScale(this GameObject obj_, Vector3 localScale_)
     {
         obj_.transform.localScale = localScale_;
     }   // SetLocalScale()
-    //! ¿ÀºêÁ§Æ®ÀÇ ·ÎÄÃ Æ÷Áö¼ÇÀ» º¯°æÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void SetLocalPos(this GameObject obj_,
         float x, float y, float z)
     {
         obj_.transform.localPosition = new Vector3(x, y, z);
     }       // SetLocalPos()
-            //! ¿ÀºêÁ§Æ®ÀÇ ·ÎÄÃ Æ÷Áö¼ÇÀ» º¯°æÇÏ´Â ÇÔ¼ö
+            //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void SetLocalPos(this GameObject obj_,
         Vector3 localPos)
     {
         obj_.transform.localPosition = localPos;
     }       // SetLocalPos()
 
-    //! ¿ÀºêÁ§Æ®ÀÇ ·ÎÄÃ Æ÷Áö¼ÇÀ» ¿¬»êÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void AddLocalPos(this GameObject obj_,
         float x, float y, float z)
     {
@@ -186,24 +186,61 @@ public static partial class GFunc
             obj_.transform.localPosition + new Vector3(x, y, z);
     }       // AddLocalPos()
 
-    //! ¿ÀºêÁ§Æ®ÀÇ ¾ŞÄ¿ Æ÷Áö¼ÇÀ» ¿¬»êÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void AddAnchoredPos(this GameObject obj_,
         float x, float y)
     {
         obj_.GetRect().anchoredPosition += new Vector2(x, y);
     }       // AddAnchoredPos()
 
-    //! ¿ÀºêÁ§Æ®ÀÇ ¾ŞÄ¿ Æ÷Áö¼ÇÀ» ¿¬»êÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ä¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public static void AddAnchoredPos(this GameObject obj_,
         Vector2 position2D)
     {
         obj_.GetRect().anchoredPosition += position2D;
     }       // AddAnchoredPos()
 
-    //! Æ®·£½ºÆûÀ» »ç¿ëÇØ¼­ ¿ÀºêÁ§Æ®¸¦ ¿òÁ÷ÀÌ´Â ÇÔ¼ö
+    //! Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Ô¼ï¿½
     public static void Translate(this Transform transform_, Vector2 moveVector)
     {
         transform_.Translate(moveVector.x, moveVector.y, 0f);
     }       // Translate()
     #endregion
+
+
+    /// <summary>
+    /// ì§€ì •ëœ ë²”ìœ„ ì•ˆì— íƒ€ê²Ÿê³¼ ê¸°ì¤€ì  ì‚¬ì´ì— ì¥ì• ë¬¼(ë²½ ë“±)ì´ ìˆëŠ”ì§€ í™•ì¸í•˜ì—¬ì„œ ê¸°ì¤€ì  ì‚¬ì´ì— ì¥ì• ë¬¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠëŠ” íƒ€ê²Ÿë§Œì„ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜
+    /// </summary>
+    /// <param name="myTransform">ê¸°ì¤€ì </param>
+    /// <param name="radius">ë²”ìœ„</param>
+    /// <param name="angle">ê°ë„</param>
+    /// <param name="targetMask">íƒ€ê²Ÿ LayerMask</param>
+    /// <param name="obstacleMask">ì¥ì• ë¬¼ LayerMask</param>
+    /// <returns></returns>
+    public static List<Transform> FindTargetInRange(Transform myTransform, float radius, float angle, LayerMask targetMask, LayerMask obstacleMask)
+    {
+        List<Transform> targets = new List<Transform>();
+
+        // viewRadiusë¥¼ ë°˜ì§€ë¦„ìœ¼ë¡œ í•œ ì› ì˜ì—­ ë‚´ targetMask ë ˆì´ì–´ì¸ ì½œë¼ì´ë”ë¥¼ ëª¨ë‘ ê°€ì ¸ì˜´
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(myTransform.position, radius, targetMask);
+
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        {
+            Transform target = targetsInViewRadius[i].transform;
+            Vector3 dirToTarget = (target.position - myTransform.position).normalized;
+
+            // forwardì™€ targetì´ ì´ë£¨ëŠ” ê°ì´ ì„¤ì •í•œ ê°ë„ ë‚´ë¼ë©´
+            if (Vector3.Angle(myTransform.forward, dirToTarget) < angle / 2)
+            {
+                float dstToTarget = Vector3.Distance(myTransform.position, target.transform.position);
+                // íƒ€ê²Ÿìœ¼ë¡œ ê°€ëŠ” ë ˆì´ìºìŠ¤íŠ¸ì— obstacleMaskê°€ ê±¸ë¦¬ì§€ ì•Šìœ¼ë©´ visibleTargetsì— Add
+                if (!Physics.Raycast(myTransform.position, dirToTarget, dstToTarget, obstacleMask))
+                {
+                    targets.Add(target);
+                }
+            }
+        }
+
+        return targets;
+    }
 }
