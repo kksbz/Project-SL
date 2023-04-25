@@ -8,3 +8,4 @@
 2023-04-20 Working Convert Attack to State Pattern and Command Pattern     
 2023-04-21 Refactoring to State Pattern feat Walk and Run      
 2023-04-24 Roll BackStep Base      
+2023-04-25 Solve Roll Issue Status setup       

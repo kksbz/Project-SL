@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerRollState : PlayerBaseState
 {
@@ -15,12 +16,15 @@ public class PlayerRollState : PlayerBaseState
         Ctx.CharacterAnimator.applyRootMotion = true;
         if(Ctx.IsRollPressed)
         {
+            Ctx.SetDirection(Ctx.CurrentMovement);
             Ctx.CombatController.Roll();
         }
         else if(Ctx.IsBackStepPressed)
         {
             Ctx.CombatController.BackStep();
         }
+        Ctx.IsRollPressed = false;
+        Ctx.IsBackStepPressed = false;
         // Ctx.CombatController.();
     }
     public override void UpdateState()

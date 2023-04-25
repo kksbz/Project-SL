@@ -18,6 +18,7 @@ public class PlayerStateMachine : MonoBehaviour
     CameraController    _cameraController;
     CombatController    _combatController;
     AnimationController _animationController;
+    AnimationEventDispatcher _animationEventDispatcher;
 
     // �ִϸ��̼� ��Ʈ�� ���� Ŭ����
     CharacterControlProperty _controlProperty;
@@ -41,8 +42,8 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isGuardPressed;
     bool _isRollPressed;
     bool _isBackStepPressed;
-    float _rollPressedRate = 0.5f;
-
+    float _dodgePressedRate = 0.5f;
+    float _dodgeStartTime = 0f;
     // State Var
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
@@ -62,12 +63,13 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsRunPressed { get { return _isRunPressed; } }
     public bool IsAttackPressed {  get { return _isAttackPressed; } }
     public bool IsGuardPressed { get { return _isGuardPressed; } }
-    public bool IsRollPressed { get { return _isRollPressed; } }
-    public bool IsBackStepPressed { get { return _isBackStepPressed; } }
+    public bool IsRollPressed { get { return _isRollPressed; } set { _isRollPressed = value; } }
+    public bool IsBackStepPressed { get { return _isBackStepPressed; } set { _isBackStepPressed = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
+    public Vector3 CurrentMovement { get { return _currentMovement; } }
     public Vector3 AppliedMovement { get { return _appliedMovement; } }
     public Behavior NextBehavior { get { return _nextBehavior; } set { _nextBehavior = value; } }
 
@@ -84,6 +86,7 @@ public class PlayerStateMachine : MonoBehaviour
         _cameraController   = GetComponent<CameraController>();
         _combatController   = GetComponent<CombatController>();
         _animationController= GetComponent<AnimationController>();
+        _animationEventDispatcher = _characterBody.gameObject.GetComponent<AnimationEventDispatcher>();
 
         _controlProperty = _playerController.controlProperty;
 
@@ -108,13 +111,10 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.Attack.canceled+= OnAttackInput;
         _playerInput.PlayerCharacterInput.Guard.started += OnGuardInput;
         _playerInput.PlayerCharacterInput.Guard.canceled+= OnGuardInput;
-        _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInput;
-        _playerInput.PlayerCharacterInput.Dodge.performed += OnDodgeInput;
-        _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInput;
-        //_playerInput.PlayerCharacterInput.Dodge.started += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Started");
-        //_playerInput.PlayerCharacterInput.Dodge.performed += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Performed");
-        //_playerInput.PlayerCharacterInput.Dodge.canceled += (InputAction.CallbackContext context) => Debug.LogWarning("Tab Canceled"); ;
+        _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInputPress;
+        _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInputRelease;
         Debug.Log("Player State Machine : ��ǲ ���ε�");
+
         // _playerInput.PlayerCharacterInput.
 
     }
@@ -155,14 +155,15 @@ public class PlayerStateMachine : MonoBehaviour
         else if (_cameraController.CameraState == ECameraState.LOCKON)
             newDirection = _cameraController.cameraArm.forward;
 
-        SetBodyDirection(newDirection);
+        SetDirection(newDirection);
 
         _appliedMovement = _currentMovement;
     }
 
-    public void SetBodyDirection(Vector3 newBodyDirection)
+    public void SetDirection(Vector3 newBodyDirection)
     {
-        _characterBody.forward = newBodyDirection;
+        // _characterBody.forward = newBodyDirection;
+        transform.forward = newBodyDirection;
     }
 
     // �Է� �ݹ� �Լ�
@@ -188,21 +189,33 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _isGuardPressed = context.ReadValueAsButton();
     }
-    void OnRollInput(InputAction.CallbackContext context)
+
+    /**
+     * 구르기 입력 로직
+     * Press와 Release 함수로 나누어서 시간 체크하고 
+     * 시간값과 무브값으로 구르기인지 백스텝인지 Release에서 검사
+     * 
+     */
+    void OnDodgeInputPress(InputAction.CallbackContext context)
     {
-        _isRollPressed = context.ReadValueAsButton();
-        Debug.Log($"Roll Input : {_isRollPressed}");
+        _dodgeStartTime = Time.time;
     }
-    void OnDodgeInput(InputAction.CallbackContext context)
+    void OnDodgeInputRelease(InputAction.CallbackContext context)
     {
-        if(_currentMovementInput != Vector2.zero)
+        float pressRate = Time.time - _dodgeStartTime;
+        Debug.Log($"Dodge Press Rate : {pressRate}");
+        if (!(pressRate < _dodgePressedRate))
+            return;
+
+        if (_currentMovementInput != Vector2.zero)
         {
-            _isRollPressed = context.ReadValueAsButton();
-            SetBodyDirection(_currentMovement);
+            Debug.LogWarning($"isRollPressed, Read Value : {context.ReadValueAsButton()}");
+            _isRollPressed = true;
         }
         else
         {
-            _isBackStepPressed = context.ReadValueAsButton();
+            Debug.LogWarning($"isBackStepPressed, Read Value : {context.ReadValueAsButton()}");
+            _isBackStepPressed = true;
         }
     }
     private void OnEnable()

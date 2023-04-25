@@ -95,7 +95,7 @@ public class CombatController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RootMotionRepositioning();
+        // RootMotionRepositioning();
     }
 
     #region Attack
