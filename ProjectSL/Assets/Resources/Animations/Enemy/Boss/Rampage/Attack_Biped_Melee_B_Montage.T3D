@@ -1,0 +1,15 @@
+Begin Object Class=/Script/Engine.AnimMontage Name="Attack_Biped_Melee_B_Montage"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfo Name="SceneThumbnailInfo_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfo_0"
+   End Object
+   BlendIn=(BlendTime=0.100000)
+   CompositeSections(0)=(SectionName="Default",LinkedMontage=AnimMontage'"Attack_Biped_Melee_B_Montage"',SegmentIndex=0,SegmentLength=1.000000,LinkedSequence=AnimSequence'"/Game/ParagonRampage/Characters/Heroes/Rampage/Animations/Attack_Biped_Melee_B.Attack_Biped_Melee_B"')
+   SlotAnimTracks(0)=(SlotName="UpperBody",AnimTrack=(AnimSegments=((AnimReference=AnimSequence'"/Game/ParagonRampage/Characters/Heroes/Rampage/Animations/Attack_Biped_Melee_B.Attack_Biped_Melee_B"',AnimEndTime=1.000000))))
+   Notifies(0)=(NotifyName="SaveAttack",Guid=CB732B0D45695204653C199DE1A91C9D,LinkedMontage=AnimMontage'"Attack_Biped_Melee_B_Montage"',SegmentIndex=0,SegmentLength=1.000000,LinkValue=0.586207,LinkedSequence=AnimSequence'"/Game/ParagonRampage/Characters/Heroes/Rampage/Animations/Attack_Biped_Melee_B.Attack_Biped_Melee_B"')
+   Notifies(1)=(NotifyName="ResetCombo",Guid=E34A54D2441CDCFBF636E6B413BA35D2,LinkedMontage=AnimMontage'"Attack_Biped_Melee_B_Montage"',SegmentIndex=0,SegmentLength=1.000000,LinkValue=0.895650,LinkedSequence=AnimSequence'"/Game/ParagonRampage/Characters/Heroes/Rampage/Animations/Attack_Biped_Melee_B.Attack_Biped_Melee_B"')
+   SequenceLength=1.000000
+   AnimNotifyTracks(0)=(TrackName="1",TrackColor=(R=0.500000,G=0.500000,B=0.500000,A=1.000000))
+   Skeleton=Skeleton'"/Game/ParagonRampage/Characters/Heroes/Rampage/Meshes/Rampage_Skeleton.Rampage_Skeleton"'
+   ThumbnailInfo=SceneThumbnailInfo'"SceneThumbnailInfo_0"'
+End Object
