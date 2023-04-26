@@ -23,7 +23,7 @@ public class SelectPanel : MonoBehaviour
     {
         useBt.onClick.AddListener(() =>
         {
-            if (slot.Item.itemType != ItemData.ItemType.CONSUMPTION)
+            if (slot.Item.itemType != ItemData.ItemType.RECOVERY_CONSUMPTION && slot.Item.itemType != ItemData.ItemType.ATTACK_CONSUMPTION)
             {
                 return;
             }
@@ -65,7 +65,7 @@ public class SelectPanel : MonoBehaviour
     //! 슬롯의 아이템의 장착 여부에 따라 버튼 사용 여부 보여주는 함수
     private void ShowButton()
     {
-        if (slot.Item.itemType == ItemData.ItemType.CONSUMPTION)
+        if (slot.Item.itemType == ItemData.ItemType.RECOVERY_CONSUMPTION || slot.Item.itemType == ItemData.ItemType.ATTACK_CONSUMPTION)
         {
             useBtImage.color = new Color(1, 1, 1, 1);
             useBtText.color = new Color(1, 1, 1, 1);

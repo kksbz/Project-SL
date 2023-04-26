@@ -71,6 +71,7 @@ public class Bonfire : MonoBehaviour
     {
         if (other.tag == GData.PLAYER_MARK)
         {
+            UiManager.Instance.bonfirePanel.SetActive(false);
             UiManager.Instance.interactionBar.SetActive(false);
             UiManager.Instance.interactionText.text = null;
             isEnterPlayer = false;

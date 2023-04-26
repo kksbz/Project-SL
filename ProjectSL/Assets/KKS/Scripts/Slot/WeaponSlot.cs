@@ -49,7 +49,7 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
             Debug.Log("무기 슬롯 선택함");
             Inventory.Instance.selectSlot = this;
             Inventory.Instance.InitSameTypeEquipSlot(slotType);
-            Inventory.Instance.equipInvenText.text = "무기";
+            Inventory.Instance.equipInvenText.text = "무기 & 방패";
             Inventory.Instance.equipInvenPanel.SetActive(true);
             Inventory.Instance.equipSlotPanel.SetActive(false);
         });
@@ -63,6 +63,8 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
             equipItem = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{_item.itemID}"));
             equipItem.GetComponent<Item>().pickupArea.SetActive(false);
             equipItem.SetActive(false);
+            Debug.Log($"템장착 완료 생성된 오브젝트 : {equipItem.name}");
+            UiManager.Instance.quickSlotBar.LoadQuickSlotData();
         }
     } // AddItem
 
@@ -72,6 +74,7 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
         // 생성된 아이템 파괴
         Destroy(equipItem);
         equipItem = null;
+        UiManager.Instance.quickSlotBar.LoadQuickSlotData();
     } // RemoveItem
 
     public void OnPointerEnter(PointerEventData eventData)

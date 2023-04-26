@@ -20,9 +20,9 @@ public class Inventory : Singleton<Inventory>
     public ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     public SelectPanel selectPanel; // 선택창 패널
 
-    public List<WeaponSlot> weaponSlotList;
-    public List<ArmorSlot> armorSlotList;
-    public List<ConsumptionSlot> consumptionSlotList;
+    public List<WeaponSlot> weaponSlotList; // 무기,방패 장착슬롯 리스트
+    public List<ArmorSlot> armorSlotList; // 방어구 장착슬롯 리스트
+    public List<ConsumptionSlot> consumptionSlotList; // 소모품 장착슬롯 리스트
 
     public List<ItemData> inventory = new List<ItemData>(); // 인벤토리
     public List<EquipSlot> equipSlots = new List<EquipSlot>(); // 장비인벤 슬롯
@@ -85,11 +85,11 @@ public class Inventory : Singleton<Inventory>
             // 장비인벤 슬롯 세팅
             GameObject slot = Instantiate(equipSlotPrefab);
             EquipSlot equipSlot = slot.GetComponent<EquipSlot>();
-            slot.transform.parent = equipInvenPanel.transform.Find("Scroll View/Viewport/Content").transform;
+            slot.transform.SetParent(equipInvenPanel.transform.Find("Scroll View/Viewport/Content").transform);
             // 통합인벤 슬롯 세팅
             GameObject tSlot = Instantiate(totalSlotPrefab);
             Slot totalSlot = tSlot.GetComponent<Slot>();
-            tSlot.transform.parent = totalInvenPanel.transform.Find("Scroll View/Viewport/Content").transform;
+            tSlot.transform.SetParent(totalInvenPanel.transform.Find("Scroll View/Viewport/Content").transform);
             equipSlots.Add(equipSlot);
             totalSlots.Add(totalSlot);
             inventory.Add(null);
@@ -123,6 +123,11 @@ public class Inventory : Singleton<Inventory>
                     if (_item.Quantity < itemData.maxQuantity)
                     {
                         _item.Quantity++;
+                        InitSlotItemData();
+                        if (_item.IsEquip == true)
+                        {
+                            UiManager.Instance.quickSlotBar.LoadQuickSlotData();
+                        }
                         return;
                     }
                 }
@@ -135,7 +140,8 @@ public class Inventory : Singleton<Inventory>
             if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
             {
                 inventory[i] = item;
-                Debug.Log($"인벤토리 빈 슬롯에 추가된 아이템 : {inventory[i].itemName}");
+                //Debug.Log($"인벤토리 빈 슬롯에 추가된 아이템 : {inventory[i].itemName}");
+                InitSlotItemData();
                 return;
             }
         }
@@ -153,6 +159,7 @@ public class Inventory : Singleton<Inventory>
         totalSlot.Item = null;
         totalSlots.Add(totalSlot);
         inventory.Add(item);
+        InitSlotItemData();
     } // AddItem
 
     //! 아이템 버리는 함수
@@ -164,7 +171,7 @@ public class Inventory : Singleton<Inventory>
             {
                 // 버리는 아이템의 프리팹을 인스턴스하고 아이템데이터 대입
                 GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemData.itemID}"));
-                item.transform.position = GameManager.Instance.player.transform.position;
+                item.transform.position = GameManager.Instance.player.transform.position + (Vector3.up * 0.5f);
                 item.GetComponent<Item>().itemData = itemData;
                 inventory[i] = null;
                 return;
@@ -192,15 +199,19 @@ public class Inventory : Singleton<Inventory>
         foreach (ItemData _item in inventory)
         {
             // 같은 타입의 아이템만 따로 캐싱
-            if (_item != null && _item.itemType == _itemType)
+            if (_itemType == ItemType.WEAPON || _itemType == ItemType.SHIELD)
+            {
+                if (_item != null && (_item.itemType == ItemType.WEAPON || _item.itemType == ItemType.SHIELD))
+                {
+                    sameTypes.Add(_item);
+                }
+            }
+            else if (_item != null && _item.itemType == _itemType)
             {
                 sameTypes.Add(_item);
             }
         }
-        for (int i = 0; i < sameTypes.Count; i++)
-        {
-            Debug.Log($"{sameTypes.Count}, {sameTypes[i].itemName}, {sameTypes[i].Quantity}");
-        }
+
         // itemID 기준으로 오름차순 정렬
         sameTypes = sameTypes.OrderBy(x => x.itemID).ToList();
         for (int i = 0; i < equipSlots.Count; i++)
@@ -226,12 +237,30 @@ public class Inventory : Singleton<Inventory>
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = weaponSlotList[j];
+                                        weaponSlotList[j].Item = equipSlots[i].Item;
                                     }
                                 }
                             }
                             break;
-                        case ItemType.CONSUMPTION:
-                            for (int j = 0; j < consumptionSlotList.Count; j++)
+                        case ItemType.SHIELD:
+                            for (int j = 0; j < weaponSlotList.Count; j++)
+                            {
+                                // 무기슬롯의 아이템이 존재할 경우
+                                if (weaponSlotList[j].Item != null)
+                                {
+                                    // 무기슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
+                                    if (weaponSlotList[j].Item.itemID == equipSlots[i].Item.itemID
+                                        && equipSlots[i].Item.IsEquip == true)
+                                    {
+                                        // 슬롯 연동
+                                        equipSlots[i].equipSlot = weaponSlotList[j];
+                                        weaponSlotList[j].Item = equipSlots[i].Item;
+                                    }
+                                }
+                            }
+                            break;
+                        case ItemType.ATTACK_CONSUMPTION:
+                            for (int j = 0; j < 3; j++)
                             {
                                 // 소모품슬롯의 아이템이 존재할 경우
                                 if (consumptionSlotList[j].Item != null)
@@ -242,6 +271,24 @@ public class Inventory : Singleton<Inventory>
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
+                                        consumptionSlotList[j].Item = equipSlots[i].Item;
+                                    }
+                                }
+                            }
+                            break;
+                        case ItemType.RECOVERY_CONSUMPTION:
+                            for (int j = 3; j < consumptionSlotList.Count; j++)
+                            {
+                                // 소모품슬롯의 아이템이 존재할 경우
+                                if (consumptionSlotList[j].Item != null)
+                                {
+                                    // 소모품슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
+                                    if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
+                                        && equipSlots[i].Item.IsEquip == true)
+                                    {
+                                        // 슬롯 연동
+                                        equipSlots[i].equipSlot = consumptionSlotList[j];
+                                        consumptionSlotList[j].Item = equipSlots[i].Item;
                                     }
                                 }
                             }
@@ -258,6 +305,7 @@ public class Inventory : Singleton<Inventory>
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = armorSlotList[j];
+                                        armorSlotList[j].Item = equipSlots[i].Item;
                                     }
                                 }
                             }
@@ -314,7 +362,7 @@ public class Inventory : Singleton<Inventory>
                 sameTypes.Add(_item);
             }
         }
-        Debug.Log($"{sameTypes.Count}");
+        //Debug.Log($"{sameTypes.Count}");
         // itemID 기준으로 오름차순 정렬
         sameTypes = sameTypes.OrderBy(x => x.itemID).ToList();
         for (int i = 0; i < totalSlots.Count; i++)
@@ -331,4 +379,71 @@ public class Inventory : Singleton<Inventory>
             }
         }
     } // InitSameTypeTotalSlot
+
+    //! 장착슬롯 데이터 초기화 함수
+    private void InitSlotItemData()
+    {
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i] != null && inventory[i].IsEquip == true)
+            {
+                switch (inventory[i].itemType)
+                {
+                    case ItemType.WEAPON:
+                        foreach (var wSlot in weaponSlotList)
+                        {
+                            if (wSlot.Item != null && wSlot.Item.itemID == inventory[i].itemID)
+                            {
+                                wSlot.Item = inventory[i];
+                                break;
+                            }
+                        }
+                        break;
+                    case ItemType.SHIELD:
+                        foreach (var wSlot in weaponSlotList)
+                        {
+                            if (wSlot.Item != null && wSlot.Item.itemID == inventory[i].itemID)
+                            {
+                                wSlot.Item = inventory[i];
+                                break;
+                            }
+                        }
+                        break;
+                    case ItemType.ATTACK_CONSUMPTION:
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (consumptionSlotList[j].Item != null)
+                            {
+                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
+                                {
+                                    consumptionSlotList[j].Item = inventory[i];
+                                }
+                            }
+                        }
+                        break;
+                    case ItemType.RECOVERY_CONSUMPTION:
+                        for (int j = 3; j < consumptionSlotList.Count; j++)
+                        {
+                            if (consumptionSlotList[j].Item != null)
+                            {
+                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
+                                {
+                                    consumptionSlotList[j].Item = inventory[i];
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        foreach (var aSlot in armorSlotList)
+                        {
+                            if (aSlot.Item != null && aSlot.Item.itemID == inventory[i].itemID)
+                            {
+                                aSlot.Item = inventory[i];
+                            }
+                        }
+                        break;
+                } // switch
+            } // if
+        } // for
+    } // InitSlotItemData
 } // Inventory

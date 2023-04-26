@@ -8,15 +8,19 @@ using System.Linq;
 public class DataManager : Singleton<DataManager>
 {
     public List<string[]> itemDatas = new List<string[]>(); // 아이템 데이터 리스트
-    private string path = "C:/unitykks/ProjectSL/SaveData"; // 데이터 저장 경로
+    //private string path = "C:/unitykks/ProjectSL/SaveData"; // 데이터 저장 경로
+    private string path; // 데이터 저장 경로
     public int slotNum; // 세이브 슬롯 넘버
     public bool[] hasSavefile; // 세이브 슬롯의 데이터 존재 유무
     private string wSlot = "무기슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string aSlot = "방어구슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string cSlot = "소모품슬롯"; // json 데이터 파싱할 때 슬롯 구분자
+    private string qSlot = "퀵슬롯 왼손/오른손/공격소모품/회복소모품"; // json 데이터 파싱할 때 슬롯 구분자
     private string bonfire = "화톳불리스트"; // json 데이터 파싱할 때 슬롯 구분자
     public override void InitManager()
     {
+        // 데이터 저장 경로 설정
+        path = Application.dataPath + "/SaveFolder/";
         StartCoroutine(GoogleSheetManager.InitData());
         hasSavefile = new bool[4];
         for (int i = 0; i < hasSavefile.Length; i++)
@@ -37,7 +41,11 @@ public class DataManager : Singleton<DataManager>
         saveData += SaveEquipSlotData();
         saveData += SaveBonfireList();
         Debug.Log(saveData);
-        File.WriteAllText(path + slotNum.ToString(), saveData);
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        File.WriteAllText(path + "SaveData" + slotNum.ToString() + ".json", saveData);
     } // SaveData
 
     //! 인벤토리 데이터 저장하는 함수
@@ -45,7 +53,7 @@ public class DataManager : Singleton<DataManager>
     {
         string data = null;
         string saveData = null;
-        foreach (var item in Inventory.Instance.inventory)
+        foreach (ItemData item in Inventory.Instance.inventory)
         {
             // 인벤토리안의 아이템들을 Json파일로 저장 아이템 구분: \n 사용
             data += JsonUtility.ToJson(item) + "\n";
@@ -53,7 +61,7 @@ public class DataManager : Singleton<DataManager>
         // 저장된 Json파일의 데이터를 \n 기준으로 잘라서 배열에 저장
         string[] datas = data.Split('\n');
         Debug.Log(datas.Length);
-        foreach (var _data in datas)
+        foreach (string _data in datas)
         {
             bool isNullData = true;
             if (!string.IsNullOrWhiteSpace(_data))
@@ -112,6 +120,13 @@ public class DataManager : Singleton<DataManager>
                 SaveEquipSlotData += JsonUtility.ToJson(cSlotList[i].Item) + "\n";
             }
         }
+
+        // 퀵슬롯 데이터 저장 qSlot으로 구분
+        SaveEquipSlotData += qSlot + "\n";
+        SaveEquipSlotData += UiManager.Instance.quickSlotBar.leftArmNum.ToString() + "/" +
+            UiManager.Instance.quickSlotBar.rightArmNum.ToString() + "/" +
+            UiManager.Instance.quickSlotBar.attackC_Num.ToString() + "/" +
+            UiManager.Instance.quickSlotBar.recoveryC_Num.ToString() + "\n";
         return SaveEquipSlotData;
     } // SaveEquipSlotData
 
@@ -136,7 +151,7 @@ public class DataManager : Singleton<DataManager>
         }
         List<string> newItemDatas = new List<string>();
         // 저장된 Json파일을 불러옴
-        string data = File.ReadAllText(path + slotNum.ToString());
+        string data = File.ReadAllText(path + "SaveData" + slotNum.ToString() + ".json");
         TextAsset inventoryData = new TextAsset(data);
         // \n을 기준으로 잘라서 배열에 데이터 저장
         string[] itemDatas = inventoryData.text.Split("\n");
@@ -215,7 +230,8 @@ public class DataManager : Singleton<DataManager>
         // 소모품 장착 슬롯 데이터 로드
         for (int i = number; i < itemDatas.Length - 1; i++)
         {
-            if (itemDatas[i] == bonfire)
+            // qSlot의 값을 만나면 그 다음 줄부턴 퀵슬롯 데이터
+            if (itemDatas[i] == qSlot)
             {
                 number = i + 1;
                 break;
@@ -234,6 +250,23 @@ public class DataManager : Singleton<DataManager>
                     break;
                 }
             }
+        }
+
+        // 퀵슬롯 데이터 로드
+        for (int i = number; i < itemDatas.Length - 1; i++)
+        {
+            // bonfire의 값을 만나면 그 다음 줄부턴 화톳불 데이터
+            if (itemDatas[i] == bonfire)
+            {
+                number = i + 1;
+                break;
+            }
+            string[] qSlotDatas = itemDatas[i].Split("/");
+            UiManager.Instance.quickSlotBar.leftArmNum = int.Parse(qSlotDatas[0]);
+            UiManager.Instance.quickSlotBar.rightArmNum = int.Parse(qSlotDatas[1]);
+            UiManager.Instance.quickSlotBar.attackC_Num = int.Parse(qSlotDatas[2]);
+            UiManager.Instance.quickSlotBar.recoveryC_Num = int.Parse(qSlotDatas[3]);
+            UiManager.Instance.quickSlotBar.LoadQuickSlotData();
         }
 
         //! 화톳불 리스트 데이터 로드
