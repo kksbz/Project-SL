@@ -1,5 +1,129 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &241428509727671644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2849560405821966954}
+  m_Layer: 0
+  m_Name: RightArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2849560405821966954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241428509727671644}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.1, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5023651066493560568}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &829689811947846928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8612031376203858973}
+  m_Layer: 0
+  m_Name: LeftArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8612031376203858973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829689811947846928}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5023651066307799135}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!1 &3246177124621718018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158564204477441280}
+  m_Layer: 0
+  m_Name: RightArmWeaponSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158564204477441280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246177124621718018}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5023651065373197723}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!1 &3794724852308818746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1461218019561066769}
+  m_Layer: 0
+  m_Name: LeftArmShieldSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1461218019561066769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3794724852308818746}
+  m_LocalRotation: {x: 0.04557152, y: 0.6634518, z: 0.7457287, w: -0.040543575}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5023651067220913080}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -83.317, y: 6.994, z: 180}
 --- !u!1 &5023651065213455831
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +364,8 @@ Transform:
   m_LocalPosition: {x: 0.09929947, y: -0.047029555, z: -0.0033796947}
   m_LocalScale: {x: 0.9999999, y: 1.0000004, z: 1.0000004}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1158564204477441280}
   m_Father: {fileID: 5023651066485655248}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -77.42365, y: 70.64227, z: -39.315895}
@@ -1268,7 +1393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatController: {fileID: 5023651067267725314}
+  _combatController: {fileID: 0}
+  _characterController: {fileID: 0}
 --- !u!114 &2359768715072563229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1572,7 +1698,8 @@ Transform:
   m_LocalPosition: {x: -0.77885467, y: -0.6960197, z: 0.43869576}
   m_LocalScale: {x: 1.0000006, y: 0.99999994, z: 1.0000011}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8612031376203858973}
   m_Father: {fileID: 5023651066425937902}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 25.885832, y: 152.12262, z: 33.98772}
@@ -1800,7 +1927,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2849560405821966954}
   m_Father: {fileID: 5023651066425937902}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2838,7 +2966,8 @@ Transform:
   m_LocalPosition: {x: -0.24802049, y: 0.013360786, z: 0.0482903}
   m_LocalScale: {x: 0.99999976, y: 1, z: 1.0000006}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1461218019561066769}
   m_Father: {fileID: 5023651065383105558}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 83.63031, y: 0.00017439504, z: 6.991217}
@@ -2896,6 +3025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3c1bc3f60a2654283c0efe2eeb85b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftArm: {fileID: 0}
+  rightArm: {fileID: 0}
 --- !u!143 &5023651067267725318
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2934,6 +3065,8 @@ MonoBehaviour:
   characterController: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   inputDir: {x: 0, y: 0, z: 0}
+  leftArm: {fileID: 0}
+  rightArm: {fileID: 0}
 --- !u!114 &5023651067267725316
 MonoBehaviour:
   m_ObjectHideFlags: 0

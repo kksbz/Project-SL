@@ -38,9 +38,17 @@ public class CombatController : MonoBehaviour
 
     #endregion  // Roll Field
 
+    #region Guard Field
+
+    private bool _isGuard = false;
+
+    #endregion  // Guard Field
+
     // Property
     public bool IsAttacking { get { return _isAttacking; } }
+    public bool IsGuard { get { return _isGuard; } }
     public bool IsDodging { get { return _isDodging; } }
+    public bool IsPlayingRootMotion { get { return _isPlayingRMAnimation; } }
 
     [SerializeField]
     private Animator _animator;
@@ -73,10 +81,11 @@ public class CombatController : MonoBehaviour
         // �Լ� ���ε�
         _animEventDispatcher.onAnimationStart.AddListener(StartedRootMotionAnimation);
         _animEventDispatcher.onAnimationEnd.AddListener(EndedRootMotionAnimation);
+        _animEventDispatcher.onAnimationEnd.AddListener(EndedTransitionAnimation);
 
         _animEventDispatcher.onAnimationEnd.AddListener(InitializeAttackProperty);
         _animEventDispatcher.onAnimationEnd.AddListener(InitializeDodgeProperty);
-        _animEventDispatcher.onAnimationEnd.AddListener(RootMotionRepositioning);
+        // _animEventDispatcher.onAnimationEnd.AddListener(RootMotionRepositioning);
     }
 
     // Update is called once per frame
@@ -95,7 +104,7 @@ public class CombatController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RootMotionRepositioning();
+        // RootMotionRepositioning();
     }
 
     #region Attack
@@ -242,6 +251,50 @@ public class CombatController : MonoBehaviour
 
     #endregion // Attack
 
+    #region Guard
+
+    public void OnGuard()
+    {
+        if (_isGuard)
+            return;
+
+        _isGuard = true;
+        // animation Set Layer Weight
+        _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 1);
+        _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 1);
+        // transition
+        // _animator.SetBool("IsGuard", _isGuard);
+        TransitionAnimationPlay();
+        // guard
+
+    }
+    public void OffGuard()
+    {
+        if (!_isGuard)
+            return;
+
+        _isGuard = false;
+        // animation Set Layer Weight
+        _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 1);
+        _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 0);
+        // _animator.SetBool("IsGuard", _isGuard);
+        TransitionAnimationPlay();
+    }
+
+    void TransitionAnimationPlay()
+    {
+        string transitionTag = string.Empty;
+        if (_isGuard)
+            transitionTag = "Transition_Guard_Begin";
+        else
+            transitionTag = "Transition_Guard_End";
+        PoseAction poseAction = new PoseAction(_animator, transitionTag, AnimationController.LAYERINDEX_TRANSITIONLAYER, 0);
+        nextPA = poseAction;
+        poseAction.Execute();
+    }
+
+    #endregion  // Guard
+
     #region Dodge
 
     public void Roll()
@@ -304,17 +357,14 @@ public class CombatController : MonoBehaviour
         meshObjTR.localPosition = Vector3.zero;
 
     }
-    public void RootMotionRepositioning()
-    {
-        if (!_isPlayingRMAnimation)
-            return;
-
-        Debug.LogWarning("Playing Root Motion");
-        transform.position = meshObjTR.position - meshObjTR.localPosition;
-    }
+    
     private bool IsAttackAnimation(string name)
     {
         return name.StartsWith("Attack");
+    }
+    private bool IsTransitionAnimation(string name)
+    {
+        return name.StartsWith("Transition");
     }
     private bool IsRollAnimation(string name)
     {
@@ -342,5 +392,27 @@ public class CombatController : MonoBehaviour
             return;
 
         _isPlayingRMAnimation = false;
+    }
+    public void EndedTransitionAnimation(string name)
+    {
+        if (!IsTransitionAnimation(name))
+            return;
+
+        _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 0);
+    }
+
+    /**
+     * Legacy RootMotion Code
+     * 루트모션 애니메이션 재생후 끝날 때 플레이어 캐릭터 오브젝트의 위치를 메쉬 오브젝트의 위치로 맞춰주는 함수
+     * 루트모션 애니메이션때 콜라이더 상호작용 없이 통과되는 이슈가 있었는데 Animator의 RootMotion Option을 
+     * OnAnimatorMove 함수를 작성하여 Handled by Script로 변경하여 함수 내에서 움직임을 처리하는 것으로 해결
+     */
+    public void RootMotionRepositioning()
+    {
+        if (!_isPlayingRMAnimation)
+            return;
+
+        Debug.LogWarning("Playing Root Motion");
+        transform.position = meshObjTR.position - meshObjTR.localPosition;
     }
 }

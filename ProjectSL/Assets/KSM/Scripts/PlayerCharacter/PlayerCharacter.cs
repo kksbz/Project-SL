@@ -14,6 +14,12 @@ public class PlayerCharacter : CharacterBase
     public Animator animator { get; private set; }
     public CharacterControlProperty controlProperty { get; private set; }
 
+    // Status Field
+    private HealthSystem _healthSystem = new HealthSystem();
+    private PlayerStatus _status = new PlayerStatus();
+
+
+
     public BehaviorStateMachine SM_Behavior { get; private set; }
     public LookStateMachine SM_Look { get; private set; }
 
