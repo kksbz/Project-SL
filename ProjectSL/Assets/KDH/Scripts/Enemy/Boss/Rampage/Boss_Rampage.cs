@@ -6,7 +6,9 @@ public class Boss_Rampage : BossBase
 {
     public Boss_Rampage_Status BossStatus { get; private set; }
 
+    public Transform rockRaiseTransform;
     public GameObject rockPrefab;
+    public GameObject rock;
 
     protected override void Init()
     {
@@ -57,7 +59,6 @@ public class Boss_Rampage : BossBase
             {
                 return new Boss_Chase_State(this);
             }
-
         }
     }
 
@@ -69,12 +70,16 @@ public class Boss_Rampage : BossBase
     #region Pattern
     public void RockRaise()
     {
-
+        rock.SetActive(true);
     }
 
     public void RockThrow()
     {
-
+        GameObject tempObject_ = Instantiate(rockPrefab, rock.transform.position, Quaternion.identity);
+        tempObject_.GetComponent<Rock>().damage = 10f;
+        tempObject_.GetComponent<Rock>().target = Target;
+        tempObject_.GetComponent<Rock>().Throwing();
+        rock.SetActive(false);
     }
     #endregion
 }
