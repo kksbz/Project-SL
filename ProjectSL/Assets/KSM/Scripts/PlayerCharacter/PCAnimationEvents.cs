@@ -5,36 +5,53 @@ using UnityEngine;
 public class PCAnimationEvents : MonoBehaviour
 {
     [SerializeField]
-    private CombatController combatController;
+    private CombatController _combatController;
+    [SerializeField]
+    private CharacterController _characterController;
+
+    private Animator _animator;
 
     //private AnimationEventDispatcher _animationEventDispatcher;
     
     private void Awake()
     {
         //_animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
+        _animator = GetComponent<Animator>();
     }
     private void Start()
     {
         // meshObjTR = transform;
     }
+    
+    private void OnAnimatorMove()
+    {
+        if (!_combatController.IsPlayingRootMotion)
+            return;
+
+        float delta = Time.deltaTime;
+        Vector3 deltaPosition = _animator.deltaPosition;
+        deltaPosition.y = 0f;
+        Vector3 velocity = deltaPosition / delta;
+        _characterController.SimpleMove(velocity);
+    }
     public void OnSetCanNextCombo()
     {
-        combatController.Event_SetCanNextCombo();
+        _combatController.Event_SetCanNextCombo();
     }
     public void OnSetCantNextCombo()
     {
-        combatController.Event_SetCantNextCombo();
+        _combatController.Event_SetCantNextCombo();
     }
     public void OnSetExecuteNextCombo()
     {
-        combatController.Event_SetOnExecuteNextCombo();
+        _combatController.Event_SetOnExecuteNextCombo();
     }
     public void OnSetOffExecuteNextCombo()
     {
-        combatController.Event_SetOffExecuteNextCombo();
+        _combatController.Event_SetOffExecuteNextCombo();
     }
     public void On_TempAttackCheck()
     {
-        combatController.AttackCheck();
+        _combatController.AttackCheck();
     }
 }

@@ -140,17 +140,19 @@ public class PlayerStateMachine : MonoBehaviour
 
         _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
         _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
-        if (!_isMovementPressed)
-            return;
+
         Transform cameraArm = _cameraController.cameraArm;
         Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
         Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
 
         _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
 
+        if (!_isMovementPressed)
+            return;
+
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����
-        if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed)
+        if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed || _combatController.IsDodging)
             newDirection = _currentMovement;
         else if (_cameraController.CameraState == ECameraState.LOCKON)
             newDirection = _cameraController.cameraArm.forward;
@@ -160,10 +162,17 @@ public class PlayerStateMachine : MonoBehaviour
         _appliedMovement = _currentMovement;
     }
 
+    public Vector3 CalculateCurrentMovement()
+    {
+        Vector3 newCurMovement = Vector3.zero;
+        
+        return newCurMovement;
+    }
+
     public void SetDirection(Vector3 newBodyDirection)
     {
-        // _characterBody.forward = newBodyDirection;
-        transform.forward = newBodyDirection;
+        _characterBody.forward = newBodyDirection;
+        // transform.forward = newBodyDirection;
     }
 
     // �Է� �ݹ� �Լ�

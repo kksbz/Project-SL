@@ -32,15 +32,7 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        /*if(Ctx.IsAttackPressed) // * 스테미너 조건 추가 작업 예상
-        {
-            SwitchState(Factory.Attack());
-        }
-        else */if(Ctx.IsMovementPressed && Ctx.IsRollPressed) // * 스테미너 조건 추가 작업 예상
-        {
-            SwitchState(Factory.Roll());
-        }
-        else if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
+        if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
         {
             //Debug.Log("Switch Jog State");
             SwitchState(Factory.Jog());

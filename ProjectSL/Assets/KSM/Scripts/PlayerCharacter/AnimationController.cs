@@ -17,12 +17,14 @@ public class AnimationController : MonoBehaviour
     private bool isLockOn;
 
     // constants layer index
-    public static readonly int LAYERINDEX_BASELAYER     = 0;
-    public static readonly int LAYERINDEX_RUNLAYER      = 1;
-    public static readonly int LAYERINDEX_WALKLAYER     = 2;
-    public static readonly int LAYERINDEX_UPPERLAYER    = 3;
-    public static readonly int LAYERINDEX_ARMLAYER      = 4;
-    public static readonly int LAYERINDEX_FULLLAYER     = 5;
+    public static readonly int LAYERINDEX_BASELAYER         = 0;
+    public static readonly int LAYERINDEX_GUARDLAYER        = 1;
+    public static readonly int LAYERINDEX_RUNLAYER          = 2;
+    public static readonly int LAYERINDEX_WALKLAYER         = 3;
+    public static readonly int LAYERINDEX_UPPERLAYER        = 4;
+    public static readonly int LAYERINDEX_ARMLAYER          = 5;
+    public static readonly int LAYERINDEX_TRANSITIONLAYER   = 6;
+    public static readonly int LAYERINDEX_FULLLAYER         = 7;
     public float Speed
     {
         set { speed = value; }

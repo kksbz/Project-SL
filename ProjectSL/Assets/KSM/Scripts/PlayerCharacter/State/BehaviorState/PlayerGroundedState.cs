@@ -35,6 +35,10 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Roll());
         }
+        else if(Ctx.IsGuardPressed)
+        {
+            SwitchState(Factory.Guard());
+        }
     }
     public override void InitializeSubState()
     {

@@ -10,6 +10,12 @@ public enum EArmState
 }
 public class EquipmentController : MonoBehaviour
 {
+    // 컴포넌트
+    [SerializeField]
+    private Animator _animator;
+    [SerializeField]
+    private CombatController _combatController;
+
     #region Equipment Item
 
     // 무기
@@ -46,8 +52,10 @@ public class EquipmentController : MonoBehaviour
 
     #region Weapon Socket
     // Dictionary<string, Transform> _dic_WeaponSockets = new Dictionary<string, Transform>();
+    [SerializeField]
     private Transform _rigthArmSocket;
-    private Transform _LeftArmSocket;
+    [SerializeField]
+    private Transform _leftArmSocket;
 
     public static readonly string WEAPONSOCKET_RIGHT_ARM    = "RightArm";
     public static readonly string WEAPONSOCKET_LEFT_ARM     = "LeftArm";
@@ -57,7 +65,7 @@ public class EquipmentController : MonoBehaviour
     private void Awake()
     {
         _rigthArmSocket = gameObject.FindChildObj(WEAPONSOCKET_RIGHT_ARM).transform;
-        _LeftArmSocket = gameObject.FindChildObj(WEAPONSOCKET_LEFT_ARM).transform;
+        _leftArmSocket = gameObject.FindChildObj(WEAPONSOCKET_LEFT_ARM).transform;
     }
     // Start is called before the first frame update
     void Start()
