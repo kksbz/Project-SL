@@ -136,16 +136,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetMoveDirection()
     {
-        Vector3 inputDir = new Vector3(_currentMovementInput.x, 0f, _currentMovementInput.y);
-
-        _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
-        _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
-
-        Transform cameraArm = _cameraController.cameraArm;
-        Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-        Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-
-        _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
+        SetCurrentMovement();
 
         if (!_isMovementPressed)
             return;
@@ -168,6 +159,19 @@ public class PlayerStateMachine : MonoBehaviour
         
         return newCurMovement;
     }
+    public void SetCurrentMovement()
+    {
+        Vector3 inputDir = new Vector3(_currentMovementInput.x, 0f, _currentMovementInput.y);
+
+        _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
+        _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
+
+        Transform cameraArm = _cameraController.cameraArm;
+        Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+        Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+
+        _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
+    }
 
     public void SetDirection(Vector3 newBodyDirection)
     {
@@ -179,6 +183,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
+        SetCurrentMovement();
         _isMovementPressed = _currentMovementInput.x != _zero || _currentMovementInput.y != _zero;
     }
     void OnRunInput(InputAction.CallbackContext context)

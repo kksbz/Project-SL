@@ -41,7 +41,11 @@ public class PlayerRollState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(!Ctx.CombatController.IsDodging)
+        if(!Ctx.CombatController.IsDodging && Ctx.IsGuardPressed)
+        {
+            SwitchState(Factory.Guard());
+        }
+        else if(!Ctx.CombatController.IsDodging)
         {
             Debug.LogWarning("Switch State Roll to Grounded");
             SwitchState(Factory.Grounded());

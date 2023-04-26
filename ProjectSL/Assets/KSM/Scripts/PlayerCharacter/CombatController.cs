@@ -347,6 +347,12 @@ public class CombatController : MonoBehaviour
 
     #endregion  // Dodge
 
+    public void InitializeAllProperty()
+    {
+        ExitAttack();
+        DodgeEndState();
+    }
+
     public void RootMotionRepositioning(string name)
     {
         if (!IsRootMotionAnimation(name))
@@ -392,6 +398,7 @@ public class CombatController : MonoBehaviour
             return;
 
         _isPlayingRMAnimation = false;
+        InitializeAllProperty();
     }
     public void EndedTransitionAnimation(string name)
     {

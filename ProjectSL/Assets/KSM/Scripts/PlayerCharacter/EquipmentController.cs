@@ -46,6 +46,12 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     ItemData _ring_4;
 
+    // 임시 기본 장비
+    [SerializeField]
+    private GameObject _defaultRightWeaponPrefab;
+    [SerializeField]
+    private GameObject _defaultLeftShieldPrefab;
+
     #endregion  // Equipment Item Data
 
     EArmState _currentArmState = EArmState.OneHanded;
@@ -53,24 +59,29 @@ public class EquipmentController : MonoBehaviour
     #region Weapon Socket
     // Dictionary<string, Transform> _dic_WeaponSockets = new Dictionary<string, Transform>();
     [SerializeField]
-    private Transform _rigthArmSocket;
+    private Transform _rightArmSocket;
     [SerializeField]
     private Transform _leftArmSocket;
 
-    public static readonly string WEAPONSOCKET_RIGHT_ARM    = "RightArm";
-    public static readonly string WEAPONSOCKET_LEFT_ARM     = "LeftArm";
+    public static readonly string WEAPONSOCKET_RIGHT_ARM    = "RightArmWeaponSocket";
+    public static readonly string WEAPONSOCKET_LEFT_ARM     = "LeftArmShieldSocket";
 
     #endregion  // Weapon Socket
 
     private void Awake()
     {
-        _rigthArmSocket = gameObject.FindChildObj(WEAPONSOCKET_RIGHT_ARM).transform;
+        _animator = gameObject.FindChildObj("Mesh").GetComponent<Animator>();
+        _combatController = GetComponent<CombatController>();
+
+        _rightArmSocket = gameObject.FindChildObj(WEAPONSOCKET_RIGHT_ARM).transform;
         _leftArmSocket = gameObject.FindChildObj(WEAPONSOCKET_LEFT_ARM).transform;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        // 임시 부착
+        AttachRightWeaponObj();
+        AttachLeftWeaponObj();
     }
 
     // Update is called once per frame
@@ -84,18 +95,28 @@ public class EquipmentController : MonoBehaviour
 
     }
 
-    /*
-    // 퀵슬롯 오른손 장비 검색 후 소켓에 자식으로 붙여주기
+    
+    // 퀵슬롯 오른손 장비 검색 후 소켓에 자식으로 붙여주기 * 임시
     public void AttachRightWeaponObj()
     {
-
+        if(_defaultRightWeaponPrefab != null)
+        {
+            _defaultRightWeaponPrefab.transform.SetParent(_rightArmSocket);
+            _defaultRightWeaponPrefab.transform.localPosition = Vector3.zero;
+            _defaultRightWeaponPrefab.transform.localRotation = Quaternion.identity;
+        }
     }
-    // 퀵슬롯 왼손 장비 검색 후 소켓에 자식으로 붙여주기
+    // 퀵슬롯 왼손 장비 검색 후 소켓에 자식으로 붙여주기 * 임시
     public void AttachLeftWeaponObj()
     {
-
+        if (_defaultLeftShieldPrefab != null)
+        {
+            _defaultLeftShieldPrefab.transform.SetParent(_leftArmSocket);
+            _defaultLeftShieldPrefab.transform.localPosition = Vector3.zero;
+            _defaultLeftShieldPrefab.transform.localRotation = Quaternion.identity;
+        }
     }
-    */
+    
 
 
 }
