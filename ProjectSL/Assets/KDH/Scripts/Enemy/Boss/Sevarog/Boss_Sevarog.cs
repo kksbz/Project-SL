@@ -18,7 +18,7 @@ public class Boss_Sevarog : BossBase
     [Tooltip("전멸기 기둥 Prefab")]
     public GameObject enragePillarPrefab = default;
 
-    public Transform hammer;
+    // public Transform hammer;
     public Vector3 middlePos = new Vector3(-176f, 2f, 42f);
 
     protected override void Init()

@@ -31,7 +31,7 @@ public class Boss_Sevarog_Swing1Attack_State : IState
     }
     public void OnAction()
     {
-        _boss.NotAttackCOlliderEnabled();
+        _boss.NotAttackColliderEnabled();
     }
 }
 

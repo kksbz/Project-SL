@@ -191,6 +191,7 @@ public class Boss_Thought_State : IState
 
         if (newState_ == null || newState_ == default)
         {
+            _boss.SetState(new Boss_Thought_State(_boss));
             yield break;
         }
 

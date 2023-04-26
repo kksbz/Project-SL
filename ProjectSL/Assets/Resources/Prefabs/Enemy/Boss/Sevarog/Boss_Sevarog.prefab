@@ -5187,7 +5187,7 @@ MonoBehaviour:
     name: Sevarog
     info: "\uCD5C\uC885\uBCF4\uC2A4"
     maxHp: 1000
-    currentHp: 500
+    currentHp: 1000
     maxMoveSpeed: 5
     currentMoveSpeed: 5
     maxAttackDamage: 10
@@ -5203,8 +5203,10 @@ MonoBehaviour:
     obstacleLayerMask:
       serializedVersion: 2
       m_Bits: 512
-  attackCollider: {fileID: 227154700822258422}
+  attackCollider:
+  - {fileID: 227154700822258422}
   _bossStatus:
+    currentPhase: 1
     patternCount: 0
     hitCount: 0
     enrageCount: 0
@@ -5213,7 +5215,6 @@ MonoBehaviour:
   enragePrefab: {fileID: 7483861121005455084}
   enragePillarPrefab: {fileID: 1256896672925984, guid: 1986951b18b9cb049ac8cb26210c244f,
     type: 3}
-  hammer: {fileID: 3666511665864425233}
   middlePos: {x: -176, y: 2, z: 42}
 --- !u!114 &6957586224941218852
 MonoBehaviour:

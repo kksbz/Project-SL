@@ -17,7 +17,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     [Tooltip("공격시 활성화 될 공격 범위 콜라이더")]
     [SerializeField]
-    protected Collider attackCollider = default;
+    protected List<Collider> attackCollider = default;
 
     #region Property
     public EnemyStatus Status { get { return status; } protected set { status = value; } }
@@ -28,7 +28,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public IEnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
     public List<Transform> PatrolTargets { get { return MoveController.Targets; } }
     public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
-    public Collider AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
+    public List<Collider> AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
     #endregion
 
     protected void Start()
@@ -111,11 +111,25 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     #region AttackCollider
     public void SetAttackColliderEnabled(bool newEnabled)
     {
-        AttackCollider.enabled = newEnabled;
+        foreach (var iterator in AttackCollider)
+        {
+            iterator.enabled = newEnabled;
+        }
     }
-    public void NotAttackCOlliderEnabled()
+    public void SetAttackColliderEnabled(int index, bool newEnabled)
     {
-        AttackCollider.enabled = !AttackCollider.enabled;
+        AttackCollider[index].enabled = newEnabled;
+    }
+    public void NotAttackColliderEnabled()
+    {
+        foreach (var iterator in AttackCollider)
+        {
+            iterator.enabled = !iterator.enabled;
+        }
+    }
+    public void NotAttackColliderEnabled(int index)
+    {
+        AttackCollider[index].enabled = !AttackCollider[index].enabled;
     }
     #endregion
 
