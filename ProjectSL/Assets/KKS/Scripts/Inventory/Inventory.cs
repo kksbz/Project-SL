@@ -28,7 +28,7 @@ public class Inventory : Singleton<Inventory>
     public List<EquipSlot> equipSlots = new List<EquipSlot>(); // 장비인벤 슬롯
     public List<Slot> totalSlots = new List<Slot>(); // 장비인벤 슬롯
     public IPublicSlot selectSlot; // 선택한 슬롯 담을 변수
-
+    public int soul;
     private void Start()
     {
         InitSlot();
@@ -36,6 +36,10 @@ public class Inventory : Singleton<Inventory>
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            UiManager.Instance.soulBag.GetSoul(500);
+        }
         if (Input.GetKeyDown(KeyCode.L))
         {
             UiManager.Instance.loadingPanel.SetActive(!UiManager.Instance.loadingPanel.activeSelf);

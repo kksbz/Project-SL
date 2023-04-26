@@ -12,5 +12,6 @@ public class UiManager : Singleton<UiManager>
     public WarpController warp; // 화톳불 워프 컨트롤러
     public GameObject loadingPanel; // 로딩화면
     public QuickSlotBar quickSlotBar; // 퀵슬롯바
+    public SoulBagUi soulBag; // 소울가방UI
 } // UiManager
 
