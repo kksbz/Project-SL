@@ -17,7 +17,6 @@
 */
 
 using UnityEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using ProjectSL.Enemy;
@@ -164,8 +163,6 @@ public class Boss_Thought_State : IState
     }
     public void OnEnter()
     {
-        _boss.SetStop(true);
-
         _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
         _boss.StartCoroutine(StateChangedDelay(0.1f));
@@ -235,6 +232,8 @@ public class Boss_Chase_State : IState
         }
 
         _boss.TargetFollow(_target);
+
+        //_boss.StartCoroutine(ThoutghtDelay());
     }
 
     public void OnExit()
@@ -249,11 +248,18 @@ public class Boss_Chase_State : IState
         if (_boss.IsRangedChecked(_boss.Status.attackRange))
         {
             _boss.SetState(new Boss_Thought_State(_boss));
+            _boss.SetStop(true);
         }
     }
 
     public void OnAction()
     {
+    }
+
+    IEnumerator ThoutghtDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        _boss.SetState(new Boss_Thought_State(_boss));
     }
 }
 
