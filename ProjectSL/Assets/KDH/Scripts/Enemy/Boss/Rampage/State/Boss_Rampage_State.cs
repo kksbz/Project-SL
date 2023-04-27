@@ -1,5 +1,6 @@
 using UnityEngine;
 using ProjectSL.Enemy;
+using System.Collections;
 
 public class Boss_Rampage_RockRaise_State : IState
 {
@@ -216,10 +217,10 @@ public class Boss_Rampage_Attack_C_State : IState
     }
 }
 
-public class Boss_Rampage_Dodge_State : IState
+public class Boss_Rampage_Dodge_Start_State : IState
 {
     private Boss_Rampage _boss;
-    public Boss_Rampage_Dodge_State(Boss_Rampage boss)
+    public Boss_Rampage_Dodge_Start_State(Boss_Rampage boss)
     {
         _boss = boss;
     }
@@ -229,82 +230,45 @@ public class Boss_Rampage_Dodge_State : IState
 
     public void OnEnter()
     {
-        _boss.SetState(new Boss_Thought_State(_boss));
+        _boss.SetTrigger("Dodge_Start");
+
+        _boss.StartCoroutine(DodgeDelay());
     }
 
     public void OnExit()
     {
+
     }
 
     public void Update()
     {
-    }
-}
-
-public class Boss_Rampage_Dodge_Left_State : IState
-{
-    private Boss_Rampage _boss;
-    public Boss_Rampage_Dodge_Left_State(Boss_Rampage boss)
-    {
-        _boss = boss;
-    }
-    public void OnAction()
-    {
+        if (_boss.IsAnimationEnd("Dodge_Start"))
+        {
+            _boss.SetState(new Boss_Rampage_Dodge_Mid_State(_boss));
+        }
     }
 
-    public void OnEnter()
+    IEnumerator DodgeDelay()
     {
-    }
-
-    public void OnExit()
-    {
-    }
-
-    public void Update()
-    {
-    }
-}
-
-public class Boss_Rampage_Dodge_Right_State : IState
-{
-    private Boss_Rampage _boss;
-    public Boss_Rampage_Dodge_Right_State(Boss_Rampage boss)
-    {
-        _boss = boss;
-    }
-    public void OnAction()
-    {
-    }
-
-    public void OnEnter()
-    {
-    }
-
-    public void OnExit()
-    {
-    }
-
-    public void Update()
-    {
-    }
-}
-
-public class Boss_Rampage_Dodge_Back_State : IState
-{
-    private Boss_Rampage _boss;
-    public Boss_Rampage_Dodge_Back_State(Boss_Rampage boss)
-    {
-        _boss = boss;
-    }
-    public void OnAction()
-    {
-    }
-
-    public void OnEnter()
-    {
+        yield return new WaitForSeconds(0.2f);
         _boss.Dodge();
+    }
+}
 
-        _boss.SetTrigger("Dodge");
+public class Boss_Rampage_Dodge_Mid_State : IState
+{
+    private Boss_Rampage _boss;
+    public Boss_Rampage_Dodge_Mid_State(Boss_Rampage boss)
+    {
+        _boss = boss;
+    }
+    public void OnAction()
+    {
+    }
+
+    public void OnEnter()
+    {
+        _boss.SetTrigger("Dodge_Mid");
     }
 
     public void OnExit()
@@ -313,15 +277,154 @@ public class Boss_Rampage_Dodge_Back_State : IState
 
     public void Update()
     {
-        // if (_boss.IsAnimationEnd("Dodge") && _boss.IsNavMeshRangeChecked(1f))
-        // {
-        //     _boss.DodgeComplete();
-        //     _boss.SetState(new Boss_Thought_State(_boss));
-        // }
-        if (_boss.IsNavMeshRangeChecked(0.1f))
+        if (_boss.IsAnimationEnd("Dodge_Mid"))
+        {
+            _boss.SetState(new Boss_Rampage_Dodge_Loop_State(_boss));
+        }
+    }
+}
+
+public class Boss_Rampage_Dodge_Loop_State : IState
+{
+    private Boss_Rampage _boss;
+    public Boss_Rampage_Dodge_Loop_State(Boss_Rampage boss)
+    {
+        _boss = boss;
+    }
+    public void OnAction()
+    {
+    }
+
+    public void OnEnter()
+    {
+        _boss.SetTrigger("Dodge_Loop");
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void Update()
+    {
+        if (_boss.DodgeCompleteCheck())
+        {
+            _boss.SetState(new Boss_Rampage_Dodge_End_State(_boss));
+        }
+    }
+}
+
+public class Boss_Rampage_Dodge_End_State : IState
+{
+    private Boss_Rampage _boss;
+    public Boss_Rampage_Dodge_End_State(Boss_Rampage boss)
+    {
+        _boss = boss;
+    }
+    public void OnAction()
+    {
+    }
+
+    public void OnEnter()
+    {
+        _boss.SetTrigger("Dodge_End");
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void Update()
+    {
+        if (_boss.IsAnimationEnd("Dodge_End"))
         {
             _boss.DodgeComplete();
             _boss.SetState(new Boss_Thought_State(_boss));
         }
     }
 }
+
+#region Lagacy Code
+// public class Boss_Rampage_Dodge_Left_State : IState
+// {
+//     private Boss_Rampage _boss;
+//     public Boss_Rampage_Dodge_Left_State(Boss_Rampage boss)
+//     {
+//         _boss = boss;
+//     }
+//     public void OnAction()
+//     {
+//     }
+
+//     public void OnEnter()
+//     {
+//     }
+
+//     public void OnExit()
+//     {
+//     }
+
+//     public void Update()
+//     {
+//     }
+// }
+
+// public class Boss_Rampage_Dodge_Right_State : IState
+// {
+//     private Boss_Rampage _boss;
+//     public Boss_Rampage_Dodge_Right_State(Boss_Rampage boss)
+//     {
+//         _boss = boss;
+//     }
+//     public void OnAction()
+//     {
+//     }
+
+//     public void OnEnter()
+//     {
+//     }
+
+//     public void OnExit()
+//     {
+//     }
+
+//     public void Update()
+//     {
+//     }
+// }
+
+// public class Boss_Rampage_Dodge_Back_State : IState
+// {
+//     private Boss_Rampage _boss;
+//     public Boss_Rampage_Dodge_Back_State(Boss_Rampage boss)
+//     {
+//         _boss = boss;
+//     }
+//     public void OnAction()
+//     {
+//     }
+
+//     public void OnEnter()
+//     {
+//         _boss.Dodge();
+//         _boss.SetTrigger("Dodge");
+//     }
+
+//     public void OnExit()
+//     {
+//     }
+
+//     public void Update()
+//     {
+//         // if (_boss.IsAnimationEnd("Dodge") && _boss.IsNavMeshRangeChecked(1f))
+//         // {
+//         //     _boss.DodgeComplete();
+//         //     _boss.SetState(new Boss_Thought_State(_boss));
+//         // }
+//         if (_boss.IsNavMeshRangeChecked(0.1f))
+//         {
+//             _boss.DodgeComplete();
+//             _boss.SetState(new Boss_Thought_State(_boss));
+//         }
+//     }
+// }
+#endregion

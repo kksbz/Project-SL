@@ -34,7 +34,6 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     protected void Start()
     {
         Init();
-        StartCoroutines();
     }
 
     protected virtual void Init()
@@ -53,10 +52,6 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         TargetResearch.Init(ResearchStatus, new FieldOfView(transform, ResearchStatus));
 
         //SetState(new Enemy_Idle_State(this));
-    }
-
-    protected void StartCoroutines()
-    {
     }
 
     protected void Update()

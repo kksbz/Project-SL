@@ -12,12 +12,14 @@ public class Boss_Rampage : BossBase
     public GameObject rockPrefab;
     public GameObject rock;
 
+    private Rigidbody _rb;
+
     protected override void Init()
     {
         base.Init();
         SetState(new Boss_Idle_State(this));
 
-        Debug.Log($"타겟 forward : {Target.forward}");
+        _rb = GetComponent<Rigidbody>();
     }
 
     public override IState Thought()
@@ -38,24 +40,10 @@ public class Boss_Rampage : BossBase
 
         switch (PreviousState)
         {
-            case Boss_Rampage_Dodge_State:
-                return new Boss_Rampage_Dodge_Back_State(this);
-            // if (randNum <= 0.3f)
-            // {
-            //     return new Boss_Rampage_Dodge_Left_State(this);
-            // }
-            // else if (randNum <= 0.6f)
-            // {
-            //     return new Boss_Rampage_Dodge_Right_State(this);
-            // }
-            // else
-            // {
-            //     return new Boss_Rampage_Dodge_Back_State(this);
-            // }
             case Boss_Rampage_Attack_A_State:
             case Boss_Rampage_Attack_B_State:
             case Boss_Rampage_Attack_C_State:
-                return new Boss_Rampage_Dodge_State(this);
+                return new Boss_Rampage_Dodge_Start_State(this);
         }
 
         // 플레이어가 근접공격 범위 안에 있을 때
@@ -75,7 +63,7 @@ public class Boss_Rampage : BossBase
             }
             else
             {
-                return new Boss_Rampage_Dodge_State(this);
+                return new Boss_Rampage_Dodge_Start_State(this);
             }
         }
         else    //  플레이어가 근접공격 범위 밖에 있을 때
@@ -135,39 +123,64 @@ public class Boss_Rampage : BossBase
     {
 
     }
+    public float initialVelocity = 5f; // adjust initial velocity as desired
+    public float maxHeight = 5f; // adjust maximum height as desired
+    public Vector3 targetPos;
+
     public void Dodge()
     {
-        Vector3 targetPos_ = default;
-        switch (CurrentState)
-        {
-            case Boss_Rampage_Dodge_Back_State:
-                targetPos_ = transform.position - transform.forward * 5;
-                break;
-            case Boss_Rampage_Dodge_Left_State:
-                Quaternion leftRotation = Quaternion.AngleAxis(-90f, Vector3.up);
-                targetPos_ = transform.position + leftRotation * transform.forward * 3;
-                break;
-            case Boss_Rampage_Dodge_Right_State:
-                Quaternion rightRotation = Quaternion.AngleAxis(90f, Vector3.up);
-                targetPos_ = transform.position + rightRotation * transform.forward * 3;
-                break;
-        }
-        Debug.Log($"currentState : {CurrentState.ToString()} / targetPos : {targetPos_}");
+        MoveController.NavMeshAgent.enabled = false;
 
-        SetFloat("ActionSpeed", 0.5f);
+        targetPos = transform.position - transform.forward * 8f;
+        targetPos.y = 0f;
+        Debug.Log(targetPos);
 
-        MoveController.NavMeshAgent.stoppingDistance = 0;
-        MoveController.SetSpeed(BossStatus.dodgeSpeed);
-        MoveController.NavMeshAgent.updateRotation = false;
-        MoveController.SetStop(false);
-        MoveController.NavMeshAgent.SetDestination(targetPos_);
+        Vector3 direction = targetPos - _rb.position;
+
+        float distance = direction.magnitude;
+
+        float horizontalVelocity = initialVelocity * (distance / Mathf.Sqrt(2 * maxHeight * Mathf.Abs(Physics.gravity.y)));
+
+        float verticalVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics.gravity.y) * maxHeight);
+
+        float timeToMaxHeight = verticalVelocity / Mathf.Abs(Physics.gravity.y);
+
+        float totalTime = timeToMaxHeight + Mathf.Sqrt((2 * maxHeight) / Mathf.Abs(Physics.gravity.y));
+
+        Vector3 velocity = horizontalVelocity * direction.normalized;
+
+        velocity.y = verticalVelocity;
+
+        _rb.velocity = velocity;
+        transform.rotation = Quaternion.identity;
+
+        // MoveController.NavMeshAgent.stoppingDistance = 0;
+        // MoveController.SetSpeed(BossStatus.dodgeSpeed);
+        // MoveController.NavMeshAgent.updateRotation = false;
+        // MoveController.NavMeshAgent.SetDestination(targetPos);
     }
     public void DodgeComplete()
     {
+        _rb.velocity = Vector3.zero;
+        MoveController.NavMeshAgent.enabled = true;
         //SetFloat("ActionSpeed", 1f);
-        MoveController.SetSpeed(Status.currentMoveSpeed);
-        MoveController.NavMeshAgent.updateRotation = true;
-        MoveController.NavMeshAgent.stoppingDistance = 5;
+        // MoveController.SetSpeed(Status.currentMoveSpeed);
+        // MoveController.NavMeshAgent.updateRotation = true;
+        // MoveController.NavMeshAgent.stoppingDistance = 5;
+    }
+    public bool DodgeCompleteCheck()
+    {
+        float distance_ = Vector3.Distance(transform.position, targetPos);
+        Debug.Log($"회피 남은 거리 : {distance_}");
+        if (distance_ <= 0.5f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     #endregion
+
 }
