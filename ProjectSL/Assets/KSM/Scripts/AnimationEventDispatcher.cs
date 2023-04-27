@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,12 +25,28 @@ public class AnimationEventDispatcher : MonoBehaviour
         }
     }
 
+    public void AddAnimationStartEndByAnimOV(AnimatorOverrideController animOV)
+    {
+        for(int i = 0; i < animOV.animationClips.Length; i++)
+        {
+            AnimationClip clip = animOV.animationClips[i];
+            if(clip == null)
+            {
+                continue;
+            }
+            AddStartAnimationEvent(clip);
+            AddEndAnimationEvent(clip);
+        }
+    }
+
     public void AddStartAnimationEvent(AnimationClip clip)
     {
+        
         AnimationEvent animationStartEvent = new AnimationEvent();
         animationStartEvent.time = 0;
         animationStartEvent.functionName = "AnimationStartHandler";
         animationStartEvent.stringParameter = clip.name;
+
         clip.AddEvent(animationStartEvent);
     }
 
@@ -39,6 +56,7 @@ public class AnimationEventDispatcher : MonoBehaviour
         animationEndEvent.time = clip.length;
         animationEndEvent.functionName = "AnimationEndHandler";
         animationEndEvent.stringParameter = clip.name;
+
         clip.AddEvent(animationEndEvent);
     }
 

@@ -187,6 +187,8 @@ public class CombatController : MonoBehaviour
         AnimationEventDispatcher aed = gameObject.GetComponentInChildren<AnimationEventDispatcher>();
         for (int i = 0; i < combo.Count; i++)
         {
+            aed.AddAnimationStartEndByAnimOV(combo[i].animatorOV);
+            /* Legacy Code
             for (int j = 0; j < combo[i].animatorOV.animationClips.Length; j++)
             {
                 AnimationClip attackClip = combo[i].animatorOV.animationClips[j];
@@ -197,6 +199,7 @@ public class CombatController : MonoBehaviour
                 aed.AddStartAnimationEvent(attackClip);
                 aed.AddEndAnimationEvent(attackClip);
             }
+            */
         }
     }
 
