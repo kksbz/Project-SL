@@ -228,6 +228,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         return EnemyAnimator.IsAnimationEnd(animationName);
     }
+    public bool IsAnimationPlaying(string animationName)
+    {
+        return enemyAnimator.IsAnimationPlaying(animationName);
+    }
     #endregion
 }
 

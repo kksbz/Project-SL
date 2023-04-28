@@ -14,12 +14,17 @@ public class Boss_Rampage : BossBase
 
     private Rigidbody _rb;
 
+    public Vector3 targetPos;
+
     protected override void Init()
     {
         base.Init();
         SetState(new Boss_Idle_State(this));
 
         _rb = GetComponent<Rigidbody>();
+
+        BossStatus.bossLayerMaskIndex = LayerMask.NameToLayer("Enemy");
+        BossStatus.targetLayerMaskIndex = LayerMask.NameToLayer("Target");
     }
 
     public override IState Thought()
@@ -43,7 +48,14 @@ public class Boss_Rampage : BossBase
             case Boss_Rampage_Attack_A_State:
             case Boss_Rampage_Attack_B_State:
             case Boss_Rampage_Attack_C_State:
-                return new Boss_Rampage_Dodge_Start_State(this);
+                if (randNum <= BossStatus.bodyTackle_Percentage)
+                {
+                    return new Boss_Ramapage_BodyTackle_State(this);
+                }
+                else
+                {
+                    return new Boss_Rampage_Dodge_Start_State(this);
+                }
         }
 
         // 플레이어가 근접공격 범위 안에 있을 때
@@ -68,28 +80,25 @@ public class Boss_Rampage : BossBase
         }
         else    //  플레이어가 근접공격 범위 밖에 있을 때
         {
-            //  조건에 따라 원거리 공격 혹은 플레이어 추적
-            if (randNum <= 0.6f)    //  60% 확률로 플레이어 추적
+            if (randNum <= BossStatus.bodyTackle_Percentage)        // 일정 확률로 돌진 상태
             {
-                return new Boss_Chase_State(this);
+                return new Boss_Ramapage_BodyTackle_State(this);
             }
-            else if (randNum <= 0.8f)   //  20% 확률로 원거리 공격
+            else if (randNum <= BossStatus.groundSmash_Percentage)  // 일정 확률로 점프 공격
             {
-                return new Boss_Chase_State(this);
+                return new Boss_Rampage_GroundSmash_Start_State(this);
             }
-            else if (randNum <= 0.9f && IsRangedChecked(BossStatus.jumpAttackDistance))   //  10% 확률로 점프 공격
+            else if (randNum <= BossStatus.rockThrow_Percentage)    // 일정 확률로 원거리 공격
             {
-                return new Boss_Chase_State(this);
+                return new Boss_Ramapage_BodyTackle_State(this);
+                //return new Boss_Rampage_RockRaise_State(this);
             }
-            else if (IsRangedChecked(BossStatus.bodyTackleDistance))    //  10% 확률로 돌진 공격
-            {
-                return new Boss_Chase_State(this);
-            }
-            else
+            else                                                    // 일정 확률로 플레이어 추적
             {
                 return new Boss_Chase_State(this);
             }
         }
+
     }
 
     public IState Phase_2_Thought()
@@ -111,29 +120,44 @@ public class Boss_Rampage : BossBase
         tempObject_.GetComponent<Rock>().Throwing();
         rock.SetActive(false);
     }
-    public void BodyTackle()
-    {
-        //  플레이어의 좌표 뒷 부분을 타겟으로 지점하고
-        //  해당 부분으로 돌진을 시키면 될 듯
-        //  콜라이더를 켜서 충돌 판정도 주면 될 듯
 
-        //NavMeshAgent.SetDestination()
-    }
     public void GroundSmash()
     {
 
     }
-    public float initialVelocity = 5f; // adjust initial velocity as desired
-    public float maxHeight = 5f; // adjust maximum height as desired
-    public Vector3 targetPos;
 
-    public void Dodge()
+    public void BodyTackle()
     {
-        MoveController.NavMeshAgent.enabled = false;
+        RigidbodyConstraints freezePosition = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        Debug.Log($"freezePosition {freezePosition}");
+        RigidbodyMoveStart(freezePosition);
 
-        targetPos = transform.position - transform.forward * 8f;
+        targetPos = Target.position;
         targetPos.y = 0f;
-        Debug.Log(targetPos);
+
+        Vector3 direction = targetPos - _rb.position;
+
+        Vector3 velocity = direction.normalized * BossStatus.bodyTackleSpeed;
+
+        _rb.velocity = velocity;
+
+        // transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
+    }
+
+    public void BodyTackleComplete()
+    {
+        RigidbodyMoveComplete();
+    }
+
+    public float initialVelocity = 5f;
+
+    public void Jump(Vector3 newTargetPos, float maxHeight)
+    {
+        RigidbodyConstraints freezePosition = RigidbodyConstraints.FreezeRotation;
+
+        RigidbodyMoveStart(freezePosition);
+
+        targetPos = newTargetPos;
 
         Vector3 direction = targetPos - _rb.position;
 
@@ -152,27 +176,40 @@ public class Boss_Rampage : BossBase
         velocity.y = verticalVelocity;
 
         _rb.velocity = velocity;
-        transform.rotation = Quaternion.identity;
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+    }
 
-        // MoveController.NavMeshAgent.stoppingDistance = 0;
-        // MoveController.SetSpeed(BossStatus.dodgeSpeed);
-        // MoveController.NavMeshAgent.updateRotation = false;
-        // MoveController.NavMeshAgent.SetDestination(targetPos);
-    }
-    public void DodgeComplete()
+    public void JumpComplete()
     {
-        _rb.velocity = Vector3.zero;
-        MoveController.NavMeshAgent.enabled = true;
-        //SetFloat("ActionSpeed", 1f);
-        // MoveController.SetSpeed(Status.currentMoveSpeed);
-        // MoveController.NavMeshAgent.updateRotation = true;
-        // MoveController.NavMeshAgent.stoppingDistance = 5;
+        RigidbodyMoveComplete();
     }
-    public bool DodgeCompleteCheck()
+
+    public void RigidbodyMoveStart()
+    {
+        MoveController.NavMeshAgent.enabled = false;
+        Physics.IgnoreLayerCollision(BossStatus.bossLayerMaskIndex, BossStatus.targetLayerMaskIndex, true);
+    }
+    public void RigidbodyMoveStart(RigidbodyConstraints freeze)
+    {
+        _rb.constraints = freeze;
+        MoveController.NavMeshAgent.enabled = false;
+
+        Physics.IgnoreLayerCollision(BossStatus.bossLayerMaskIndex, BossStatus.targetLayerMaskIndex, true);
+    }
+
+    public void RigidbodyMoveComplete()
+    {
+        Physics.IgnoreLayerCollision(BossStatus.bossLayerMaskIndex, BossStatus.targetLayerMaskIndex, false);
+        _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        _rb.velocity = Vector3.zero;
+        targetPos = Vector3.zero;
+        MoveController.NavMeshAgent.enabled = true;
+    }
+
+    public bool MoveCompleteCheck(float newDistance)
     {
         float distance_ = Vector3.Distance(transform.position, targetPos);
-        Debug.Log($"회피 남은 거리 : {distance_}");
-        if (distance_ <= 0.5f)
+        if (distance_ <= newDistance)
         {
             return true;
         }
@@ -181,6 +218,22 @@ public class Boss_Rampage : BossBase
             return false;
         }
     }
+
+    public bool JumpCompleteCheck(float newDistance)
+    {
+        Vector3 planePos = new Vector3(transform.position.x, 0f, transform.position.y);
+        float distance_ = Vector3.Distance(transform.position, planePos);
+        if (distance_ <= newDistance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
     #endregion
 
 }

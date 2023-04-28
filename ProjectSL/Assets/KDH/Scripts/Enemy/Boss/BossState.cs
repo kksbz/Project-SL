@@ -204,6 +204,7 @@ public class Boss_Chase_State : IState
     private BossBase _boss;
     private float _distance = float.MaxValue;
     private Transform _target = default;
+    private IEnumerator _thoughtDelay;
     public Boss_Chase_State(BossBase newBoss)
     {
         _boss = newBoss;
@@ -233,11 +234,13 @@ public class Boss_Chase_State : IState
 
         _boss.TargetFollow(_target);
 
-        //_boss.StartCoroutine(ThoutghtDelay());
+        _thoughtDelay = ThoutghtDelay();
+        _boss.StartCoroutine(_thoughtDelay);
     }
 
     public void OnExit()
     {
+        _boss.StopCoroutine(_thoughtDelay);
     }
 
     public void Update()
@@ -256,11 +259,28 @@ public class Boss_Chase_State : IState
     {
     }
 
+    //  지정한 딜레이 시간 마다 상태 전환 조건을 체크, 다른 상태로 전환이 가능하다면 해다 상태로 전환
     IEnumerator ThoutghtDelay()
     {
         yield return new WaitForSeconds(1f);
-        _boss.SetState(new Boss_Thought_State(_boss));
+        while (true)
+        {
+            IState thoughtState = _boss.Thought();
+            Debug.Log($"판단 상태 : {thoughtState.ToString()} / 현재 상태 : {this.ToString()}");
+            switch (thoughtState)
+            {
+                case Boss_Chase_State:
+                    break;
+                default:
+                    _boss.SetStop(true);
+                    _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
+                    _boss.SetState(thoughtState);
+                    break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
+
 }
 
 /// <summary>
