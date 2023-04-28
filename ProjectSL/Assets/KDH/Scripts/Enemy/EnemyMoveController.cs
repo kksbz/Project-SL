@@ -14,6 +14,7 @@ public interface IEnemyMoveController : GData.IInitialize
     void TargetFollow(Transform newTarget);
     void TargetFollow(Transform newTarget, bool isFollow);
     void Warp();
+    void Warp(Vector3 newPos);
     bool IsArrive(float distance);
     bool IsMissed(float distance);
     bool IsNavMeshRangeChecked(float ranged);
@@ -111,16 +112,22 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
             NavMeshAgent.isStopped = isFollow;
         }
     }
-
+    const float RANDOM_X_RANGE = 10f;
+    const float RANDOM_Y_RANGE = 10f;
     public void Warp()
     {
-        float randX_ = Random.Range(transform.position.x - 50f, transform.position.x + 50f);
-        float randY_ = Random.Range(transform.position.z - 50f, transform.position.z + 50f);
+        float randX_ = Random.Range(transform.position.x - RANDOM_X_RANGE, transform.position.x + RANDOM_X_RANGE);
+        float randY_ = Random.Range(transform.position.z - RANDOM_Y_RANGE, transform.position.z + RANDOM_Y_RANGE);
 
         Vector3 randPos = new Vector3(randX_, 0f, randY_);
         Debug.Log($"Warp Pos : {randPos}");
 
         NavMeshAgent.Warp(randPos);
+    }
+
+    public void Warp(Vector3 newPos)
+    {
+        NavMeshAgent.Warp(newPos);
     }
 
     /// <summary>

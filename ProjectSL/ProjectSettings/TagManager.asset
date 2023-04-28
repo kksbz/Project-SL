@@ -16,10 +16,8 @@ TagManager:
   - Character
   - Target
   - Obstacle
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Player
   - 
   - 
   - 

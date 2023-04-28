@@ -31,7 +31,7 @@ public class Boss_Sevarog_Swing1Attack_State : IState
     }
     public void OnAction()
     {
-        _boss.NotAttackCOlliderEnabled();
+        _boss.NotAttackColliderEnabled();
     }
 }
 
@@ -73,8 +73,7 @@ public class Boss_Sevarog_Teleport_State : IState
     public void OnEnter()
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_TELEPORT);
-        _boss.BossStatus.hitCount = 0;
-        _boss.Warp();
+        _boss.Teleport();
     }
 
     public void OnExit()
@@ -106,6 +105,7 @@ public class Boss_Sevarog_Subjugation_State : IState
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SUBJUGATION);
 
         //  원거리 공격 수행 예정
+        _boss.SubjugationPattern();
     }
 
     public void OnExit()
@@ -121,5 +121,45 @@ public class Boss_Sevarog_Subjugation_State : IState
     }
     public void OnAction()
     {
+    }
+
+}
+
+public class Boss_Sevarog_Enrage_State : IState
+{
+    private Boss_Sevarog _boss;
+    public Boss_Sevarog_Enrage_State(Boss_Sevarog newBoss)
+    {
+        _boss = newBoss;
+    }
+    public void OnEnter()
+    {
+        _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
+        _boss.StartCoroutine(AnimationDelay());
+
+        //  원거리 공격 수행 예정
+        _boss.EnragePattern();
+    }
+
+    public void OnExit()
+    {
+    }
+
+    public void Update()
+    {
+        if (_boss.IsAnimationEnd(EnemyDefineData.ANIMATION_ENRAGE))
+        {
+            _boss.SetState(new Boss_Thought_State(_boss));
+        }
+    }
+    public void OnAction()
+    {
+    }
+
+
+    IEnumerator AnimationDelay()
+    {
+        yield return new WaitForSeconds(0.6f);
+        _boss.SetTrigger(EnemyDefineData.TRIGGER_ENRAGE);
     }
 }

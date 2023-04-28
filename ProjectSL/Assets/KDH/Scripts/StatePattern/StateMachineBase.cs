@@ -42,7 +42,6 @@ public class StateMachineBase : IStateMachine
     }
     public void Update()
     {
-        Debug.Log($"Current State : {CurrentState.ToString()}");
         CurrentState.Update();
     }
     public void OnExit()

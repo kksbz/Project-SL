@@ -17,7 +17,6 @@
 */
 
 using UnityEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using ProjectSL.Enemy;
@@ -164,8 +163,6 @@ public class Boss_Thought_State : IState
     }
     public void OnEnter()
     {
-        _boss.SetStop(true);
-
         _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
         _boss.StartCoroutine(StateChangedDelay(0.1f));
@@ -178,7 +175,7 @@ public class Boss_Thought_State : IState
     public void Update()
     {
         //  플레이어를 바라보는 동작을 수행할 예정 후에 Lerp를 사용해서 회전을 구현할 예정
-        _boss.transform.LookAt(_boss.MoveController.Target);
+        _boss.transform.LookAt(_boss.Target);
     }
     public void OnAction()
     {
@@ -191,6 +188,7 @@ public class Boss_Thought_State : IState
 
         if (newState_ == null || newState_ == default)
         {
+            _boss.SetState(new Boss_Thought_State(_boss));
             yield break;
         }
 
@@ -206,6 +204,7 @@ public class Boss_Chase_State : IState
     private BossBase _boss;
     private float _distance = float.MaxValue;
     private Transform _target = default;
+    private IEnumerator _thoughtDelay;
     public Boss_Chase_State(BossBase newBoss)
     {
         _boss = newBoss;
@@ -234,10 +233,14 @@ public class Boss_Chase_State : IState
         }
 
         _boss.TargetFollow(_target);
+
+        _thoughtDelay = ThoutghtDelay();
+        _boss.StartCoroutine(_thoughtDelay);
     }
 
     public void OnExit()
     {
+        _boss.StopCoroutine(_thoughtDelay);
     }
 
     public void Update()
@@ -248,12 +251,36 @@ public class Boss_Chase_State : IState
         if (_boss.IsRangedChecked(_boss.Status.attackRange))
         {
             _boss.SetState(new Boss_Thought_State(_boss));
+            _boss.SetStop(true);
         }
     }
 
     public void OnAction()
     {
     }
+
+    //  지정한 딜레이 시간 마다 상태 전환 조건을 체크, 다른 상태로 전환이 가능하다면 해다 상태로 전환
+    IEnumerator ThoutghtDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        while (true)
+        {
+            IState thoughtState = _boss.Thought();
+            Debug.Log($"판단 상태 : {thoughtState.ToString()} / 현재 상태 : {this.ToString()}");
+            switch (thoughtState)
+            {
+                case Boss_Chase_State:
+                    break;
+                default:
+                    _boss.SetStop(true);
+                    _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
+                    _boss.SetState(thoughtState);
+                    break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
 }
 
 /// <summary>

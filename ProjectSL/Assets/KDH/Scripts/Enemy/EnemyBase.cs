@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProjectSL.Enemy;
 
-public class EnemyBase : CharacterBase, GData.IDamageable
+public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 {
     [Tooltip("Enemy의 Status")]
     [SerializeField]
@@ -17,7 +17,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
 
     [Tooltip("공격시 활성화 될 공격 범위 콜라이더")]
     [SerializeField]
-    protected Collider attackCollider = default;
+    protected List<Collider> attackCollider = default;
 
     #region Property
     public EnemyStatus Status { get { return status; } protected set { status = value; } }
@@ -28,13 +28,12 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     public IEnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
     public List<Transform> PatrolTargets { get { return MoveController.Targets; } }
     public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
-    public Collider AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
+    public List<Collider> AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
     #endregion
 
     protected void Start()
     {
         Init();
-        StartCoroutines();
     }
 
     protected virtual void Init()
@@ -55,13 +54,29 @@ public class EnemyBase : CharacterBase, GData.IDamageable
         //SetState(new Enemy_Idle_State(this));
     }
 
-    protected void StartCoroutines()
-    {
-    }
-
     protected void Update()
     {
         StateMachine.Update();
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        GData.IDamageable object_ = other.GetComponent<GData.IDamageable>();
+
+        if (object_ == null || object_ == default)
+        {
+            /*  Do Nothing  */
+        }
+        else
+        {
+            GiveDamage(object_, Status.currentAttackDamage);
+        }
+    }
+
+    public virtual void GiveDamage(GData.IDamageable damageable, float damage)
+    {
+        Debug.Log($"데미지를 입힘 / 대상 : {damageable.ToString()} / 데미지 : {damage}");
+        damageable.TakeDamage(damage);
     }
 
     public virtual void TakeDamage(float damage)
@@ -91,11 +106,25 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     #region AttackCollider
     public void SetAttackColliderEnabled(bool newEnabled)
     {
-        AttackCollider.enabled = newEnabled;
+        foreach (var iterator in AttackCollider)
+        {
+            iterator.enabled = newEnabled;
+        }
     }
-    public void NotAttackCOlliderEnabled()
+    public void SetAttackColliderEnabled(int index, bool newEnabled)
     {
-        AttackCollider.enabled = !AttackCollider.enabled;
+        AttackCollider[index].enabled = newEnabled;
+    }
+    public void NotAttackColliderEnabled()
+    {
+        foreach (var iterator in AttackCollider)
+        {
+            iterator.enabled = !iterator.enabled;
+        }
+    }
+    public void NotAttackColliderEnabled(int index)
+    {
+        AttackCollider[index].enabled = !AttackCollider[index].enabled;
     }
     #endregion
 
@@ -114,6 +143,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     #endregion
 
     #region IEnemyMoveController
+    public Transform Target { get { return MoveController.Target; } }
     public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
     public void SetSpeed(float newSpeed)
     {
@@ -138,6 +168,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     public void Warp()
     {
         MoveController.Warp();
+    }
+    public void Warp(Vector3 newPos)
+    {
+        MoveController.Warp(newPos);
     }
     public bool IsArrive(float distance)
     {
@@ -193,6 +227,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable
     public bool IsAnimationEnd(string animationName)
     {
         return EnemyAnimator.IsAnimationEnd(animationName);
+    }
+    public bool IsAnimationPlaying(string animationName)
+    {
+        return enemyAnimator.IsAnimationPlaying(animationName);
     }
     #endregion
 }
