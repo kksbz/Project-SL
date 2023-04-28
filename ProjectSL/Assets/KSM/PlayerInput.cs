@@ -80,6 +80,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchArm"",
+                    ""type"": ""Button"",
+                    ""id"": ""2526e37b-3dcd-4a78-ab02-241ee4bae1a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -247,6 +256,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6503480-cfa4-45e9-8676-ed24a6d5485c"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""SwitchArm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -278,6 +298,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerCharacterInput_Attack = m_PlayerCharacterInput.FindAction("Attack", throwIfNotFound: true);
         m_PlayerCharacterInput_Guard = m_PlayerCharacterInput.FindAction("Guard", throwIfNotFound: true);
         m_PlayerCharacterInput_Dodge = m_PlayerCharacterInput.FindAction("Dodge", throwIfNotFound: true);
+        m_PlayerCharacterInput_SwitchArm = m_PlayerCharacterInput.FindAction("SwitchArm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -345,6 +366,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerCharacterInput_Attack;
     private readonly InputAction m_PlayerCharacterInput_Guard;
     private readonly InputAction m_PlayerCharacterInput_Dodge;
+    private readonly InputAction m_PlayerCharacterInput_SwitchArm;
     public struct PlayerCharacterInputActions
     {
         private @PlayerInput m_Wrapper;
@@ -355,6 +377,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_PlayerCharacterInput_Attack;
         public InputAction @Guard => m_Wrapper.m_PlayerCharacterInput_Guard;
         public InputAction @Dodge => m_Wrapper.m_PlayerCharacterInput_Dodge;
+        public InputAction @SwitchArm => m_Wrapper.m_PlayerCharacterInput_SwitchArm;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCharacterInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -382,6 +405,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @SwitchArm.started += instance.OnSwitchArm;
+            @SwitchArm.performed += instance.OnSwitchArm;
+            @SwitchArm.canceled += instance.OnSwitchArm;
         }
 
         private void UnregisterCallbacks(IPlayerCharacterInputActions instance)
@@ -404,6 +430,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @SwitchArm.started -= instance.OnSwitchArm;
+            @SwitchArm.performed -= instance.OnSwitchArm;
+            @SwitchArm.canceled -= instance.OnSwitchArm;
         }
 
         public void RemoveCallbacks(IPlayerCharacterInputActions instance)
@@ -438,5 +467,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnGuard(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnSwitchArm(InputAction.CallbackContext context);
     }
 }

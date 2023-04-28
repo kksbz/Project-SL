@@ -22,10 +22,10 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess
     public LookStateMachine SM_Look { get; private set; }
 
     private static PlayerCharacter instance;
-    // {Å×½ºÆ® ¿À¸¥¼Õ ¿Þ¼Õ Àåºñ
+    // {ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½
     public GameObject leftArm;
     public GameObject rightArm;
-    // }Å×½ºÆ® ¿À¸¥¼Õ ¿Þ¼Õ Àåºñ
+    // }ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½
     private void Awake()
     {
         if (instance == null)
@@ -75,7 +75,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess
         // SM_Look = new LookStateMachine(ELookStateName.FREELOOK, new )
     }
 
-    //! { ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ¼¼ÀÌºê ¹× ·ÎµåÇÏ´Â ÀÎÅÍÆäÀÌ½ºÇÔ¼ö
+    //! { ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½Ô¼ï¿½
     public PlayerStatus GetPlayerData()
     {
         return _status;
@@ -89,5 +89,5 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess
     {
         return _healthSystem;
     }
-    //! } ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ¼¼ÀÌºê ¹× ·ÎµåÇÏ´Â ÀÎÅÍÆäÀÌ½ºÇÔ¼ö
+    //! } ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½Ô¼ï¿½
 }

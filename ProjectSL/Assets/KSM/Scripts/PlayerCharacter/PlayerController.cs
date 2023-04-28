@@ -27,16 +27,16 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController = default;
 
     
-    // ÀÓ½Ã
+    // ï¿½Ó½ï¿½
     public Vector3 moveDir;
     public Vector3 inputDir;
     public Move nextMove;
     public Behavior wait;
     bool isMove;
-
+    
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
         playerCharacter = GetComponent<PlayerCharacter>();
         characterController = GetComponent<CharacterController>();
         cameraController = GetComponent<CameraController>();
@@ -94,11 +94,11 @@ public class PlayerController : MonoBehaviour
         moveDir = lookForward * inputDir.z + lookRight * inputDir.x;
 
         bool isMove = inputDir.magnitude != 0;
-        // input°ª ÀÖÀ¸¸é moveDirection °è»ê
+        // inputï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ moveDirection ï¿½ï¿½ï¿½
         if (isMove)
         {
 
-            // Ä³¸¯ÅÍ È¸Àü * ÀÓ½ÃÀÏ¼öµµ ÀÖÀ½
+            // Ä³ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ * ï¿½Ó½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (cameraController.CameraState == ECameraState.DEFAULT)
                 characterBody.forward = moveDir;
             else if(cameraController.CameraState == ECameraState.LOCKON)
@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
     /*
     void LockOn()
     {
-        // ÀÓ½Ã
+        // ï¿½Ó½ï¿½
         if(Input.GetMouseButtonDown(3))
         {
             switch (cameraState)

@@ -17,6 +17,15 @@ public class QuickSlotBar : MonoBehaviour
     public int rightArmNum = 0;
     public int attackC_Num = 0;
     public int recoveryC_Num = 0;
+
+    // { Property
+    public ItemData QuickSlotRightWeapon { get { return RightArm.Item; } }
+    public ItemData QuickSlotLeftWeapon { get { return LeftArm.Item; } }
+    // } Property
+    public GameObject GetCurrentRightWeaponObject { get { return RightWeaponList[rightArmNum].equipItem; } }
+    public GameObject GetCurrentLeftWeaponObject { get { return LeftWeaponList[leftArmNum].equipItem; } }
+    //
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,9 +71,6 @@ public class QuickSlotBar : MonoBehaviour
                 if (RightWeaponList[rightArmNum].Item != null)
                 {
                     // 무기 오브젝트를 플레이어의 오른손으로 위치 조정하고 활성화
-                    RightWeaponList[rightArmNum].equipItem.transform.parent = GameManager.Instance.playerRightArm.transform;
-                    RightWeaponList[rightArmNum].equipItem.transform.localPosition = Vector3.zero;
-                    RightWeaponList[rightArmNum].equipItem.transform.localRotation = Quaternion.identity;
                     RightWeaponList[rightArmNum].equipItem.SetActive(true);
                     //Debug.Log($"쉬프트+휠업 : {rightArmNum}");
                 }
@@ -89,9 +95,6 @@ public class QuickSlotBar : MonoBehaviour
                 if (LeftWeaponList[leftArmNum].Item != null)
                 {
                     // 무기 오브젝트를 플레이어의 오른손으로 위치 조정하고 활성화
-                    LeftWeaponList[leftArmNum].equipItem.transform.parent = GameManager.Instance.playerLeftArm.transform;
-                    LeftWeaponList[leftArmNum].equipItem.transform.localPosition = Vector3.zero;
-                    LeftWeaponList[leftArmNum].equipItem.transform.localRotation = Quaternion.identity;
                     LeftWeaponList[leftArmNum].equipItem.SetActive(true);
                     //Debug.Log($"쉬프트+휠다운 : {leftArmNum}");
                 }
@@ -120,9 +123,6 @@ public class QuickSlotBar : MonoBehaviour
                 if (AttackC_List[attackC_Num].Item != null)
                 {
                     // 공격용 소모품 오브젝트를 플레이어의 오른손으로 위치 조정하고 활성화
-                    AttackC_List[attackC_Num].equipItem.transform.parent = GameManager.Instance.playerRightArm.transform;
-                    AttackC_List[attackC_Num].equipItem.transform.localPosition = Vector3.zero;
-                    AttackC_List[attackC_Num].equipItem.transform.localRotation = Quaternion.identity;
                 }
             }
             // 마우스 휠을 아래로 스크롤했을 때 회복용 소모품 장착
@@ -145,9 +145,6 @@ public class QuickSlotBar : MonoBehaviour
                 if (RecoveryC_List[recoveryC_Num].Item != null)
                 {
                     // 회복용 소모품 오브젝트를 플레이어의 오른손으로 위치 조정하고 활성화
-                    RecoveryC_List[recoveryC_Num].equipItem.transform.parent = GameManager.Instance.playerRightArm.transform;
-                    RecoveryC_List[recoveryC_Num].equipItem.transform.localPosition = Vector3.zero;
-                    RecoveryC_List[recoveryC_Num].equipItem.transform.localRotation = Quaternion.identity;
                 }
             }
         }
@@ -160,9 +157,6 @@ public class QuickSlotBar : MonoBehaviour
         if (RightWeaponList[rightArmNum].Item != null && RightWeaponList[rightArmNum].equipItem != null)
         {
             RightArm.Item = RightWeaponList[rightArmNum].Item;
-            RightWeaponList[rightArmNum].equipItem.transform.parent = GameManager.Instance.playerRightArm.transform;
-            RightWeaponList[rightArmNum].equipItem.transform.localPosition = Vector3.zero;
-            RightWeaponList[rightArmNum].equipItem.transform.localRotation = Quaternion.identity;
             RightWeaponList[rightArmNum].equipItem.SetActive(true);
         }
         else
@@ -174,9 +168,6 @@ public class QuickSlotBar : MonoBehaviour
         if (LeftWeaponList[leftArmNum].Item != null && LeftWeaponList[leftArmNum].equipItem != null)
         {
             LeftArm.Item = LeftWeaponList[leftArmNum].Item;
-            LeftWeaponList[leftArmNum].equipItem.transform.parent = GameManager.Instance.playerLeftArm.transform;
-            LeftWeaponList[leftArmNum].equipItem.transform.localPosition = Vector3.zero;
-            LeftWeaponList[leftArmNum].equipItem.transform.localRotation = Quaternion.identity;
             LeftWeaponList[leftArmNum].equipItem.SetActive(true);
         }
         else
@@ -188,9 +179,6 @@ public class QuickSlotBar : MonoBehaviour
         if (AttackC_List[attackC_Num].Item != null && AttackC_List[attackC_Num].equipItem != null)
         {
             attackC.Item = AttackC_List[attackC_Num].Item;
-            AttackC_List[attackC_Num].equipItem.transform.parent = GameManager.Instance.playerRightArm.transform;
-            AttackC_List[attackC_Num].equipItem.transform.localPosition = Vector3.zero;
-            AttackC_List[attackC_Num].equipItem.transform.localRotation = Quaternion.identity;
         }
         else
         {
@@ -201,13 +189,11 @@ public class QuickSlotBar : MonoBehaviour
         if (RecoveryC_List[recoveryC_Num].Item != null && RecoveryC_List[recoveryC_Num].equipItem != null)
         {
             recoveryC.Item = RecoveryC_List[recoveryC_Num].Item;
-            RecoveryC_List[recoveryC_Num].equipItem.transform.parent = GameManager.Instance.playerRightArm.transform;
-            RecoveryC_List[recoveryC_Num].equipItem.transform.localPosition = Vector3.zero;
-            RecoveryC_List[recoveryC_Num].equipItem.transform.localRotation = Quaternion.identity;
         }
         else
         {
             recoveryC.Item = null;
         }
+        Inventory.Instance._onEquipSlotUpdated();
     } // LoadQuickSlotData
 } // QuickSlotBar

@@ -18,6 +18,7 @@ public class PlayerStateMachine : MonoBehaviour
     CameraController    _cameraController;
     CombatController    _combatController;
     AnimationController _animationController;
+    EquipmentController _equipmentController;
     AnimationEventDispatcher _animationEventDispatcher;
 
     // �ִϸ��̼� ��Ʈ�� ���� Ŭ����
@@ -42,6 +43,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isGuardPressed;
     bool _isRollPressed;
     bool _isBackStepPressed;
+    bool _isSwitchingArmPressed;
     float _dodgePressedRate = 0.5f;
     float _dodgeStartTime = 0f;
     // State Var
@@ -56,6 +58,7 @@ public class PlayerStateMachine : MonoBehaviour
     public CharacterController CharacterController { get { return _characterController; } }
     public AnimationController AnimationController { get { return _animationController; } }
     public CombatController CombatController { get { return _combatController; } }
+    public EquipmentController EquipmentController { get { return _equipmentController; } }
     public Animator CharacterAnimator { get { return _animator; } }
     public CharacterControlProperty ControlProperty { get { return _controlProperty; } }
     public bool IsMovementPressed { get { return _isMovementPressed; } }
@@ -86,6 +89,7 @@ public class PlayerStateMachine : MonoBehaviour
         _cameraController   = GetComponent<CameraController>();
         _combatController   = GetComponent<CombatController>();
         _animationController= GetComponent<AnimationController>();
+        _equipmentController= GetComponent<EquipmentController>();
         _animationEventDispatcher = _characterBody.gameObject.GetComponent<AnimationEventDispatcher>();
 
         _controlProperty = _playerController.controlProperty;
@@ -113,6 +117,10 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.Guard.canceled+= OnGuardInput;
         _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInputPress;
         _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInputRelease;
+        _playerInput.PlayerCharacterInput.SwitchArm.performed += OnSwitchingArmInput;
+        //_playerInput.PlayerCharacterInput.SwitchArm.started += (InputAction.CallbackContext context) => Debug.Log("SwitchArm Started");
+        //_playerInput.PlayerCharacterInput.SwitchArm.performed += (InputAction.CallbackContext context) => Debug.Log("SwitchArm performed");
+        //_playerInput.PlayerCharacterInput.SwitchArm.canceled += (InputAction.CallbackContext context) => Debug.Log("SwitchArm canceled");
         Debug.Log("Player State Machine : ��ǲ ���ε�");
 
         // _playerInput.PlayerCharacterInput.
@@ -136,16 +144,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetMoveDirection()
     {
-        Vector3 inputDir = new Vector3(_currentMovementInput.x, 0f, _currentMovementInput.y);
-
-        _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
-        _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
-
-        Transform cameraArm = _cameraController.cameraArm;
-        Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
-        Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-
-        _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
+        SetCurrentMovement();
 
         if (!_isMovementPressed)
             return;
@@ -168,6 +167,19 @@ public class PlayerStateMachine : MonoBehaviour
         
         return newCurMovement;
     }
+    public void SetCurrentMovement()
+    {
+        Vector3 inputDir = new Vector3(_currentMovementInput.x, 0f, _currentMovementInput.y);
+
+        _controlProperty.axisValue = new Vector2(inputDir.x, inputDir.z);
+        _controlProperty.speed = Mathf.Ceil(Mathf.Abs(inputDir.x) + Mathf.Abs(inputDir.z) / 2f);
+
+        Transform cameraArm = _cameraController.cameraArm;
+        Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+        Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+
+        _currentMovement = lookForward * inputDir.z + lookRight * inputDir.x;
+    }
 
     public void SetDirection(Vector3 newBodyDirection)
     {
@@ -179,6 +191,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         _currentMovementInput = context.ReadValue<Vector2>();
+        SetCurrentMovement();
         _isMovementPressed = _currentMovementInput.x != _zero || _currentMovementInput.y != _zero;
     }
     void OnRunInput(InputAction.CallbackContext context)
@@ -226,6 +239,16 @@ public class PlayerStateMachine : MonoBehaviour
             Debug.LogWarning($"isBackStepPressed, Read Value : {context.ReadValueAsButton()}");
             _isBackStepPressed = true;
         }
+    }
+
+    void OnSwitchingArmInput(InputAction.CallbackContext context)
+    {
+        _isSwitchingArmPressed = context.ReadValueAsButton();
+        if(_isSwitchingArmPressed ) 
+        {
+            _equipmentController.SwitchArmState();
+        }
+
     }
     private void OnEnable()
     {

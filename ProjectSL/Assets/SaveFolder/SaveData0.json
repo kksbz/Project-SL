@@ -1,10 +1,20 @@
+{"itemID":1,"itemName":"에스트 병","itemType":1,"damage":0,"vigor":50,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":0,"sellPrice":0,"maxQuantity":9,"description":"둔탁한 황색 유리병\n불사자의 보물\n화톳불에서 에스트를 채우고 마셔서 HP를 회복한다\n예로부터 불사자의 여행은 화톳불을 순회하며\n에스트 병은 언제나 여행과 함께 했다","itemIcon":"KKS/Icon/Item/HpPotion_Bagic","quantity":1,"isEquip":true}
+{"itemID":2,"itemName":"에스트 잿빛 병","itemType":1,"damage":0,"vigor":50,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":0,"sellPrice":0,"maxQuantity":9,"description":"둔탁한 잿빛 유리병\n불 꺼진 재의 유물\n화톳불에서 에스트를 채우고 마셔서 MP를 회복한다\n화톳불의 열기를 차갑게 바꾸는 잿빛 병은\n불 꺼진 재에게야 말로 어울릴 것이다","itemIcon":"KKS/Icon/Item/MpPotion_Bagic","quantity":1,"isEquip":true}
+{"itemID":51,"itemName":"투척 나이프","itemType":2,"damage":250,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":700,"sellPrice":500,"maxQuantity":5,"description":"투척용의 소형 나이프\n적에게 던져 대미지를 입힌다\n많은 아이템은 사용자를 가린다\n숙련된 사용자는 그 위력을 더욱 끌어올린다\n힘을 얻는다는 것은 언제나 그런 것이다","itemIcon":"KKS/Icon/Item/ThrowingKnife","quantity":1,"isEquip":true}
+{"itemID":52,"itemName":"투척 폭발 나이프","itemType":2,"damage":350,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":1500,"sellPrice":900,"maxQuantity":5,"description":"투척용의 소형 폭발 나이프\n충돌 시 작은 폭발이 일어나 데미지를 입힌다\n투척용 나이프에 소형 폭약을 장착했다","itemIcon":"KKS/Icon/Item/ThrowingBombKnife","quantity":1,"isEquip":true}
+{"itemID":102,"itemName":"카이트 실드","itemType":4,"damage":220,"vigor":0,"attunement":0,"endurance":25,"vitality":0,"strength":0,"dexterity":0,"buyPrice":2000,"sellPrice":1200,"maxQuantity":1,"description":"중형의 금속 방패\n정통파 중형 방패\n중형 방패는 가장 표준적인 방패 종류이며 감소율 버티기 능력 중량의 밸런스가 좋다","itemIcon":"KKS/Icon/Item/KiteShield","quantity":1,"isEquip":true}
+{"itemID":106,"itemName":"브로드소드","itemType":3,"damage":234,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":2000,"sellPrice":1200,"maxQuantity":1,"description":"폭이 넓은 날을 지닌 직검\n베어내는 공격을 중시하고 있다\n횡으로 크게 휘두르는 공격은 범위가 넓고 다수의 적을 상대로 유효한 반면 좁은 장소에서는 벽에 튕기기 쉽다","itemIcon":"KKS/Icon/Item/BroadSword","quantity":1,"isEquip":true}
 무기슬롯
+0번{"itemID":106,"itemName":"브로드소드","itemType":3,"damage":234,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":2000,"sellPrice":1200,"maxQuantity":1,"description":"폭이 넓은 날을 지닌 직검\n베어내는 공격을 중시하고 있다\n횡으로 크게 휘두르는 공격은 범위가 넓고 다수의 적을 상대로 유효한 반면 좁은 장소에서는 벽에 튕기기 쉽다","itemIcon":"KKS/Icon/Item/BroadSword","quantity":1,"isEquip":true}
+3번{"itemID":102,"itemName":"카이트 실드","itemType":4,"damage":220,"vigor":0,"attunement":0,"endurance":25,"vitality":0,"strength":0,"dexterity":0,"buyPrice":2000,"sellPrice":1200,"maxQuantity":1,"description":"중형의 금속 방패\n정통파 중형 방패\n중형 방패는 가장 표준적인 방패 종류이며 감소율 버티기 능력 중량의 밸런스가 좋다","itemIcon":"KKS/Icon/Item/KiteShield","quantity":1,"isEquip":true}
 방어구슬롯
 소모품슬롯
+0번{"itemID":51,"itemName":"투척 나이프","itemType":2,"damage":250,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":700,"sellPrice":500,"maxQuantity":5,"description":"투척용의 소형 나이프\n적에게 던져 대미지를 입힌다\n많은 아이템은 사용자를 가린다\n숙련된 사용자는 그 위력을 더욱 끌어올린다\n힘을 얻는다는 것은 언제나 그런 것이다","itemIcon":"KKS/Icon/Item/ThrowingKnife","quantity":1,"isEquip":true}
+1번{"itemID":52,"itemName":"투척 폭발 나이프","itemType":2,"damage":350,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":1500,"sellPrice":900,"maxQuantity":5,"description":"투척용의 소형 폭발 나이프\n충돌 시 작은 폭발이 일어나 데미지를 입힌다\n투척용 나이프에 소형 폭약을 장착했다","itemIcon":"KKS/Icon/Item/ThrowingBombKnife","quantity":1,"isEquip":true}
+3번{"itemID":1,"itemName":"에스트 병","itemType":1,"damage":0,"vigor":50,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":0,"sellPrice":0,"maxQuantity":9,"description":"둔탁한 황색 유리병\n불사자의 보물\n화톳불에서 에스트를 채우고 마셔서 HP를 회복한다\n예로부터 불사자의 여행은 화톳불을 순회하며\n에스트 병은 언제나 여행과 함께 했다","itemIcon":"KKS/Icon/Item/HpPotion_Bagic","quantity":1,"isEquip":true}
+4번{"itemID":2,"itemName":"에스트 잿빛 병","itemType":1,"damage":0,"vigor":50,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":0,"sellPrice":0,"maxQuantity":9,"description":"둔탁한 잿빛 유리병\n불 꺼진 재의 유물\n화톳불에서 에스트를 채우고 마셔서 MP를 회복한다\n화톳불의 열기를 차갑게 바꾸는 잿빛 병은\n불 꺼진 재에게야 말로 어울릴 것이다","itemIcon":"KKS/Icon/Item/MpPotion_Bagic","quantity":1,"isEquip":true}
 퀵슬롯 왼손/오른손/공격소모품/회복소모품
-0/0/0/0
+0/0/1/0
 화톳불리스트
-{"hasBonfire":true,"activeSceneName":"Test","bonfireName":"화톳불 1번","bonfirePos":{"x":-183.0,"y":-2.0,"z":60.0}}
-{"hasBonfire":true,"activeSceneName":"Test","bonfireName":"화톳불 2번","bonfirePos":{"x":-167.0,"y":-2.0,"z":58.0}}
 플레이어 정보
 {"_name":"","_level":1,"_vigor":1,"_attunement":1,"_endurance":1,"_vitality":1,"_strength":1,"_dexterity":1}

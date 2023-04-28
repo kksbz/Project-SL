@@ -19,6 +19,8 @@ public class LineDebugger : MonoBehaviour
     PlayerController targetController;
     [SerializeField]
     Transform cameraArm;
+    [SerializeField]
+    PlayerStateMachine _stateMachine;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +66,6 @@ public class LineDebugger : MonoBehaviour
     void SetLine_InputDirection()
     {
         inputDirectionLine.SetPosition(0, transform.position);
-        inputDirectionLine.SetPosition(1, transform.position + inputDirection);
+        inputDirectionLine.SetPosition(1, transform.position + _stateMachine.CurrentMovement);
     }
 }
