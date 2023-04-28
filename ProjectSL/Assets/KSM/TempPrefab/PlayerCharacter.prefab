@@ -336,9 +336,9 @@ MonoBehaviour:
   characterDirectionLine: {fileID: 5023651065953910927}
   cameraDirectionLine: {fileID: 5023651066621383417}
   inputDirectionLine: {fileID: 5023651066130597631}
-  targetController: {fileID: 0}
+  targetController: {fileID: 5023651067267725317}
   cameraArm: {fileID: 432022514124829448}
-  _stateMachine: {fileID: 0}
+  _stateMachine: {fileID: 3362425920318137729}
 --- !u!1 &5023651065354976794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,8 +1458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _combatController: {fileID: 0}
-  _characterController: {fileID: 0}
+  _combatController: {fileID: 5023651067267725314}
+  _characterController: {fileID: 5023651067267725318}
 --- !u!114 &2359768715072563229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2665,7 +2665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5023651066941928675}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6870005, z: -0.04400003}
+  m_LocalPosition: {x: 0, y: 1.6870005, z: -0.04399872}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3189,16 +3189,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05077696fc8018a41a285cb8e8ff0c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCharacter: {fileID: 0}
+  _playerCharacter: {fileID: 0}
   EnemyMask:
     serializedVersion: 2
     m_Bits: 128
   attackRadius: 2
-  combo:
-  - {fileID: 11400000, guid: 592fd39574087254aaff9076d9a0fa51, type: 2}
+  combo: []
   _canAttack: 1
   _canDodge: 1
-  _animator: {fileID: 5023651066933726024}
+  comboAttack_R_Pist:
+  - {fileID: 11400000, guid: c9fe4598faa0b2349851a24d5f95b537, type: 2}
+  comboAttack_L_Pist:
+  - {fileID: 11400000, guid: df77f22f162d7614c960777bbc12bb39, type: 2}
+  comboAttack_OH_Sword:
+  - {fileID: 11400000, guid: 592fd39574087254aaff9076d9a0fa51, type: 2}
+  - {fileID: 11400000, guid: 10577c0f13c8bdb4ba9119cd8f6a3a6d, type: 2}
+  comboAttack_TH_Sword:
+  - {fileID: 11400000, guid: 95081a9f16aa8d54599b35719331b72a, type: 2}
+  - {fileID: 11400000, guid: 30222ddb8b0af93479958a2e68a06025, type: 2}
+  _animator: {fileID: 0}
   playerObjTR: {fileID: 0}
   meshObjTR: {fileID: 0}
 --- !u!114 &3362425920318137729
@@ -3515,9 +3524,13 @@ MonoBehaviour:
   _defaultRightWeaponPrefab: {fileID: 0}
   _defaultLeftShieldPrefab: {fileID: 0}
   _inventory: {fileID: 0}
+  _quickSlotBar: {fileID: 0}
   _rightArmSocket: {fileID: 0}
   _leftArmSocket: {fileID: 0}
-  _SSH_2H_AnimOV: {fileID: 0}
+  _backRWSocket: {fileID: 0}
+  _backLWSocket: {fileID: 0}
+  _default_AnimController: {fileID: 0}
+  _SSH_2H_AnimOV: {fileID: 22100000, guid: d97924580e510f54784e28ccc7ebf723, type: 2}
 --- !u!114 &5023651067267725313
 MonoBehaviour:
   m_ObjectHideFlags: 0

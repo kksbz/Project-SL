@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33daddba9936d264d858275fd2f22781, type: 3}
-  m_Name: SSH_BasicComboAttack_1
+  m_Name: OHS_BasicComboAttack_1
   m_EditorClassIdentifier: 
   animatorOV: {fileID: 22100000, guid: bfea3fc873b8c3145b4d539e3ddde0e1, type: 2}
   damage: 10

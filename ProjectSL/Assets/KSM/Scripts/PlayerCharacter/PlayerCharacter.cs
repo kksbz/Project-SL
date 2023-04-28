@@ -41,10 +41,6 @@ public class PlayerCharacter : CharacterBase
             GameObject ownMeshObj = gameObject.FindChildObj("Mesh");
             animator = ownMeshObj.GetComponent<Animator>();
 
-            // 테스트용
-            GameManager.Instance.playerLeftArm = leftArm;
-            GameManager.Instance.playerRightArm = rightArm;
-            GameManager.Instance.player = gameObject;
             return;
         }
         DestroyImmediate(gameObject);

@@ -17,6 +17,15 @@ public class QuickSlotBar : MonoBehaviour
     public int rightArmNum = 0;
     public int attackC_Num = 0;
     public int recoveryC_Num = 0;
+
+    // { Property
+    public ItemData QuickSlotRightWeapon { get { return RightArm.Item; } }
+    public ItemData QuickSlotLeftWeapon { get { return LeftArm.Item; } }
+    // } Property
+    public GameObject GetCurrentRightWeaponObject { get { return RightWeaponList[rightArmNum].equipItem; } }
+    public GameObject GetCurrentLeftWeaponObject { get { return LeftWeaponList[leftArmNum].equipItem; } }
+    //
+
     // Start is called before the first frame update
     void Start()
     {
@@ -209,5 +218,6 @@ public class QuickSlotBar : MonoBehaviour
         {
             recoveryC.Item = null;
         }
+        Inventory.Instance._onEquipSlotUpdated();
     } // LoadQuickSlotData
 } // QuickSlotBar

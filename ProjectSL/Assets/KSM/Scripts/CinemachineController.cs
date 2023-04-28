@@ -8,20 +8,34 @@ public class CinemachineController : MonoBehaviour
     [SerializeField]
     private CinemachineBrain cinemachineBrain;
     [SerializeField]
-    private CinemachineFreeLook freelockCamera;
+    private CinemachineFreeLook freelookCamera;
     [SerializeField]
     private CinemachineFreeLook lockTargetCamera;
 
+    private void Awake()
+    {
+        GameObject playerCharacter = GFunc.GetRootObj("PlayerCharacter");
+        GameObject playerMeshObj = playerCharacter.FindChildObj("Mesh");
+        GameObject targetGroupObj = playerCharacter.FindChildObj("TargetGroup");
+        Transform cameraTarget = playerMeshObj.FindChildObj("CameraTarget").transform;
+        CinemachineTargetGroup targetGroup = targetGroupObj.GetComponent<CinemachineTargetGroup>();
+        freelookCamera.Follow = playerMeshObj.transform;
+        freelookCamera.LookAt = cameraTarget;
+        lockTargetCamera.Follow = playerMeshObj.transform;
+        lockTargetCamera.LookAt = targetGroup.transform;
+
+    }
+
     public void LockCamera()
     {
-        freelockCamera.Priority = 0;
+        freelookCamera.Priority = 0;
         lockTargetCamera.Priority = 1;
     }
     public void FreeCamera()
     {
-        freelockCamera.Priority = 1;
+        freelookCamera.Priority = 1;
         lockTargetCamera.Priority = 0;
-        freelockCamera.gameObject.transform.position = transform.position;
+        freelookCamera.gameObject.transform.position = transform.position;
     }
     public void SetLookAt(Transform newTargetTR)
     {

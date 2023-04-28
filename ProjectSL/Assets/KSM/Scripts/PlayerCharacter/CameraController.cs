@@ -78,6 +78,11 @@ public class CameraController : MonoBehaviour
         animationController = GetComponent<AnimationController>();
 
         _meshObj = gameObject.FindChildObj("Mesh").transform;
+        GameObject cameraObj = GFunc.GetRootObj("Main Camera");
+        camera = cameraObj.transform;
+        cm_FreeLook = cameraObj.FindChildObj("CM FreeLook");
+        cm_LockOn = cameraObj.FindChildObj("CM LockOnCam");
+
         //onSetPlayerLockOn = new EventHandler_void_GameObject(SetPlayerLockOn);
         //onReleasePlayerLockOn = new EventHandler_void(ReleasePlayerLockOn);
     }

@@ -9,6 +9,11 @@ public enum EArmState
     OneHanded,
     TwoHanded
 }
+public enum EWeaponState
+{
+    NONE = 0,
+    Sword_OneHanded
+}
 public class EquipmentController : MonoBehaviour
 {
     // 컴포넌트
@@ -24,7 +29,11 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     ItemData _currentRightArmWeapon = default;
     [SerializeField]
+    GameObject _currentRightArmWeaponObj = default;
+    [SerializeField]
     ItemData _currentLeftArmWeapon = default;
+    [SerializeField]
+    GameObject _currentLeftArmWeaponObj = default;
 
     // 무기
     [SerializeField]
@@ -60,10 +69,13 @@ public class EquipmentController : MonoBehaviour
 
     [SerializeField]
     private Inventory _inventory;
+    [SerializeField]
+    private QuickSlotBar _quickSlotBar;
 
     #endregion  // Equipment Item Data
 
     EArmState _currentArmState = EArmState.OneHanded;
+    EWeaponState _currentWeaponState = EWeaponState.NONE;
 
     bool _isSwitching = false;
 
@@ -86,11 +98,22 @@ public class EquipmentController : MonoBehaviour
     #endregion  // Weapon Socket
 
     #region Override Controller
+    
     [SerializeField]
     private AnimatorController _default_AnimController;
     // private AnimatorController _default_AnimOV;
     public AnimatorOverrideController _SSH_2H_AnimOV;
     #endregion  // Override Controller
+
+    public delegate void EventHandler();
+    public EventHandler _onChangedEquipment;
+    public EventHandler _onSwitchiedArmState;
+
+    // Property
+    public EArmState ArmState { get { return _currentArmState; } }
+    public EWeaponState WeaponState { get { return _currentWeaponState; } }
+    // Property
+
 
     private void Awake()
     {
@@ -103,24 +126,36 @@ public class EquipmentController : MonoBehaviour
         _backRWSocket = gameObject.FindChildObj(WEAPONSOCKET_BACK_RIGHTWP).transform;
         _backLWSocket = gameObject.FindChildObj(WEAPONSOCKET_BACK_LEFTWP).transform;
 
+        // 테스트용
+        GameManager.Instance.playerLeftArm = _leftArmSocket.gameObject;
+        GameManager.Instance.playerRightArm = _rightArmSocket.gameObject;
+        GameManager.Instance.player = gameObject;
+
         // caching inventory 
         GameObject managers = GFunc.GetRootObj("Managers");
         //GameObject invenObj = managers.FindChildObj("Inventory");
         //_inventory = invenObj.GetComponent<Inventory>();
+        GameObject quickSlotObj = managers.FindChildObj("QuickSlot");
+        _quickSlotBar = quickSlotObj.GetComponent<QuickSlotBar>();
 
         // 애니메이션 오버라이드 컨트롤러 이벤트 바인딩
         AnimationEventDispatcher aed = meshObj.GetComponent<AnimationEventDispatcher>();
         aed.AddAnimationStartEndByAnimOV(_SSH_2H_AnimOV);
+        
     }
     // Start is called before the first frame update
     void Start()
     {
         // 임시 부착
-        AttachWeaponObj(_defaultRightWeaponPrefab.transform, _rightArmSocket);
-        AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
+        if(_defaultRightWeaponPrefab != null)
+            AttachWeaponObj(_defaultRightWeaponPrefab.transform, _rightArmSocket);
+        if(_defaultLeftShieldPrefab != null)
+            AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
         // default overrideController caching
         _default_AnimController =_animator.runtimeAnimatorController as AnimatorController;
 
+        // 인벤토리 델리게이트 함수 바인딩
+        Inventory.Instance._onEquipSlotUpdated += UpdateEquipmentItem;
         // 애니메이션 오버라이드 컨트롤러 시작 끝 이벤트 바인딩
 
     }
@@ -159,14 +194,23 @@ public class EquipmentController : MonoBehaviour
         {
             _currentArmState = EArmState.TwoHanded;
             _animator.runtimeAnimatorController = _SSH_2H_AnimOV;
-            AttachWeaponObj(_defaultLeftShieldPrefab.transform, _backLWSocket);
+            // AttachWeaponObj(_defaultLeftShieldPrefab.transform, _backLWSocket);
+            if(_currentLeftArmWeapon != null)
+            {
+                AttachWeaponObj(_currentLeftArmWeaponObj.transform, _backLWSocket);
+            } 
         }
         else if(_currentArmState == EArmState.TwoHanded)
         {
             _currentArmState = EArmState.OneHanded;
             _animator.runtimeAnimatorController = _default_AnimController;
-            AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
+            // AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
+            if (_currentLeftArmWeapon != null)
+            {
+                AttachWeaponObj(_currentLeftArmWeaponObj.transform, _leftArmSocket);
+            }
         }
+        _onSwitchiedArmState();
         // 애니메이션 실행 후 일정 시간 뒤에 무기를 각각 맞는 소켓에 붙이기
         _isSwitching = false;
     }
@@ -193,5 +237,58 @@ public class EquipmentController : MonoBehaviour
         }
     }
 
+    public void UpdateEquipmentItem()
+    {
+        Debug.Log("Enter EquipmentController UpdateEquipmentItem()");
+        _rightWeapon[0] = Inventory.Instance.weaponSlotList[0].Item;
+        _rightWeapon[1] = Inventory.Instance.weaponSlotList[1].Item;
+        _rightWeapon[2] = Inventory.Instance.weaponSlotList[2].Item;
+
+        Debug.Log("통과!");
+
+        _leftWeapon[0] = Inventory.Instance.weaponSlotList[3].Item;
+        _leftWeapon[1] = Inventory.Instance.weaponSlotList[4].Item;
+        _leftWeapon[2] = Inventory.Instance.weaponSlotList[5].Item;
+
+        _armor_Helmet = Inventory.Instance.armorSlotList[0].Item;
+        _armor_Chest = Inventory.Instance.armorSlotList[1].Item;
+        _armor_Gloves = Inventory.Instance.armorSlotList[2].Item;
+        _armor_Pants = Inventory.Instance.armorSlotList[3].Item;
+
+        _currentRightArmWeapon = _quickSlotBar.QuickSlotRightWeapon;
+        if(_currentRightArmWeapon != null )
+        {
+            _currentRightArmWeaponObj = _quickSlotBar.GetCurrentRightWeaponObject;
+        }
+        _currentLeftArmWeapon = _quickSlotBar.QuickSlotLeftWeapon;
+        if(_currentLeftArmWeapon != null )
+        {
+            _currentLeftArmWeaponObj = _quickSlotBar.GetCurrentLeftWeaponObject;
+        }
+
+        // 임시 *검밖에 없으니 검으로
+        if(_currentRightArmWeapon != null )
+        {
+            SetWeaponState(EWeaponState.Sword_OneHanded);
+        }
+        else
+        {
+            SetWeaponState(EWeaponState.NONE);
+        }
+
+        SetArmState(EArmState.OneHanded);
+
+        _onChangedEquipment();
+        // 추후 반지 업데이트?
+        //_ring_1 = Inventory.Instance
+    }
+    private void SetWeaponState(EWeaponState newState)
+    {
+        _currentWeaponState = newState;
+    }
+    private void SetArmState(EArmState newState)
+    {
+        _currentArmState = newState;
+    }
     // public void 
 }

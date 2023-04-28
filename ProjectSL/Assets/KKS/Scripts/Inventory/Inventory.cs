@@ -29,6 +29,16 @@ public class Inventory : Singleton<Inventory>
     public List<Slot> totalSlots = new List<Slot>(); // 장비인벤 슬롯
     public IPublicSlot selectSlot; // 선택한 슬롯 담을 변수
     public int soul;
+
+    //
+    public delegate void EventHandler();
+    public EventHandler _onEquipSlotUpdated;
+
+    private void Awake()
+    {
+        _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+    }
+    //
     private void Start()
     {
         InitSlot();
