@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static ItemData;
 using static UnityEditor.Progress;
 
 public class Inventory : Singleton<Inventory>
 {
-    [SerializeField] private GameObject invenObj;
     private int invenCount = 52;
+    public GameObject invenObj;
     public GameObject equipSlotPrefab; // 장비슬롯 프리팹
     public GameObject totalSlotPrefab; // 통합인벤 슬롯 프리팹
     public GameObject equipSlotPanel; // 장비슬롯 패널
     public GameObject equipInvenPanel; // 장비인벤토리 패널
     public GameObject totalInvenPanel; // 통합인벤 패널
-    public TMP_Text equipInvenText; // 장비인벤토리 패널 상단 텍스트
-    public TMP_Text totalInvenText; // 통합인벤토리 패널 상단 텍스트
+    public Image equipInvenImage; // 장비인벤토리 패널 상단 이미지
     public ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     public SelectPanel selectPanel; // 선택창 패널
 
@@ -42,7 +42,7 @@ public class Inventory : Singleton<Inventory>
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            UiManager.Instance.loadingPanel.SetActive(!UiManager.Instance.loadingPanel.activeSelf);
+            UiManager.Instance.loadingPanel.gameObject.SetActive(!UiManager.Instance.loadingPanel.gameObject.activeSelf);
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -54,16 +54,10 @@ public class Inventory : Singleton<Inventory>
             DataManager.Instance.slotNum = 0;
             DataManager.Instance.LoadData();
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            invenObj.SetActive(false);
-            equipSlotPanel.SetActive(true);
-            equipInvenPanel.SetActive(false);
-            selectPanel.gameObject.SetActive(false);
-            totalInvenPanel.SetActive(false);
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    UiManager.Instance.ExitUiPanel();
+        //}
     } // Update
 
     //! 슬롯 초기화
@@ -175,7 +169,7 @@ public class Inventory : Singleton<Inventory>
             {
                 // 버리는 아이템의 프리팹을 인스턴스하고 아이템데이터 대입
                 GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemData.itemID}"));
-                item.transform.position = GameManager.Instance.player.transform.position + (Vector3.up * 0.5f);
+                item.transform.position = GameManager.Instance.player.gameObject.transform.position + (Vector3.up * 0.5f);
                 item.GetComponent<Item>().itemData = itemData;
                 inventory[i] = null;
                 return;

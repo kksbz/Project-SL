@@ -10,8 +10,16 @@ public class UiManager : Singleton<UiManager>
     public GameObject interactionBar; // 상호작용 오브젝트
     public TMP_Text interactionText; // 상호작용 텍스트
     public WarpController warp; // 화톳불 워프 컨트롤러
-    public GameObject loadingPanel; // 로딩화면
+    public LoadingPanel loadingPanel; // 로딩화면
+    public StatusPanel statusPanel; // 스테이터스 화면
     public QuickSlotBar quickSlotBar; // 퀵슬롯바
     public SoulBagUi soulBag; // 소울가방UI
+
+    //! 스테이터스 패널 갱신하는 함수
+    public void RenewalstatusPanel()
+    {
+        statusPanel.ShowPlayerStatusPanel(GameManager.Instance.player.GetPlayerData(),
+                GameManager.Instance.player.GetHealth());
+    } // RenewalstatusPanel
 } // UiManager
 

@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject playerLeftArm;
     public GameObject playerRightArm;
-    public GameObject player;
+    public PlayerCharacter player;
 
     //! 씬 로드하는 코루틴함수
     public IEnumerator LoadScene(BonfireData bonfire)
@@ -16,7 +16,9 @@ public class GameManager : Singleton<GameManager>
         DataManager.Instance.slotNum = 0;
         DataManager.Instance.SaveData();
         // 로딩창 활성화
-        UiManager.Instance.loadingPanel.SetActive(true);
+        UiManager.Instance.loadingPanel.gameObject.SetActive(true);
+        float fadeTime = UiManager.Instance.loadingPanel.FadeInLoadingPanel();
+        yield return new WaitForSeconds(fadeTime);
         var asyncLoad = SceneManager.LoadSceneAsync(bonfire.activeSceneName);
         while (!asyncLoad.isDone)
         {
@@ -27,7 +29,9 @@ public class GameManager : Singleton<GameManager>
         player.transform.position = bonfire.bonfirePos;
         yield return new WaitForSeconds(3f);
         Debug.Log($"씬로드 끝");
+        UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
+        yield return new WaitForSeconds(fadeTime);
         // 로딩창 비활성화
-        UiManager.Instance.loadingPanel.SetActive(false);
+        UiManager.Instance.loadingPanel.gameObject.SetActive(false);
     } // LoadScene
 } // GameManager

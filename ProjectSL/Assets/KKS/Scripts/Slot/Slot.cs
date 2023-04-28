@@ -12,6 +12,7 @@ public class Slot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPointerEx
     [SerializeField] private Image icon; // 슬롯에 표시될 icon
     [SerializeField] private GameObject equipIcon; // 장착여부 표시 icon
     [SerializeField] private TMP_Text quantity; // 수량표시 Text
+    [SerializeField] private GameObject pointerEffect; // 커서가 슬롯에 들어올 시 나올 이펙트
     private SelectPanel selectPanel; // 선택창 패널
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     public GameObject SlotObj { get { return gameObject; } }
@@ -82,6 +83,11 @@ public class Slot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPointerEx
         });
     } // Start
 
+    private void OnDisable()
+    {
+        pointerEffect.SetActive(false);
+    } // OnDisable
+
     public void AddItem(ItemData _item)
     {
         Item = _item;
@@ -94,6 +100,7 @@ public class Slot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        pointerEffect.SetActive(true);
         if (item != null)
         {
             Debug.Log("템있는 슬롯에 커서 들옴");
@@ -103,6 +110,7 @@ public class Slot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPointerEx
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        pointerEffect.SetActive(false);
         descriptionPanel.HideItemData();
     } // OnPointerExit
 } // Slot

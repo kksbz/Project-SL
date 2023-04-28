@@ -1,8 +1,4 @@
-{"itemID":102,"itemName":"카이트 실드","itemType":4,"damage":220,"vigor":0,"attunement":0,"endurance":25,"vitality":0,"strength":0,"dexterity":0,"buyPrice":2000,"sellPrice":1200,"maxQuantity":1,"description":"중형의 금속 방패\n정통파 중형 방패\n중형 방패는 가장 표준적인 방패 종류이며 감소율 버티기 능력 중량의 밸런스가 좋다","itemIcon":"KKS/Icon/Item/KiteShield","quantity":1,"isEquip":true}
-{"itemID":105,"itemName":"롱소드","itemType":3,"damage":220,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":1000,"sellPrice":600,"maxQuantity":1,"description":"표준적인 직검\n밸런스가 우수하며 널리 쓰이는 무기\n효과가 안정적인 표준 속성의 공격에 더해 공격력이 높은 관통 공격을 가진다","itemIcon":"KKS/Icon/Item/LongSword","quantity":1,"isEquip":true}
 무기슬롯
-0번{"itemID":105,"itemName":"롱소드","itemType":3,"damage":220,"vigor":0,"attunement":0,"endurance":0,"vitality":0,"strength":0,"dexterity":0,"buyPrice":1000,"sellPrice":600,"maxQuantity":1,"description":"표준적인 직검\n밸런스가 우수하며 널리 쓰이는 무기\n효과가 안정적인 표준 속성의 공격에 더해 공격력이 높은 관통 공격을 가진다","itemIcon":"KKS/Icon/Item/LongSword","quantity":1,"isEquip":true}
-3번{"itemID":102,"itemName":"카이트 실드","itemType":4,"damage":220,"vigor":0,"attunement":0,"endurance":25,"vitality":0,"strength":0,"dexterity":0,"buyPrice":2000,"sellPrice":1200,"maxQuantity":1,"description":"중형의 금속 방패\n정통파 중형 방패\n중형 방패는 가장 표준적인 방패 종류이며 감소율 버티기 능력 중량의 밸런스가 좋다","itemIcon":"KKS/Icon/Item/KiteShield","quantity":1,"isEquip":true}
 방어구슬롯
 소모품슬롯
 퀵슬롯 왼손/오른손/공격소모품/회복소모품
@@ -10,3 +6,5 @@
 화톳불리스트
 {"hasBonfire":true,"activeSceneName":"Test","bonfireName":"화톳불 1번","bonfirePos":{"x":-183.0,"y":-2.0,"z":60.0}}
 {"hasBonfire":true,"activeSceneName":"Test","bonfireName":"화톳불 2번","bonfirePos":{"x":-167.0,"y":-2.0,"z":58.0}}
+플레이어 정보
+{"_name":"","_level":1,"_vigor":1,"_attunement":1,"_endurance":1,"_vitality":1,"_strength":1,"_dexterity":1}

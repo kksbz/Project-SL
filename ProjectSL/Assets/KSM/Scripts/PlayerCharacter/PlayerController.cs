@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour
     public Behavior wait;
     bool isMove;
 
-    public GameObject leftArm;
-    public GameObject rightArm;
     private void Awake()
     {
         // 컴포넌트 초기화
@@ -44,9 +42,6 @@ public class PlayerController : MonoBehaviour
         cameraController = GetComponent<CameraController>();
         animationController = GetComponent<AnimationController>();
 
-        GameManager.Instance.playerLeftArm = leftArm;
-        GameManager.Instance.playerRightArm = rightArm;
-        GameManager.Instance.player = gameObject;
     }   // Awake()
     // Start is called before the first frame update
     void Start()

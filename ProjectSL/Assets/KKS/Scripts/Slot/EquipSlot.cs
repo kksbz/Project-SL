@@ -11,6 +11,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [SerializeField] private Image icon; // 슬롯에 표시될 icon
     [SerializeField] private GameObject equipIcon; // 장착여부 표시 icon
     [SerializeField] private TMP_Text quantity; // 수량표시 Text
+    [SerializeField] private GameObject pointerEffect; // 커서가 슬롯에 들어올 시 나올 이펙트
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     public IPublicSlot equipSlot; // 선택한 장비 슬롯
     [SerializeField] private ItemData item; // 슬롯에 담길 아이템 변수
@@ -72,16 +73,23 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 equipSlot.AddItem(item);
                 Inventory.Instance.equipSlotPanel.SetActive(true);
                 Inventory.Instance.equipInvenPanel.SetActive(false);
+                UiManager.Instance.RenewalstatusPanel();
             }
             else
             {
                 // 아이템 장착 해제
                 equipSlot.RemoveItem();
+                UiManager.Instance.RenewalstatusPanel();
             }
             item.IsEquip = !item.IsEquip;
             Inventory.Instance.InitSameTypeEquipSlot(item.itemType);
         });
     } // Start
+
+    private void OnDisable()
+    {
+        pointerEffect.SetActive(false);
+    } // OnDisable
 
     //! 선택된 슬롯 가져오는 함수
     public void SelectSlot()
@@ -92,6 +100,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     //! 마우스 커서 들어올 때 실행
     public void OnPointerEnter(PointerEventData eventData)
     {
+        pointerEffect.SetActive(true);
         if (item != null)
         {
             descriptionPanel.ShowItemData(item);
@@ -100,6 +109,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        pointerEffect.SetActive(false);
         descriptionPanel.HideItemData();
     } // OnPointerExit
 } // EquipSlot

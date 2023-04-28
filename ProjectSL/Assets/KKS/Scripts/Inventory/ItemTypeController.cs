@@ -8,18 +8,18 @@ using static ItemData;
 
 public class ItemTypeController : MonoBehaviour
 {
-    [SerializeField] private TMP_Text typeText; // 아이템타입 표시 텍스트
+    [SerializeField] private Image typeImage; // 아이템타입 이미지
+    [SerializeField] private List<Sprite> itemSprites; // 스프라이트 리스트
     [SerializeField] private Button leftBt; // 왼쪽 버튼
     [SerializeField] private Button RightBt; // 오른쪽 버튼
     private List<ItemType> typeList = new List<ItemType>((ItemType[])Enum.GetValues(typeof(ItemType))); // 아이템타입 리스트
-    private List<string> typeNameToKr = new List<string>(); // 아이템타입 한글로 변환한 리스트
-    private Dictionary<ItemType, string> typeDic = new Dictionary<ItemType, string>(); // 딕셔너리로 저장
+    private List<Sprite> typeSprites = new List<Sprite>(); // 아이템타입별 스프라이트 리스트
+    private Dictionary<ItemType, Sprite> typeDic = new Dictionary<ItemType, Sprite>(); // 딕셔너리로 저장
     private int num = 0;
-    public ItemType selectType; // 선택한 아이템타입
-    // Start is called before the first frame update
+    public ItemType selectType;
     void Awake()
     {
-        TypeNameToKr();
+        GetTypeSprites();
         RightBt.onClick.AddListener(() =>
         {
             if (num == typeList.Count - 1)
@@ -28,7 +28,7 @@ public class ItemTypeController : MonoBehaviour
             }
             num++;
             Debug.Log($"오른쪽 버튼 클릭 : {num}, {typeDic[typeList[num]]}, {typeList[num]}");
-            typeText.text = typeDic[typeList[num]];
+            typeImage.sprite = typeDic[typeList[num]];
             Inventory.Instance.InitSameTypeTotalSlot(typeList[num]);
             selectType = typeList[num];
         });
@@ -41,7 +41,7 @@ public class ItemTypeController : MonoBehaviour
             }
             num--;
             Debug.Log($"왼쪽 버튼 클릭 : {num}, {typeDic[typeList[num]]}, {typeList[num]}");
-            typeText.text = typeDic[typeList[num]];
+            typeImage.sprite = typeDic[typeList[num]];
             Inventory.Instance.InitSameTypeTotalSlot(typeList[num]);
             selectType = typeList[num];
         });
@@ -51,50 +51,52 @@ public class ItemTypeController : MonoBehaviour
     {
         Debug.Log("활성화됨");
         num = 0;
-        typeText.text = typeDic[typeList[num]];
+        typeImage.sprite = typeDic[typeList[num]];
         Inventory.Instance.InitSameTypeTotalSlot(typeList[num]);
+        selectType = typeList[num];
     } // OnEnable
 
-    private void TypeNameToKr()
+    //! 아이템타입별 스프라이트 딕셔너리로 저장하는 함수
+    private void GetTypeSprites()
     {
-        string typeName = default;
+        Sprite itemTypeSprite = default;
         for (int i = 0; i < typeList.Count; i++)
         {
             switch (typeList[i])
             {
                 case ItemType.NONE:
-                    typeName = "전체";
+                    itemTypeSprite = itemSprites[0];
                     break;
                 case ItemType.RECOVERY_CONSUMPTION:
-                    typeName = "회복용 소모품";
+                    itemTypeSprite = itemSprites[1];
                     break;
                 case ItemType.ATTACK_CONSUMPTION:
-                    typeName = "공격용 소모품";
+                    itemTypeSprite = itemSprites[2];
                     break;
                 case ItemType.WEAPON:
-                    typeName = "무기";
+                    itemTypeSprite = itemSprites[3];
                     break;
                 case ItemType.SHIELD:
-                    typeName = "방패";
+                    itemTypeSprite = itemSprites[4];
                     break;
                 case ItemType.HELMET:
-                    typeName = "투구";
+                    itemTypeSprite = itemSprites[5];
                     break;
                 case ItemType.CHEST:
-                    typeName = "상의";
+                    itemTypeSprite = itemSprites[6];
                     break;
                 case ItemType.GLOVES:
-                    typeName = "장갑";
+                    itemTypeSprite = itemSprites[7];
                     break;
                 case ItemType.PANTS:
-                    typeName = "하의";
+                    itemTypeSprite = itemSprites[8];
                     break;
                 case ItemType.RING:
-                    typeName = "반지";
+                    itemTypeSprite = itemSprites[9];
                     break;
             }
-            typeNameToKr.Add(typeName);
-            typeDic.Add(typeList[i], typeNameToKr[i]);
+            typeSprites.Add(itemTypeSprite);
+            typeDic.Add(typeList[i], typeSprites[i]);
         }
     } // TypeNameToKr
 } // ItemTypeController

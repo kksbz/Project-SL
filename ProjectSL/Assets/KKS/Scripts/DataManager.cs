@@ -12,6 +12,7 @@ public class DataManager : Singleton<DataManager>
     private string path; // 데이터 저장 경로
     public int slotNum; // 세이브 슬롯 넘버
     public bool[] hasSavefile; // 세이브 슬롯의 데이터 존재 유무
+    private string playerData = "플레이어 정보"; // json 데이터 파싱할 때 슬롯 구분자
     private string wSlot = "무기슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string aSlot = "방어구슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string cSlot = "소모품슬롯"; // json 데이터 파싱할 때 슬롯 구분자
@@ -40,6 +41,7 @@ public class DataManager : Singleton<DataManager>
         saveData = SaveInventoryData();
         saveData += SaveEquipSlotData();
         saveData += SaveBonfireList();
+        saveData += SavePlayerData();
         Debug.Log(saveData);
         if (!Directory.Exists(path))
         {
@@ -47,6 +49,15 @@ public class DataManager : Singleton<DataManager>
         }
         File.WriteAllText(path + "SaveData" + slotNum.ToString() + ".json", saveData);
     } // SaveData
+
+    //! 플레이어 데이터 저장하는 함수
+    private string SavePlayerData()
+    {
+        string saveData = playerData + "\n";
+        PlayerStatus _playerStatus = GameManager.Instance.player.GetPlayerData();
+        saveData += JsonUtility.ToJson(_playerStatus) + "\n";
+        return saveData;
+    } // GetPlayerData.
 
     //! 인벤토리 데이터 저장하는 함수
     private string SaveInventoryData()
@@ -272,6 +283,12 @@ public class DataManager : Singleton<DataManager>
         //! 화톳불 리스트 데이터 로드
         for (int i = number; i < itemDatas.Length - 1; i++)
         {
+            // playerData의 값을 만나면 그 다음 줄부턴 플레이어 데이터
+            if (itemDatas[i] == playerData)
+            {
+                number = i + 1;
+                break;
+            }
             BonfireData bonfire = JsonUtility.FromJson<BonfireData>(itemDatas[i]);
             // bonfireList에 불러온 화톳불데이터의 이름과 동일한 이름이 존재하지 않는 경우에만 add 및 slot생성
             if (!UiManager.Instance.warp.bonfireList.Any(b => b.bonfireName == bonfire.bonfireName))
@@ -279,6 +296,13 @@ public class DataManager : Singleton<DataManager>
                 UiManager.Instance.warp.bonfireList.Add(bonfire);
                 UiManager.Instance.warp.CreateWarpSlot(bonfire);
             }
+        }
+
+        //! 플레이어 데이터 로드
+        for (int i = number; i < itemDatas.Length - 1; i++)
+        {
+            PlayerStatus playerStatus = JsonUtility.FromJson<PlayerStatus>(itemDatas[i]);
+            GameManager.Instance.player.LoadPlayerData(playerStatus);
         }
         Debug.Log("저장된 데이터 로드 완료!");
     } // LoadData

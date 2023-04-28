@@ -24,12 +24,12 @@ public class ItemData
     public string itemName; // 이름
     public ItemType itemType; // 타입
     public int damage; // 공격력
-    public int vigor; // hp
-    public int attunement; // mp
-    public int endurance; // st
-    public int vitality; // 활력
-    public int strength; // 힘
-    public int dexterity; // 민첩
+    public int vigor; // 생명력
+    public int attunement; // 집중력
+    public int endurance; // 지구력
+    public int vitality; // 체력
+    public int strength; // 근력
+    public int dexterity; // 기량
     public int buyPrice; // 구매가격
     public int sellPrice; // 판매가격
     public int maxQuantity; // 최대 수량

@@ -9,7 +9,8 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
 {
     private Button button;
     [SerializeField] private Image icon; // 슬롯에 표시될 icon
-    [SerializeField] private Image equipSlotBg; // 아이템 장착 시 슬롯의 배경 이미지
+    [SerializeField] private GameObject pointerEffect; // 커서가 슬롯에 들어올 시 나올 이펙트
+    [SerializeField] private Sprite typeSprite; // 장비인벤 상단에 표시될 무기 스프라이트
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     public GameObject equipItem; // 슬롯에 장착한 무기 아이템 오브젝트
     public GameObject SlotObj { get { return gameObject; } }
@@ -29,13 +30,11 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
                 // 아이템이 있으면 이미지 출력
                 icon.sprite = Resources.Load<Sprite>(item.itemIcon);
                 icon.color = new Color(1, 1, 1, 1);
-                equipSlotBg.color = new Color(1, 1, 1, 1);
             }
             else
             {
                 // 아이템이 없으면 알파값 0으로 숨김
                 icon.color = new Color(1, 1, 1, 0);
-                equipSlotBg.color = new Color(1, 1, 1, 0);
             }
         }
     } // Item
@@ -49,11 +48,17 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
             Debug.Log("무기 슬롯 선택함");
             Inventory.Instance.selectSlot = this;
             Inventory.Instance.InitSameTypeEquipSlot(slotType);
-            Inventory.Instance.equipInvenText.text = "무기 & 방패";
+            Inventory.Instance.equipInvenImage.sprite = typeSprite;
             Inventory.Instance.equipInvenPanel.SetActive(true);
             Inventory.Instance.equipSlotPanel.SetActive(false);
+            pointerEffect.SetActive(false);
         });
     } // Start
+
+    private void OnDisable()
+    {
+        pointerEffect.SetActive(false);
+    } // OnDisable
 
     public void AddItem(ItemData _item)
     {
@@ -79,6 +84,7 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        pointerEffect.SetActive(true);
         if (item != null)
         {
             Debug.Log("템있는 슬롯에 커서 들옴");
@@ -88,6 +94,7 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        pointerEffect.SetActive(false);
         descriptionPanel.HideItemData();
     } // OnPointerExit
 } // WeaponSlot
