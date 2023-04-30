@@ -29,6 +29,7 @@ public class PlayerStateMachine : MonoBehaviour
     Vector2 _currentMovementInput;
     Vector3 _currentMovement;
     Vector3 _appliedMovement;
+    Vector3 _currentDirection;
     bool _isMovementPressed;
     bool _isRunPressed;
     bool _isWalkPressed;
@@ -52,6 +53,10 @@ public class PlayerStateMachine : MonoBehaviour
 
     // Behavior Command
     Behavior _nextBehavior;
+
+    //
+    bool _canRotate;
+    //
 
     // getter and setter
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -140,6 +145,8 @@ public class PlayerStateMachine : MonoBehaviour
     private void FixedUpdate()
     {
         _currentState.FixedUpdateStates();
+        // 임시?
+        RotateCharacterBody();
     }
 
     public void SetMoveDirection()
@@ -183,8 +190,17 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetDirection(Vector3 newBodyDirection)
     {
-        _characterBody.forward = newBodyDirection;
+        _currentDirection = newBodyDirection;
+        //  _characterBody.forward = newBodyDirection;
         // transform.forward = newBodyDirection;
+    }
+
+    public void RotateCharacterBody()
+    {
+        //if (!_canRotate)
+        //    return;
+
+        _characterBody.rotation = Quaternion.Lerp(_characterBody.rotation, Quaternion.Euler(_currentDirection), 100f);
     }
 
     // �Է� �ݹ� �Լ�

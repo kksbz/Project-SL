@@ -19,9 +19,6 @@ public class CombatController : MonoBehaviour
     public float attackRadius;
 
     public List<AttackSO> combo;
-    private float lastClickedTime;
-    private float lastComboEnd;
-    private int comboCounter = 0;
 
     public bool _canAttack = true;
     private bool _canNextCombo = default;
@@ -147,10 +144,10 @@ public class CombatController : MonoBehaviour
     void AttackLogic()
     {
         // Combo Attack
-        if (_isAttacking)
+        if (_maxCombo > 1 && _isAttacking)
         {
-            if (_currentCombo < 1 || _currentCombo >= _maxCombo)
-                return;
+            //if (_currentCombo < 1 || _currentCombo >= _maxCombo)
+            //    return;
             if (_canNextCombo)
             {
                 isComboInputOn = true;
@@ -180,6 +177,7 @@ public class CombatController : MonoBehaviour
 
         if (!CheckComboAssert(_currentCombo, 0, _maxCombo))
         {
+            _currentCombo = 1;
             return;
         }
         _currentCombo = Mathf.Clamp(_currentCombo + 1, 1, _maxCombo);
@@ -229,7 +227,6 @@ public class CombatController : MonoBehaviour
     void BindingComboAttackEventByAttackSO(List<AttackSO> comboAttack)
     {
         AnimationEventDispatcher aed = gameObject.GetComponentInChildren<AnimationEventDispatcher>();
-        // 오른손 주먹 공격
         for (int i = 0; i < comboAttack.Count; i++)
         {
             aed.AddAnimationStartEndByAnimOV(comboAttack[i].animatorOV);
