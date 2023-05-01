@@ -1,0 +1,52 @@
+Begin Object Class=/Script/Engine.MaterialInstanceConstant Name="MI_GKnightCape"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   ParameterStateId=C64D47794E5E09A3D396D6B7AF8EFD6E
+   Parent=Material'"/Game/GKnight/Materials/M_MKT_MasterMaterial_v02.M_MKT_MasterMaterial_v02"'
+   bHasStaticPermutationResource=True
+   ScalarParameterValues(0)=(ParameterInfo=(Name="DetailMapIntensity"),ParameterValue=0.160000,ExpressionGUID=DCE839BA428FCA1EBFDBBEAB5A41E68A)
+   ScalarParameterValues(1)=(ParameterInfo=(Name="Gloss power A"),ParameterValue=1.000000,ExpressionGUID=0B106ECB402294EDCDD7D09164D1A16A)
+   ScalarParameterValues(2)=(ParameterInfo=(Name="Tile A scale"),ParameterValue=2.000000,ExpressionGUID=0A3D9B7148060652F65574878687C512)
+   ScalarParameterValues(3)=(ParameterInfo=(Name="RefractionDepthBias"))
+   VectorParameterValues(0)=(ParameterInfo=(Name="DecalTint"),ParameterValue=(R=0.501042,G=0.154991,B=0.067623,A=1.000000),ExpressionGUID=442F33C5481626C4EEAA61A7F42393DE)
+   VectorParameterValues(1)=(ParameterInfo=(Name="Material_A_tint"),ParameterValue=(R=0.421875,G=0.390094,B=0.254364,A=1.000000),ExpressionGUID=67DDDEC148835C39502047B7538919C7)
+   TextureParameterValues(0)=(ParameterInfo=(Name="Decal_L"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Decals/T_CoatOfArm_02.T_CoatOfArm_02"',ExpressionGUID=8B33DA724A8BA0F24FAC12910C431D95)
+   TextureParameterValues(1)=(ParameterInfo=(Name="Decal_R"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Decals/T_CoatOfArm_02.T_CoatOfArm_02"',ExpressionGUID=7ECB3361482FB01210B1AA915DA6C9BE)
+   TextureParameterValues(2)=(ParameterInfo=(Name="Tile A"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Tiles/T_Denim_d.T_Denim_d"',ExpressionGUID=056392074EE5E332BC7B5FB4BAC71B5A)
+   TextureParameterValues(3)=(ParameterInfo=(Name="COLOR"),ParameterValue=Texture2D'"/Game/GKnight/Textures/KnightCape/T_GothicKnight_CapeD_D.T_GothicKnight_CapeD_D"',ExpressionGUID=55B0ACFF4C6A66B9BC41D49F50039D3D)
+   TextureParameterValues(4)=(ParameterInfo=(Name="MASK"),ParameterValue=Texture2D'"/Game/GKnight/Textures/KnightCape/T_GothicKnight_Cape_ID.T_GothicKnight_Cape_ID"',ExpressionGUID=D1E04D4F4F18A418BF7CF78AA83D4329)
+   TextureParameterValues(5)=(ParameterInfo=(Name="Normals"),ParameterValue=Texture2D'"/Game/GKnight/Textures/KnightCape/T_GothicKnight_Cape_N.T_GothicKnight_Cape_N"',ExpressionGUID=8E984AE64D759C1E1C81FC83404EEEB5)
+   TextureParameterValues(6)=(ParameterInfo=(Name="RMO_mask"),ParameterValue=Texture2D'"/Game/GKnight/Textures/KnightCape/T_GothicKnight_Cape_ORM.T_GothicKnight_Cape_ORM"',ExpressionGUID=D01EDDFF49B03FDB7346D0A0377EBD6E)
+   BasePropertyOverrides=(bOverride_BlendMode=True,bOverride_TwoSided=True,TwoSided=True,BlendMode=BLEND_Masked,OpacityMaskClipValue=0.333300)
+   ReferencedTextureGuids(0)=377EF67B418EBE27FA8C60B7FABFB78C
+   ReferencedTextureGuids(1)=E2513051476E01AA26034A8DDAFE3B6F
+   ReferencedTextureGuids(2)=353D76424EDADC059448288E5E5B3798
+   ReferencedTextureGuids(3)=01B3E6D34DDCF722B11100917CE61888
+   ReferencedTextureGuids(4)=6B019C3C4AFD8C0967495799E8317394
+   ReferencedTextureGuids(5)=333E900B46E0EF6EFCCEC2A5A2C69F46
+   ReferencedTextureGuids(6)=5D4DBB0F4AD744A819E3C38D23DBE0D0
+   ReferencedTextureGuids(7)=B0B4614149E1CEA8D0D7B0928CE96B61
+   StaticParameters=(StaticSwitchParameters=((Value=True,ParameterInfo=(Name="Use Decal"),bOverride=True,ExpressionGUID=20FC3CFC4D9F94108F39818109AAAE48)))
+   CachedReferencedTextures(0)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_N.T_BaseMaterial_v01_N"'
+   CachedReferencedTextures(1)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_D.T_BaseMaterial_v01_D"'
+   CachedReferencedTextures(2)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_ORM.T_BaseMaterial_v01_ORM"'
+   CachedReferencedTextures(3)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend"'
+   CachedReferencedTextures(4)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase"'
+   CachedReferencedTextures(5)=Texture2D'"/Game/GKnight/Textures/Tiles/checker.checker"'
+   CachedReferencedTextures(6)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_ID.T_BaseMaterial_v01_ID"'
+   CachedReferencedTextures(7)=Texture2D'"/Game/GKnight/Textures/Decals/T_CoatOfArm_02.T_CoatOfArm_02"'
+   CachedReferencedTextures(8)=Texture2D'"/Game/GKnight/Textures/Decals/T_CoatOfArm_04_1.T_CoatOfArm_04_1"'
+   CachedReferencedTextures(9)=Texture2D'"/Game/GKnight/Textures/DetailMaps/T_detailMap01_n.T_detailMap01_n"'
+   TextureStreamingDataVersion=1
+   TextureStreamingData(0)=(SamplingScale=1.000000,UVChannelIndex=1,TextureName="T_CoatOfArm_02",TextureReference=/Game/GKnight/Textures/Decals/T_CoatOfArm_02.T_CoatOfArm_02)
+   TextureStreamingData(1)=(SamplingScale=2.000000,UVChannelIndex=0,TextureName="T_Denim_d",TextureReference=/Game/GKnight/Textures/Tiles/T_Denim_d.T_Denim_d)
+   TextureStreamingData(2)=(SamplingScale=6.000000,UVChannelIndex=0,TextureName="T_detailMap01_n",TextureReference=/Game/GKnight/Textures/DetailMaps/T_detailMap01_n.T_detailMap01_n)
+   TextureStreamingData(3)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Cape_ID",TextureReference=/Game/GKnight/Textures/KnightCape/T_GothicKnight_Cape_ID.T_GothicKnight_Cape_ID)
+   TextureStreamingData(4)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Cape_N",TextureReference=/Game/GKnight/Textures/KnightCape/T_GothicKnight_Cape_N.T_GothicKnight_Cape_N)
+   TextureStreamingData(5)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Cape_ORM",TextureReference=/Game/GKnight/Textures/KnightCape/T_GothicKnight_Cape_ORM.T_GothicKnight_Cape_ORM)
+   TextureStreamingData(6)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_CapeD_D",TextureReference=/Game/GKnight/Textures/KnightCape/T_GothicKnight_CapeD_D.T_GothicKnight_CapeD_D)
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=2B0092E24D52C6F8D8A9CEA1780715F9
+End Object

@@ -41,6 +41,10 @@ public class PlayerGuardState : PlayerBaseState
         {
             SwitchState(Factory.Roll());
         }
+        else if (Ctx.BlockFlag)
+        {
+            SwitchState(Factory.Block());
+        }
     }
     public override void InitializeSubState()
     {

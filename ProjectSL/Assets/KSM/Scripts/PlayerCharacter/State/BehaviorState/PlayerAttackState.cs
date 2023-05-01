@@ -31,6 +31,7 @@ public class PlayerAttackState : PlayerBaseState
     public override void ExitState()
     {
         Debug.Log("Attack State Exit");
+        // Ctx.CombatController.ResetAnimatorController();
         Ctx.CharacterAnimator.applyRootMotion = false;
     }
     public override void CheckSwitchStates()

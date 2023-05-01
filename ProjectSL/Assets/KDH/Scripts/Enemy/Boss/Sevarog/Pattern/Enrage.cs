@@ -85,7 +85,7 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
     public void GiveDamage(GData.IDamageable damageable, float damage)
     {
         Debug.Log($"데미지를 입힘 Enrage Debug / 대상 : {damageable.ToString()} / 데미지 : {damage}");
-        damageable.TakeDamage(damage);
+        damageable.TakeDamage(gameObject, damage);
     }
 
 }

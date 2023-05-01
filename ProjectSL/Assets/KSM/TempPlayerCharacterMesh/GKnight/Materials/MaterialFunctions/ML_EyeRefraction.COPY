@@ -1,0 +1,638 @@
+Begin Object Class=/Script/Engine.MaterialFunction Name="ML_EyeRefraction"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionTextureSample Name="MaterialExpressionTextureSample_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionSubtract Name="MaterialExpressionSubtract_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionSubtract Name="MaterialExpressionSubtract_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionSubtract Name="MaterialExpressionSubtract_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionPixelNormalWS Name="MaterialExpressionPixelNormalWS_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionNormalize Name="MaterialExpressionNormalize_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMultiply Name="MaterialExpressionMultiply_9"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMultiply Name="MaterialExpressionMultiply_6"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMultiply Name="MaterialExpressionMultiply_11"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMultiply Name="MaterialExpressionMultiply_10"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMultiply Name="MaterialExpressionMultiply_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMultiply Name="MaterialExpressionMultiply_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMax Name="MaterialExpressionMax_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_9"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_8"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionLinearInterpolate Name="MaterialExpressionLinearInterpolate_6"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionLinearInterpolate Name="MaterialExpressionLinearInterpolate_12"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionOutput Name="MaterialExpressionFunctionOutput_3"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionOutput Name="MaterialExpressionFunctionOutput_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionOutput Name="MaterialExpressionFunctionOutput_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_9"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_7"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_6"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_5"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_4"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionFunctionInput Name="MaterialExpressionFunctionInput_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionDotProduct Name="MaterialExpressionDotProduct_7"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionDotProduct Name="MaterialExpressionDotProduct_6"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionDotProduct Name="MaterialExpressionDotProduct_3"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionDotProduct Name="MaterialExpressionDotProduct_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionDivide Name="MaterialExpressionDivide_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionCustom Name="MaterialExpressionCustom_16"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionCustom Name="MaterialExpressionCustom_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionCrossProduct Name="MaterialExpressionCrossProduct_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionConstant3Vector Name="MaterialExpressionConstant3Vector_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionConstant2Vector Name="MaterialExpressionConstant2Vector_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionConstant Name="MaterialExpressionConstant_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionComment Name="MaterialExpressionComment_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionCameraVectorWS Name="MaterialExpressionCameraVectorWS_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionAdd Name="MaterialExpressionAdd_2"
+   End Object
+   Begin Object Class=/Script/Engine.Material Name="Material_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_2"
+   End Object
+   Begin Object Name="MaterialExpressionTextureSample_1"
+      SamplerType=SAMPLERTYPE_LinearColor
+      MaterialExpressionEditorX=-2080
+      MaterialExpressionEditorY=576
+      MaterialExpressionGuid=1A4EEC304E714B31DCBBAD9E1E29D610
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="UVs not scaled by center as the base UVs are a ortho projection and this depth needs to stay in that space"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionSubtract_2"
+      A=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_6"')
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_5"')
+      MaterialExpressionEditorX=-1536
+      MaterialExpressionEditorY=608
+      MaterialExpressionGuid=35A06ACE481D10D51B10798D0F244621
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      bCollapsed=False
+   End Object
+   Begin Object Name="MaterialExpressionSubtract_1"
+      A=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_2"',OutputIndex=1)
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_0"')
+      MaterialExpressionEditorX=1616
+      MaterialExpressionEditorY=816
+      MaterialExpressionGuid=ABFEC4764338B81969E96B8814C6ABC1
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="When a refraction ray should see beyond the iris"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionSubtract_0"
+      A=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_0"')
+      B=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_1"')
+      MaterialExpressionEditorX=464
+      MaterialExpressionEditorY=832
+      MaterialExpressionGuid=7AA787CC42292C044A5440BD7B4AD17F
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionPixelNormalWS_2"
+      MaterialExpressionEditorX=-1088
+      MaterialExpressionEditorY=48
+      MaterialExpressionGuid=F49D9F1046017742179442B964BF73E5
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionNormalize_0"
+      VectorInput=(Expression=MaterialExpressionSubtract'"ML_EyeRefraction:MaterialExpressionSubtract_0"')
+      MaterialExpressionEditorX=576
+      MaterialExpressionEditorY=832
+      MaterialExpressionGuid=83DDDB164B9059E90D7E68A162105453
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionMultiply_9"
+      A=(Expression=MaterialExpressionCustom'"ML_EyeRefraction:MaterialExpressionCustom_16"')
+      B=(Expression=MaterialExpressionDivide'"ML_EyeRefraction:MaterialExpressionDivide_0"')
+      MaterialExpressionEditorX=160
+      MaterialExpressionEditorY=352
+      MaterialExpressionGuid=B2DB6DB7471252256313F0839AA5F70D
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Scale Refracted Offset Direction"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionMultiply_6"
+      A=(Expression=MaterialExpressionMax'"ML_EyeRefraction:MaterialExpressionMax_0"')
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_4"')
+      MaterialExpressionEditorX=-992
+      MaterialExpressionEditorY=608
+      MaterialExpressionGuid=1E6507AE4F832EBFD1271D94A175C93C
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Iris Depth"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionMultiply_11"
+      A=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_0"')
+      B=(Expression=MaterialExpressionConstant2Vector'"ML_EyeRefraction:MaterialExpressionConstant2Vector_0"')
+      MaterialExpressionEditorX=1184
+      MaterialExpressionEditorY=288
+      MaterialExpressionGuid=21FB3F7642CFA7066841D5A6479F2308
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionMultiply_10"
+      A=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_11"')
+      B=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_8"')
+      MaterialExpressionEditorX=1296
+      MaterialExpressionEditorY=336
+      MaterialExpressionGuid=53376DE44E5F03A9A980B2B2AE3FAD83
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Scale offset to within Iris"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionMultiply_1"
+      A=(Expression=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_3"')
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_7"')
+      MaterialExpressionEditorX=352
+      MaterialExpressionEditorY=832
+      MaterialExpressionGuid=A57A52FF4F3D2FCDAC321BADC5EDC3CD
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionMultiply_0"
+      A=(Expression=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_2"')
+      B=(Expression=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_2"')
+      MaterialExpressionEditorX=-320
+      MaterialExpressionEditorY=704
+      MaterialExpressionGuid=23697793438A73929BB77CAC58F38A09
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionMax_0"
+      A=(Expression=MaterialExpressionSubtract'"ML_EyeRefraction:MaterialExpressionSubtract_2"')
+      B=(Expression=MaterialExpressionConstant'"ML_EyeRefraction:MaterialExpressionConstant_2"')
+      MaterialExpressionEditorX=-1328
+      MaterialExpressionEditorY=608
+      MaterialExpressionGuid=29DD2E074BCF9D66B6E2CB84F556A373
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_9"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.BreakOutFloat2Components"'
+      FunctionInputs(0)=(ExpressionInputId=0FC5C56B4335798F20CB928CF1C87421,Input=(Expression=MaterialExpressionCustom'"ML_EyeRefraction:MaterialExpressionCustom_1"',InputName="Float2"))
+      FunctionOutputs(0)=(ExpressionOutputId=6BC893C247FCFC567178CE944E213385,Output=(OutputName="R"))
+      FunctionOutputs(1)=(ExpressionOutputId=9720C81E449DF8E5514FCB8A80FD5FA3,Output=(OutputName="G"))
+      MaterialExpressionEditorY=-288
+      MaterialExpressionGuid=1C092C8D4F703EA81DB516A17468C4B4
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Outputs(0)=(OutputName="R")
+      Outputs(1)=(OutputName="G")
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_8"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/MakeFloat2.MakeFloat2"'
+      FunctionInputs(0)=(ExpressionInputId=529C1D96441E07EB03A9E59B8A7F67B6,Input=(Expression=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_6"',InputName="X"))
+      FunctionInputs(1)=(ExpressionInputId=B5BD7D1B494F6928732CCDA1C63D8E15,Input=(Expression=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_7"',InputName="Y"))
+      FunctionOutputs(0)=(ExpressionOutputId=0DD6F9954C067C3E5DDBBBA0D6910DD2,Output=(OutputName="Result"))
+      MaterialExpressionEditorX=896
+      MaterialExpressionEditorY=880
+      MaterialExpressionGuid=FECE02AF457A5D0F1707299EE1453590
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Refracted UV Offset"
+      bCommentBubbleVisible=True
+      Outputs(0)=(OutputName="Result")
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_2"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorLength.VectorLength"'
+      FunctionInputs(0)=(ExpressionInputId=1F411C544AE4A9ACC5F5F8A2A099B309,Input=(OutputIndex=-1,InputName="Vector 3"))
+      FunctionInputs(1)=(ExpressionInputId=E06081AD4255F67C6D398889E3CE73BA,Input=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_10"',InputName="Vector 2"))
+      FunctionOutputs(0)=(ExpressionOutputId=F186F43445EF47104CD650A242DEAECE,Output=(OutputName="V3 Length"))
+      FunctionOutputs(1)=(ExpressionOutputId=3C53F2D54FE1029372151E82C85F7755,Output=(OutputName="V2 Length"))
+      MaterialExpressionEditorX=1376
+      MaterialExpressionEditorY=736
+      MaterialExpressionGuid=369D1BF24ADB9E8A5C0F6F9644EB62C9
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Outputs(0)=(OutputName="V3 Length")
+      Outputs(1)=(OutputName="V2 Length")
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_1"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions01/Texturing/ScaleUVsByCenter.ScaleUVsByCenter"'
+      FunctionInputs(0)=(ExpressionInputId=395E1DA54D9791A8DB7094B52B0509C3,Input=(OutputIndex=-1,InputName="UVs"))
+      FunctionInputs(1)=(ExpressionInputId=9E726E4E4FF0FCD65D606FB9CE123842,Input=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_2"',InputName="Texture Scale"))
+      FunctionOutputs(0)=(ExpressionOutputId=94A339B248B805839CF8F28B335D4E1D,Output=(OutputName="UVs"))
+      FunctionOutputs(1)=(ExpressionOutputId=2DFD3EF340552A23494E8D987C76BC0D,Output=(OutputName="0-1 mask"))
+      MaterialExpressionEditorX=-1088
+      MaterialExpressionEditorY=368
+      MaterialExpressionGuid=5D34685E47F78CE6D097E19E0D63E7D6
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Outputs(0)=(OutputName="UVs")
+      Outputs(1)=(OutputName="0-1 mask")
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_0"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/TangentBasis.TangentBasis"'
+      FunctionOutputs(0)=(ExpressionOutputId=50D5309F4533F385CB95B2B327B50518,Output=(OutputName="X U"))
+      FunctionOutputs(1)=(ExpressionOutputId=D9797C774B300021254832A001D3A89A,Output=(OutputName="Y V"))
+      FunctionOutputs(2)=(ExpressionOutputId=6D4DDB864A8FC4F1198379B8A82A44A8,Output=(OutputName="Z W"))
+      MaterialExpressionEditorX=112
+      MaterialExpressionEditorY=816
+      MaterialExpressionGuid=2DF304584031BC53FEAFA68F922607FE
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Outputs(0)=(OutputName="X U")
+      Outputs(1)=(OutputName="Y V")
+      Outputs(2)=(OutputName="Z W")
+   End Object
+   Begin Object Name="MaterialExpressionLinearInterpolate_6"
+      Alpha=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_0"')
+      ConstA=0.325000
+      MaterialExpressionEditorX=-208
+      MaterialExpressionEditorY=656
+      MaterialExpressionGuid=C4F9B29849E3D3605FB4ADACE4D8B119
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionLinearInterpolate_12"
+      A=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_1"')
+      B=(Expression=MaterialExpressionAdd'"ML_EyeRefraction:MaterialExpressionAdd_2"')
+      Alpha=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_9"')
+      ConstA=1.000000
+      MaterialExpressionEditorX=1648
+      MaterialExpressionEditorY=512
+      MaterialExpressionGuid=76A8231E4316C90B56D9C6889F1E8AF0
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Use Refracted UV within Iris based on Iris Mask"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionFunctionOutput_3"
+      OutputName="IrisMask"
+      A=(Expression=MaterialExpressionCustom'"ML_EyeRefraction:MaterialExpressionCustom_1"')
+      bLastPreviewed=True
+      Id=0A9115B44527B70C50E3D9A5AA691798
+      MaterialExpressionEditorX=2048
+      MaterialExpressionEditorY=-368
+      MaterialExpressionGuid=706979F94A7852004AFBE1882B3D44B2
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionOutput_2"
+      OutputName="Transparency"
+      A=(Expression=MaterialExpressionSubtract'"ML_EyeRefraction:MaterialExpressionSubtract_1"')
+      Id=D2908D4A4E9C40A014CAE9A5C502C985
+      MaterialExpressionEditorX=2048
+      MaterialExpressionEditorY=816
+      MaterialExpressionGuid=B46D651E4F42CBB14E8DC8B74B8E4344
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionOutput_1"
+      OutputName="RefractedUV"
+      A=(Expression=MaterialExpressionLinearInterpolate'"ML_EyeRefraction:MaterialExpressionLinearInterpolate_12"')
+      Id=E7B6B75B491914BE13A5B59379A2182B
+      MaterialExpressionEditorX=2032
+      MaterialExpressionEditorY=512
+      MaterialExpressionGuid=01299CF442F67AA20AF80DBC2E38DBFE
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_9"
+      InputName="LimbusUVWidth"
+      Description="Limbus UV Width"
+      Id=7220EEA94FD33533BDBCA09A65E36290
+      InputType=FunctionInput_Vector2
+      PreviewValue=(X=0.050000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1136
+      MaterialExpressionEditorY=-592
+      MaterialExpressionGuid=6B328F774BAA3055E201839469856DF0
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_7"
+      Preview=(Expression=MaterialExpressionConstant3Vector'"ML_EyeRefraction:MaterialExpressionConstant3Vector_2"')
+      InputName="EyeDirectionWorld"
+      Id=7D1B161D45F2083D083D6AA069042BFE
+      MaterialExpressionEditorX=-1408
+      MaterialExpressionEditorY=64
+      MaterialExpressionGuid=7A9AAD4643245B3D29373DA1E7603D33
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_6"
+      Preview=(Expression=MaterialExpressionTextureSample'"ML_EyeRefraction:MaterialExpressionTextureSample_1"',Mask=1,MaskR=1,MaskG=1,MaskB=1)
+      InputName="MidPlaneDisplacement"
+      Id=946956E243C3A5B38C173785CB8CA97C
+      PreviewValue=(X=1.620000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1856
+      MaterialExpressionEditorY=608
+      MaterialExpressionGuid=050F3812484354FD42339C81D1E8D033
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Offset depth of Iris from plane through middle of the eye"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_5"
+      InputName="DepthPlaneOffset"
+      Id=3BD255394BFC26AE799CA0A6F5EF0742
+      InputType=FunctionInput_Scalar
+      PreviewValue=(X=1.620000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1776
+      MaterialExpressionEditorY=848
+      MaterialExpressionGuid=050F3812484354FD42339C81D1E8D033
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Offset depth of Iris from plane through middle of the eye"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_4"
+      InputName="DepthScale"
+      Id=39B51E9D4B68A53E646547B1816B1044
+      InputType=FunctionInput_Scalar
+      PreviewValue=(X=1.000000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1168
+      MaterialExpressionEditorY=800
+      MaterialExpressionGuid=050F3812484354FD42339C81D1E8D033
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_2"
+      InputName="ScaleByCenter"
+      Description="Scale By Center"
+      Id=A466DFFF443D8417CB7DCD8A0EA85574
+      InputType=FunctionInput_Scalar
+      PreviewValue=(X=0.650000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1408
+      MaterialExpressionEditorY=304
+      MaterialExpressionGuid=4141479F4A4635FEDA9126B45375AA63
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_1"
+      InputName="InternalIoR"
+      Description="Internal IoR"
+      Id=8F236A654DACFE8D7B9ACEB2F5D8AFAD
+      InputType=FunctionInput_Scalar
+      PreviewValue=(X=1.376000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1136
+      MaterialExpressionEditorY=-160
+      MaterialExpressionGuid=AF1B2A574E744368A0FFCA8C10682CF8
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionFunctionInput_0"
+      InputName="IrisUVRadius"
+      Description="Iris UV Radius"
+      Id=0E8B0B4946FE6B39F697D781F6C47553
+      InputType=FunctionInput_Scalar
+      PreviewValue=(X=0.133000,Y=0.000000,Z=0.000000,W=1.000000)
+      MaterialExpressionEditorX=-1136
+      MaterialExpressionEditorY=-400
+      MaterialExpressionGuid=3493EA054D4D446A4FD229947C819079
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionDotProduct_7"
+      A=(Expression=MaterialExpressionCrossProduct'"ML_EyeRefraction:MaterialExpressionCrossProduct_0"')
+      B=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_9"')
+      MaterialExpressionEditorX=736
+      MaterialExpressionEditorY=976
+      MaterialExpressionGuid=1C925CD44BCEA5E7A084EBABCF8F5281
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionDotProduct_6"
+      A=(Expression=MaterialExpressionNormalize'"ML_EyeRefraction:MaterialExpressionNormalize_0"')
+      B=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_9"')
+      MaterialExpressionEditorX=736
+      MaterialExpressionEditorY=832
+      MaterialExpressionGuid=1C925CD44BCEA5E7A084EBABCF8F5281
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionDotProduct_3"
+      A=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_0"')
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_7"')
+      MaterialExpressionEditorX=256
+      MaterialExpressionEditorY=832
+      MaterialExpressionGuid=1C925CD44BCEA5E7A084EBABCF8F5281
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionDotProduct_2"
+      A=(Expression=MaterialExpressionCameraVectorWS'"ML_EyeRefraction:MaterialExpressionCameraVectorWS_2"')
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_7"')
+      MaterialExpressionEditorX=-320
+      MaterialExpressionEditorY=320
+      MaterialExpressionGuid=3B6E76744DD5106D0FA5579D7B5E2394
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="cosAlpha = Camera to Iris Plane Normal Facing Ratio"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionDivide_0"
+      A=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_6"')
+      B=(Expression=MaterialExpressionLinearInterpolate'"ML_EyeRefraction:MaterialExpressionLinearInterpolate_6"')
+      MaterialExpressionEditorX=-64
+      MaterialExpressionEditorY=608
+      MaterialExpressionGuid=FCBFB45A41497AF50E019BA3A459205F
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="heightW / cosAlpha - scale distance to iris plane by facing ratio of camera and plane"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionCustom_16"
+      Code="float airIoR = 1.00029;\r\n\r\nfloat n = airIoR / internalIoR;\r\n\r\nfloat facing = dot(normalW, cameraW);\r\n\r\nfloat w = n * facing;\r\n\r\nfloat k = sqrt(1+(w-n)*(w+n));\r\n\r\nfloat3 t;\r\nt = (w - k)*normalW - n*cameraW;\r\nt = normalize(t);\r\nreturn -t;"
+      Inputs(0)=(InputName="internalIoR",Input=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_1"'))
+      Inputs(1)=(InputName="normalW",Input=(Expression=MaterialExpressionPixelNormalWS'"ML_EyeRefraction:MaterialExpressionPixelNormalWS_2"'))
+      Inputs(2)=(InputName="cameraW",Input=(Expression=MaterialExpressionCameraVectorWS'"ML_EyeRefraction:MaterialExpressionCameraVectorWS_2"'))
+      MaterialExpressionEditorX=-288
+      MaterialExpressionEditorY=32
+      MaterialExpressionGuid=C1FB902E4534045AB1598CBE37768462
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Refraction Direction"
+      bCommentBubbleVisible=True
+      bCollapsed=True
+   End Object
+   Begin Object Name="MaterialExpressionCustom_1"
+      Code="// Iris Mask with Limbus Ring falloff\r\nUV = UV - float2(0.5f, 0.5f);\r\n\r\nfloat2 m, r;\r\nr = (length(UV) - (IrisUVRadius - LimbusUVWidth)) / LimbusUVWidth;\r\nm = saturate(1 - r);\r\nm = smoothstep(0, 1, m);\r\nreturn m;"
+      OutputType=CMOT_Float2
+      Inputs(0)=(InputName="IrisUVRadius",Input=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_0"'))
+      Inputs(1)=(InputName="UV",Input=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_1"'))
+      Inputs(2)=(InputName="LimbusUVWidth",Input=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_9"'))
+      MaterialExpressionEditorX=-288
+      MaterialExpressionEditorY=-352
+      MaterialExpressionGuid=2C80C43249186F0AEEECDE9B1FF5DC35
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Irisi UV Mask"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="MaterialExpressionCrossProduct_0"
+      A=(Expression=MaterialExpressionNormalize'"ML_EyeRefraction:MaterialExpressionNormalize_0"')
+      B=(Expression=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_7"')
+      MaterialExpressionEditorX=640
+      MaterialExpressionEditorY=976
+      MaterialExpressionGuid=8113EAAE4BCA3ABCD91CC2864122AE2B
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionConstant3Vector_2"
+      Constant=(R=0.000000,G=1.000000,B=0.000000,A=0.000000)
+      MaterialExpressionEditorX=-1616
+      MaterialExpressionEditorY=64
+      MaterialExpressionGuid=4B4AAA05460036D7F4EEBF96EEA8FD8E
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionConstant2Vector_0"
+      R=-1.000000
+      G=1.000000
+      MaterialExpressionEditorX=1088
+      MaterialExpressionEditorY=240
+      MaterialExpressionGuid=C964C8F54C9DD835B7343980D4AAB437
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionConstant_2"
+      MaterialExpressionEditorX=-1376
+      MaterialExpressionEditorY=816
+      MaterialExpressionGuid=2A2FB0834C381A001B5A618A64B77DB7
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionComment_0"
+      SizeX=752
+      SizeY=304
+      Text="Derive tangents"
+      MaterialExpressionEditorX=96
+      MaterialExpressionEditorY=768
+      MaterialExpressionGuid=26C5BA12408AC1879ECB52ACD7363CD0
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionCameraVectorWS_2"
+      MaterialExpressionEditorX=-1088
+      MaterialExpressionEditorY=224
+      MaterialExpressionGuid=171670F94F407E32B3F048A677C6692E
+      Function=MaterialFunction'"ML_EyeRefraction"'
+   End Object
+   Begin Object Name="MaterialExpressionAdd_2"
+      A=(Expression=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_10"')
+      B=(Expression=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_1"')
+      MaterialExpressionEditorX=1408
+      MaterialExpressionEditorY=448
+      MaterialExpressionGuid=13D989A946E2B823A0C38E931B4DA1B7
+      Function=MaterialFunction'"ML_EyeRefraction"'
+      Desc="Refracted UV"
+      bCommentBubbleVisible=True
+   End Object
+   Begin Object Name="Material_0"
+      EmissiveColor=(Expression=MaterialExpressionFunctionOutput'"ML_EyeRefraction:MaterialExpressionFunctionOutput_2"')
+      ShadingModel=MSM_Unlit
+      ShadingModels=(ShadingModelField=1)
+      Expressions(0)=MaterialExpressionFunctionOutput'"ML_EyeRefraction:MaterialExpressionFunctionOutput_3"'
+      Expressions(1)=MaterialExpressionPixelNormalWS'"ML_EyeRefraction:MaterialExpressionPixelNormalWS_2"'
+      Expressions(2)=MaterialExpressionCameraVectorWS'"ML_EyeRefraction:MaterialExpressionCameraVectorWS_2"'
+      Expressions(3)=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_2"'
+      Expressions(4)=MaterialExpressionAdd'"ML_EyeRefraction:MaterialExpressionAdd_2"'
+      Expressions(5)=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_8"'
+      Expressions(6)=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_1"'
+      Expressions(7)=MaterialExpressionConstant3Vector'"ML_EyeRefraction:MaterialExpressionConstant3Vector_2"'
+      Expressions(8)=MaterialExpressionCustom'"ML_EyeRefraction:MaterialExpressionCustom_16"'
+      Expressions(9)=MaterialExpressionCustom'"ML_EyeRefraction:MaterialExpressionCustom_1"'
+      Expressions(10)=MaterialExpressionLinearInterpolate'"ML_EyeRefraction:MaterialExpressionLinearInterpolate_12"'
+      Expressions(11)=MaterialExpressionFunctionOutput'"ML_EyeRefraction:MaterialExpressionFunctionOutput_1"'
+      Expressions(12)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_0"'
+      Expressions(13)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_1"'
+      Expressions(14)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_2"'
+      Expressions(15)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_9"'
+      Expressions(16)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_4"'
+      Expressions(17)=MaterialExpressionFunctionOutput'"ML_EyeRefraction:MaterialExpressionFunctionOutput_2"'
+      Expressions(18)=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_6"'
+      Expressions(19)=MaterialExpressionDivide'"ML_EyeRefraction:MaterialExpressionDivide_0"'
+      Expressions(20)=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_9"'
+      Expressions(21)=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_10"'
+      Expressions(22)=MaterialExpressionConstant2Vector'"ML_EyeRefraction:MaterialExpressionConstant2Vector_0"'
+      Expressions(23)=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_11"'
+      Expressions(24)=MaterialExpressionSubtract'"ML_EyeRefraction:MaterialExpressionSubtract_1"'
+      Expressions(25)=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_2"'
+      Expressions(26)=MaterialExpressionTextureSample'"ML_EyeRefraction:MaterialExpressionTextureSample_1"'
+      Expressions(27)=MaterialExpressionSubtract'"ML_EyeRefraction:MaterialExpressionSubtract_2"'
+      Expressions(28)=MaterialExpressionMax'"ML_EyeRefraction:MaterialExpressionMax_0"'
+      Expressions(29)=MaterialExpressionConstant'"ML_EyeRefraction:MaterialExpressionConstant_2"'
+      Expressions(30)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_5"'
+      Expressions(31)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_6"'
+      Expressions(32)=MaterialExpressionLinearInterpolate'"ML_EyeRefraction:MaterialExpressionLinearInterpolate_6"'
+      Expressions(33)=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_0"'
+      Expressions(34)=MaterialExpressionFunctionInput'"ML_EyeRefraction:MaterialExpressionFunctionInput_7"'
+      Expressions(35)=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_9"'
+      Expressions(36)=MaterialExpressionMaterialFunctionCall'"ML_EyeRefraction:MaterialExpressionMaterialFunctionCall_0"'
+      Expressions(37)=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_3"'
+      Expressions(38)=MaterialExpressionMultiply'"ML_EyeRefraction:MaterialExpressionMultiply_1"'
+      Expressions(39)=MaterialExpressionSubtract'"ML_EyeRefraction:MaterialExpressionSubtract_0"'
+      Expressions(40)=MaterialExpressionNormalize'"ML_EyeRefraction:MaterialExpressionNormalize_0"'
+      Expressions(41)=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_6"'
+      Expressions(42)=MaterialExpressionCrossProduct'"ML_EyeRefraction:MaterialExpressionCrossProduct_0"'
+      Expressions(43)=MaterialExpressionDotProduct'"ML_EyeRefraction:MaterialExpressionDotProduct_7"'
+      bCanMaskedBeAssumedOpaque=True
+      StateId=3119F49A451D2736FBED08AD3BA244DA
+      CachedExpressionData=(ReferencedTextures=(None),FunctionInfos=((StateId=7560E2DA4356343C18E6818AA015BAC5,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/MakeFloat2.MakeFloat2"'),(StateId=2C1DDB6E406BC9FC1D4141A17C82122A,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.BreakOutFloat2Components"'),(StateId=B2F4A5A74EDE33D8E70A4A83A28D1503,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions01/Texturing/ScaleUVsByCenter.ScaleUVsByCenter"'),(StateId=6BB9714649B7587803A983999B3C01AF,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorLength.VectorLength"'),(StateId=2C1DDB6E406BC9FC1D4141A17C82122A,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.BreakOutFloat2Components"'),(StateId=2C0AFCEF4B67951F85943A898827DBDF,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions02/TangentBasis.TangentBasis"')),QualityLevelsUsed=(False,False,False,False))
+      ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"ML_EyeRefraction:SceneThumbnailInfoWithPrimitive_2"'
+      LightingGuid=907AD86240FB92FE2758CDABACFCA060
+   End Object
+   FunctionExpressions(0)=MaterialExpressionFunctionOutput'"MaterialExpressionFunctionOutput_3"'
+   FunctionExpressions(1)=MaterialExpressionPixelNormalWS'"MaterialExpressionPixelNormalWS_2"'
+   FunctionExpressions(2)=MaterialExpressionCameraVectorWS'"MaterialExpressionCameraVectorWS_2"'
+   FunctionExpressions(3)=MaterialExpressionDotProduct'"MaterialExpressionDotProduct_2"'
+   FunctionExpressions(4)=MaterialExpressionAdd'"MaterialExpressionAdd_2"'
+   FunctionExpressions(5)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_8"'
+   FunctionExpressions(6)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_1"'
+   FunctionExpressions(7)=MaterialExpressionConstant3Vector'"MaterialExpressionConstant3Vector_2"'
+   FunctionExpressions(8)=MaterialExpressionCustom'"MaterialExpressionCustom_16"'
+   FunctionExpressions(9)=MaterialExpressionCustom'"MaterialExpressionCustom_1"'
+   FunctionExpressions(10)=MaterialExpressionLinearInterpolate'"MaterialExpressionLinearInterpolate_12"'
+   FunctionExpressions(11)=MaterialExpressionFunctionOutput'"MaterialExpressionFunctionOutput_1"'
+   FunctionExpressions(12)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_0"'
+   FunctionExpressions(13)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_1"'
+   FunctionExpressions(14)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_2"'
+   FunctionExpressions(15)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_9"'
+   FunctionExpressions(16)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_4"'
+   FunctionExpressions(17)=MaterialExpressionFunctionOutput'"MaterialExpressionFunctionOutput_2"'
+   FunctionExpressions(18)=MaterialExpressionMultiply'"MaterialExpressionMultiply_6"'
+   FunctionExpressions(19)=MaterialExpressionDivide'"MaterialExpressionDivide_0"'
+   FunctionExpressions(20)=MaterialExpressionMultiply'"MaterialExpressionMultiply_9"'
+   FunctionExpressions(21)=MaterialExpressionMultiply'"MaterialExpressionMultiply_10"'
+   FunctionExpressions(22)=MaterialExpressionConstant2Vector'"MaterialExpressionConstant2Vector_0"'
+   FunctionExpressions(23)=MaterialExpressionMultiply'"MaterialExpressionMultiply_11"'
+   FunctionExpressions(24)=MaterialExpressionSubtract'"MaterialExpressionSubtract_1"'
+   FunctionExpressions(25)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_2"'
+   FunctionExpressions(26)=MaterialExpressionTextureSample'"MaterialExpressionTextureSample_1"'
+   FunctionExpressions(27)=MaterialExpressionSubtract'"MaterialExpressionSubtract_2"'
+   FunctionExpressions(28)=MaterialExpressionMax'"MaterialExpressionMax_0"'
+   FunctionExpressions(29)=MaterialExpressionConstant'"MaterialExpressionConstant_2"'
+   FunctionExpressions(30)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_5"'
+   FunctionExpressions(31)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_6"'
+   FunctionExpressions(32)=MaterialExpressionLinearInterpolate'"MaterialExpressionLinearInterpolate_6"'
+   FunctionExpressions(33)=MaterialExpressionMultiply'"MaterialExpressionMultiply_0"'
+   FunctionExpressions(34)=MaterialExpressionFunctionInput'"MaterialExpressionFunctionInput_7"'
+   FunctionExpressions(35)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_9"'
+   FunctionExpressions(36)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_0"'
+   FunctionExpressions(37)=MaterialExpressionDotProduct'"MaterialExpressionDotProduct_3"'
+   FunctionExpressions(38)=MaterialExpressionMultiply'"MaterialExpressionMultiply_1"'
+   FunctionExpressions(39)=MaterialExpressionSubtract'"MaterialExpressionSubtract_0"'
+   FunctionExpressions(40)=MaterialExpressionNormalize'"MaterialExpressionNormalize_0"'
+   FunctionExpressions(41)=MaterialExpressionDotProduct'"MaterialExpressionDotProduct_6"'
+   FunctionExpressions(42)=MaterialExpressionCrossProduct'"MaterialExpressionCrossProduct_0"'
+   FunctionExpressions(43)=MaterialExpressionDotProduct'"MaterialExpressionDotProduct_7"'
+   FunctionEditorComments(0)=MaterialExpressionComment'"MaterialExpressionComment_0"'
+   DependentFunctionExpressionCandidates(0)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_8"'
+   DependentFunctionExpressionCandidates(1)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_1"'
+   DependentFunctionExpressionCandidates(2)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_2"'
+   DependentFunctionExpressionCandidates(3)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_9"'
+   DependentFunctionExpressionCandidates(4)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_0"'
+   CombinedInputTypes=15
+   CombinedOutputTypes=15
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_2"'
+End Object

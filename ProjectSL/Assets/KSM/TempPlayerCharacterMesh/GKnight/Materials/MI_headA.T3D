@@ -1,0 +1,31 @@
+Begin Object Class=/Script/Engine.MaterialInstanceConstant Name="MI_headA"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   ParameterStateId=7E35ADBD43DD19E32E7105AB59B22F68
+   Parent=Material'"/Game/GKnight/Materials/M_Skin_Master.M_Skin_Master"'
+   ScalarParameterValues(0)=(ParameterInfo=(Name="DeSaturation"),ParameterValue=0.495238,ExpressionGUID=58500E564827CD8D64DAE986DD511A30)
+   ScalarParameterValues(1)=(ParameterInfo=(Name="RoughPower"),ParameterValue=0.420707,ExpressionGUID=74E73A814265AD6A7D72DFA4537C829F)
+   ScalarParameterValues(2)=(ParameterInfo=(Name="RefractionDepthBias"))
+   VectorParameterValues(0)=(ParameterInfo=(Name="SkinTone"),ParameterValue=(R=0.262500,G=0.215642,B=0.187031,A=1.000000),ExpressionGUID=C717596F48A915347F0BDAA6A42FD70E)
+   VectorParameterValues(1)=(ParameterInfo=(Name="SSS_tint"),ParameterValue=(R=0.236478,G=0.237500,B=0.190114,A=1.000000),ExpressionGUID=03BDC5B740DB29FD2C705B842D324089)
+   TextureParameterValues(0)=(ParameterInfo=(Name="Albedo"),ParameterValue=Texture2D'"/Game/GKnight/Textures/FaceA/T_PoliceOfficer_04_skin_D.T_PoliceOfficer_04_skin_D"',ExpressionGUID=7CA7D88144685A533CC6E6954F5BDC5D)
+   TextureParameterValues(1)=(ParameterInfo=(Name="AO_Rough_Metal"),ParameterValue=Texture2D'"/Game/GKnight/Textures/FaceA/T_PoliceOfficer_04_skin_ORM.T_PoliceOfficer_04_skin_ORM"',ExpressionGUID=4B0B5FDE429075FC9918C0AAA8581D7E)
+   TextureParameterValues(2)=(ParameterInfo=(Name="Normal"),ParameterValue=Texture2D'"/Game/GKnight/Textures/FaceA/T_PoliceOfficer_04_skin_N.T_PoliceOfficer_04_skin_N"',ExpressionGUID=5E3FD1F749DA3E5308732780D8EED1E0)
+   BasePropertyOverrides=(ShadingModel=MSM_PreintegratedSkin,OpacityMaskClipValue=0.333300)
+   ReferencedTextureGuids(0)=236C2B924504EA5EB67B18B43285D75B
+   ReferencedTextureGuids(1)=F79BCB414D2CB97DB45974B6A4B68C5D
+   ReferencedTextureGuids(2)=8A5BEEF3415790CEE502A08E0AA5F3AD
+   CachedReferencedTextures(0)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend"'
+   CachedReferencedTextures(1)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase"'
+   CachedReferencedTextures(2)=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_ORM.T_GHead_B_ORM"'
+   CachedReferencedTextures(3)=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_N.T_GHead_B_N"'
+   CachedReferencedTextures(4)=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_D.T_GHead_B_D"'
+   TextureStreamingDataVersion=1
+   TextureStreamingData(0)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_PoliceOfficer_04_skin_D",TextureReference=/Game/GKnight/Textures/FaceA/T_PoliceOfficer_04_skin_D.T_PoliceOfficer_04_skin_D)
+   TextureStreamingData(1)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_PoliceOfficer_04_skin_N",TextureReference=/Game/GKnight/Textures/FaceA/T_PoliceOfficer_04_skin_N.T_PoliceOfficer_04_skin_N)
+   TextureStreamingData(2)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_PoliceOfficer_04_skin_ORM",TextureReference=/Game/GKnight/Textures/FaceA/T_PoliceOfficer_04_skin_ORM.T_PoliceOfficer_04_skin_ORM)
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=E225BD384CD60EC7EEA44194CF2523DE
+End Object

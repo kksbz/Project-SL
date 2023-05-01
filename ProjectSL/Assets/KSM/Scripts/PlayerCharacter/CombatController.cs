@@ -19,9 +19,6 @@ public class CombatController : MonoBehaviour
     public float attackRadius;
 
     public List<AttackSO> combo;
-    private float lastClickedTime;
-    private float lastComboEnd;
-    private int comboCounter = 0;
 
     public bool _canAttack = true;
     private bool _canNextCombo = default;
@@ -46,6 +43,15 @@ public class CombatController : MonoBehaviour
 
     #endregion  // Guard Field
 
+    #region Hit Field
+    bool _isHit;
+    string _hitAnimationTag;
+    #endregion  // Hit Field
+
+    #region Block Field
+    bool _isBlock;
+    #endregion  // Block Field
+
     #region Attack Data
 
     [SerializeField]
@@ -63,6 +69,9 @@ public class CombatController : MonoBehaviour
     public bool IsAttacking { get { return _isAttacking; } }
     public bool IsGuard { get { return _isGuard; } }
     public bool IsDodging { get { return _isDodging; } }
+    public bool IsHit { get { return _isHit; } }
+    public bool IsBlock { get { return _isBlock; } }
+    public string HitAnimationTag { get { return _hitAnimationTag; } set { _hitAnimationTag = value; } }
     public bool IsPlayingRootMotion { get { return _isPlayingRMAnimation; } }
 
     [SerializeField]
@@ -87,6 +96,8 @@ public class CombatController : MonoBehaviour
         _equipmentController = GetComponent<EquipmentController>();
         _animator = meshObj.GetComponent<Animator>();
 
+        _currentAnimatorController = _animator.runtimeAnimatorController as AnimatorController;
+
         // Legacy
         playerObjTR = gameObject.transform;
         meshObjTR = gameObject.FindChildObj("Mesh").transform;
@@ -110,6 +121,8 @@ public class CombatController : MonoBehaviour
 
         _animEventDispatcher.onAnimationEnd.AddListener(InitializeAttackProperty);
         _animEventDispatcher.onAnimationEnd.AddListener(InitializeDodgeProperty);
+        _animEventDispatcher.onAnimationEnd.AddListener(InitializeHitProperty);
+        _animEventDispatcher.onAnimationEnd.AddListener(InitializeBlockProperty);
         // _animEventDispatcher.onAnimationEnd.AddListener(RootMotionRepositioning);
 
         SetCurrentCombo();
@@ -147,10 +160,10 @@ public class CombatController : MonoBehaviour
     void AttackLogic()
     {
         // Combo Attack
-        if (_isAttacking)
+        if (_maxCombo > 1 && _isAttacking)
         {
-            if (_currentCombo < 1 || _currentCombo >= _maxCombo)
-                return;
+            //if (_currentCombo < 1 || _currentCombo >= _maxCombo)
+            //    return;
             if (_canNextCombo)
             {
                 isComboInputOn = true;
@@ -180,6 +193,7 @@ public class CombatController : MonoBehaviour
 
         if (!CheckComboAssert(_currentCombo, 0, _maxCombo))
         {
+            _currentCombo = 1;
             return;
         }
         _currentCombo = Mathf.Clamp(_currentCombo + 1, 1, _maxCombo);
@@ -193,10 +207,6 @@ public class CombatController : MonoBehaviour
         Debug.LogWarning("_isAttacking False");
         _isAttacking = false;
         _controlProperty.isAttacking = false;
-
-        //임시
-        _animator.runtimeAnimatorController = _currentAnimatorController;
-        //
     }
     bool CheckComboAssert(int current, int start, int max)
     {
@@ -229,7 +239,6 @@ public class CombatController : MonoBehaviour
     void BindingComboAttackEventByAttackSO(List<AttackSO> comboAttack)
     {
         AnimationEventDispatcher aed = gameObject.GetComponentInChildren<AnimationEventDispatcher>();
-        // 오른손 주먹 공격
         for (int i = 0; i < comboAttack.Count; i++)
         {
             aed.AddAnimationStartEndByAnimOV(comboAttack[i].animatorOV);
@@ -369,7 +378,6 @@ public class CombatController : MonoBehaviour
     {
         PoseAction poseAction = new PoseAction(_animator, dodge, AnimationController.LAYERINDEX_FULLLAYER, 0);
         nextPA = poseAction;
-        // playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
         poseAction.Execute();
     }
 
@@ -382,6 +390,66 @@ public class CombatController : MonoBehaviour
     }
 
     #endregion  // Dodge
+
+    #region Hit
+
+    public void Hit()
+    {
+        if (_isHit)
+            return;
+
+        _isHit= true;
+        HitAnimationPlay();
+    }
+
+    void HitAnimationPlay()
+    {
+        PoseAction poseAction = new PoseAction(_animator, HitAnimationTag, AnimationController.LAYERINDEX_FULLLAYER, 0);
+        nextPA = poseAction;
+        poseAction.Execute();
+    }
+    void HitEndState()
+    {
+        _isHit = false;
+    }
+    public void InitializeHitProperty(string name)
+    {
+        if (IsHitAnimation(name))
+        {
+            HitEndState();
+        }
+    }
+
+    #endregion  // Hit
+
+    #region Block
+    public void Block()
+    {
+        if (_isBlock)
+            return;
+
+        _isBlock = true;
+        BlockAnimationPlay();
+    }
+
+    void BlockAnimationPlay()
+    {
+        PoseAction poseAction = new PoseAction(_animator, "Block", AnimationController.LAYERINDEX_FULLLAYER, 0);
+        nextPA = poseAction;
+        poseAction.Execute();
+    }
+    void BlockEndState()
+    {
+        _isBlock = false;
+    }
+    public void InitializeBlockProperty(string name)
+    {
+        if (IsBlockAnimation(name))
+        {
+            BlockEndState();
+        }
+    }
+    #endregion  // Block
 
     #region Set Attack Data
 
@@ -418,8 +486,22 @@ public class CombatController : MonoBehaviour
     {
         ExitAttack();
         DodgeEndState();
+        HitEndState();
+        _animator.runtimeAnimatorController = _currentAnimatorController;
     }
-
+    public void SetAnimatorControllerState(AnimatorController controller)
+    {
+        _animator.runtimeAnimatorController = controller;
+        _currentAnimatorController = controller;
+    }
+    public void SetAnimatorController(AnimatorController controller)
+    {
+        _animator.runtimeAnimatorController = controller;
+    }
+    public void ResetAnimatorController()
+    {
+        _animator.runtimeAnimatorController = _currentAnimatorController;
+    }
     public void RootMotionRepositioning(string name)
     {
         if (!IsRootMotionAnimation(name))
@@ -442,6 +524,14 @@ public class CombatController : MonoBehaviour
     private bool IsRollAnimation(string name)
     {
         return name.StartsWith("Roll");
+    }
+    private bool IsHitAnimation(string name)
+    {
+        return name.StartsWith("Hit");
+    }
+    private bool IsBlockAnimation(string name)
+    {
+        return name.StartsWith("Block");
     }
     private bool IsBackStepAnimation(string name)
     {
@@ -474,6 +564,7 @@ public class CombatController : MonoBehaviour
 
         _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 0);
     }
+
     // Legacy Field
     [SerializeField]
     private Transform playerObjTR;
@@ -494,4 +585,5 @@ public class CombatController : MonoBehaviour
         Debug.LogWarning("Playing Root Motion");
         transform.position = meshObjTR.position - meshObjTR.localPosition;
     }
+    
 }

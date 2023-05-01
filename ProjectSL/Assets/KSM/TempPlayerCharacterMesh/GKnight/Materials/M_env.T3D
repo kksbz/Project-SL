@@ -1,0 +1,34 @@
+Begin Object Class=/Script/Engine.Material Name="M_env"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionConstant3Vector Name="MaterialExpressionConstant3Vector_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionConstant Name="MaterialExpressionConstant_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="MaterialExpressionConstant3Vector_0"
+      Constant=(R=0.010798,G=0.020833,B=0.018998,A=1.000000)
+      MaterialExpressionEditorX=-256
+      MaterialExpressionEditorY=-48
+      MaterialExpressionGuid=18878BFB42BDCCA3CEB35AA14FFBA37B
+      Material=Material'"M_env"'
+   End Object
+   Begin Object Name="MaterialExpressionConstant_0"
+      R=0.800000
+      MaterialExpressionEditorX=-209
+      MaterialExpressionEditorY=223
+      MaterialExpressionGuid=B672E0004E586E22A24B3B8670FB6370
+      Material=Material'"M_env"'
+   End Object
+   BaseColor=(Expression=MaterialExpressionConstant3Vector'"MaterialExpressionConstant3Vector_0"')
+   Roughness=(Expression=MaterialExpressionConstant'"MaterialExpressionConstant_0"')
+   bUsedWithStaticLighting=True
+   Expressions(0)=MaterialExpressionConstant3Vector'"MaterialExpressionConstant3Vector_0"'
+   Expressions(1)=MaterialExpressionConstant'"MaterialExpressionConstant_0"'
+   bCanMaskedBeAssumedOpaque=True
+   StateId=75A6CA234C53E5E0AA3A15B9B03E06E5
+   CachedExpressionData=(QualityLevelsUsed=(False,False,False,False))
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=68E462B94D6766B4B1A049AA0215A220
+End Object

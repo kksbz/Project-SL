@@ -11,7 +11,7 @@ public static partial class GData
 
     public interface IDamageable
     {
-        void TakeDamage(float damage);
+        void TakeDamage(GameObject damageCauser, float damage);
     }
 
     public interface IGiveDamageable

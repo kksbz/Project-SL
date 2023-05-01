@@ -35,10 +35,15 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Roll());
         }
-        else if(Ctx.IsGuardPressed)
+        else if(Ctx.IsGuardPressed && Ctx.EquipmentController.IsEquipShieldToLeftArm)
         {
             SwitchState(Factory.Guard());
         }
+        else if(Ctx.HitFlag)
+        {
+            SwitchState(Factory.Hit());
+        }
+        
     }
     public override void InitializeSubState()
     {

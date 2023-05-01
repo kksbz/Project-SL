@@ -28,7 +28,7 @@ public class Boss_Sevarog : BossBase
         SetState(new Boss_Idle_State(this));
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(GameObject damageCauser, float damage)
     {
         if (Status.currentHp - damage <= 0)
         {

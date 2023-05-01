@@ -38,6 +38,6 @@ public class Rock : MonoBehaviour, GData.IGiveDamageable
 
     public void GiveDamage(GData.IDamageable damageable, float damage)
     {
-        damageable.TakeDamage(damage);
+        damageable.TakeDamage(gameObject, damage);
     }
 }

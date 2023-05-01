@@ -29,6 +29,7 @@ public class PlayerStateMachine : MonoBehaviour
     Vector2 _currentMovementInput;
     Vector3 _currentMovement;
     Vector3 _appliedMovement;
+    Vector3 _currentDirection;
     bool _isMovementPressed;
     bool _isRunPressed;
     bool _isWalkPressed;
@@ -46,12 +47,19 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isSwitchingArmPressed;
     float _dodgePressedRate = 0.5f;
     float _dodgeStartTime = 0f;
+
+    bool _hitFlag;
+    bool _blockFlag;
     // State Var
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
 
     // Behavior Command
     Behavior _nextBehavior;
+
+    //
+    bool _canRotate;
+    //
 
     // getter and setter
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -68,6 +76,8 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGuardPressed { get { return _isGuardPressed; } }
     public bool IsRollPressed { get { return _isRollPressed; } set { _isRollPressed = value; } }
     public bool IsBackStepPressed { get { return _isBackStepPressed; } set { _isBackStepPressed = value; } }
+    public bool HitFlag { get { return _hitFlag; } set { _hitFlag = value; } }
+    public bool BlockFlag { get { return _blockFlag; } set { _blockFlag = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -140,6 +150,8 @@ public class PlayerStateMachine : MonoBehaviour
     private void FixedUpdate()
     {
         _currentState.FixedUpdateStates();
+        // 임시?
+        RotateCharacterBody();
     }
 
     public void SetMoveDirection()
@@ -183,8 +195,17 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetDirection(Vector3 newBodyDirection)
     {
-        _characterBody.forward = newBodyDirection;
-        // transform.forward = newBodyDirection;
+        // _currentDirection = newBodyDirection;
+        // _characterBody.forward = newBodyDirection;
+        transform.forward = newBodyDirection;
+    }
+
+    public void RotateCharacterBody()
+    {
+        //if (!_canRotate)
+        //    return;
+
+        // _characterBody.rotation = Quaternion.Lerp(_characterBody.rotation, Quaternion.Euler(_currentDirection), 100f);
     }
 
     // �Է� �ݹ� �Լ�
