@@ -13,10 +13,10 @@ public class Boss_Rampage_Status : BossStatus
     public float groundSmashDistance;
     public float groundSmashMaxHeight = 10f;
     public float bodyTackleDistance;
+    public float bodyTackleSpeed = 10f;
     public float dodgeSpeed;
     public float dodgeMaxHeight = 5f;
 
-    public float bodyTackleSpeed = 10f;
 
 
 

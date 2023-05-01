@@ -8,6 +8,11 @@ public interface IEnemyTargetResearch
     IFieldOfView FieldOfView { get; }
     List<Transform> Targets { get; }
     void Init(EnemyResearchStatus newResearchStatus, IFieldOfView newFieldOfView);
+    /// <summary>
+    /// FOV 탐색 로직
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <returns></returns>
     IEnumerator FieldOfViewSearch(float delay);
     bool IsFieldOfViewFind { get; }
 }

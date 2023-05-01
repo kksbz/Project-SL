@@ -163,7 +163,7 @@ public class Boss_Rampage_GroundSmash_End_State : IState
     {
         if (_boss.IsAnimationEnd("Ground_Smash_End"))
         {
-            _boss.JumpComplete();
+            //_boss.JumpComplete();
             _boss.SetState(new Boss_Thought_State(_boss));
         }
     }

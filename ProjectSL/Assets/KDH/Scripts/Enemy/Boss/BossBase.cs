@@ -9,7 +9,6 @@ public class BossBase : EnemyBase
     protected override void Init()
     {
         base.Init();
-        transform.GetChild(0).transform.rotation = Quaternion.identity;
     }
 
     public void OnPlayerJoin()

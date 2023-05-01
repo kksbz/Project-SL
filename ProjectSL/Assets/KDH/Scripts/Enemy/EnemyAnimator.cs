@@ -24,7 +24,6 @@ namespace ProjectSL.Enemy
         /// </summary>
         /// <returns></returns>
         bool IsAnimationEnd();
-
         bool IsAnimationEnd(string animationName);
         bool IsAnimationPlaying(string animationName);
 
@@ -66,7 +65,6 @@ namespace ProjectSL.Enemy
 
         public bool IsAnimationEnd()
         {
-            Debug.Log($"CurrentAnimation NormalizedTime : {CurrentStateInfo.normalizedTime} / IsLoop : {CurrentStateInfo.loop}");
             if (1f <= CurrentStateInfo.normalizedTime && !CurrentStateInfo.loop)
             {
                 return true;
@@ -79,6 +77,7 @@ namespace ProjectSL.Enemy
 
         public bool IsAnimationEnd(string animationName)
         {
+
             if (!CurrentStateInfo.IsName(animationName))
             {
                 return false;
