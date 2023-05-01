@@ -19,6 +19,10 @@ public class Inventory : Singleton<Inventory>
     public Image equipInvenImage; // 장비인벤토리 패널 상단 이미지
     public ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
     public SelectPanel selectPanel; // 선택창 패널
+    public Image topImage; // 상단패널 이미지
+    public TMP_Text topText; // 상단패널 텍스트
+    public TMP_Text possessionSoul; // 상단패널 보유소울
+    public GameObject goBack; // 바텀 뒤로가기패널
 
     public List<WeaponSlot> weaponSlotList; // 무기,방패 장착슬롯 리스트
     public List<ArmorSlot> armorSlotList; // 방어구 장착슬롯 리스트
@@ -28,8 +32,16 @@ public class Inventory : Singleton<Inventory>
     public List<EquipSlot> equipSlots = new List<EquipSlot>(); // 장비인벤 슬롯
     public List<Slot> totalSlots = new List<Slot>(); // 장비인벤 슬롯
     public IPublicSlot selectSlot; // 선택한 슬롯 담을 변수
-    public int soul;
-
+    [SerializeField] private int soul; // 보유소울
+    public int Soul
+    {
+        get { return soul; }
+        set
+        {
+            soul = value;
+            possessionSoul.text = soul.ToString();
+        }
+    }
     //
     public delegate void EventHandler();
     public EventHandler _onEquipSlotUpdated;
@@ -42,6 +54,7 @@ public class Inventory : Singleton<Inventory>
     private void Start()
     {
         InitSlot();
+        Soul = 0;
     } // Start
 
     private void Update()
@@ -64,10 +77,6 @@ public class Inventory : Singleton<Inventory>
             DataManager.Instance.slotNum = 0;
             DataManager.Instance.LoadData();
         }
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    UiManager.Instance.ExitUiPanel();
-        //}
     } // Update
 
     //! 슬롯 초기화

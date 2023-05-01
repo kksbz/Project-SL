@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -103,7 +103,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 28
+        width: 68
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0d46e1c48a94484eacc9ba0e881147c
+      internalID: 1576089104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 35
+        width: 64
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ec7065c6a8127c4f8d27b7220872cf9
+      internalID: 610647494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_2
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 38
+        width: 66
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf5283cb9b5fc7d4692ac622e338a0e8
+      internalID: 72392518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_3
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 27
+        width: 52
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a8188b8b706f3643bc6ef3dfc4ca6ef
+      internalID: 1471873907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_4
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 35
+        width: 66
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d11eb21636548104aa4998c5ee346e1b
+      internalID: 428749814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_5
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 25
+        width: 69
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5af812bf249f5d44e849b0991a39271a
+      internalID: 1492813716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PC_SettingParts_6
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 43
+        width: 67
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b479f004c4f0ed43b4a5de5e8b54c8b
+      internalID: -1739072120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +261,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MENU_PC_SettingParts_0: 1576089104
+      MENU_PC_SettingParts_1: 610647494
+      MENU_PC_SettingParts_2: 72392518
+      MENU_PC_SettingParts_3: 1471873907
+      MENU_PC_SettingParts_4: 428749814
+      MENU_PC_SettingParts_5: 1492813716
+      MENU_PC_SettingParts_6: -1739072120
+      MENU_PC_SettingParts_7: 503736382
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

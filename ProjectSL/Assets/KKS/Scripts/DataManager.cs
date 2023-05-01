@@ -8,41 +8,52 @@ using System.Linq;
 public class DataManager : Singleton<DataManager>
 {
     public List<string[]> itemDatas = new List<string[]>(); // 아이템 데이터 리스트
-    //private string path = "C:/unitykks/ProjectSL/SaveData"; // 데이터 저장 경로
     private string path; // 데이터 저장 경로
     public int slotNum; // 세이브 슬롯 넘버
     public bool[] hasSavefile; // 세이브 슬롯의 데이터 존재 유무
     private string playerData = "플레이어 정보"; // json 데이터 파싱할 때 슬롯 구분자
+    private string soul = "보유소울"; // json 데이터 파싱할 때 슬롯 구분자
     private string wSlot = "무기슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string aSlot = "방어구슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string cSlot = "소모품슬롯"; // json 데이터 파싱할 때 슬롯 구분자
     private string qSlot = "퀵슬롯 왼손/오른손/공격소모품/회복소모품"; // json 데이터 파싱할 때 슬롯 구분자
     private string bonfire = "화톳불리스트"; // json 데이터 파싱할 때 슬롯 구분자
+    private string nowTime = "저장한 시간"; // json 데이터 파싱할 때 슬롯 구분자
+    public string selectPlayerName; // 뉴게임시 입력한 플레이어 이름
     public override void InitManager()
     {
         // 데이터 저장 경로 설정
         path = Application.dataPath + "/SaveFolder/";
         StartCoroutine(GoogleSheetManager.InitData());
         hasSavefile = new bool[4];
+        RenewalSavefile();
+    } // InitManager
+
+    //! 세이브파일 목록 갱신하는 함수
+    public void RenewalSavefile()
+    {
         for (int i = 0; i < hasSavefile.Length; i++)
         {
             // 세이브 데이터 파일이 존재할 경우 true
-            if (File.Exists(path + $"{i}") == true)
+            if (File.Exists(path + "SaveData" + $"{i}" + ".json") == true)
             {
                 hasSavefile[i] = true;
             }
+            Debug.Log(hasSavefile[i]);
         }
-    } // InitManager
+    } // RenewalSavefile
 
     //! 플레이어 데이터 세이브하는 함수
     public void SaveData()
     {
+        Debug.Log($"세이브 시작 슬롯 넘버 : {slotNum}");
         string saveData = null;
         saveData = SaveInventoryData();
         saveData += SaveEquipSlotData();
         saveData += SaveBonfireList();
         saveData += SavePlayerData();
-        Debug.Log(saveData);
+        saveData += nowTime + "\n";
+        saveData += DateTime.Now.ToString(("yyyy-MM-dd HH:mm:ss"));
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
@@ -53,6 +64,7 @@ public class DataManager : Singleton<DataManager>
     //! 플레이어 데이터 저장하는 함수
     private string SavePlayerData()
     {
+        GameManager.Instance.player.SavePlayerPos();
         string saveData = playerData + "\n";
         PlayerStatus _playerStatus = GameManager.Instance.player.GetPlayerData();
         saveData += JsonUtility.ToJson(_playerStatus) + "\n";
@@ -87,6 +99,8 @@ public class DataManager : Singleton<DataManager>
                 saveData += _data + "\n";
             }
         }
+        saveData += soul + "\n";
+        saveData += Inventory.Instance.Soul.ToString() + "\n";
         return saveData;
     } // SaveInventoryData
 
@@ -170,10 +184,10 @@ public class DataManager : Singleton<DataManager>
         //Debug.Log($"불러온 세이브데이터의 길이 : {itemDatas.Length}");
 
         // 통합 인벤토리 데이터 로드
-        for (int i = 0; i < itemDatas.Length - 1; i++)
+        for (int i = number; i < itemDatas.Length - 1; i++)
         {
-            // wSlot 값을 만나면 그 다음 줄부턴 무기슬롯 데이터
-            if (itemDatas[i] == wSlot)
+            // soul 값을 만나면 그 다음 줄부턴 보유소울 데이터
+            if (itemDatas[i] == soul)
             {
                 //Debug.Log("무기슬롯 데이터 시작");
                 number = i + 1;
@@ -185,13 +199,25 @@ public class DataManager : Singleton<DataManager>
             Inventory.Instance.AddItem(item);
         }
 
+        for (int i = number; i < itemDatas.Length - 1; i++)
+        {
+            // wSlot 값을 만나면 그 다음 줄부턴 무기슬롯 데이터
+            if (itemDatas[i] == wSlot)
+            {
+                //Debug.Log("무기슬롯 데이터 시작");
+                number = i + 1;
+                break;
+            }
+            UiManager.Instance.soulBag.GetSoul(int.Parse(itemDatas[i]));
+        }
+
         // 무기 장착 슬롯 데이터 로드
         for (int i = number; i < itemDatas.Length - 1; i++)
         {
-            // aSlot 값을 만나면 그 다음 줄부턴 방어구슬롯 데이터
+            // aSlot 값을 만나면 그 다음 줄부턴 방어구 데이터
             if (itemDatas[i] == aSlot)
             {
-                //Debug.Log("방어구슬롯 데이터 시작");
+                //Debug.Log("방어구 데이터 시작");
                 number = i + 1;
                 break;
             }
@@ -301,9 +327,38 @@ public class DataManager : Singleton<DataManager>
         //! 플레이어 데이터 로드
         for (int i = number; i < itemDatas.Length - 1; i++)
         {
+            if (itemDatas[i] == nowTime)
+            {
+                break;
+            }
             PlayerStatus playerStatus = JsonUtility.FromJson<PlayerStatus>(itemDatas[i]);
             GameManager.Instance.player.LoadPlayerData(playerStatus);
         }
         Debug.Log("저장된 데이터 로드 완료!");
     } // LoadData
+
+    //! 플레이어 정보만 로드하는 함수
+    public List<string> LoadPlayerInfoData()
+    {
+        List<string> playerInfo = new List<string>();
+        // 저장된 Json파일을 불러옴
+        string data = File.ReadAllText(path + "SaveData" + slotNum.ToString() + ".json");
+        TextAsset pData = new TextAsset(data);
+        // \n을 기준으로 잘라서 배열에 데이터 저장
+        string[] playerDatas = pData.text.Split("\n");
+        Debug.Log(playerDatas.Length);
+        for (int i = 0; i < playerDatas.Length; i++)
+        {
+            if (playerDatas[i] == playerData)
+            {
+                playerInfo.Add(playerDatas[i + 1]);
+            }
+            if (playerDatas[i] == nowTime)
+            {
+                playerInfo.Add(playerDatas[i + 1]);
+                break;
+            }
+        }
+        return playerInfo;
+    } // LoadPlayerInfoData
 } // DataManager

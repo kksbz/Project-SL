@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiInPutManager : Singleton<UiInPutManager>
 {
-    private bool isOptionBar = false;
-    private bool isEquipPanel = false;
-
     void Update()
     {
         UiInPutSystem();
@@ -15,7 +13,7 @@ public class UiInPutManager : Singleton<UiInPutManager>
 
     private void UiInPutSystem()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != GData.SCENENAME_TITLE)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -23,9 +21,24 @@ public class UiInPutManager : Singleton<UiInPutManager>
             {
                 ExitUiPanel();
             }
+            else if (UiManager.Instance.statusPanel.gameObject.activeInHierarchy == true)
+            {
+                UiManager.Instance.statusPanel.gameObject.SetActive(false);
+            }
+            else if (UiManager.Instance.warp.warpPanel.activeInHierarchy == true)
+            {
+                UiManager.Instance.warp.warpPanel.SetActive(false);
+            }
+            else if (UiManager.Instance.optionPanel.gameObject.activeInHierarchy == true)
+            {
+                if (UiManager.Instance.optionPanel.goBackText.activeInHierarchy == false)
+                {
+                    UiManager.Instance.optionPanel.gameObject.SetActive(false);
+                }
+            }
             else
             {
-                UiManager.Instance.optionBar.SetActive(!UiManager.Instance.optionBar.activeSelf);
+                UiManager.Instance.quickBar.SetActive(!UiManager.Instance.quickBar.activeSelf);
             }
         }
     } // UiInPutSystem

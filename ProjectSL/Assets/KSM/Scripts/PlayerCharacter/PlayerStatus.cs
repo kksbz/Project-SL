@@ -14,7 +14,7 @@ public class PlayerStatus
     [SerializeField] int _vitality;
     [SerializeField] int _strength;
     [SerializeField] int _dexterity;
-
+    [SerializeField] Vector3 _playerPos;
     public PlayerStatus()
     {
         _name = string.Empty;
@@ -35,4 +35,5 @@ public class PlayerStatus
     public int Vitality { get { return _vitality; } set { _vitality = value; } }
     public int Strength { get { return _strength; } set { _strength = value; } }
     public int Dexterity { get { return _dexterity; } set { _dexterity = value; } }
+    public Vector3 PlayerPos { get { return _playerPos; } set { _playerPos = value; } }
 }

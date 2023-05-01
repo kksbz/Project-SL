@@ -10,14 +10,14 @@ public class SoulBagUi : MonoBehaviour
 
     private void Start()
     {
-        soulText.text = Inventory.Instance.soul.ToString();
+        soulText.text = Inventory.Instance.Soul.ToString();
     } // Start
 
     //! 소울 얻는 함수
     public void GetSoul(int _soul)
     {
-        Inventory.Instance.soul += _soul;
-        soulText.text = Inventory.Instance.soul.ToString();
+        Inventory.Instance.Soul += _soul;
+        soulText.text = Inventory.Instance.Soul.ToString();
         InstanceGetSoulText(_soul);
     } // GetSoul
 

@@ -155,7 +155,7 @@ TextureImporter:
         width: 22
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,6 +163,48 @@ TextureImporter:
       bones: []
       spriteID: 46f1f2e7d2ca078488da2f46da2eaed9
       internalID: 916037668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SelectEffect
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 281
+        width: 157
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f029726add41ef4f9cfc36f5e833e4d
+      internalID: 1949675289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_ItemParts_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 456
+        width: 385
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a8db1a4189dee4491803c38d61e40d
+      internalID: -289881528
       vertices: []
       indices: 
       edges: []
@@ -179,10 +221,11 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       MENU_ItemParts_0: 916037668
-      MENU_ItemParts_1: -742779212
+      MENU_ItemParts_1: -289881528
       MENU_ItemParts_2: -1998298976
       MENU_ItemParts_3: 425357762
       MENU_ItemParts_Equip: 246284357
+      SelectEffect: -742779212
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

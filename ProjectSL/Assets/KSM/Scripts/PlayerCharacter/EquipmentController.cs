@@ -44,12 +44,12 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     ItemData _armor_Helmet;
     [SerializeField]
-    ItemData _armor_Chest; 
+    ItemData _armor_Chest;
     [SerializeField]
     ItemData _armor_Gloves;
     [SerializeField]
     ItemData _armor_Pants;
-    
+
 
     // 반지
     [SerializeField]
@@ -90,15 +90,15 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     private Transform _backLWSocket;
 
-    public static readonly string WEAPONSOCKET_RIGHT_ARM    = "RightArmWeaponSocket";
-    public static readonly string WEAPONSOCKET_LEFT_ARM     = "LeftArmShieldSocket";
+    public static readonly string WEAPONSOCKET_RIGHT_ARM = "RightArmWeaponSocket";
+    public static readonly string WEAPONSOCKET_LEFT_ARM = "LeftArmShieldSocket";
     public static readonly string WEAPONSOCKET_BACK_RIGHTWP = "BackRightWeaponSocket";
-    public static readonly string WEAPONSOCKET_BACK_LEFTWP  = "BackLeftShieldSocket";
+    public static readonly string WEAPONSOCKET_BACK_LEFTWP = "BackLeftShieldSocket";
 
     #endregion  // Weapon Socket
 
     #region Override Controller
-    
+
     [SerializeField]
     private AnimatorController _default_AnimController;
     // private AnimatorController _default_AnimOV;
@@ -126,30 +126,31 @@ public class EquipmentController : MonoBehaviour
         _backRWSocket = gameObject.FindChildObj(WEAPONSOCKET_BACK_RIGHTWP).transform;
         _backLWSocket = gameObject.FindChildObj(WEAPONSOCKET_BACK_LEFTWP).transform;
 
-        
+
 
         // caching inventory 
         GameObject managers = GFunc.GetRootObj("Managers");
         //GameObject invenObj = managers.FindChildObj("Inventory");
         //_inventory = invenObj.GetComponent<Inventory>();
-        GameObject quickSlotObj = managers.FindChildObj("QuickSlot");
-        _quickSlotBar = quickSlotObj.GetComponent<QuickSlotBar>();
+        //GameObject quickSlotObj = managers.FindChildObj("QuickSlot");
+        //_quickSlotBar = quickSlotObj.GetComponent<QuickSlotBar>();
+        _quickSlotBar = UiManager.Instance.quickSlotBar;
 
         // 애니메이션 오버라이드 컨트롤러 이벤트 바인딩
         AnimationEventDispatcher aed = meshObj.GetComponent<AnimationEventDispatcher>();
         aed.AddAnimationStartEndByAnimOV(_SSH_2H_AnimOV);
-        
+
     }
     // Start is called before the first frame update
     void Start()
     {
         // 임시 부착
-        if(_defaultRightWeaponPrefab != null)
+        if (_defaultRightWeaponPrefab != null)
             AttachWeaponObj(_defaultRightWeaponPrefab.transform, _rightArmSocket);
-        if(_defaultLeftShieldPrefab != null)
+        if (_defaultLeftShieldPrefab != null)
             AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
         // default overrideController caching
-        _default_AnimController =_animator.runtimeAnimatorController as AnimatorController;
+        _default_AnimController = _animator.runtimeAnimatorController as AnimatorController;
 
         // 인벤토리 델리게이트 함수 바인딩
         Inventory.Instance._onEquipSlotUpdated += UpdateEquipmentItem;
@@ -160,7 +161,7 @@ public class EquipmentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SwitchArmState()
@@ -187,17 +188,17 @@ public class EquipmentController : MonoBehaviour
     IEnumerator SwitchingArm()
     {
         yield return new WaitForSeconds(0.3f);
-        if(_currentArmState == EArmState.OneHanded)
+        if (_currentArmState == EArmState.OneHanded)
         {
             _currentArmState = EArmState.TwoHanded;
             _animator.runtimeAnimatorController = _SSH_2H_AnimOV;
             // AttachWeaponObj(_defaultLeftShieldPrefab.transform, _backLWSocket);
-            if(_currentLeftArmWeapon != null)
+            if (_currentLeftArmWeapon != null)
             {
                 AttachWeaponObj(_currentLeftArmWeaponObj.transform, _backLWSocket);
-            } 
+            }
         }
-        else if(_currentArmState == EArmState.TwoHanded)
+        else if (_currentArmState == EArmState.TwoHanded)
         {
             _currentArmState = EArmState.OneHanded;
             _animator.runtimeAnimatorController = _default_AnimController;
@@ -221,11 +222,11 @@ public class EquipmentController : MonoBehaviour
         PoseAction poseAction = new PoseAction(_animator, stateTag, AnimationController.LAYERINDEX_TRANSITIONLAYER);
         poseAction.Execute();
     }
-    
+
     // 퀵슬롯 오른손 장비 검색 후 소켓에 자식으로 붙여주기 * 임시
     public void AttachWeaponObj(Transform targetTR, Transform attachTR)
     {
-        if(targetTR != null)
+        if (targetTR != null)
         {
             Debug.LogWarning("Attach Check!");
             targetTR.SetParent(attachTR);
@@ -253,20 +254,20 @@ public class EquipmentController : MonoBehaviour
         _armor_Pants = Inventory.Instance.armorSlotList[3].Item;
 
         _currentRightArmWeapon = _quickSlotBar.QuickSlotRightWeapon;
-        if(_currentRightArmWeapon != null )
+        if (_currentRightArmWeapon != null)
         {
             _currentRightArmWeaponObj = _quickSlotBar.GetCurrentRightWeaponObject;
             AttachWeaponObj(_currentRightArmWeaponObj.transform, _rightArmSocket);
         }
         _currentLeftArmWeapon = _quickSlotBar.QuickSlotLeftWeapon;
-        if(_currentLeftArmWeapon != null )
+        if (_currentLeftArmWeapon != null)
         {
             _currentLeftArmWeaponObj = _quickSlotBar.GetCurrentLeftWeaponObject;
             AttachWeaponObj(_currentLeftArmWeaponObj.transform, _leftArmSocket);
         }
 
         // 임시 *검밖에 없으니 검으로
-        if(_currentRightArmWeapon != null )
+        if (_currentRightArmWeapon != null)
         {
             SetWeaponState(EWeaponState.Sword_OneHanded);
         }

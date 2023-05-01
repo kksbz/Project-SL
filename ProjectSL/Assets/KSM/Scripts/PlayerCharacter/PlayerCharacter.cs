@@ -85,6 +85,15 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess
         _status = _playerStatusData;
     }
 
+    public void SavePlayerPos()
+    {
+        _status.PlayerPos = gameObject.transform.position;
+    }
+    public void PlayerNameSelect(string _name)
+    {
+        _status.Name = _name;
+    }
+
     public HealthSystem GetHealth()
     {
         return _healthSystem;

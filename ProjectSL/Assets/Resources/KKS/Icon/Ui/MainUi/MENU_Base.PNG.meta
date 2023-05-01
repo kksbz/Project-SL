@@ -126,12 +126,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MENU_Base_1
+      name: Bonfire
       rect:
         serializedVersion: 2
         x: 1868
         y: 1954
-        width: 92
+        width: 90
         height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -465,9 +465,9 @@ TextureImporter:
       name: MENU_Base_26
       rect:
         serializedVersion: 2
-        x: 1155
+        x: 1156
         y: 0
-        width: 529
+        width: 528
         height: 272
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -535,8 +535,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Bonfire: -1338322839
       MENU_Base: -316772201
-      MENU_Base_1: -1338322839
       MENU_Base_10: 1139095238
       MENU_Base_11: 662218780
       MENU_Base_13: 1185379810
