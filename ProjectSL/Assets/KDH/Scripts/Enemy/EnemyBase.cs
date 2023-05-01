@@ -76,10 +76,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public virtual void GiveDamage(GData.IDamageable damageable, float damage)
     {
         Debug.Log($"데미지를 입힘 / 대상 : {damageable.ToString()} / 데미지 : {damage}");
-        damageable.TakeDamage(damage);
+        damageable.TakeDamage(gameObject, damage);
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(GameObject damageCauser, float damage)
     {
         if (Status.currentHp - damage <= 0)
         {

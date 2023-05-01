@@ -56,7 +56,7 @@ public class HealthSystem
     #endregion  // Increase Decrease Health
     #region Damage, Consumption
 
-    void Damage(float damageAmount)
+    public void Damage(float damageAmount)
     {
         _healthPoint -= damageAmount;
         if(_healthPoint <= 0f)
@@ -64,7 +64,7 @@ public class HealthSystem
             // Á×À½ Ã³¸®?
         }
     }
-    void ConsumSP(float value_)
+    public void ConsumSP(float value_)
     {
         _staminaPoint -= value_;
     }

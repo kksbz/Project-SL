@@ -1,0 +1,29 @@
+Begin Object Class=/Script/Engine.MaterialInstanceConstant Name="MI_HeadE"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   ParameterStateId=B9C709554CAF2A4427573984F093EF09
+   Parent=Material'"/Game/GKnight/Materials/M_Skin_Master.M_Skin_Master"'
+   ScalarParameterValues(0)=(ParameterInfo=(Name="RoughPower"),ParameterValue=0.809524,ExpressionGUID=74E73A814265AD6A7D72DFA4537C829F)
+   ScalarParameterValues(1)=(ParameterInfo=(Name="RefractionDepthBias"))
+   VectorParameterValues(0)=(ParameterInfo=(Name="SkinTone"),ParameterValue=(R=0.442708,G=0.442708,B=0.442708,A=1.000000),ExpressionGUID=C717596F48A915347F0BDAA6A42FD70E)
+   TextureParameterValues(0)=(ParameterInfo=(Name="Albedo"),ParameterValue=Texture2D'"/Game/GKnight/Textures/FaceE/T_GHead_E_D.T_GHead_E_D"',ExpressionGUID=7CA7D88144685A533CC6E6954F5BDC5D)
+   TextureParameterValues(1)=(ParameterInfo=(Name="AO_Rough_Metal"),ParameterValue=Texture2D'"/Game/GKnight/Textures/FaceE/T_GHead_E_ORM.T_GHead_E_ORM"',ExpressionGUID=4B0B5FDE429075FC9918C0AAA8581D7E)
+   TextureParameterValues(2)=(ParameterInfo=(Name="Normal"),ParameterValue=Texture2D'"/Game/GKnight/Textures/FaceE/T_GHead_E_N.T_GHead_E_N"',ExpressionGUID=5E3FD1F749DA3E5308732780D8EED1E0)
+   BasePropertyOverrides=(ShadingModel=MSM_PreintegratedSkin,OpacityMaskClipValue=0.333300)
+   ReferencedTextureGuids(0)=FC96E2334B3BEDB90F635C8DCCEBAC60
+   ReferencedTextureGuids(1)=68D36EB24B91CF7CD800B4966A853147
+   ReferencedTextureGuids(2)=AA0F0ACB423A9530C106A3BE281B19DA
+   CachedReferencedTextures(0)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend"'
+   CachedReferencedTextures(1)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase"'
+   CachedReferencedTextures(2)=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_ORM.T_GHead_B_ORM"'
+   CachedReferencedTextures(3)=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_N.T_GHead_B_N"'
+   CachedReferencedTextures(4)=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_D.T_GHead_B_D"'
+   TextureStreamingDataVersion=1
+   TextureStreamingData(0)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GHead_E_D",TextureReference=/Game/GKnight/Textures/FaceE/T_GHead_E_D.T_GHead_E_D)
+   TextureStreamingData(1)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GHead_E_N",TextureReference=/Game/GKnight/Textures/FaceE/T_GHead_E_N.T_GHead_E_N)
+   TextureStreamingData(2)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GHead_E_ORM",TextureReference=/Game/GKnight/Textures/FaceE/T_GHead_E_ORM.T_GHead_E_ORM)
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=483C67D84096A904032FF7A4D01E93E4
+End Object

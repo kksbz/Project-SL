@@ -1,0 +1,52 @@
+Begin Object Class=/Script/Engine.MaterialInstanceConstant Name="MI_GKnight_Pants"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   ParameterStateId=08A3F0DE433292BC92DE78931449636A
+   Parent=Material'"/Game/GKnight/Materials/M_MKT_MasterMaterial_v02.M_MKT_MasterMaterial_v02"'
+   ScalarParameterValues(0)=(ParameterInfo=(Name="DetailMap Tile"),ParameterValue=9.210908,ExpressionGUID=A07AD1AA41BCB9713E118C9E9DDE8E61)
+   ScalarParameterValues(1)=(ParameterInfo=(Name="DetailMapIntensity"),ParameterValue=0.068571,ExpressionGUID=DCE839BA428FCA1EBFDBBEAB5A41E68A)
+   ScalarParameterValues(2)=(ParameterInfo=(Name="Gloss power A"),ParameterValue=0.267223,ExpressionGUID=0B106ECB402294EDCDD7D09164D1A16A)
+   ScalarParameterValues(3)=(ParameterInfo=(Name="Tile A scale"),ParameterValue=12.142549,ExpressionGUID=0A3D9B7148060652F65574878687C512)
+   ScalarParameterValues(4)=(ParameterInfo=(Name="Gloss power D"),ParameterValue=0.712501,ExpressionGUID=F7E62BBF406930BE486A0BAFB366068A)
+   ScalarParameterValues(5)=(ParameterInfo=(Name="RefractionDepthBias"))
+   VectorParameterValues(0)=(ParameterInfo=(Name="Material_A_tint"),ParameterValue=(R=0.700897,G=0.721875,B=0.697578,A=1.000000),ExpressionGUID=67DDDEC148835C39502047B7538919C7)
+   VectorParameterValues(1)=(ParameterInfo=(Name="Material_B_tint_1"),ParameterValue=(R=0.617708,G=0.297209,B=0.153376,A=1.000000),ExpressionGUID=FBC1AAB8418CCB63CC5BAA888A2E1FCA)
+   VectorParameterValues(2)=(ParameterInfo=(Name="Material_C_tint"),ParameterValue=(R=0.429166,G=0.273559,B=0.189729,A=1.000000),ExpressionGUID=B97D4DA242951E014BC84AA9FC100CCD)
+   VectorParameterValues(3)=(ParameterInfo=(Name="Material_D_tint"),ParameterValue=(R=0.734375,G=0.598825,B=0.522477,A=1.000000),ExpressionGUID=7B1690F7495441CD12009EB31DC9D94C)
+   TextureParameterValues(0)=(ParameterInfo=(Name="Tile A"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Tiles/T_FlatMid.T_FlatMid"',ExpressionGUID=056392074EE5E332BC7B5FB4BAC71B5A)
+   TextureParameterValues(1)=(ParameterInfo=(Name="Tile B"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Tiles/T_FlatMid.T_FlatMid"',ExpressionGUID=E36D08F94BCFBCED21E4FCBD88196254)
+   TextureParameterValues(2)=(ParameterInfo=(Name="Tile C"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Tiles/T_FlatMid.T_FlatMid"',ExpressionGUID=B4032B1648BD4BF8979511A4B0BD0356)
+   TextureParameterValues(3)=(ParameterInfo=(Name="Tile D"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Tiles/T_FlatMid.T_FlatMid"',ExpressionGUID=F3C5B73A493A26C9B40A06A763856B83)
+   TextureParameterValues(4)=(ParameterInfo=(Name="COLOR"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_D.T_GothicKnight_Pants_D"',ExpressionGUID=55B0ACFF4C6A66B9BC41D49F50039D3D)
+   TextureParameterValues(5)=(ParameterInfo=(Name="MASK"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_ID.T_GothicKnight_Pants_ID"',ExpressionGUID=D1E04D4F4F18A418BF7CF78AA83D4329)
+   TextureParameterValues(6)=(ParameterInfo=(Name="Normals"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_N.T_GothicKnight_Pants_N"',ExpressionGUID=8E984AE64D759C1E1C81FC83404EEEB5)
+   TextureParameterValues(7)=(ParameterInfo=(Name="RMO_mask"),ParameterValue=Texture2D'"/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_ORM.T_GothicKnight_Pants_ORM"',ExpressionGUID=D01EDDFF49B03FDB7346D0A0377EBD6E)
+   BasePropertyOverrides=(OpacityMaskClipValue=0.333300)
+   ReferencedTextureGuids(0)=A6BC377449D9D21E4B5B88A62D857007
+   ReferencedTextureGuids(1)=E2513051476E01AA26034A8DDAFE3B6F
+   ReferencedTextureGuids(2)=F89FB0474C1A8FDA8F0652AAC4E80DB5
+   ReferencedTextureGuids(3)=87DB7AFF4258D79C2F23AAA987C08374
+   ReferencedTextureGuids(4)=CA2125E144FE634C71D9D4910B18417F
+   ReferencedTextureGuids(5)=B998B7134B7DD400C7A69886C3BEAB87
+   CachedReferencedTextures(0)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_N.T_BaseMaterial_v01_N"'
+   CachedReferencedTextures(1)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_D.T_BaseMaterial_v01_D"'
+   CachedReferencedTextures(2)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_ORM.T_BaseMaterial_v01_ORM"'
+   CachedReferencedTextures(3)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend"'
+   CachedReferencedTextures(4)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase"'
+   CachedReferencedTextures(5)=Texture2D'"/Game/GKnight/Textures/Tiles/checker.checker"'
+   CachedReferencedTextures(6)=Texture2D'"/Game/GKnight/Materials/TestSphere/Textures/T_BaseMaterial_v01_ID.T_BaseMaterial_v01_ID"'
+   CachedReferencedTextures(7)=Texture2D'"/Game/GKnight/Textures/Decals/T_CoatOfArm_02.T_CoatOfArm_02"'
+   CachedReferencedTextures(8)=Texture2D'"/Game/GKnight/Textures/Decals/T_CoatOfArm_04_1.T_CoatOfArm_04_1"'
+   CachedReferencedTextures(9)=Texture2D'"/Game/GKnight/Textures/DetailMaps/T_detailMap01_n.T_detailMap01_n"'
+   TextureStreamingDataVersion=1
+   TextureStreamingData(0)=(SamplingScale=9.203125,UVChannelIndex=0,TextureName="T_detailMap01_n",TextureReference=/Game/GKnight/Textures/DetailMaps/T_detailMap01_n.T_detailMap01_n)
+   TextureStreamingData(1)=(SamplingScale=2.000000,UVChannelIndex=0,TextureName="T_FlatMid",TextureReference=/Game/GKnight/Textures/Tiles/T_FlatMid.T_FlatMid)
+   TextureStreamingData(2)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Pants_D",TextureReference=/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_D.T_GothicKnight_Pants_D)
+   TextureStreamingData(3)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Pants_ID",TextureReference=/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_ID.T_GothicKnight_Pants_ID)
+   TextureStreamingData(4)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Pants_N",TextureReference=/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_N.T_GothicKnight_Pants_N)
+   TextureStreamingData(5)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_GothicKnight_Pants_ORM",TextureReference=/Game/GKnight/Textures/Pants/T_GothicKnight_Pants_ORM.T_GothicKnight_Pants_ORM)
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=8F08A25E4474356B301C179ACC7F7661
+End Object

@@ -1,0 +1,27 @@
+Begin Object Class=/Script/Engine.MaterialInstanceConstant Name="MI_EyeMaterial"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   ParameterStateId=2AA4EDB34ABA9DA777B994AA0441EF18
+   Parent=Material'"/Game/GKnight/Materials/M_Eye.M_Eye"'
+   ScalarParameterValues(0)=(ParameterInfo=(Name="Iris UV Radius"),ParameterValue=0.160000,ExpressionGUID=E9BEC1BC4F39E1D4C27A0BAC57616B21)
+   ScalarParameterValues(1)=(ParameterInfo=(Name="IrisBRightness"),ParameterValue=0.800000,ExpressionGUID=241ACA254B1DB6392D70A3A7A685291F)
+   ScalarParameterValues(2)=(ParameterInfo=(Name="RefractionDepthBias"))
+   TextureParameterValues(0)=(ParameterInfo=(Name="IrisColor"),ExpressionGUID=00E78A4B4B1A5CE53EEBA691B4D1718E)
+   BasePropertyOverrides=(ShadingModel=MSM_Eye,OpacityMaskClipValue=0.333300)
+   ReferencedTextureGuids(0)=391F674A4894A9B3762E108E55CACD8E
+   ReferencedTextureGuids(1)=2A0C180E4C8974C13AA14BAF449FB2D1
+   ReferencedTextureGuids(2)=B4FB30064D4A73C720C2968481428239
+   ReferencedTextureGuids(3)=AAFC37EE4DECA198C1D34C87FF815EDC
+   ReferencedTextureGuids(4)=869985C04A5CD8BAF81F0980F02EAFCF
+   CachedReferencedTextures(0)=None
+   CachedReferencedTextures(1)=Texture2D'"/Game/GKnight/Materials/Eyes/T_Eye_Wet_Normal_MKT.T_Eye_Wet_Normal_MKT"'
+   CachedReferencedTextures(2)=Texture2D'"/Game/GKnight/Materials/Eyes/T_EyeBaseColorA_mkt.T_EyeBaseColorA_mkt"'
+   CachedReferencedTextures(3)=Texture2D'"/Game/GKnight/Materials/Eyes/T_EyeScleraBaseColor_mkt.T_EyeScleraBaseColor_mkt"'
+   CachedReferencedTextures(4)=Texture2D'"/Game/GKnight/Materials/Eyes/T_EyeDisplacement_MKT.T_EyeDisplacement_MKT"'
+   CachedReferencedTextures(5)=Texture2D'"/Game/GKnight/Materials/Eyes/T_EyeNormals_MKT.T_EyeNormals_MKT"'
+   CachedReferencedTextures(6)=TextureCube'"/Game/GKnight/Materials/Eyes/T_SecondReflection_mkt.T_SecondReflection_mkt"'
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=9FF7B2584DE05B33F39EC8B8882D4892
+End Object

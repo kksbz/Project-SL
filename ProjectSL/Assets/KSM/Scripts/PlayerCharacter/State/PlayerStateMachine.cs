@@ -47,6 +47,9 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isSwitchingArmPressed;
     float _dodgePressedRate = 0.5f;
     float _dodgeStartTime = 0f;
+
+    bool _hitFlag;
+    bool _blockFlag;
     // State Var
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
@@ -73,6 +76,8 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGuardPressed { get { return _isGuardPressed; } }
     public bool IsRollPressed { get { return _isRollPressed; } set { _isRollPressed = value; } }
     public bool IsBackStepPressed { get { return _isBackStepPressed; } set { _isBackStepPressed = value; } }
+    public bool HitFlag { get { return _hitFlag; } set { _hitFlag = value; } }
+    public bool BlockFlag { get { return _blockFlag; } set { _blockFlag = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -190,9 +195,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetDirection(Vector3 newBodyDirection)
     {
-        _currentDirection = newBodyDirection;
-        //  _characterBody.forward = newBodyDirection;
-        // transform.forward = newBodyDirection;
+        // _currentDirection = newBodyDirection;
+        // _characterBody.forward = newBodyDirection;
+        transform.forward = newBodyDirection;
     }
 
     public void RotateCharacterBody()
@@ -200,7 +205,7 @@ public class PlayerStateMachine : MonoBehaviour
         //if (!_canRotate)
         //    return;
 
-        _characterBody.rotation = Quaternion.Lerp(_characterBody.rotation, Quaternion.Euler(_currentDirection), 100f);
+        // _characterBody.rotation = Quaternion.Lerp(_characterBody.rotation, Quaternion.Euler(_currentDirection), 100f);
     }
 
     // �Է� �ݹ� �Լ�

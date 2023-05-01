@@ -1,0 +1,190 @@
+Begin Object Class=/Script/Engine.Material Name="M_Skin_Master"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionVectorParameter Name="MaterialExpressionVectorParameter_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionVectorParameter Name="MaterialExpressionVectorParameter_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionTextureSampleParameter2D Name="MaterialExpressionTextureSampleParameter2D_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionTextureSampleParameter2D Name="MaterialExpressionTextureSampleParameter2D_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionTextureSampleParameter2D Name="MaterialExpressionTextureSampleParameter2D_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionScalarParameter Name="MaterialExpressionScalarParameter_2"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionScalarParameter Name="MaterialExpressionScalarParameter_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionScalarParameter Name="MaterialExpressionScalarParameter_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionPower Name="MaterialExpressionPower_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionPower Name="MaterialExpressionPower_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_1"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionMaterialFunctionCall Name="MaterialExpressionMaterialFunctionCall_0"
+   End Object
+   Begin Object Class=/Script/Engine.MaterialExpressionDesaturation Name="MaterialExpressionDesaturation_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="MaterialExpressionVectorParameter_1"
+      DefaultValue=(R=0.500000,G=0.500000,B=0.500000,A=1.000000)
+      ParameterName="SSS_tint"
+      ExpressionGUID=03BDC5B740DB29FD2C705B842D324089
+      MaterialExpressionEditorX=-448
+      MaterialExpressionEditorY=272
+      MaterialExpressionGuid=0F32B8514A4ABAF23F338081314636C3
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionVectorParameter_0"
+      DefaultValue=(R=0.500000,G=0.500000,B=0.500000,A=1.000000)
+      ParameterName="SkinTone"
+      ExpressionGUID=C717596F48A915347F0BDAA6A42FD70E
+      MaterialExpressionEditorX=-736
+      MaterialExpressionEditorY=-240
+      MaterialExpressionGuid=0F32B8514A4ABAF23F338081314636C3
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionTextureSampleParameter2D_2"
+      ParameterName="AO_Rough_Metal"
+      ExpressionGUID=4B0B5FDE429075FC9918C0AAA8581D7E
+      Texture=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_ORM.T_GHead_B_ORM"'
+      SamplerType=SAMPLERTYPE_LinearColor
+      MaterialExpressionEditorX=-672
+      MaterialExpressionEditorY=560
+      MaterialExpressionGuid=B4FC8D8745D25DB2A6068B9E16F39760
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionTextureSampleParameter2D_1"
+      ParameterName="Normal"
+      ExpressionGUID=5E3FD1F749DA3E5308732780D8EED1E0
+      Texture=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_N.T_GHead_B_N"'
+      SamplerType=SAMPLERTYPE_Normal
+      MaterialExpressionEditorX=-672
+      MaterialExpressionEditorY=368
+      MaterialExpressionGuid=5B0D34E648BF1234D76129BD001F3B17
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionTextureSampleParameter2D_0"
+      ParameterName="Albedo"
+      ExpressionGUID=7CA7D88144685A533CC6E6954F5BDC5D
+      Texture=Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_D.T_GHead_B_D"'
+      MaterialExpressionEditorX=-768
+      MaterialExpressionEditorY=-32
+      MaterialExpressionGuid=4E8BAAF74CAD2EA18D0F35A8B74BC4F3
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionScalarParameter_2"
+      DefaultValue=2.000000
+      ParameterName="SSS_brightness"
+      ExpressionGUID=96F74A154076373DFD5FAFB7AB27E7C5
+      MaterialExpressionEditorX=-736
+      MaterialExpressionEditorY=192
+      MaterialExpressionGuid=D5ECFBF047EA15E289F93F93B19FB6BD
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionScalarParameter_1"
+      ParameterName="DeSaturation"
+      ExpressionGUID=58500E564827CD8D64DAE986DD511A30
+      MaterialExpressionEditorX=-496
+      MaterialExpressionEditorY=-224
+      MaterialExpressionGuid=030AA7914D4E720C76124FA3DB83A72D
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionScalarParameter_0"
+      DefaultValue=1.000000
+      ParameterName="RoughPower"
+      ExpressionGUID=74E73A814265AD6A7D72DFA4537C829F
+      MaterialExpressionEditorX=-576
+      MaterialExpressionEditorY=784
+      MaterialExpressionGuid=DC4C3BB845464325BD5BD5BCE6A509EB
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionPower_1"
+      Base=(Expression=MaterialExpressionDesaturation'"M_Skin_Master:MaterialExpressionDesaturation_0"')
+      Exponent=(Expression=MaterialExpressionScalarParameter'"M_Skin_Master:MaterialExpressionScalarParameter_2"')
+      MaterialExpressionEditorX=-464
+      MaterialExpressionEditorY=80
+      MaterialExpressionGuid=4B0B3A484F60F491D68326A0F2D99EA0
+      Material=Material'"M_Skin_Master"'
+      bCollapsed=False
+   End Object
+   Begin Object Name="MaterialExpressionPower_0"
+      Base=(Expression=MaterialExpressionTextureSampleParameter2D'"M_Skin_Master:MaterialExpressionTextureSampleParameter2D_2"',OutputIndex=2,Mask=1,MaskG=1)
+      Exponent=(Expression=MaterialExpressionScalarParameter'"M_Skin_Master:MaterialExpressionScalarParameter_0"')
+      MaterialExpressionEditorX=-240
+      MaterialExpressionEditorY=416
+      MaterialExpressionGuid=10E2D9E14056F504509C5490439EAA39
+      Material=Material'"M_Skin_Master"'
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_1"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions03/Blends/Blend_Overlay.Blend_Overlay"'
+      FunctionInputs(0)=(ExpressionInputId=88817477432D9FAD10A549A321ACA1A3,Input=(Expression=MaterialExpressionVectorParameter'"M_Skin_Master:MaterialExpressionVectorParameter_1"',InputName="Base",Mask=1,MaskR=1,MaskG=1,MaskB=1))
+      FunctionInputs(1)=(ExpressionInputId=199F573E4F017F639BE3529FE8C8D580,Input=(Expression=MaterialExpressionPower'"M_Skin_Master:MaterialExpressionPower_1"',InputName="Blend"))
+      FunctionOutputs(0)=(ExpressionOutputId=C17FADFB4135A52E64E751901D7BE521,Output=(OutputName="Result"))
+      MaterialExpressionEditorX=-208
+      MaterialExpressionEditorY=176
+      MaterialExpressionGuid=2499A5264759D1607DD6D688A6B3C65B
+      Material=Material'"M_Skin_Master"'
+      Outputs(0)=(OutputName="Result")
+   End Object
+   Begin Object Name="MaterialExpressionMaterialFunctionCall_0"
+      MaterialFunction=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions03/Blends/Blend_Overlay.Blend_Overlay"'
+      FunctionInputs(0)=(ExpressionInputId=88817477432D9FAD10A549A321ACA1A3,Input=(Expression=MaterialExpressionVectorParameter'"M_Skin_Master:MaterialExpressionVectorParameter_0"',InputName="Base",Mask=1,MaskR=1,MaskG=1,MaskB=1))
+      FunctionInputs(1)=(ExpressionInputId=199F573E4F017F639BE3529FE8C8D580,Input=(Expression=MaterialExpressionDesaturation'"M_Skin_Master:MaterialExpressionDesaturation_0"',InputName="Blend"))
+      FunctionOutputs(0)=(ExpressionOutputId=C17FADFB4135A52E64E751901D7BE521,Output=(OutputName="Result"))
+      MaterialExpressionEditorX=-304
+      MaterialExpressionEditorY=-16
+      MaterialExpressionGuid=19EA094B44975B84C85B868C8B834128
+      Material=Material'"M_Skin_Master"'
+      Outputs(0)=(OutputName="Result")
+   End Object
+   Begin Object Name="MaterialExpressionDesaturation_0"
+      Input=(Expression=MaterialExpressionTextureSampleParameter2D'"M_Skin_Master:MaterialExpressionTextureSampleParameter2D_0"',Mask=1,MaskR=1,MaskG=1,MaskB=1)
+      Fraction=(Expression=MaterialExpressionScalarParameter'"M_Skin_Master:MaterialExpressionScalarParameter_1"')
+      MaterialExpressionEditorX=-384
+      MaterialExpressionEditorY=-128
+      MaterialExpressionGuid=AD17C1D840AF0105FD0F3F82ED7806F4
+      Material=Material'"M_Skin_Master"'
+   End Object
+   BaseColor=(Expression=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_0"')
+   Metallic=(Expression=MaterialExpressionTextureSampleParameter2D'"MaterialExpressionTextureSampleParameter2D_2"',OutputIndex=3,Mask=1,MaskB=1)
+   Roughness=(Expression=MaterialExpressionPower'"MaterialExpressionPower_0"')
+   Normal=(Expression=MaterialExpressionTextureSampleParameter2D'"MaterialExpressionTextureSampleParameter2D_1"',Mask=1,MaskR=1,MaskG=1,MaskB=1)
+   ShadingModel=MSM_PreintegratedSkin
+   ShadingModels=(ShadingModelField=8)
+   SubsurfaceColor=(Expression=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_1"')
+   AmbientOcclusion=(Expression=MaterialExpressionTextureSampleParameter2D'"MaterialExpressionTextureSampleParameter2D_2"',OutputIndex=1,Mask=1,MaskR=1)
+   bUsedWithSkeletalMesh=True
+   Expressions(0)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_0"'
+   Expressions(1)=MaterialExpressionTextureSampleParameter2D'"MaterialExpressionTextureSampleParameter2D_2"'
+   Expressions(2)=MaterialExpressionPower'"MaterialExpressionPower_0"'
+   Expressions(3)=MaterialExpressionTextureSampleParameter2D'"MaterialExpressionTextureSampleParameter2D_1"'
+   Expressions(4)=MaterialExpressionMaterialFunctionCall'"MaterialExpressionMaterialFunctionCall_1"'
+   Expressions(5)=MaterialExpressionPower'"MaterialExpressionPower_1"'
+   Expressions(6)=MaterialExpressionTextureSampleParameter2D'"MaterialExpressionTextureSampleParameter2D_0"'
+   Expressions(7)=MaterialExpressionVectorParameter'"MaterialExpressionVectorParameter_0"'
+   Expressions(8)=MaterialExpressionScalarParameter'"MaterialExpressionScalarParameter_0"'
+   Expressions(9)=MaterialExpressionDesaturation'"MaterialExpressionDesaturation_0"'
+   Expressions(10)=MaterialExpressionScalarParameter'"MaterialExpressionScalarParameter_1"'
+   Expressions(11)=MaterialExpressionScalarParameter'"MaterialExpressionScalarParameter_2"'
+   Expressions(12)=MaterialExpressionVectorParameter'"MaterialExpressionVectorParameter_1"'
+   ParameterGroupData(0)=(GroupName="None")
+   ParameterGroupData(1)=(GroupName="None")
+   ParameterGroupData(2)=(GroupName="None")
+   ParameterGroupData(3)=(GroupName="None")
+   ParameterGroupData(4)=(GroupName="None")
+   ParameterGroupData(5)=(GroupName="None")
+   ParameterGroupData(6)=(GroupName="None")
+   ParameterGroupData(7)=(GroupName="None")
+   bCanMaskedBeAssumedOpaque=True
+   StateId=8D6508D948C7DF0B489A57B9602CB33E
+   CachedExpressionData=(Parameters=(RuntimeEntries[0]=(NameHashes=(3248926795781262500,5882314936111615653,11886263454228811012),ParameterInfos=((Name="DeSaturation"),(Name="RoughPower"),(Name="SSS_brightness")),ExpressionGuids=(58500E564827CD8D64DAE986DD511A30,74E73A814265AD6A7D72DFA4537C829F,96F74A154076373DFD5FAFB7AB27E7C5)),RuntimeEntries[1]=(NameHashes=(837035889816834764,11091069100507476543),ParameterInfos=((Name="SkinTone"),(Name="SSS_tint")),ExpressionGuids=(C717596F48A915347F0BDAA6A42FD70E,03BDC5B740DB29FD2C705B842D324089)),RuntimeEntries[2]=(NameHashes=(1093733950441199189,4708953410708818575,5743972511304114995),ParameterInfos=((Name="AO_Rough_Metal"),(Name="Normal"),(Name="Albedo")),ExpressionGuids=(4B0B5FDE429075FC9918C0AAA8581D7E,5E3FD1F749DA3E5308732780D8EED1E0,7CA7D88144685A533CC6E6954F5BDC5D)),ScalarValues=(0.000000,1.000000,2.000000),VectorValues=((R=0.500000,G=0.500000,B=0.500000,A=1.000000),(R=0.500000,G=0.500000,B=0.500000,A=1.000000)),TextureValues=(Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_ORM.T_GHead_B_ORM"',Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_N.T_GHead_B_N"',Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_D.T_GHead_B_D"'),ScalarMinMaxValues=((X=0.000000,Y=0.000000),(X=0.000000,Y=0.000000),(X=0.000000,Y=0.000000)),ScalarCurveValues=(None,None,None),ScalarCurveAtlasValues=(None,None,None),VectorChannelNameValues=((),()),VectorUsedAsChannelMaskValues=(False,False),TextureChannelNameValues=((),(),())),ReferencedTextures=(Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend"',Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase"',Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_ORM.T_GHead_B_ORM"',Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_N.T_GHead_B_N"',Texture2D'"/Game/GKnight/Textures/FaceB/T_GHead_B_D.T_GHead_B_D"'),FunctionInfos=((StateId=12B6F73F4D5D4FF9D2FBF18B43945D5B,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions03/Blends/Blend_Overlay.Blend_Overlay"'),(StateId=12B6F73F4D5D4FF9D2FBF18B43945D5B,Function=MaterialFunction'"/Engine/Functions/Engine_MaterialFunctions03/Blends/Blend_Overlay.Blend_Overlay"')),QualityLevelsUsed=(False,False,False,False))
+   ReferencedTextureGuids(0)=B0C496454A28A5C4820C6380311C511F
+   ReferencedTextureGuids(1)=DB27AB37466E33DC5DDE7CAD98D3957E
+   ReferencedTextureGuids(2)=E67CFF8F425E728AF657528FD894F5DA
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=B9D74C8C4E0476863349EBB85E0039AB
+End Object

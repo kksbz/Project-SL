@@ -1,0 +1,39 @@
+Begin Object Class=/Script/Engine.MaterialInstanceConstant Name="MI_BearFur"
+   Begin Object Class=/Script/UnrealEd.SceneThumbnailInfoWithPrimitive Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   Begin Object Name="SceneThumbnailInfoWithPrimitive_0"
+   End Object
+   ParameterStateId=DC78C0EA4CA9117C4EE5CBA7021EC141
+   Parent=Material'"/Game/GKnight/Materials/M_Master_FurAndHair.M_Master_FurAndHair"'
+   ScalarParameterValues(0)=(ParameterInfo=(Name="CurvaturePower"),ParameterValue=0.761905,ExpressionGUID=6EC6C3D741BAFF0CBE5C0B9182AA5F1F)
+   ScalarParameterValues(1)=(ParameterInfo=(Name="Gloss power A"),ParameterValue=0.156240,ExpressionGUID=F9077C8B43BE9C0D9A0853BBEA814056)
+   ScalarParameterValues(2)=(ParameterInfo=(Name="PDO"),ParameterValue=0.660000,ExpressionGUID=B104CFCE4A0E5CA73F286C92A3963A4D)
+   ScalarParameterValues(3)=(ParameterInfo=(Name="Scatter"),ParameterValue=0.688571,ExpressionGUID=4A5C56484BB092CB1803A2B72300D646)
+   ScalarParameterValues(4)=(ParameterInfo=(Name="Specular"),ParameterValue=0.500000,ExpressionGUID=9E1008C8419EA402B630909FDBE9B2DF)
+   ScalarParameterValues(5)=(ParameterInfo=(Name="VertexColourPower"),ParameterValue=0.400000,ExpressionGUID=ACA0CB51497A75ED0CF7CD954E7637F2)
+   ScalarParameterValues(6)=(ParameterInfo=(Name="RefractionDepthBias"))
+   VectorParameterValues(0)=(ParameterInfo=(Name="HairTint"),ParameterValue=(R=0.430208,G=0.331047,B=0.227204,A=1.000000),ExpressionGUID=755D44714777130BB8DD469C3F7D4137)
+   VectorParameterValues(1)=(ParameterInfo=(Name="TangentB"),ParameterValue=(R=0.000000,G=-10.000000,B=0.802700,A=1.000000),ExpressionGUID=C726700D4ABD9CC1A495B6A09B7E0B2B)
+   TextureParameterValues(0)=(ParameterInfo=(Name="Heigh"),ParameterValue=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_H.T_T_FurBear_H"',ExpressionGUID=32ACBAB740FCBB5A14E8449C0C5AEFC3)
+   TextureParameterValues(1)=(ParameterInfo=(Name="Normal"),ParameterValue=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_N.T_T_FurBear_N"',ExpressionGUID=63A9BEDB49D73B9382B26E9251936A49)
+   TextureParameterValues(2)=(ParameterInfo=(Name="RMOC"),ParameterValue=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_RMOC.T_T_FurBear_RMOC"',ExpressionGUID=EF507D564348C191D42763A5B5BFADAB)
+   TextureParameterValues(3)=(ParameterInfo=(Name="Albedo"),ParameterValue=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_D.T_T_FurBear_D"',ExpressionGUID=750358844EEF685AF3C4CAB8246D8F71)
+   BasePropertyOverrides=(TwoSided=True,BlendMode=BLEND_Masked,ShadingModel=MSM_Hair,OpacityMaskClipValue=0.333300)
+   ReferencedTextureGuids(0)=3B275D164D78AFA4590E78B8588B0046
+   ReferencedTextureGuids(1)=8848AB554B823CFC366B6EB5D61591FB
+   ReferencedTextureGuids(2)=5E3E7C2C46AE799A7C116B96CADF8760
+   ReferencedTextureGuids(3)=F8730345472155AE8D1B68B96C4768DB
+   CachedReferencedTextures(0)=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_D.T_T_FurBear_D"'
+   CachedReferencedTextures(1)=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_RMOC.T_T_FurBear_RMOC"'
+   CachedReferencedTextures(2)=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_N.T_T_FurBear_N"'
+   CachedReferencedTextures(3)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBlend.BlendFunc_DefBlend"'
+   CachedReferencedTextures(4)=Texture2D'"/Engine/EngineMaterials/BlendFunc_DefBase.BlendFunc_DefBase"'
+   CachedReferencedTextures(5)=Texture2D'"/Game/GKnight/Textures/BearFur/T_T_FurBear_H.T_T_FurBear_H"'
+   TextureStreamingDataVersion=1
+   TextureStreamingData(0)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_T_FurBear_D",TextureReference=/Game/GKnight/Textures/BearFur/T_T_FurBear_D.T_T_FurBear_D)
+   TextureStreamingData(1)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_T_FurBear_H",TextureReference=/Game/GKnight/Textures/BearFur/T_T_FurBear_H.T_T_FurBear_H)
+   TextureStreamingData(2)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_T_FurBear_N",TextureReference=/Game/GKnight/Textures/BearFur/T_T_FurBear_N.T_T_FurBear_N)
+   TextureStreamingData(3)=(SamplingScale=1.000000,UVChannelIndex=0,TextureName="T_T_FurBear_RMOC",TextureReference=/Game/GKnight/Textures/BearFur/T_T_FurBear_RMOC.T_T_FurBear_RMOC)
+   ThumbnailInfo=SceneThumbnailInfoWithPrimitive'"SceneThumbnailInfoWithPrimitive_0"'
+   LightingGuid=51C54DAA441F11D9FE440C971CF18089
+End Object

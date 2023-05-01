@@ -37,7 +37,7 @@ public class Subjugation : MonoBehaviour
         }
         else
         {
-            object_.TakeDamage(damage);
+            object_.TakeDamage(gameObject, damage);
         }
     }
 }
