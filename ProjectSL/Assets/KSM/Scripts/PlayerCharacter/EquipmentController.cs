@@ -112,7 +112,13 @@ public class EquipmentController : MonoBehaviour
     // Property
     public EArmState ArmState { get { return _currentArmState; } }
     public EWeaponState WeaponState { get { return _currentWeaponState; } }
-    public bool IsEquipShieldToLeftArm { get { return _currentLeftArmWeapon.itemType == ItemData.ItemType.SHIELD; } }
+    public bool IsEquipShieldToLeftArm() 
+    {
+        if (_currentLeftArmWeapon == null)
+            return false;
+
+        return _currentLeftArmWeapon.itemType == ItemData.ItemType.SHIELD; 
+    }
     // Property
 
 

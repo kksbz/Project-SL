@@ -31,38 +31,38 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Attack());
         }
-        else if(Ctx.IsRollPressed || Ctx.IsBackStepPressed)
+        else if (Ctx.IsRollPressed || Ctx.IsBackStepPressed)
         {
             SwitchState(Factory.Roll());
         }
-        else if(Ctx.IsGuardPressed && Ctx.EquipmentController.IsEquipShieldToLeftArm)
+        else if (Ctx.IsGuardPressed && Ctx.EquipmentController.IsEquipShieldToLeftArm())
         {
             SwitchState(Factory.Guard());
         }
-        else if(Ctx.HitFlag)
+        else if (Ctx.HitFlag)
         {
             SwitchState(Factory.Hit());
         }
-        
+
     }
     public override void InitializeSubState()
     {
-        if(!Ctx.IsMovementPressed && !Ctx.IsRunPressed)
+        if (!Ctx.IsMovementPressed && !Ctx.IsRunPressed)
         {
             //Debug.Log("GroundedState SetSubState Idle");
             SetSubState(Factory.Idle());
         }
-        else if(Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
+        else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.IsWalkPressed)
         {
             //Debug.Log("GroundedState SetSubState Jog");
             SetSubState(Factory.Jog());
         }
-        else if(Ctx.IsMovementPressed && Ctx.IsRunPressed)
+        else if (Ctx.IsMovementPressed && Ctx.IsRunPressed)
         {
             //Debug.Log("GroundedState SetSubState Run");
             SetSubState(Factory.Run());
         }
-        else if(Ctx.IsMovementPressed && Ctx.IsWalkPressed)
+        else if (Ctx.IsMovementPressed && Ctx.IsWalkPressed)
         {
             //Debug.Log("GroundedState SetSubState Walk");
             SetSubState(Factory.Walk());
