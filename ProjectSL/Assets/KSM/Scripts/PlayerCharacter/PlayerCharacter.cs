@@ -20,6 +20,8 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
 
     private PlayerStateMachine _stateMachine;
 
+    public PlayerStateMachine StateMachine { get { return _stateMachine; } }
+
     public BehaviorStateMachine SM_Behavior { get; private set; }
     public LookStateMachine SM_Look { get; private set; }
 

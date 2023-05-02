@@ -11,6 +11,12 @@ public class AnimationController : MonoBehaviour
 
     private CharacterControlProperty controlProperty;
 
+    [Header("Equipment Parts Animator")]
+    [SerializeField]
+    Animator _headAnimator;
+    [SerializeField]
+    Animator _torsoAnimator;
+
     private float speed;
     private float axisX;
     private float axisY;
@@ -50,6 +56,8 @@ public class AnimationController : MonoBehaviour
     void Start()
     {
         controlProperty = playerController.controlProperty;
+        // animator.
+        //_torsoAnimator.runtimeAnimatorController = animator.runtimeAnimatorController;
     }
 
     // Update is called once per frame

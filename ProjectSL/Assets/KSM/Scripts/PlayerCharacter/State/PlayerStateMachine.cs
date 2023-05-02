@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.Examples;
@@ -9,6 +10,8 @@ public class PlayerStateMachine : MonoBehaviour
     CharacterController _characterController;
     Animator _animator;
     PlayerInput _playerInput;
+    CinemachineInputProvider _cameraInput;
+
     [SerializeField]
     Transform _characterBody;
 
@@ -103,7 +106,6 @@ public class PlayerStateMachine : MonoBehaviour
         _animationEventDispatcher = _characterBody.gameObject.GetComponent<AnimationEventDispatcher>();
 
         _controlProperty = _playerController.controlProperty;
-
         //Debug.Log("Player State Machine : ������Ʈ �ʱ�ȭ");
 
         // ������Ʈ �ʱ�ȭ
@@ -139,7 +141,7 @@ public class PlayerStateMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _cameraInput = _cameraController.cm_FreeLook.GetComponent<CinemachineInputProvider>();
     }
 
     // Update is called once per frame
@@ -271,6 +273,17 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
     }
+    public void LockInput()
+    {
+        _playerInput.PlayerCharacterInput.Disable();
+        _cameraInput.enabled = false;
+    }
+    public void ResetInput()
+    {
+        _playerInput.PlayerCharacterInput.Enable();
+        _cameraInput.enabled = true;
+    }
+
     private void OnEnable()
     {
         _playerInput.PlayerCharacterInput.Enable();
