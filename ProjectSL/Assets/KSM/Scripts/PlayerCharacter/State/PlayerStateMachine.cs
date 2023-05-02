@@ -198,8 +198,8 @@ public class PlayerStateMachine : MonoBehaviour
     public void SetDirection(Vector3 newBodyDirection)
     {
         // _currentDirection = newBodyDirection;
-        // _characterBody.forward = newBodyDirection;
-        transform.forward = newBodyDirection;
+        _characterBody.forward = newBodyDirection;
+        // transform.forward = newBodyDirection;
     }
 
     public void RotateCharacterBody()
