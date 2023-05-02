@@ -175,7 +175,10 @@ public class Boss_Thought_State : IState
     public void Update()
     {
         //  플레이어를 바라보는 동작을 수행할 예정 후에 Lerp를 사용해서 회전을 구현할 예정
-        _boss.transform.LookAt(_boss.Target);
+        //_boss.transform.LookAt(_boss.Target);
+        Vector3 dir = _boss.Target.transform.position - _boss.transform.position;
+
+        _boss.transform.rotation = Quaternion.Lerp(_boss.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5f);
     }
     public void OnAction()
     {
