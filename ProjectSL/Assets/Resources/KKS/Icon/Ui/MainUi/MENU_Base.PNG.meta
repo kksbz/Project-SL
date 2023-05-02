@@ -168,13 +168,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MENU_Base_3
+      name: FireMaid
       rect:
         serializedVersion: 2
         x: 1868
-        y: 1852
-        width: 92
-        height: 92
+        y: 1854
+        width: 90
+        height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,12 +189,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MENU_Base_4
+      name: LevelUp
       rect:
         serializedVersion: 2
         x: 1868
         y: 1754
-        width: 92
+        width: 90
         height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -210,13 +210,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MENU_Base_5
+      name: Shop_1
       rect:
         serializedVersion: 2
         x: 1868
-        y: 1652
-        width: 92
-        height: 92
+        y: 1654
+        width: 90
+        height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -273,12 +273,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MENU_Base_8
+      name: Shop_2
       rect:
         serializedVersion: 2
         x: 1852
         y: 1354
-        width: 92
+        width: 90
         height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -536,6 +536,8 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Bonfire: -1338322839
+      FireMaid: -1584434800
+      LevelUp: -713982445
       MENU_Base: -316772201
       MENU_Base_10: 1139095238
       MENU_Base_11: 662218780
@@ -556,16 +558,14 @@ TextureImporter:
       MENU_Base_27: 1076528443
       MENU_Base_28: 1408307392
       MENU_Base_29: -1725494304
-      MENU_Base_3: -1584434800
-      MENU_Base_4: -713982445
-      MENU_Base_5: 1501706712
       MENU_Base_6: -1223674584
       MENU_Base_7: -689934974
-      MENU_Base_8: -757187068
       MENU_Base_9: 2043157430
       MENU_Souls: 1658432767
       MENU_Top: 1130125208
       MENU_bottom: 1682296474
+      Shop_1: 1501706712
+      Shop_2: -757187068
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

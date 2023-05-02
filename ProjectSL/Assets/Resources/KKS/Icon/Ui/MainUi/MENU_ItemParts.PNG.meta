@@ -197,7 +197,7 @@ TextureImporter:
         width: 385
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,6 +205,27 @@ TextureImporter:
       bones: []
       spriteID: 04a8db1a4189dee4491803c38d61e40d
       internalID: -289881528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 289
+        width: 19
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 844ffeeb6f3e97e4fbec6b3ae08f2dd5
+      internalID: -347846997
       vertices: []
       indices: 
       edges: []
@@ -220,9 +241,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Arrow: -1998298976
       MENU_ItemParts_0: 916037668
       MENU_ItemParts_1: -289881528
-      MENU_ItemParts_2: -1998298976
       MENU_ItemParts_3: 425357762
       MENU_ItemParts_Equip: 246284357
       SelectEffect: -742779212
