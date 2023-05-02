@@ -110,6 +110,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
 
     }
+    public virtual int RandomAttack()
+    {
+        return 0;
+    }
     public void SetAttackColliderEnabled(bool newEnabled)
     {
         foreach (var iterator in AttackCollider)
@@ -267,5 +271,15 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         return enemyAnimator.IsAnimationPlaying(animationName);
     }
     #endregion
+
+    public Vector3 DirFromAngle(float angleDegrees, bool angleIsGlobal)
+    {
+        if (!angleIsGlobal)
+        {
+            angleDegrees += transform.eulerAngles.y;
+        }
+
+        return new Vector3(Mathf.Cos((-angleDegrees + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees + 90) * Mathf.Deg2Rad));
+    }
 }
 

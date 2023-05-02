@@ -98,6 +98,7 @@ public class Enemy_Patrol_State : IState
         _enemy.SetStop(false);
 
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed * 0.5f);
+        _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 0f);
 
         _enemy.Patrol();
         _enemy.StartCoroutine(MoveDelay());
@@ -154,6 +155,7 @@ public class Enemy_Chase_State : IState
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed);
 
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+        _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 1f);
 
         if (1 < _enemy.ChaseTargets.Count)
         {
@@ -217,30 +219,29 @@ public class Enemy_Attack_State : IState
 
         float randNum_ = Random.value;
 
-        if (randNum_ <= 0.2f)
+        _animationIndex = _enemy.RandomAttack();
+
+        switch (_animationIndex)
         {
-            _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_01;
-            _animationIndex = 1;
-        }
-        else if (randNum_ <= 0.4f)
-        {
-            _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_02;
-            _animationIndex = 2;
-        }
-        else if (randNum_ <= 0.6f)
-        {
-            _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_03;
-            _animationIndex = 3;
-        }
-        else if (randNum_ <= 0.8f)
-        {
-            _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_04;
-            _animationIndex = 4;
-        }
-        else
-        {
-            _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_05;
-            _animationIndex = 5;
+            case 1:
+                _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_01;
+                break;
+            case 2:
+                _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_02;
+                break;
+            case 3:
+                _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_03;
+                break;
+            case 4:
+                _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_04;
+                break;
+            case 5:
+                _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_05;
+                break;
+            default:
+                _currentAnimationName = EnemyDefineData.ANIMATION_ATTACK_01;
+                _animationIndex = 1;
+                break;
         }
 
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
