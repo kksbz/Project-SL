@@ -3,7 +3,12 @@ guid: c6dd67dcb692320478e58313664507d3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_GKnight_Glove
+    second: {fileID: 2100000, guid: 0b4e68bd3394db740b366ad5c3c137db, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

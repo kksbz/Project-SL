@@ -283,7 +283,12 @@ public class CombatController : MonoBehaviour
         foreach (Collider hitResult in hitResults)
         {
             Debug.LogWarning($"{hitResult.gameObject.name} �¾���");
-
+            GData.IDamageable damageable = hitResult.gameObject.GetComponent<GData.IDamageable>();
+            if(damageable != null)
+            {
+                // 임시 데미지 30 설정
+                damageable.TakeDamage(gameObject, 30f);
+            }
         }
     }
     public void InitializeAttackProperty(string name)

@@ -21,6 +21,27 @@ public class EquipmentController : MonoBehaviour
     private Animator _animator;
     [SerializeField]
     private CombatController _combatController;
+    
+
+    #region Equipment Model Change
+    [Header("Equipment Model Changer")]
+    HelmetModelChanger _helmetModelChanger;
+    ChestModelChanger _chestModelChanger;
+    GloveModelChanger _gloveModelChanger;
+    PantModelChanger _pantModelChanger;
+
+    SkinnedMeshRenderer _mannequinMesh;
+    SkinnedMeshRenderer _helmetMesh;
+    SkinnedMeshRenderer _chestMesh;
+    SkinnedMeshRenderer _gloveMesh;
+    SkinnedMeshRenderer _pantMesh;
+
+    GameObject _helmets;
+    GameObject _chests;
+    GameObject _gloves;
+    GameObject _pants;
+
+    #endregion  // Equipment Model Change
 
     #region Equipment Item
 
@@ -124,9 +145,16 @@ public class EquipmentController : MonoBehaviour
 
     private void Awake()
     {
+        // Component Init
         GameObject meshObj = gameObject.FindChildObj("Mesh");
         _animator = meshObj.GetComponent<Animator>();
         _combatController = GetComponent<CombatController>();
+
+        //_helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
+        //_chestModelChanger = GetComponentInChildren<ChestModelChanger>();
+        //_gloveModelChanger = GetComponentInChildren<GloveModelChanger>();
+        //_pantModelChanger = GetComponentInChildren<PantModelChanger>();
+
 
         _rightArmSocket = gameObject.FindChildObj(WEAPONSOCKET_RIGHT_ARM).transform;
         _leftArmSocket = gameObject.FindChildObj(WEAPONSOCKET_LEFT_ARM).transform;
@@ -142,6 +170,18 @@ public class EquipmentController : MonoBehaviour
         //GameObject quickSlotObj = managers.FindChildObj("QuickSlot");
         //_quickSlotBar = quickSlotObj.GetComponent<QuickSlotBar>();
         _quickSlotBar = UiManager.Instance.quickSlotBar;
+
+        //
+        /*
+        _mannequinMesh = meshObj.GetComponent<SkinnedMeshRenderer>();
+        _helmets = gameObject.FindChildObj("Male_Helmets");
+        _chests = gameObject.FindChildObj("Male_Chests");
+        _gloves = gameObject.FindChildObj("Male_Gloves");
+        _pants = gameObject.FindChildObj("Male_Pants");
+
+        _chestMesh = _chests.GetComponentInChildren<SkinnedMeshRenderer>();
+        */
+        //
 
         // 애니메이션 오버라이드 컨트롤러 이벤트 바인딩
         AnimationEventDispatcher aed = meshObj.GetComponent<AnimationEventDispatcher>();
@@ -163,12 +203,40 @@ public class EquipmentController : MonoBehaviour
         Inventory.Instance._onEquipSlotUpdated += UpdateEquipmentItem;
         // 애니메이션 오버라이드 컨트롤러 시작 끝 이벤트 바인딩
 
+        // Mannequin Mesh Hide
+        // _mannequinMesh.enabled = false;
+        
+        //
+        // EquipAllEquipmentModelOnStart();
+        
+    }
+
+    void EquipAllEquipmentModelOnStart()
+    {
+        _helmetModelChanger.UnEquipAllHelmetModels();
+        _chestModelChanger.UnEquipAllChestModels();
+        _gloveModelChanger.UnEquipAllGloveModels();
+        _pantModelChanger.UnEquipAllPantModels();
+
+        _helmetModelChanger.EquipHelmetModelByName("Helmet_01");
+        _chestModelChanger.EquipChestModelByName("Chest_01");
+        _gloveModelChanger.EquipGloveModelByName("Glove_01");
+        _pantModelChanger.EquipPantModelByName("Pant_01");
+    }
+
+    void TempEquip()
+    {
+        Debug.LogWarning("TempEquip");
+        _mannequinMesh.sharedMesh = _chestMesh.sharedMesh;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            // TempEquip();
+        }
     }
 
     public void SwitchArmState()

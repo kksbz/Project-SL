@@ -3,7 +3,12 @@ guid: 32e6086d457e76c4c8dede1a795d1b48
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MI_GKnight_Pants
+    second: {fileID: 2100000, guid: b3e77472628aa9f4bbe470f5d24baf34, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

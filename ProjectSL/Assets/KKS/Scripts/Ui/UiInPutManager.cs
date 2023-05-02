@@ -15,6 +15,7 @@ public class UiInPutManager : Singleton<UiInPutManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != GData.SCENENAME_TITLE)
         {
+            // GameManager.Instance.player.StateMachine.LockInput();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             if (Inventory.Instance.invenObj.activeInHierarchy == true)
