@@ -48,8 +48,7 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
         }
         Explosion();
 
-        yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
         unActiveObj.SetActive(true);
         foreach (var iterator in activeObj)
         {
@@ -59,6 +58,7 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
         {
             Destroy(iterator);
         }
+        gameObject.SetActive(false);
     }
 
 

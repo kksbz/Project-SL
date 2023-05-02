@@ -24,7 +24,7 @@ public interface IEnemyMoveController : GData.IInitialize
     bool IsStopped();
     bool IsNavMeshRangeChecked(float ranged);
     bool IsRangeChecked(float ranged);
-    bool IsPositionReachable(Vector3 newPosition);
+    bool IsPositionValid(Vector3 newPosition);
 }
 
 public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
@@ -55,7 +55,14 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         {
             Targets.Add(element);
         }
-        Target = Targets[_index];
+        if (Targets.IsValidCollection())
+        {
+            Target = Targets[_index];
+        }
+        else
+        {
+            Target = transform;
+        }
 
         //_moveDelay = MoveDelay(1f);
     }
@@ -125,7 +132,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     }
     public void TargetFollow(Vector3 newPosition, bool isFollow)
     {
-        if (IsPositionReachable(newPosition))
+        if (IsPositionValid(newPosition))
         {
             TargetFollow(newPosition);
             SetStop(isFollow);
@@ -144,13 +151,26 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
 
         Vector3 randPos = new Vector3(randX_, 0f, randY_);
         Debug.Log($"Warp Pos : {randPos}");
-
-        NavMeshAgent.Warp(randPos);
+        if (IsPositionValid(randPos))
+        {
+            NavMeshAgent.Warp(randPos);
+        }
+        else
+        {
+            return;
+        }
     }
 
     public void Warp(Vector3 newPos)
     {
-        NavMeshAgent.Warp(newPos);
+        if (IsPositionValid(newPos))
+        {
+            NavMeshAgent.Warp(newPos);
+        }
+        else
+        {
+            return;
+        }
     }
 
     /// <summary>
@@ -303,17 +323,16 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         }
     }
 
-    public bool IsPositionReachable(Vector3 newPosition)
+    /// <summary>
+    /// 특정 좌표가 현재 NavMeshAgent가 이동할 수 있는 좌표인지 확인하는 함수
+    /// </summary>
+    /// <param name="newPosition"></param>
+    /// <returns></returns>
+    public bool IsPositionValid(Vector3 newPosition)
     {
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(newPosition, out hit, 0.1f, NavMesh.AllAreas))
-        {
-            NavMeshPath path = new NavMeshPath();
-            if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, path))
-            {
-                return path.status == NavMeshPathStatus.PathComplete;
-            }
-        }
-        return false;
+        bool isOnNavMesh = NavMesh.SamplePosition(newPosition, out hit, _navMeshAgent.height * 0.5f, NavMesh.AllAreas);
+
+        return isOnNavMesh;
     }
 }

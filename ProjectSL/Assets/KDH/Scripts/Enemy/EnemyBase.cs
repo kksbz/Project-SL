@@ -221,7 +221,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     }
     public bool IsPositionReachable(Vector3 newPosition)
     {
-        return MoveController.IsPositionReachable(newPosition);
+        return MoveController.IsPositionValid(newPosition);
     }
     #endregion
 
