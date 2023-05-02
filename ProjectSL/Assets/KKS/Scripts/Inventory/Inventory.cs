@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static ItemData;
-using static UnityEditor.Progress;
 
 public class Inventory : Singleton<Inventory>
 {

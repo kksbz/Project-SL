@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: Assets/01.ProjectSL/Scenes/Title.unity
     guid: 4fc0281c6857b144d918d41f249d5227
   - enabled: 1
-    path: Assets/01.ProjectSL/Scenes/Lobby.unity
-    guid: f8524901c54421b478fd8445888517ee
-  - enabled: 1
-    path: Assets/01.ProjectSL/Scenes/Test.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/01.ProjectSL/Scenes/Play.unity
+    guid: 974b796945f7bfa409276350e16f3d3f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9640d9d2b974a514191e31a1d90d942c,
       type: 2}
