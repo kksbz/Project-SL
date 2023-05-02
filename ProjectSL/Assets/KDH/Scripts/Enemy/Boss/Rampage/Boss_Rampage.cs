@@ -141,7 +141,7 @@ public class Boss_Rampage : BossBase
 
         _rb.velocity = velocity;
 
-        // transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
     }
 
     public void BodyTackleComplete()
@@ -199,6 +199,7 @@ public class Boss_Rampage : BossBase
 
     public void RigidbodyMoveComplete()
     {
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
         Physics.IgnoreLayerCollision(BossStatus.bossLayerMaskIndex, BossStatus.targetLayerMaskIndex, false);
         _rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
         _rb.velocity = Vector3.zero;

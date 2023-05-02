@@ -81,6 +81,8 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     public virtual void TakeDamage(GameObject damageCauser, float damage)
     {
+        if (Status.currentHp <= 0) return;
+
         if (Status.currentHp - damage <= 0)
         {
             Status.currentHp = 0;
@@ -104,6 +106,14 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     }
 
     #region AttackCollider
+    public virtual void Attack(string CurrentAnimationName, int onActionIndex)
+    {
+
+    }
+    public virtual int RandomAttack()
+    {
+        return 0;
+    }
     public void SetAttackColliderEnabled(bool newEnabled)
     {
         foreach (var iterator in AttackCollider)
@@ -153,17 +163,33 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         MoveController.SetStop(isStopped);
     }
+    public void SetUpdateRotation(bool isRotation)
+    {
+        MoveController.SetUpdateRotation(isRotation);
+    }
     public void Patrol()
     {
         MoveController.Patrol();
+    }
+    public void PatrolStop()
+    {
+        MoveController.PatrolStop();
     }
     public void TargetFollow(Transform newTarget)
     {
         MoveController.TargetFollow(newTarget);
     }
+    public void TargetFollow(Vector3 newPosition)
+    {
+        MoveController.TargetFollow(newPosition);
+    }
     public void TargetFollow(Transform newTarget, bool isFollow)
     {
         MoveController.TargetFollow(newTarget, isFollow);
+    }
+    public void TargetFollow(Vector3 newPosition, bool isFollow)
+    {
+        MoveController.TargetFollow(newPosition, isFollow);
     }
     public void Warp()
     {
@@ -181,6 +207,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         return MoveController.IsMissed(distance);
     }
+    public bool IsStopped()
+    {
+        return MoveController.IsStopped();
+    }
     public bool IsNavMeshRangeChecked(float ranged)
     {
         return MoveController.IsNavMeshRangeChecked(ranged);
@@ -188,6 +218,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public bool IsRangedChecked(float ranged)
     {
         return MoveController.IsRangeChecked(ranged);
+    }
+    public bool IsPositionReachable(Vector3 newPosition)
+    {
+        return MoveController.IsPositionReachable(newPosition);
     }
     #endregion
 
@@ -204,6 +238,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     #region IEnemyAnimator
     public AnimatorStateInfo CurrentStateInfo { get { return EnemyAnimator.CurrentStateInfo; } }
+    public bool IsName(string animationName)
+    {
+        return EnemyAnimator.CurrentStateInfo.IsName(animationName);
+    }
     public void SetTrigger(string parameter)
     {
         EnemyAnimator.SetTrigger(parameter);
@@ -233,5 +271,15 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         return enemyAnimator.IsAnimationPlaying(animationName);
     }
     #endregion
+
+    public Vector3 DirFromAngle(float angleDegrees, bool angleIsGlobal)
+    {
+        if (!angleIsGlobal)
+        {
+            angleDegrees += transform.eulerAngles.y;
+        }
+
+        return new Vector3(Mathf.Cos((-angleDegrees + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees + 90) * Mathf.Deg2Rad));
+    }
 }
 

@@ -10,20 +10,27 @@ public interface IEnemyMoveController : GData.IInitialize
     Transform Target { get; }
     void SetSpeed(float newSpeed);
     void SetStop(bool isStopped);
+    void SetUpdateRotation(bool isRotation);
     void Patrol();
+    void PatrolStop();
     void TargetFollow(Transform newTarget);
+    void TargetFollow(Vector3 newPosition);
     void TargetFollow(Transform newTarget, bool isFollow);
+    void TargetFollow(Vector3 newPosition, bool isFollow);
     void Warp();
     void Warp(Vector3 newPos);
     bool IsArrive(float distance);
     bool IsMissed(float distance);
+    bool IsStopped();
     bool IsNavMeshRangeChecked(float ranged);
     bool IsRangeChecked(float ranged);
+    bool IsPositionReachable(Vector3 newPosition);
 }
 
 public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
 {
     private NavMeshAgent _navMeshAgent = default;
+    private IEnumerator _moveDelay;
     private int _index;
 
     public NavMeshAgent NavMeshAgent { get { return _navMeshAgent; } private set { _navMeshAgent = value; } }
@@ -49,6 +56,8 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
             Targets.Add(element);
         }
         Target = Targets[_index];
+
+        //_moveDelay = MoveDelay(1f);
     }
 
     public void SetSpeed(float newSpeed)
@@ -62,19 +71,9 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         NavMeshAgent.isStopped = isStopped;
     }
 
-    /// <summary>
-    /// 순찰을 위해 지정된 범위를 반복 이동하는 함수
-    /// </summary>
-    public void Patrol()
+    public void SetUpdateRotation(bool isRotation)
     {
-        if (Target == null || Target == default)
-        {
-            /* Do Nothing */
-        }
-        else
-        {
-            StartCoroutine(MoveDelay(1f));
-        }
+        NavMeshAgent.updateRotation = isRotation;
     }
 
     /// <summary>
@@ -93,6 +92,19 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
             NavMeshAgent.SetDestination(newTarget.position);
         }
     }
+    public void TargetFollow(Vector3 newPosition)
+    {
+        NavMeshAgent.SetDestination(newPosition);
+        // if (IsPositionReachable(newPosition))
+        // {
+        //     Debug.Log($"Dodge Debug : {newPosition}");
+        //     NavMeshAgent.SetDestination(newPosition);
+        // }
+        // else
+        // {
+        //     /*  Do Nothing  */
+        // }
+    }
 
     /// <summary>
     /// 지정된 대상을 향해서 NavMeshAgent를 사용해서 이동하는 함수 + isStopped를 조정해서 정지를 시키는 동작 수행
@@ -107,9 +119,20 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         }
         else
         {
-            Target = newTarget;
-            NavMeshAgent.SetDestination(newTarget.position);
-            NavMeshAgent.isStopped = isFollow;
+            TargetFollow(newTarget);
+            SetStop(isFollow);
+        }
+    }
+    public void TargetFollow(Vector3 newPosition, bool isFollow)
+    {
+        if (IsPositionReachable(newPosition))
+        {
+            TargetFollow(newPosition);
+            SetStop(isFollow);
+        }
+        else
+        {
+            /*  Do Nothing  */
         }
     }
     const float RANDOM_X_RANGE = 10f;
@@ -131,10 +154,32 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     }
 
     /// <summary>
+    /// 순찰을 위해 지정된 범위를 반복 이동하는 함수
+    /// </summary>
+    public void Patrol()
+    {
+        if (Target == null || Target == default)
+        {
+            /* Do Nothing */
+        }
+        else
+        {
+            _moveDelay = MoveDelay(1f);
+            StartCoroutine(_moveDelay);
+            //StartCoroutine(MoveDelay(1f));
+        }
+    }
+
+    public void PatrolStop()
+    {
+        StopCoroutine(_moveDelay);
+    }
+
+    /// <summary>
     /// 순찰 시 순찰 지점에 도달한 후 바로 이동하는게 아닌 잠시간에 딜레이를 주고 이동시키기 위해서 작성한 함수
     /// </summary>
     /// <param name="delay">딜레이를 줄 시간 Sec</param>
-    /// <returns></returns>
+    /// <returns</returns>
     IEnumerator MoveDelay(float delay)
     {
         // Targets.Enqueue(_target);
@@ -144,14 +189,21 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         // TargetFollow(_target);
 
         _index++;
+        Debug.Log($"Patrol Debug : Targets.Count : {Targets.Count} / currentIndex : {_index} ");
         if (Targets.Count <= _index)
         {
             _index = 0;
+            Debug.Log($"_index = 0");
         }
-        yield return new WaitForSeconds(delay);
         Target = Targets[_index];
-        TargetFollow(Target);
+        TargetFollow(Target, true);
+        yield return new WaitForSeconds(delay);
+        TargetFollow(Target, false);
     }
+
+
+
+
 
     /// <summary>
     /// 목표에 도달했는지 확인하기 위한 함수
@@ -194,6 +246,12 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         //     return false;
         // }
     }
+
+    public bool IsStopped()
+    {
+        return NavMeshAgent.isStopped;
+    }
+
 
     /// <summary>
     /// 타겟이 범위 내에 있는지 확인하는 함수 (NavMeshAgent에 RemainingDistance를 사용)
@@ -243,5 +301,19 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         {
             return true;
         }
+    }
+
+    public bool IsPositionReachable(Vector3 newPosition)
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(newPosition, out hit, 0.1f, NavMesh.AllAreas))
+        {
+            NavMeshPath path = new NavMeshPath();
+            if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, path))
+            {
+                return path.status == NavMeshPathStatus.PathComplete;
+            }
+        }
+        return false;
     }
 }
