@@ -14,6 +14,9 @@ namespace ProjectSL.Enemy
         public const string TRIGGER_THOUGHT = "Thought";
         public const string TRIGGER_SWING1 = "Swing1";
         public const string TRIGGER_SWING1_RETURN = "Swing1_Return";
+        public const string TRIGGER_SWING2 = "Swing2";
+        public const string TRIGGER_SWING2_1 = "Swing2_1";
+        public const string TRIGGER_SWING3 = "Swing3";
         public const string TRIGGER_TELEPORT = "Teleport";
         public const string ANIMATION_TELEPORT = "Teleport";
         public const string TRIGGER_SUBJUGATION = "Subjugation";

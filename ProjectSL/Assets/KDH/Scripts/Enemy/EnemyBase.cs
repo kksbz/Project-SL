@@ -34,6 +34,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     protected void Start()
     {
         Init();
+        Invoke("DropReward", 1f);
     }
 
     protected virtual void Init()
@@ -95,9 +96,42 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         }
     }
 
-    public virtual IState Thought(Transform newTarget)
+    public virtual void DropReward()
     {
-        return null;
+        Debug.Log($"DropReward Debug : {Status.name}");
+        //List<string> dropList = DataManager.Instance.dropTable[Status.name];
+        string dataKey = string.Empty;
+        string statusName = string.Empty;
+        foreach (var data in DataManager.Instance.dropTable)
+        {
+            dataKey = data.Key;
+            statusName = Status.name;
+            Debug.LogFormat("DropReward Debug : ({0}) / ({1}) | is same: {2}, length: {3}, {4}",
+            dataKey, statusName, dataKey.Equals(statusName), dataKey.Length, statusName.Length);
+
+            for (int i = 0; i < data.Value.Count - 1; i++)
+            {
+                // Debug.Log($"DropReward Debug : ({data.Key.ToString()}) / ({Status.name.ToString()}) | is same: {}");
+
+                if (data.Key.ToString() == Status.name.ToString())
+                {
+                    Debug.Log($"DropReward Debug : 키값과 일치");
+                }
+                if (data.Key.ToString() == "Sevarog")
+                {
+                    Debug.Log($"DropReward Debug : 키값과 일치 / string");
+                }
+                if (data.Key.ToString() == Status.name.ToString())
+                {
+                    Debug.Log($"{data.Value}");
+                }
+            }
+            Debug.Log("=======================================");
+        }
+        // foreach (var iterator in dropList)
+        // {
+        //     Debug.Log($"DropReward Debug : {iterator}");
+        // }
     }
 
     public virtual IState Thought()
@@ -113,6 +147,18 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public virtual int RandomAttack()
     {
         return 0;
+    }
+    public virtual void TargetLook()
+    {
+        Vector3 dir_ = Target.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(dir_);
+        transform.rotation = rotation;
+    }
+    public virtual void TargetLook(Transform newTarget)
+    {
+        Vector3 dir_ = newTarget.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(dir_);
+        transform.rotation = rotation;
     }
     public void SetAttackColliderEnabled(bool newEnabled)
     {
@@ -221,7 +267,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     }
     public bool IsPositionReachable(Vector3 newPosition)
     {
-        return MoveController.IsPositionReachable(newPosition);
+        return MoveController.IsPositionValid(newPosition);
     }
     #endregion
 

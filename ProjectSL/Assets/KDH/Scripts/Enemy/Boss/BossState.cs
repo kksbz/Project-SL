@@ -178,7 +178,8 @@ public class Boss_Thought_State : IState
         //_boss.transform.LookAt(_boss.Target);
         Vector3 dir = _boss.Target.transform.position - _boss.transform.position;
 
-        _boss.transform.rotation = Quaternion.Lerp(_boss.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5f);
+        //_boss.transform.rotation = Quaternion.Lerp(_boss.transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5f);
+        _boss.TargetLook();
     }
     public void OnAction()
     {
@@ -270,16 +271,14 @@ public class Boss_Chase_State : IState
         {
             IState thoughtState = _boss.Thought();
             Debug.Log($"판단 상태 : {thoughtState.ToString()} / 현재 상태 : {this.ToString()}");
-            switch (thoughtState)
+
+            if (!(thoughtState is Boss_Chase_State))
             {
-                case Boss_Chase_State:
-                    break;
-                default:
-                    _boss.SetStop(true);
-                    _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
-                    _boss.SetState(thoughtState);
-                    break;
+                _boss.SetStop(true);
+                _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
+                _boss.SetState(thoughtState);
             }
+
             yield return new WaitForSeconds(1f);
         }
     }

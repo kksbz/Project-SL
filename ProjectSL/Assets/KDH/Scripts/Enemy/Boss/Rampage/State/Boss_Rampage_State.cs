@@ -121,7 +121,10 @@ public class Boss_Rampage_GroundSmash_Start_State : IState
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger("Ground_Smash_Start");
 
-        Vector3 targetPos = _boss.Target.position;
+        Vector3 dir_ = (_boss.Target.position - _boss.transform.position).normalized;
+        Vector3 targetPos = _boss.Target.transform.position - dir_ * 3f;
+        //_boss.Target.TransformPoint(dir_ * 2f);
+        Debug.Log($"Ground Smash Start Debug : {targetPos}");
         _boss.Jump(targetPos, _boss.BossStatus.groundSmashMaxHeight);
     }
 
@@ -147,7 +150,7 @@ public class Boss_Rampage_GroundSmash_End_State : IState
     }
     public void OnAction()
     {
-        _boss.SetAttackColliderEnabled(true);
+        _boss.NotAttackColliderEnabled();
     }
 
     public void OnEnter()
@@ -179,6 +182,7 @@ public class Boss_Rampage_Attack_A_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled(0);
     }
 
     public void OnEnter()
@@ -208,6 +212,7 @@ public class Boss_Rampage_Attack_B_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled(1);
     }
 
     public void OnEnter()
@@ -237,8 +242,7 @@ public class Boss_Rampage_Attack_C_State : IState
     }
     public void OnAction()
     {
-
-
+        _boss.NotAttackColliderEnabled(0);
     }
 
     public void OnEnter()
@@ -297,7 +301,7 @@ public class Boss_Rampage_Dodge_Start_State : IState
     {
         yield return new WaitForSeconds(0.2f);
         Vector3 targetPos = _boss.transform.position - _boss.transform.forward * 8f;
-        targetPos.y = 0f;
+        targetPos.y = _boss.transform.position.y;
         _boss.Jump(targetPos, _boss.BossStatus.dodgeMaxHeight);
     }
 }

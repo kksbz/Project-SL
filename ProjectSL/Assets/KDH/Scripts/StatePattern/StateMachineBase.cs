@@ -30,7 +30,15 @@ public class StateMachineBase : IStateMachine
         else
         {
             OnExit();
-            PreviousState = CurrentState;
+            if (CurrentState is Boss_Thought_State || CurrentState is Enemy_Thought_State)
+            {
+                /* Do Nothing */
+            }
+            else
+            {
+                PreviousState = CurrentState;
+            }
+
             CurrentState = newState;
             OnEnter();
         }

@@ -18,6 +18,10 @@ public class Boss_Sevarog : BossBase
     [Tooltip("전멸기 기둥 Prefab")]
     public GameObject enragePillarPrefab = default;
 
+    public List<GameObject> enragePillars = default;
+
+    public List<GameObject> spawnEnemyPrefabs;
+
     // public Transform hammer;
     public Vector3 middlePos = new Vector3(-176f, 2f, 42f);
 
@@ -30,9 +34,12 @@ public class Boss_Sevarog : BossBase
 
     public override void TakeDamage(GameObject damageCauser, float damage)
     {
+        if (Status.currentHp <= 0) return;
+
         if (Status.currentHp - damage <= 0)
         {
             Status.currentHp = 0;
+            SetState(new Enemy_Die_State(this));
         }
         else
         {
@@ -40,14 +47,11 @@ public class Boss_Sevarog : BossBase
             BossStatus.hitCount++;
         }
     }
-    public override IState Thought(Transform newTarget)
-    {
-        return null;
-    }
 
     public override IState Thought()
     {
-        Debug.Log($"current Hp : {Status.currentHp} / enrageCount : {BossStatus.enrageCount} / hitCount : {BossStatus.hitCount}");
+        float randNum_ = Random.value;
+
         if (Status.currentHp <= Status.maxHp * 0.5f && BossStatus.enrageCount < 1)
         {
             BossStatus.enrageCount++;
@@ -64,6 +68,88 @@ public class Boss_Sevarog : BossBase
 
         switch (PreviousState)
         {
+            case Boss_Sevarog_Swing2_1_Attack_State:
+                if (randNum_ <= BossStatus.swing3_Percentage)
+                {
+                    //  뒤로 텔포
+                    Debug.Log($"뒤로 텔포");
+                    BossStatus.backTeleport = true;
+                    return new Boss_Sevarog_Teleport_State(this);
+                }
+                break;
+            case Boss_Sevarog_Swing1_Return_State:
+            case Boss_Sevarog_Swing3_Attack_State:
+                if (randNum_ <= BossStatus.teleport_Percentage)
+                {
+                    return new Boss_Sevarog_Teleport_State(this);
+                }
+                break;
+            case Boss_Sevarog_Teleport_State:
+                if (BossStatus.enrageCount == 1)
+                {
+                    BossStatus.enrageCount++;
+                    return new Boss_Sevarog_Enrage_State(this);
+                }
+                if (BossStatus.backTeleport)
+                {
+                    return new Boss_Sevarog_Swing3_Attack_State(this);
+                }
+                return new Boss_Sevarog_Subjugation_State(this);
+        }
+
+        // 플레이어가 근접공격 범위 안에 있을 때
+        if (IsRangedChecked(Status.attackRange))
+        {
+            Debug.Log($"플레이어가 근접공격 범위 내에 있음");
+            if (randNum_ <= BossStatus.swing1_Percentage)
+            {
+                return new Boss_Sevarog_Swing1_Attack_State(this);
+            }
+            else if (randNum_ <= BossStatus.swing2_Percentage)
+            {
+                return new Boss_Sevarog_Swing2_Attack_State(this);
+            }
+            else
+            {
+                return new Boss_Sevarog_Swing3_Attack_State(this);
+            }
+
+        }
+        else    //  플레이어가 근접공격 범위 밖에 있을 때
+        {
+            // 확률에 따라 원거리 공격 혹은 플레이어 추적
+            Debug.Log($"플레이어가 근접공격 범위 밖에 있음");
+            if (randNum_ <= BossStatus.subjugation_Percentage)
+            {
+                return new Boss_Sevarog_Subjugation_State(this);
+            }
+            else if (randNum_ <= BossStatus.enemySpawn_Percentage)
+            {
+                return new Boss_Sevarog_EnemySpawn_State(this);
+            }
+            else
+            {
+                return new Boss_Chase_State(this);
+            }
+        }
+    }
+
+    public IState PreviousStateThought(float randNum)
+    {
+        switch (PreviousState)
+        {
+            case Boss_Sevarog_Swing2_Attack_State:
+                if (randNum <= BossStatus.swing3_Percentage)
+                {
+                    //  뒤로 텔포
+                    BossStatus.backTeleport = true;
+                    return new Boss_Sevarog_Teleport_State(this);
+                }
+                else
+                {
+                    /*  Do Nothing  */
+                }
+                break;
             case Boss_Sevarog_Teleport_State:
                 if (BossStatus.enrageCount == 1)
                 {
@@ -73,32 +159,53 @@ public class Boss_Sevarog : BossBase
                 return new Boss_Sevarog_Subjugation_State(this);
         }
 
-        // 플레이어가 근접공격 범위 안에 있을 때
-        if (IsRangedChecked(Status.attackRange))
-        {
-            Debug.Log($"플레이어가 근접공격 범위 내에 있음 Swing1Attack State로 전환");
-            return new Boss_Sevarog_Swing1Attack_State(this);
-        }
-        else    //  플레이어가 근접공격 범위 밖에 있을 때
-        {
-            //  조건에 따라 원거리 공격 혹은 플레이어 추적
-            Debug.Log($"플레이어가 근접공격 범위 밖에 있음 Chase State로 전환");
-            return new Boss_Chase_State(this);
-        }
+        return null;
     }
 
     #region Pattern
     public void Teleport()
     {
+        if (BossStatus.backTeleport)
+        {
+            //  타겟에 뒤로 텔레포트
+            BossStatus.backTeleport = false;
+            Vector3 targetBackPos_ = Target.TransformPoint(-Target.forward * 3f);
+            Debug.Log($"뒤로 텔레포트 : {targetBackPos_}");
+            Warp(targetBackPos_);
+
+            TargetLook();
+
+            return;
+        }
+
         if (BossStatus.enrageCount == 1)
         {
             Warp(middlePos);
+            TargetLook();
         }
         else
         {
             BossStatus.hitCount = 0;
             Warp();
+            TargetLook();
         }
+    }
+
+
+    public void EnemySpawn()
+    {
+        float distance_ = 1.0f;
+
+        Vector3 objectPos = transform.position;
+        Vector3 objectRight = transform.right;
+
+        Vector3 leftOffset = -distance_ * objectRight;
+        Vector3 rightOffset = distance_ * objectRight;
+        Vector3 leftCoord = transform.TransformPoint(leftOffset);
+        Vector3 rightCoord = transform.TransformPoint(rightOffset);
+
+        Instantiate(spawnEnemyPrefabs[0], leftCoord, Quaternion.identity);
+        Instantiate(spawnEnemyPrefabs[1], rightCoord, Quaternion.identity);
     }
 
     public void SubjugationPattern()
