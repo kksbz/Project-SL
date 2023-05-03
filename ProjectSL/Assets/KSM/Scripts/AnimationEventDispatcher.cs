@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,7 +31,23 @@ public class AnimationEventDispatcher : MonoBehaviour
         for(int i = 0; i < animOV.animationClips.Length; i++)
         {
             AnimationClip clip = animOV.animationClips[i];
+            
             if(clip == null)
+            {
+                continue;
+            }
+            AddStartAnimationEvent(clip);
+            AddEndAnimationEvent(clip);
+            Debug.Log($"Add Animation Event, clip is {clip.name}");
+        }
+    }
+
+    public void AddAnimationStartEndByAnimOV(AnimatorController animOV)
+    {
+        for (int i = 0; i < animOV.animationClips.Length; i++)
+        {
+            AnimationClip clip = animOV.animationClips[i];
+            if (clip == null)
             {
                 continue;
             }
@@ -53,7 +70,8 @@ public class AnimationEventDispatcher : MonoBehaviour
     public void AddEndAnimationEvent(AnimationClip clip)
     {
         AnimationEvent animationEndEvent = new AnimationEvent();
-        animationEndEvent.time = clip.length;
+        animationEndEvent.time = clip.length - 0.01f;
+        Debug.Log($"clip length : {clip.length}, AnimationEndEventTime = {animationEndEvent.time}");
         animationEndEvent.functionName = "AnimationEndHandler";
         animationEndEvent.stringParameter = clip.name;
 
@@ -63,12 +81,12 @@ public class AnimationEventDispatcher : MonoBehaviour
 
     public void AnimationStartHandler(string name)
     {
-        //Debug.Log($"{name} animation start.");
+        Debug.Log($"{name} animation start.");
         onAnimationStart?.Invoke(name);
     }
     public void AnimationEndHandler(string name)
     {
-        //Debug.Log($"{name} animation end");
+        Debug.Log($"{name} animation end");
         onAnimationEnd?.Invoke(name);
     }
 }

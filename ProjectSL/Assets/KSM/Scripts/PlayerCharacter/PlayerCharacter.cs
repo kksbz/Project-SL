@@ -17,10 +17,14 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     // Status Field
     private HealthSystem _healthSystem = new HealthSystem();
     private PlayerStatus _status = new PlayerStatus();
+    private CombatStatus _combatStatus = new CombatStatus();
 
     private PlayerStateMachine _stateMachine;
 
     public PlayerStateMachine StateMachine { get { return _stateMachine; } }
+    public HealthSystem HealthSys { get { return _healthSystem; } }
+    public PlayerStatus PlayerStat { get { return _status; } }
+    public CombatStatus CombatStat { get { return _combatStatus; } }
 
     public BehaviorStateMachine SM_Behavior { get; private set; }
     public LookStateMachine SM_Look { get; private set; }

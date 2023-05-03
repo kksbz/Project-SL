@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class AnimationController : MonoBehaviour
@@ -11,11 +12,14 @@ public class AnimationController : MonoBehaviour
 
     private CharacterControlProperty controlProperty;
 
-    [Header("Equipment Parts Animator")]
+    // 임시로 기본 애니메이터 컨트롤러 캐싱해두고 사용하기 * 임시 아닐수도 있음
     [SerializeField]
-    Animator _headAnimator;
+    private RuntimeAnimatorController _defaultAnimatorController;
+
     [SerializeField]
-    Animator _torsoAnimator;
+    private RuntimeAnimatorController _currentAnimatorController;
+
+    public RuntimeAnimatorController DefaultAnimatorController { get { return _defaultAnimatorController; } }
 
     private float speed;
     private float axisX;
@@ -50,12 +54,17 @@ public class AnimationController : MonoBehaviour
 
     private void Awake()
     {
+        GameObject meshObj = gameObject.FindChildObj("Mesh");
+        animator = meshObj.GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
+
     }
     // Start is called before the first frame update
     void Start()
     {
         controlProperty = playerController.controlProperty;
+        _defaultAnimatorController = animator.runtimeAnimatorController as AnimatorController;
+        _currentAnimatorController = _defaultAnimatorController;
         // animator.
         //_torsoAnimator.runtimeAnimatorController = animator.runtimeAnimatorController;
     }
@@ -75,5 +84,14 @@ public class AnimationController : MonoBehaviour
     public void SetWeight(int layerIndex, float weight)
     {
         animator.SetLayerWeight(layerIndex, weight);
+    }
+    public void InitializeAnimController()
+    {
+        animator.runtimeAnimatorController = _currentAnimatorController;
+    }
+    public void SetAnimatorControllerState(RuntimeAnimatorController newAnimController)
+    {
+        _currentAnimatorController = newAnimController;
+        animator.runtimeAnimatorController = newAnimController;
     }
 }

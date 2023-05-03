@@ -19,12 +19,12 @@ public class PlayerStatus
     {
         _name = string.Empty;
         _level = 1;
-        _vigor = 1;
-        _attunement = 1;
-        _endurance = 1;
-        _vitality = 1;
-        _strength = 1;
-        _dexterity = 1;
+        _vigor = 10;
+        _attunement = 10;
+        _endurance = 10;
+        _vitality = 10;
+        _strength = 10;
+        _dexterity = 10;
     }
     // property
     public string Name { get { return _name; } set { _name = value; } }

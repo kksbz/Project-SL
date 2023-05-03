@@ -20,6 +20,8 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     private Animator _animator;
     [SerializeField]
+    private AnimationController _animationController;
+    [SerializeField]
     private CombatController _combatController;
     
 
@@ -121,7 +123,7 @@ public class EquipmentController : MonoBehaviour
     #region Override Controller
 
     [SerializeField]
-    private AnimatorController _default_AnimController;
+    private RuntimeAnimatorController _default_AnimController;
     // private AnimatorController _default_AnimOV;
     public AnimatorOverrideController _SSH_2H_AnimOV;
     #endregion  // Override Controller
@@ -149,6 +151,7 @@ public class EquipmentController : MonoBehaviour
         GameObject meshObj = gameObject.FindChildObj("Mesh");
         _animator = meshObj.GetComponent<Animator>();
         _combatController = GetComponent<CombatController>();
+        _animationController = GetComponent<AnimationController>();
 
         //_helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
         //_chestModelChanger = GetComponentInChildren<ChestModelChanger>();
@@ -211,25 +214,6 @@ public class EquipmentController : MonoBehaviour
         
     }
 
-    void EquipAllEquipmentModelOnStart()
-    {
-        _helmetModelChanger.UnEquipAllHelmetModels();
-        _chestModelChanger.UnEquipAllChestModels();
-        _gloveModelChanger.UnEquipAllGloveModels();
-        _pantModelChanger.UnEquipAllPantModels();
-
-        _helmetModelChanger.EquipHelmetModelByName("Helmet_01");
-        _chestModelChanger.EquipChestModelByName("Chest_01");
-        _gloveModelChanger.EquipGloveModelByName("Glove_01");
-        _pantModelChanger.EquipPantModelByName("Pant_01");
-    }
-
-    void TempEquip()
-    {
-        Debug.LogWarning("TempEquip");
-        _mannequinMesh.sharedMesh = _chestMesh.sharedMesh;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -266,7 +250,8 @@ public class EquipmentController : MonoBehaviour
         if (_currentArmState == EArmState.OneHanded)
         {
             _currentArmState = EArmState.TwoHanded;
-            _animator.runtimeAnimatorController = _SSH_2H_AnimOV;
+            RuntimeAnimatorController nextAnimatorController = _SSH_2H_AnimOV; ;
+            _animationController.SetAnimatorControllerState(_SSH_2H_AnimOV);
             // AttachWeaponObj(_defaultLeftShieldPrefab.transform, _backLWSocket);
             if (_currentLeftArmWeapon != null)
             {
@@ -276,7 +261,8 @@ public class EquipmentController : MonoBehaviour
         else if (_currentArmState == EArmState.TwoHanded)
         {
             _currentArmState = EArmState.OneHanded;
-            _animator.runtimeAnimatorController = _default_AnimController;
+            RuntimeAnimatorController nextAnimatorController = _animationController.DefaultAnimatorController; ;
+            _animationController.SetAnimatorControllerState(nextAnimatorController);
             // AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
             if (_currentLeftArmWeapon != null)
             {
