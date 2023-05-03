@@ -169,22 +169,28 @@ public class Boss_Sevarog : BossBase
         {
             //  타겟에 뒤로 텔레포트
             BossStatus.backTeleport = false;
-            Vector3 targetBackPos_ = Target.TransformPoint(-Target.forward);
+            Vector3 targetBackPos_ = Target.TransformPoint(-Target.forward * 3f);
             Debug.Log($"뒤로 텔레포트 : {targetBackPos_}");
             Warp(targetBackPos_);
+
+            TargetLook();
+
             return;
         }
 
         if (BossStatus.enrageCount == 1)
         {
             Warp(middlePos);
+            TargetLook();
         }
         else
         {
             BossStatus.hitCount = 0;
             Warp();
+            TargetLook();
         }
     }
+
 
     public void EnemySpawn()
     {

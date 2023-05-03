@@ -73,4 +73,9 @@ public class Enemy_Bear : EnemyBase
                 break;
         }
     }
+
+    public override void DropReward()
+    {
+        base.DropReward();
+    }
 }

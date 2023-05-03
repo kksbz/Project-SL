@@ -41,6 +41,8 @@ public class Boss_Rampage : BossBase
 
     public IState Phase_1_Thought()
     {
+        return new Boss_Rampage_GroundSmash_Start_State(this);
+
         float randNum = Random.value;
 
         switch (PreviousState)
@@ -210,6 +212,7 @@ public class Boss_Rampage : BossBase
     public bool MoveCompleteCheck(float newDistance)
     {
         float distance_ = Vector3.Distance(transform.position, targetPos);
+        Debug.Log($"distance : {distance_} / {targetPos}");
         if (distance_ <= newDistance)
         {
             return true;
