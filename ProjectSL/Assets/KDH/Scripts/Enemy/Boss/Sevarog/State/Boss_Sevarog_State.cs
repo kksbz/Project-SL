@@ -89,6 +89,7 @@ public class Boss_Sevarog_Swing2_Attack_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled();
     }
 }
 
@@ -117,6 +118,7 @@ public class Boss_Sevarog_Swing2_1_Attack_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled();
     }
 }
 public class Boss_Sevarog_Swing3_Attack_State : IState
@@ -145,6 +147,7 @@ public class Boss_Sevarog_Swing3_Attack_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled();
     }
 }
 

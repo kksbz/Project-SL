@@ -50,8 +50,6 @@ public class Boss_Sevarog : BossBase
 
     public override IState Thought()
     {
-        return new Boss_Sevarog_EnemySpawn_State(this);
-
         float randNum_ = Random.value;
 
         if (Status.currentHp <= Status.maxHp * 0.5f && BossStatus.enrageCount < 1)

@@ -147,7 +147,7 @@ public class Boss_Rampage_GroundSmash_End_State : IState
     }
     public void OnAction()
     {
-        _boss.SetAttackColliderEnabled(true);
+        _boss.NotAttackColliderEnabled();
     }
 
     public void OnEnter()
@@ -179,6 +179,7 @@ public class Boss_Rampage_Attack_A_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled(0);
     }
 
     public void OnEnter()
@@ -208,6 +209,7 @@ public class Boss_Rampage_Attack_B_State : IState
     }
     public void OnAction()
     {
+        _boss.NotAttackColliderEnabled(1);
     }
 
     public void OnEnter()
@@ -237,8 +239,7 @@ public class Boss_Rampage_Attack_C_State : IState
     }
     public void OnAction()
     {
-
-
+        _boss.NotAttackColliderEnabled(0);
     }
 
     public void OnEnter()
