@@ -11,6 +11,7 @@ public class CombatController : MonoBehaviour
     private PlayerController _playerController;
     private EquipmentController _equipmentController;
     private CharacterControlProperty _controlProperty;
+    private AnimationController _animationController;
     private AnimationEventDispatcher _animEventDispatcher;
 
     #region Attack Field
@@ -81,10 +82,6 @@ public class CombatController : MonoBehaviour
 
     private bool _isPlayingRMAnimation = false;
 
-    // 임시 버그픽스
-    [SerializeField]
-    private AnimatorController _currentAnimatorController;
-
     private void Awake()
     {
         // GameObject
@@ -93,10 +90,9 @@ public class CombatController : MonoBehaviour
         // Component Init
         _playerCharacter = GetComponent<PlayerCharacter>();
         _playerController = GetComponent<PlayerController>();
+        _animationController = GetComponent<AnimationController>();
         _equipmentController = GetComponent<EquipmentController>();
         _animator = meshObj.GetComponent<Animator>();
-
-        _currentAnimatorController = _animator.runtimeAnimatorController as AnimatorController;
 
         // Legacy
         playerObjTR = gameObject.transform;
@@ -131,20 +127,12 @@ public class CombatController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning($"_isAttacking : {_isAttacking}");
-        /*
-        if(Input.GetButtonDown("Fire1"))
-        {
-            Attack();
-        }
-        NextAttackCheck();
-        ExitAttack();
-        */
+        
     }
 
     private void FixedUpdate()
     {
-        // RootMotionRepositioning();
+        
     }
 
     #region Attack
@@ -174,10 +162,6 @@ public class CombatController : MonoBehaviour
         {
             if (_currentCombo != 0)
                 return;
-
-            // 임시
-            _currentAnimatorController = _animator.runtimeAnimatorController as AnimatorController;
-            //
 
             AttackStartComboState();
             AttackAnimationPlay();
@@ -492,20 +476,7 @@ public class CombatController : MonoBehaviour
         ExitAttack();
         DodgeEndState();
         HitEndState();
-        _animator.runtimeAnimatorController = _currentAnimatorController;
-    }
-    public void SetAnimatorControllerState(AnimatorController controller)
-    {
-        _animator.runtimeAnimatorController = controller;
-        _currentAnimatorController = controller;
-    }
-    public void SetAnimatorController(AnimatorController controller)
-    {
-        _animator.runtimeAnimatorController = controller;
-    }
-    public void ResetAnimatorController()
-    {
-        _animator.runtimeAnimatorController = _currentAnimatorController;
+        _animationController.InitializeAnimController();
     }
     public void RootMotionRepositioning(string name)
     {
