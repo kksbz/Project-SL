@@ -113,7 +113,7 @@ TextureImporter:
         width: 614
         height: 669
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -134,7 +134,7 @@ TextureImporter:
         width: 212
         height: 252
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -155,7 +155,7 @@ TextureImporter:
         width: 522
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,6 +163,27 @@ TextureImporter:
       bones: []
       spriteID: 172ac40496b05c84482b0fd1108d5dd3
       internalID: -1643657279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_ShopBase_Slot2
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 22
+        width: 102
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53e8def3998596841a1d8d87e3fdd7a4
+      internalID: 2000396203
       vertices: []
       indices: 
       edges: []
@@ -181,6 +202,7 @@ TextureImporter:
       MENU_ShopBase_0: 1055793348
       MENU_ShopBase_Line: -1643657279
       MENU_ShopBase_Slot: -21096684
+      MENU_ShopBase_Slot2: 2000396203
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

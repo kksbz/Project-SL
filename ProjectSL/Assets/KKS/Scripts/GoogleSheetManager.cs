@@ -12,6 +12,8 @@ public class GoogleSheetManager
     const string EXPERIENCEDATA_URL = "https://docs.google.com/spreadsheets/d/1fc7zvkSFdMGstxoSrExcC7ZaMutmBfqONeRNgoNVqW8/export?format=csv&range=A2:C&gid=1728483937";
     // 드랍 테이블 주소
     const string DROPTABLEDATA_URL = "https://docs.google.com/spreadsheets/d/1fc7zvkSFdMGstxoSrExcC7ZaMutmBfqONeRNgoNVqW8/export?format=csv&range=A2:H&gid=1955775546";
+    // 스테이터스 레벨 테이블 주소
+    const string STATUSLEVELDATA_URL = "https://docs.google.com/spreadsheets/d/1fc7zvkSFdMGstxoSrExcC7ZaMutmBfqONeRNgoNVqW8/export?format=csv&range=A2:H&gid=1873222712";
 
     //! 구글시트에 담긴 아이템정보를 URL로 가져오는 함수
     public static IEnumerator InitItemData()
@@ -62,20 +64,39 @@ public class GoogleSheetManager
         {
             string key = dropData[0];
             List<string> value = new List<string>();
-            for (int i = 1; i < dropData.Length; i++)
+            for (int i = 1; i < dropData.Length - 1; i++)
             {
                 value.Add(dropData[i]);
             }
             dropTableDic.Add(key, value);
         }
         DataManager.Instance.dropTable = dropTableDic;
-        foreach (var data in DataManager.Instance.dropTable)
-        {
-            for (int i = 0; i < data.Value.Count - 1; i++)
-            {
-                Debug.Log($"{data.Key} 의 드랍템 : {data.Value[i]}");
-            }
-            Debug.Log("=======================================");
-        }
+        //foreach (var data in DataManager.Instance.dropTable)
+        //{
+        //    for (int i = 0; i < data.Value.Count; i++)
+        //    {
+        //        Debug.Log($"{data.Key} 의 드랍템 : {data.Value[i]}");
+        //    }
+        //    Debug.Log("=======================================");
+        //}
     } // InitDropTableData
+
+    //! 구글시트에 담긴 스테이터스 레벨 테이블 정보를 URL로 가져오는 함수
+    public static IEnumerator InitStatusPerLevelData()
+    {
+        UnityWebRequest wwwStatusDatas = UnityWebRequest.Get(STATUSLEVELDATA_URL);
+        yield return wwwStatusDatas.SendWebRequest();
+        string statusTable = wwwStatusDatas.downloadHandler.text;
+        List<string[]> statusTableData = CSVReader.CSVRead(statusTable);
+
+        Dictionary<int, StatusLevelData> statusLevelData = new Dictionary<int, StatusLevelData>();
+        foreach (var data in statusTableData)
+        {
+            int key = int.Parse(data[0]);
+            StatusLevelData value = new StatusLevelData(data);
+            statusLevelData.Add(key, value);
+            //Debug.Log($"스텟레벨테이블 키값 : {key}, 벨류값: {value.damageMultiplier}");
+        }
+        DataManager.Instance.statusLevelData = statusLevelData;
+    } // InitStatusPerLevelData
 } // GoogleSheetManager

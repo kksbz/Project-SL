@@ -69,6 +69,13 @@ public class GameManager : Singleton<GameManager>
         Debug.Log($"씬로드 끝");
         yield return new WaitForSeconds(3f);
         GameManager.Instance.player.PlayerNameSelect(DataManager.Instance.selectPlayerName);
+        // 뉴게임 시작시 에스트병과 잿빛 에스트병 가지고 시작
+        ItemData hpPotion = new ItemData(DataManager.Instance.itemDatas[0]);
+        hpPotion.Quantity = hpPotion.maxQuantity;
+        ItemData mpPotion = new ItemData(DataManager.Instance.itemDatas[1]);
+        mpPotion.Quantity = mpPotion.maxQuantity;
+        Inventory.Instance.AddItem(hpPotion);
+        Inventory.Instance.AddItem(mpPotion);
         DataManager.Instance.slotNum = num;
         DataManager.Instance.SaveData();
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();

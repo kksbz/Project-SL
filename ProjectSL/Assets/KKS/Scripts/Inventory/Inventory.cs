@@ -60,7 +60,7 @@ public class Inventory : Singleton<Inventory>
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            UiManager.Instance.soulBag.GetSoul(500);
+            UiManager.Instance.soulBag.GetSoul(5000);
         }
         if (Input.GetKeyDown(KeyCode.L))
         {

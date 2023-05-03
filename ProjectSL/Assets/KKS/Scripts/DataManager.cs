@@ -10,6 +10,7 @@ public class DataManager : Singleton<DataManager>
     public List<string[]> itemDatas = new List<string[]>(); // 아이템 데이터 리스트
     public Dictionary<int, int> experienceDatas = new Dictionary<int, int>(); // 경험치 테이블
     public Dictionary<string, List<string>> dropTable = new Dictionary<string, List<string>>(); // 아이템 드랍 테이블
+    public Dictionary<int, StatusLevelData> statusLevelData = new Dictionary<int, StatusLevelData>(); // 스텟 레벨당 데이터 테이블
     private string path; // 데이터 저장 경로
     public int slotNum; // 세이브 슬롯 넘버
     public bool[] hasSavefile; // 세이브 슬롯의 데이터 존재 유무
@@ -29,6 +30,7 @@ public class DataManager : Singleton<DataManager>
         StartCoroutine(GoogleSheetManager.InitItemData());
         StartCoroutine(GoogleSheetManager.InitExperienceData());
         StartCoroutine(GoogleSheetManager.InitDropTableData());
+        StartCoroutine(GoogleSheetManager.InitStatusPerLevelData());
         hasSavefile = new bool[4];
         RenewalSavefile();
     } // InitManager

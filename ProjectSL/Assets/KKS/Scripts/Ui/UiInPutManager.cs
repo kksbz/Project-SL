@@ -37,6 +37,10 @@ public class UiInPutManager : Singleton<UiInPutManager>
                     UiManager.Instance.optionPanel.gameObject.SetActive(false);
                 }
             }
+            else if (UiManager.Instance.levelUpPanel.activeInHierarchy == true)
+            {
+                UiManager.Instance.levelUpPanel.SetActive(false);
+            }
             else
             {
                 UiManager.Instance.quickBar.SetActive(!UiManager.Instance.quickBar.activeSelf);

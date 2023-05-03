@@ -31,6 +31,9 @@ public class LevelUpPanel : MonoBehaviour
 
     [SerializeField] private GameObject warningPanel; // 경고창
     [SerializeField] private TMP_Text warningText; // 경고창 텍스트
+    [SerializeField] private GameObject selectPanel; // NPC대화 선택 패널
+    [SerializeField] private GameObject levelUpPanel; // 레벨업 패널
+    [SerializeField] private GameObject potionUpPanel; // 포션강화 패널
     private string pWarningMessage = "레벨업에 필요한 소울이 부족합니다";
     private string mWarningMessage = "현재 레벨 미만으로 감소할수없습니다";
     private int[] playerStatus; // 플레이어 현재스텟 배열
@@ -111,6 +114,14 @@ public class LevelUpPanel : MonoBehaviour
         // 활성화될 때 플레이어의 현재스텟 가져옴
         GetPlayerStatus();
     } // OnEnable
+
+    private void OnDisable()
+    {
+        potionUpPanel.SetActive(false);
+        levelUpPanel.SetActive(false);
+        selectPanel.SetActive(true);
+        gameObject.SetActive(false);
+    } // OnDisable
 
     private void Update()
     {
