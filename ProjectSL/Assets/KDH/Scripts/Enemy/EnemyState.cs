@@ -40,6 +40,7 @@ public class Enemy_Idle_State : IState
 public class Enemy_Thought_State : IState
 {
     private EnemyBase _enemy;
+    private IEnumerator _coroutine;
     public Enemy_Thought_State(EnemyBase newEnemy)
     {
         _enemy = newEnemy;
@@ -49,16 +50,30 @@ public class Enemy_Thought_State : IState
     {
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        _enemy.StartCoroutine(Thought(0.1f));
+        _enemy.StartCoroutine(Thought(0.2f));
+
+        if (_enemy.MoveController.PatrolPoints.Count <= 1)
+        {
+            _coroutine = _enemy.FieldOfViewSearch(0.2f);
+            _enemy.StartCoroutine(_coroutine);
+        }
+
     }
 
     public void OnExit()
     {
+        if (_enemy.MoveController.PatrolPoints.Count <= 1)
+        {
+            _enemy.StopCoroutine(_coroutine);
+        }
     }
 
     public void Update()
     {
-        //_enemy.transform.LookAt(_enemy.Target);
+        if (_enemy.IsFieldOfViewFind() && _enemy.MoveController.PatrolPoints.Count <= 1)
+        {
+            Thought();
+        }
     }
     public void OnAction()
     {
@@ -69,12 +84,16 @@ public class Enemy_Thought_State : IState
     {
         yield return new WaitForSeconds(delay);
 
+        Thought();
+    }
+
+    void Thought()
+    {
         IState newState_ = _enemy.Thought();
 
         if (newState_ == null || newState_ == default)
         {
-            _enemy.SetState(new Enemy_Thought_State(_enemy));
-            yield break;
+            return;
         }
 
         _enemy.SetState(newState_);
@@ -87,7 +106,7 @@ public class Enemy_Thought_State : IState
 public class Enemy_Patrol_State : IState
 {
     private EnemyBase _enemy;
-    private IEnumerator coroutine;
+    private IEnumerator _coroutine;
     public Enemy_Patrol_State(EnemyBase newEnemy)
     {
         _enemy = newEnemy;
@@ -103,29 +122,42 @@ public class Enemy_Patrol_State : IState
         _enemy.Patrol();
         _enemy.StartCoroutine(MoveDelay());
 
-        coroutine = _enemy.FieldOfViewSearch(0.2f);
+        _coroutine = _enemy.FieldOfViewSearch(0.2f);
 
-        _enemy.StartCoroutine(coroutine);
+        _enemy.StartCoroutine(_coroutine);
     }
 
     public void OnExit()
     {
-        _enemy.StopCoroutine(coroutine);
+        _enemy.StopCoroutine(_coroutine);
         //_enemy.PatrolStop();
     }
 
     public void Update()
     {
-        //  순찰 지점에 도달했거나, 플레이어를 발견했다면
-        if (_enemy.IsArrive(0.2f) || _enemy.IsFieldOfViewFind())
+        // //  순찰 포인트가 1개 이하라면
+        // if (_enemy.MoveController.PatrolPoints.Count <= 1)
+        // {
+        //     // 플레이어를 발견했다면
+        //     if (_enemy.IsFieldOfViewFind())
+        //     {
+
+        //         _enemy.SetState(new Enemy_Thought_State(_enemy));
+        //     }
+        // }
+        // else
+        // {
+        //     //  순찰 지점에 도달했거나, 플레이어를 발견했다면
+        //     if (_enemy.IsArrive(0.2f) || _enemy.IsFieldOfViewFind())
+        //     {
+        //         _enemy.SetState(new Enemy_Thought_State(_enemy));
+        //     }
+        // }
+        //  순찰 지점에 도달했거나, 타겟을 발견했다면
+        if (_enemy.IsArrivePatrol(0.2f) || _enemy.IsFieldOfViewFind())
         {
             _enemy.SetState(new Enemy_Thought_State(_enemy));
         }
-        // if (_enemy.IsFieldOfViewFind())
-        // {
-        //     _enemy.SetState(new Enemy_Thought_State(_enemy));
-        //     Debug.Log($"적 찾음");
-        // }
     }
     public void OnAction()
     {
@@ -179,21 +211,17 @@ public class Enemy_Chase_State : IState
 
     public void OnExit()
     {
-
+        _enemy.SetStop(true);
     }
 
     public void Update()
     {
         _enemy.TargetFollow(_target);
-        //  플레이어를 놓쳤거나, 플레이어가 공격 범위 내로 들어온다면
-        if (_enemy.IsMissed(_enemy.Status.detectionRange) || _enemy.IsArrive(_enemy.Status.attackRange))
+
+        if (!_enemy.IsInRange(_enemy.Status.detectionRange) || _enemy.IsInRange(_enemy.Status.attackRange))
         {
             _enemy.SetState(new Enemy_Thought_State(_enemy));
         }
-        // if (_enemy.IsArrive(_enemy.Status.attackRange))
-        // {
-        //     _enemy.SetState(new Enemy_Thought_State(_enemy));
-        // }
     }
     public void OnAction()
     {

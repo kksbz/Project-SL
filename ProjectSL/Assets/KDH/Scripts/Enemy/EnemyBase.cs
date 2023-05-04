@@ -14,6 +14,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     protected IEnemyMoveController moveController = default;
     protected IEnemyAnimator enemyAnimator = default;
     protected IEnemyTargetResearch targetResearch = default;
+    protected IEnemyHpBar enemyHpBar = default;
 
     [Tooltip("공격시 활성화 될 공격 범위 콜라이더")]
     [SerializeField]
@@ -26,10 +27,13 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public IEnemyMoveController MoveController { get { return moveController; } protected set { moveController = value; } }
     public IEnemyAnimator EnemyAnimator { get { return enemyAnimator; } protected set { enemyAnimator = value; } }
     public IEnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
-    public List<Transform> PatrolTargets { get { return MoveController.Targets; } }
+    public IEnemyHpBar EnemyHpBar { get { return enemyHpBar; } protected set { enemyHpBar = value; } }
+    public List<Transform> PatrolPoints { get { return MoveController.PatrolPoints; } }
     public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
     public List<Collider> AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
     #endregion
+
+    public string currentState;
 
     protected void Start()
     {
@@ -44,6 +48,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         TryGetComponent<IEnemyMoveController>(out moveController);
         TryGetComponent<IEnemyTargetResearch>(out targetResearch);
         TryGetComponent<IEnemyAnimator>(out enemyAnimator);
+        TryGetComponent<IEnemyHpBar>(out enemyHpBar);
 
         MoveController.Init();
         SetSpeed(Status.currentMoveSpeed);
@@ -52,12 +57,19 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
         TargetResearch.Init(ResearchStatus, new FieldOfView(transform, ResearchStatus));
 
+        if (EnemyHpBar != null && EnemyHpBar != default)
+        {
+            EnemyHpBar.Init();
+            InitHpBar(Status.maxHp, Status.currentHp);
+        }
+
         //SetState(new Enemy_Idle_State(this));
     }
 
     protected void Update()
     {
         StateMachine.Update();
+        currentState = CurrentState.ToString();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -94,50 +106,28 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
             Status.currentHp -= damage;
             SetState(new Enemy_Hit_State(this));
         }
+        UpdateHpBar(Status.currentHp);
     }
 
     public virtual void DropReward()
     {
-        Debug.Log($"DropReward Debug : {Status.name}");
-        //List<string> dropList = DataManager.Instance.dropTable[Status.name];
-        string dataKey = string.Empty;
-        string statusName = string.Empty;
-        foreach (var data in DataManager.Instance.dropTable)
-        {
-            dataKey = data.Key;
-            statusName = Status.name;
-            Debug.LogFormat("DropReward Debug : ({0}) / ({1}) | is same: {2}, length: {3}, {4}",
-            dataKey, statusName, dataKey.Equals(statusName), dataKey.Length, statusName.Length);
 
-            for (int i = 0; i < data.Value.Count - 1; i++)
-            {
-                // Debug.Log($"DropReward Debug : ({data.Key.ToString()}) / ({Status.name.ToString()}) | is same: {}");
-
-                if (data.Key.ToString() == Status.name.ToString())
-                {
-                    Debug.Log($"DropReward Debug : 키값과 일치");
-                }
-                if (data.Key.ToString() == "Sevarog")
-                {
-                    Debug.Log($"DropReward Debug : 키값과 일치 / string");
-                }
-                if (data.Key.ToString() == Status.name.ToString())
-                {
-                    Debug.Log($"{data.Value}");
-                }
-            }
-            Debug.Log("=======================================");
-        }
-        // foreach (var iterator in dropList)
-        // {
-        //     Debug.Log($"DropReward Debug : {iterator}");
-        // }
     }
 
     public virtual IState Thought()
     {
         return null;
     }
+    #region EnemyHpBar
+    public void InitHpBar(float maxHp, float currentHp)
+    {
+        EnemyHpBar.InitHpBar(maxHp, currentHp);
+    }
+    public void UpdateHpBar(float newHp)
+    {
+        EnemyHpBar.UpdateHpBar(newHp);
+    }
+    #endregion
 
     #region AttackCollider
     public virtual void Attack(string CurrentAnimationName, int onActionIndex)
@@ -249,21 +239,13 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         return MoveController.IsArrive(distance);
     }
-    public bool IsMissed(float distance)
+    public bool IsArrivePatrol(float distance)
     {
-        return MoveController.IsMissed(distance);
+        return MoveController.IsArrivePatrol(distance);
     }
-    public bool IsStopped()
+    public bool IsInRange(float distance)
     {
-        return MoveController.IsStopped();
-    }
-    public bool IsNavMeshRangeChecked(float ranged)
-    {
-        return MoveController.IsNavMeshRangeChecked(ranged);
-    }
-    public bool IsRangedChecked(float ranged)
-    {
-        return MoveController.IsRangeChecked(ranged);
+        return MoveController.IsInRange(distance);
     }
     public bool IsPositionReachable(Vector3 newPosition)
     {

@@ -12,7 +12,7 @@ public class Boss_Sevarog_Swing1_Attack_State : IState
     }
     public void OnEnter()
     {
-        _boss.SetStop(true);
+        //_boss.SetStop(true);
 
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SWING1);
@@ -264,7 +264,7 @@ public class Boss_Sevarog_EnemySpawn_State : IState
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SUBJUGATION);
 
-        _boss.EnemySpawn();
+        _boss.StartCoroutine(SpawnDelay());
     }
 
     public void OnExit()
@@ -280,5 +280,11 @@ public class Boss_Sevarog_EnemySpawn_State : IState
     }
     public void OnAction()
     {
+    }
+
+    IEnumerator SpawnDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+        _boss.EnemySpawn();
     }
 }

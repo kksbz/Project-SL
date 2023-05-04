@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public interface IEnemyMoveController : GData.IInitialize
 {
     NavMeshAgent NavMeshAgent { get; }
-    List<Transform> Targets { get; }
+    List<Transform> PatrolPoints { get; }
     Transform Target { get; }
     void SetSpeed(float newSpeed);
     void SetStop(bool isStopped);
@@ -19,11 +19,10 @@ public interface IEnemyMoveController : GData.IInitialize
     void TargetFollow(Vector3 newPosition, bool isFollow);
     void Warp();
     void Warp(Vector3 newPos);
-    bool IsArrive(float distance);
-    bool IsMissed(float distance);
-    bool IsStopped();
-    bool IsNavMeshRangeChecked(float ranged);
-    bool IsRangeChecked(float ranged);
+    bool IsArrive(float ranged);
+    bool IsArrivePatrol(float ranged);
+    bool IsInRange(float ranged);
+
     bool IsPositionValid(Vector3 newPosition);
 }
 
@@ -39,9 +38,10 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// 순찰 지점 List
     /// </summary>
     /// <value></value>
-    public List<Transform> Targets { get; private set; }
+    public List<Transform> PatrolPoints { get; private set; }
     public Transform Target { get; private set; }
-    public Transform[] targets;
+    [Header("순찰 포인트")]
+    public List<Transform> patrolPointsInspector;
 
     /// <summary>
     /// 초기화 함수
@@ -49,20 +49,21 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     public void Init()
     {
         TryGetComponent<NavMeshAgent>(out _navMeshAgent);
-        Targets = new List<Transform>();
+        PatrolPoints = new List<Transform>();
         _index = 0;
-        foreach (var element in targets)
+        if (patrolPointsInspector.IsValidCollection())
         {
-            Targets.Add(element);
-        }
-        if (Targets.IsValidCollection())
-        {
-            Target = Targets[_index];
+            foreach (var element in patrolPointsInspector)
+            {
+                PatrolPoints.Add(element);
+            }
         }
         else
         {
-            Target = transform;
+            PatrolPoints.Add(transform);
         }
+
+        Target = PatrolPoints[_index];
 
         //_moveDelay = MoveDelay(1f);
     }
@@ -74,7 +75,6 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
 
     public void SetStop(bool isStopped)
     {
-        Debug.Log($"NavMeshAgent isStopped : {NavMeshAgent.isStopped}");
         NavMeshAgent.isStopped = isStopped;
     }
 
@@ -82,6 +82,8 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     {
         NavMeshAgent.updateRotation = isRotation;
     }
+
+
 
     /// <summary>
     /// 지정된 대상을 향해서 NavMeshAgent를 사용해서 이동하는 함수
@@ -209,118 +211,16 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         // TargetFollow(_target);
 
         _index++;
-        Debug.Log($"Patrol Debug : Targets.Count : {Targets.Count} / currentIndex : {_index} ");
-        if (Targets.Count <= _index)
+        Debug.Log($"Patrol Debug : Targets.Count : {PatrolPoints.Count} / currentIndex : {_index} ");
+        if (PatrolPoints.Count <= _index)
         {
             _index = 0;
             Debug.Log($"_index = 0");
         }
-        Target = Targets[_index];
+        Target = PatrolPoints[_index];
         TargetFollow(Target, true);
         yield return new WaitForSeconds(delay);
         TargetFollow(Target, false);
-    }
-
-
-
-
-
-    /// <summary>
-    /// 목표에 도달했는지 확인하기 위한 함수
-    /// </summary>
-    /// <param name="distance">목표와의 거리 해당 거리 만큼 들어오면 도달했다고 판단</param>
-    /// <returns></returns>
-    public bool IsArrive(float distance)
-    {
-        if (Target == null || Target == default || distance < NavMeshAgent.remainingDistance)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /// <summary>
-    /// 타겟을 추적 중 타겟을 놓쳤는지 확인하기 위한 함수
-    /// </summary>
-    /// <param name="distance">인식 범위 / 해당 범위를 벗어나면 놓친것으로 판단</param>
-    /// <returns></returns>
-    public bool IsMissed(float distance)
-    {
-        if (Target == null || Target == default || NavMeshAgent.remainingDistance < distance)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-        // if (distance < _navMeshAgent.remainingDistance)
-        // {
-        //     return true;
-        // }
-        // else
-        // {
-        //     return false;
-        // }
-    }
-
-    public bool IsStopped()
-    {
-        return NavMeshAgent.isStopped;
-    }
-
-
-    /// <summary>
-    /// 타겟이 범위 내에 있는지 확인하는 함수 (NavMeshAgent에 RemainingDistance를 사용)
-    /// </summary>
-    /// <param name="distance"></param>
-    /// <returns>
-    /// true : 범위 내에 타겟이 존재  false : 범위 밖에 타겟이 존재
-    /// </returns>
-    public bool IsNavMeshRangeChecked(float ranged)
-    {
-        if (Target == null || Target == default)
-        {
-            return false;
-        }
-
-        Debug.Log($"ranged : {ranged} / remainingDistance : {NavMeshAgent.remainingDistance}");
-
-        if (ranged < NavMeshAgent.remainingDistance)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /// <summary>
-    /// 타겟이 범위 내에 있는지 확인하는 함수
-    /// </summary>
-    /// <param name="ranged"></param>
-    /// <returns></returns>
-    public bool IsRangeChecked(float ranged)
-    {
-        if (Target == null || Target == default)
-        {
-            return false;
-        }
-
-        float distance_ = Vector3.Distance(transform.position, Target.position);
-
-        if (ranged < distance_)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
     }
 
     /// <summary>
@@ -334,5 +234,91 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         bool isOnNavMesh = NavMesh.SamplePosition(newPosition, out hit, _navMeshAgent.height * 0.5f, NavMesh.AllAreas);
 
         return isOnNavMesh;
+    }
+
+
+    //  타겟이 유효한지 확인할 Property
+    public bool IsValidTarget
+    {
+        get
+        {
+            if (Target == null || Target == default)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
+
+    //  순찰 지점이 유효한지 확인할 Property
+    public bool IsValidTargetPatrol
+    {
+        get
+        {
+            return IsValidTarget & 1 < PatrolPoints.Count;
+        }
+    }
+
+    //  타겟이 플레이어인지 확인할 Property
+    public bool IsValidTargetPlayer
+    {
+        get
+        {
+            return IsValidTarget & Target.gameObject.layer.Equals(8);
+        }
+    }
+
+    /// <summary>
+    /// NavMeshAgent과 타겟 사이 거리를 확인하는 함수
+    /// </summary>
+    /// <param name="distance">범위</param>
+    /// <returns>범위 내에 타겟이 있다면 : TRUE / 범위 내에 타겟이 없다면 : FALSE</returns>
+    public bool IsArrive(float ranged)
+    {
+        if (!IsValidTarget || ranged < NavMeshAgent.remainingDistance)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 순찰 대상이 유효한지 범위 내에 있는지 확인하는 함수
+    /// </summary>
+    /// <param name="ranged"></param>
+    /// <returns></returns>
+    public bool IsArrivePatrol(float ranged)
+    {
+        if (!IsValidTargetPatrol || ranged < NavMeshAgent.remainingDistance)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 추적 상태일 때 추적 대상이 유효한지, 추적 대상이 범위 내 있는지 확인하는 함수
+    /// </summary>
+    /// <param name="distance">범위</param>
+    /// <returns>추적 대상이 범위 내 있으면 : TRUE / 추적 대상이 유효하지 않거나 범위 내 존재하지 않으면 : FALSE </returns>
+    public bool IsInRange(float ranged)
+    {
+        if (!IsValidTargetPlayer || ranged < NavMeshAgent.remainingDistance)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
