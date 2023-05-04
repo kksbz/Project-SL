@@ -207,7 +207,10 @@ public class DataManager : Singleton<DataManager>
 
         for (int i = 0; i < Inventory.Instance.inventory.Count; i++)
         {
-            Debug.Log($"현재 인벤에 들어있는 아이템 : {Inventory.Instance.inventory[i].itemName}, 장착여부 : {Inventory.Instance.inventory[i].IsEquip}");
+            if (Inventory.Instance.inventory[i] != null)
+            {
+                Debug.Log($"현재 인벤에 들어있는 아이템 : {Inventory.Instance.inventory[i].itemName}, 장착여부 : {Inventory.Instance.inventory[i].IsEquip}");
+            }
         }
 
         for (int i = number; i < itemDatas.Length - 1; i++)

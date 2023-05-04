@@ -138,7 +138,28 @@ public class Inventory : Singleton<Inventory>
                     // 같은 아이템이 있고 보유수량이 최대수량보다 작을 때
                     if (_item.Quantity < itemData.maxQuantity)
                     {
-                        _item.Quantity++;
+                        // 아이템의 보유수량과 획득한 아이템의 보유수량의 합이 최대보유수량 을 초과할 때
+                        if ((_item.Quantity + item.Quantity) > itemData.maxQuantity)
+                        {
+                            // 최대보유수량으로 나눈 나머지값을 구함
+                            int remainQuantity = (_item.Quantity + item.Quantity) % itemData.maxQuantity;
+                            // 아이템의 보유수량을 최대수량으로 적용
+                            _item.Quantity = itemData.maxQuantity;
+                            for (int i = 0; i < inventory.Count; i++)
+                            {
+                                if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
+                                {
+                                    // 새로운 아이템의 보유수량을 구한 나머지값으로 적용한 후 인벤토리에 넣음
+                                    itemData.Quantity = remainQuantity;
+                                    inventory[i] = itemData;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            _item.Quantity += item.Quantity;
+                        }
                         InitSlotItemData();
                         if (_item.IsEquip == true)
                         {
@@ -156,6 +177,7 @@ public class Inventory : Singleton<Inventory>
             if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
             {
                 itemData.Quantity = item.Quantity;
+                itemData.IsEquip = item.IsEquip;
                 inventory[i] = itemData;
                 //Debug.Log($"인벤토리 빈 슬롯에 추가된 아이템 : {inventory[i].itemName}");
                 InitSlotItemData();
@@ -188,7 +210,7 @@ public class Inventory : Singleton<Inventory>
             {
                 // 버리는 아이템의 프리팹을 인스턴스하고 아이템데이터 대입
                 GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemData.itemID}"));
-                item.transform.position = GameManager.Instance.player.gameObject.transform.position + (Vector3.up * 0.5f);
+                item.transform.position = GameManager.Instance.player.gameObject.transform.position + (Vector3.up * 0.3f);
                 item.GetComponent<Item>().itemData = itemData;
                 inventory[i] = null;
                 return;
@@ -431,9 +453,10 @@ public class Inventory : Singleton<Inventory>
                         {
                             if (consumptionSlotList[j].Item != null)
                             {
-                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
+                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID && consumptionSlotList[j].Item.Quantity == inventory[i].Quantity)
                                 {
                                     consumptionSlotList[j].Item = inventory[i];
+                                    break;
                                 }
                             }
                         }
@@ -443,9 +466,10 @@ public class Inventory : Singleton<Inventory>
                         {
                             if (consumptionSlotList[j].Item != null)
                             {
-                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
+                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID && consumptionSlotList[j].Item.Quantity == inventory[i].Quantity)
                                 {
                                     consumptionSlotList[j].Item = inventory[i];
+                                    break;
                                 }
                             }
                         }
@@ -456,6 +480,7 @@ public class Inventory : Singleton<Inventory>
                             if (aSlot.Item != null && aSlot.Item.itemID == inventory[i].itemID)
                             {
                                 aSlot.Item = inventory[i];
+                                break;
                             }
                         }
                         break;
