@@ -75,7 +75,6 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
 
     public void SetStop(bool isStopped)
     {
-        Debug.Log($"NavMeshAgent isStopped : {NavMeshAgent.isStopped}");
         NavMeshAgent.isStopped = isStopped;
     }
 

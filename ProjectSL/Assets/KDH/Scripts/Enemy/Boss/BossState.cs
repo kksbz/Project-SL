@@ -140,7 +140,7 @@ public class Boss_Idle_State : IState
             }
 
             Debug.Log($"target : {target_.name}");
-            _boss.TargetFollow(target_, false);
+            //_boss.TargetFollow(target_, false);
 
             _boss.SetState(new Boss_Thought_State(_boss));
         }
@@ -166,6 +166,8 @@ public class Boss_Thought_State : IState
         _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
         _boss.StartCoroutine(StateChangedDelay(0.1f));
+
+        _boss.TargetFollow(_boss.Target, false);
     }
 
     public void OnExit()

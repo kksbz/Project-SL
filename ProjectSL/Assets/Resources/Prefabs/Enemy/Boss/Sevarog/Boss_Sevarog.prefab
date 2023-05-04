@@ -4649,7 +4649,7 @@ GameObject:
   - component: {fileID: 8237715823300581039}
   - component: {fileID: 8237715823300581036}
   - component: {fileID: 8237715823300581037}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Boss_Sevarog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4706,6 +4706,7 @@ MonoBehaviour:
       m_Bits: 512
   attackCollider:
   - {fileID: 8237715822438640074}
+  currentState: 
   _bossStatus:
     currentPhase: 1
     patternCount: 0
@@ -4716,8 +4717,8 @@ MonoBehaviour:
     swing2_Percentage: 0.75
     swing3_Percentage: 1
     teleport_swing3_Percentage: 0.5
-    subjugation_Percentage: 0.2
-    enemySpawn_Percentage: 0.4
+    subjugation_Percentage: 0.4
+    enemySpawn_Percentage: 0.15
     teleport_Percentage: 0.2
   subjugationPrefab: {fileID: 6966130419290751147, guid: c965604f10162484cad3ee123a12673c,
     type: 3}
@@ -4741,8 +4742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0900d80152ea2a0429d248a1d6b351af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 8237715823300581034}
+  patrolPointsInspector: []
 --- !u!114 &8237715823300581033
 MonoBehaviour:
   m_ObjectHideFlags: 0

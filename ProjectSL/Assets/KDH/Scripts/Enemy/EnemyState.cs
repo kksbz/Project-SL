@@ -217,15 +217,7 @@ public class Enemy_Chase_State : IState
     public void Update()
     {
         _enemy.TargetFollow(_target);
-        //  플레이어를 놓쳤거나, 플레이어가 공격 범위 내로 들어온다면
-        // if (_enemy.IsMissed(_enemy.Status.detectionRange) || _enemy.IsArrive(_enemy.Status.attackRange))
-        // {
-        //     _enemy.SetState(new Enemy_Thought_State(_enemy));
-        // }
-        // if (_enemy.IsArrive(_enemy.Status.attackRange))
-        // {
-        //     _enemy.SetState(new Enemy_Thought_State(_enemy));
-        // }
+
         if (!_enemy.IsInRange(_enemy.Status.detectionRange) || _enemy.IsInRange(_enemy.Status.attackRange))
         {
             _enemy.SetState(new Enemy_Thought_State(_enemy));
