@@ -15,3 +15,4 @@
 2023-05-01 Hit and Block Base</br>
 2023-05-02 Model Changer Base</br>
 2023-05-03 Improve Model Change Solve Some TH Issue</br>
+2023-05-04 Stat, HealthSystem UI Bind, solve LockOn Issue</br>

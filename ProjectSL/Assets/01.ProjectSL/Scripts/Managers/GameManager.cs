@@ -100,7 +100,7 @@ public class GameManager : Singleton<GameManager>
         Debug.Log($"¾À·Îµå ³¡");
         DataManager.Instance.slotNum = num;
         DataManager.Instance.LoadData();
-        player.transform.position = player.GetPlayerData().PlayerPos;
+        // player.transform.position = player.GetPlayerData().PlayerPos;
         yield return new WaitForSeconds(3f);
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
         yield return new WaitForSeconds(fadeTime);

@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public Transform characterBody;
     [SerializeField]
+    public Animator animator;
+    [SerializeField]
     private PlayerCharacter playerCharacter;
     [SerializeField]
     private Transform cameraArm;
@@ -33,7 +35,13 @@ public class PlayerController : MonoBehaviour
     public Move nextMove;
     public Behavior wait;
     bool isMove;
-    
+
+    #region Die Field
+    bool _isDie;
+    #endregion  // Die Field
+
+    public bool IsDie { get { return _isDie; } }
+
     private void Awake()
     {
         // ������Ʈ �ʱ�ȭ
@@ -41,6 +49,10 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         cameraController = GetComponent<CameraController>();
         animationController = GetComponent<AnimationController>();
+
+        GameObject meshObj = gameObject.FindChildObj("Mesh");
+        characterBody = meshObj.transform;
+        animator = meshObj.GetComponent<Animator>();
 
     }   // Awake()
     // Start is called before the first frame update
@@ -75,6 +87,22 @@ public class PlayerController : MonoBehaviour
         }
     }
     */
+    public void Die()
+    {
+        if (_isDie)
+            return;
+        _isDie = true;
+
+        DieAnimationPlay();
+    }
+
+    void DieAnimationPlay()
+    {
+        PoseAction poseAction = new PoseAction(animator, "Die_Light_1", AnimationController.LAYERINDEX_FULLLAYER, 0);
+        // nextPA = poseAction;
+        poseAction.Execute();
+    }
+
     void SetMove()
     {
         

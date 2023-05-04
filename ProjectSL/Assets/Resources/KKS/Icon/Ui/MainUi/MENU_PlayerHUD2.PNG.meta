@@ -101,6 +101,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -197,7 +209,7 @@ TextureImporter:
         width: 94
         height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,6 +217,27 @@ TextureImporter:
       bones: []
       spriteID: 2297a614f36c7ba4c9213ffdf4c546c5
       internalID: 1757639158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_PlayerHUD2_Decrease
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 140
+        width: 256
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e611d8f83430d7c47aa0c2fd2438e8be
+      internalID: 1442570812
       vertices: []
       indices: 
       edges: []
@@ -222,6 +255,7 @@ TextureImporter:
     nameFileIdTable:
       MENU_PlayerHUD2_0: 1757639158
       MENU_PlayerHUD2_Bar: 324761732
+      MENU_PlayerHUD2_Decrease: 1442570812
       MENU_PlayerHUD2_HP: 1003722934
       MENU_PlayerHUD2_MP: 1745593984
       MENU_PlayerHUD2_Stamina: 887335722
