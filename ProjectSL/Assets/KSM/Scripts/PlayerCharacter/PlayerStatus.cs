@@ -14,6 +14,7 @@ public class PlayerStatus
     [SerializeField] int _vitality;
     [SerializeField] int _strength;
     [SerializeField] int _dexterity;
+    
     public PlayerStatus()
     {
         _name = string.Empty;

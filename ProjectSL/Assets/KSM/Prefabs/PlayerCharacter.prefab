@@ -6722,7 +6722,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3937250334138039316}
   - component: {fileID: 3937250334138039317}
-  - component: {fileID: 3937250334138039318}
   m_Layer: 0
   m_Name: Male_Chests
   m_TagString: Untagged
@@ -6761,19 +6760,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chestModels: []
   _chestMeshes: []
---- !u!114 &3937250334138039318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3937250334138039319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3452d4790fbdb4fa304a6161c34447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  original: {fileID: 8292380730787405754}
 --- !u!1 &3937250334163318497
 GameObject:
   m_ObjectHideFlags: 0
@@ -16672,6 +16658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterBody: {fileID: 8292380730787401799}
+  animator: {fileID: 0}
   playerCharacter: {fileID: 0}
   cameraArm: {fileID: 3701174261585143800}
   cameraController: {fileID: 0}

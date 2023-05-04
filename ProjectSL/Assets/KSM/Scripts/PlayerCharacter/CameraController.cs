@@ -206,21 +206,19 @@ public class CameraController : MonoBehaviour
 
         Debug.DrawRay(transform.position, leftBoundary, Color.red);
         Debug.DrawRay(transform.position, rightBoundary, Color.red);
-
+        // int layerMask = 1 << targetMask;
         Collider[] targets = Physics.OverlapSphere(transform.position, viewDistance, targetMask);
 
         foreach(var targetCol in targets)
         {
-            
             Transform targetTf = targetCol.transform;
             Vector3 direction = (targetTf.position - transform.position).normalized;
             float angle = Vector3.Angle(direction, cameraArm.forward);
             // Debug.Log($"target Angle : {angle}");
             if (angle < viewAngle * 0.5f)
             {
-                Debug.Log($"angle Checking");
                 RaycastHit hit;
-                if(Physics.Raycast(transform.position, direction, out hit, viewDistance))
+                if (Physics.Raycast(transform.position + transform.up, direction, out hit, viewDistance, targetMask))
                 {
                     Debug.Log($"hit : {hit.transform.gameObject.name}");
                     tempTargetsInView.Add(hit.transform);

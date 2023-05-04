@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class HealthSystem
 {
@@ -11,22 +13,47 @@ public class HealthSystem
     float _manaPoint;
     float _maxManaPoint;
 
-    public HealthSystem()
+    public delegate void HealthEventHandler();
+    public delegate void HealthEventHandler_TwoParam(EHealthType type, bool isLerp);
+    public HealthEventHandler onDieHandle;
+    public HealthEventHandler_TwoParam onChangedHealth;
+    public enum EHealthChangeType : byte
     {
-        _healthPoint = 0;
-        _maxHealthPoint = 0;
-        _staminaPoint = 0;
-        _maxStaminaPoint = 0;
-        _manaPoint = 0;
-        _maxManaPoint = 0;
+        Init,
+        Damage,
+        Consum,
+        Heal,
+    }
+    public enum EHealthType : byte
+    {
+        HP,
+        MP,
+        SP
     }
 
     public float HP { get { return _healthPoint; } set { _healthPoint = value; } }
     public float MaxHP { get { return _maxHealthPoint; } }
     public float SP { get { return _staminaPoint; } }
     public float MaxSP { get { return _maxStaminaPoint; } }
-    public float MP { get { return _manaPoint; } set { _manaPoint = value; } }
+    public float MP
+    {
+        get { return _manaPoint; }
+        set { _manaPoint = value; }
+    }
     public float MaxMP { get { return _maxManaPoint; } }
+
+    public HealthSystem() 
+    {
+        _healthPoint        = 0;
+        _maxHealthPoint     = 0;
+        _staminaPoint       = 0;
+        _maxStaminaPoint    = 0;
+        _manaPoint          = 0;
+        _maxManaPoint       = 0;
+        onChangedHealth = new HealthEventHandler_TwoParam(OnChangedHealth);
+    }
+
+    
 
     #region Increase, Decrease Health
     public void Increase_HP(float value_)
@@ -59,18 +86,92 @@ public class HealthSystem
     public void Damage(float damageAmount)
     {
         _healthPoint -= damageAmount;
-        if (_healthPoint <= 0f)
+        onChangedHealth(EHealthType.HP, true);
+        if(IsDead())
         {
-            // Á×À½ Ã³¸®?
+            onDieHandle();
+            // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½?
         }
+    }
+    public void HealHP(float healAmount) 
+    {
+        _healthPoint = Mathf.Clamp(_healthPoint + healAmount, 0, _maxHealthPoint);
+        onChangedHealth(EHealthType.HP, false);
+    }
+    public void HealMP(float healAmount)
+    {
+        _manaPoint = Mathf.Clamp(_manaPoint + healAmount, 0, _maxManaPoint);
+        onChangedHealth(EHealthType.MP, false);
+    }
+    public void ConsumMP(float value_)
+    {
+        _manaPoint = Mathf.Clamp(_manaPoint - value_, 0, _maxManaPoint);
+        onChangedHealth(EHealthType.MP, true);
     }
     public void ConsumSP(float value_)
     {
         _staminaPoint -= value_;
+        onChangedHealth(EHealthType.SP, true);
     }
-    // ÀÌÈÄ Ãß°¡?
+    void OnChangedHealth(EHealthType healthType, bool isLerp)
+    {
+        Image targetBar = default;
+        Image targetDecBar = default;
+        float targetRatio = 0f;
+        switch(healthType)
+        {
+            case EHealthType.HP:
+                targetBar = UiManager.Instance.healthHud.HP_Bar;
+                targetDecBar = UiManager.Instance.healthHud.HP_Dec_Bar;
+                targetRatio = CalculateRatio(_healthPoint, _maxHealthPoint);
+                break;
+            case EHealthType.MP:
+                targetBar = UiManager.Instance.healthHud.MP_Bar;
+                targetDecBar = UiManager.Instance.healthHud.MP_Dec_Bar;
+                targetRatio = CalculateRatio(_manaPoint, _maxManaPoint);
+                break;
+            case EHealthType.SP:
+                targetBar = UiManager.Instance.healthHud.SP_Bar;
+                targetDecBar = UiManager.Instance.healthHud.SP_Dec_Bar;
+                targetRatio = CalculateRatio(_staminaPoint, _maxStaminaPoint);
+                break;
+        }
+
+        if (targetBar == null)
+            return;
+        if (targetDecBar == null)
+            return;
+
+        if(isLerp)
+        {
+            UiManager.Instance.healthHud.ChangeProgressImmediate(targetBar, targetRatio);
+            //UiManager.Instance.healthHud.ChangeProgressImmediate(targetDecBar, targetRatio);
+            UiManager.Instance.healthHud.ChangeProgressLerp(targetDecBar, targetRatio);
+        }
+        else
+        {
+            UiManager.Instance.healthHud.ChangeProgressImmediate(targetBar, targetRatio);
+            UiManager.Instance.healthHud.ChangeProgressImmediate(targetDecBar, targetRatio);
+        }
+    }
 
     #endregion  // Damage, Consumption
+    public float CalculateRatio(float currentValue, float maxValue)
+    {
+        return currentValue / maxValue;
+    }
+
+    public void InitializeHealthSystem(PlayerStatus playerStatus)
+    {
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+        _maxHealthPoint = DataManager.Instance.statusLevelData[playerStatus.Vigor].hp;
+        _maxManaPoint = DataManager.Instance.statusLevelData[playerStatus.Attunement].mp;
+        _maxStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.Endurance].st;
+
+        _staminaPoint = _maxStaminaPoint;
+        onChangedHealth(EHealthType.SP, false);
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ PlayerStatus ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Data Table ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ HealthSystem ï¿½Ê±ï¿½È­
+    }
 
     public bool IsDead()
     {

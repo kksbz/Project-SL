@@ -30,7 +30,11 @@ public class PlayerHitState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(!Ctx.CombatController.IsHit)
+        if(Ctx.DeadFlag)
+        {
+            SwitchState(Factory.Dead());
+        }
+        else if(!Ctx.CombatController.IsHit)
         {
             SwitchState(Factory.Grounded());
         }

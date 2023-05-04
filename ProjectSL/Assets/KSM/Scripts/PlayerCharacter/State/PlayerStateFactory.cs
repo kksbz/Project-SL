@@ -48,6 +48,10 @@ public class PlayerStateFactory : MonoBehaviour
     {
         return new PlayerBlockState(_context, this);
     }
+    public PlayerBaseState Dead()
+    {
+        return new PlayerDeadState(_context, this);
+    }
     public PlayerBaseState Grounded()
     {
         return new PlayerGroundedState(_context, this);

@@ -9,20 +9,20 @@ public class GameManager : Singleton<GameManager>
     public GameObject playerRightArm;
     public PlayerCharacter player;
 
-    //! È­ÅêºÒ ÀÌ¿ë½Ã ¾À ·ÎµåÇÏ´Â ÇÔ¼ö
+    //! È­ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void LoadBonfire(BonfireData bonfire)
     {
         StartCoroutine(LoadBonfireScene(bonfire));
     } // LoadBonfire
-    //! È­ÅêºÒ ÀÌ¿ë½Ã ¾À ·ÎµåÇÏ´Â ÄÚ·çÆ¾ÇÔ¼ö
+    //! È­ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½Ô¼ï¿½
 
-    //! ´º°ÔÀÓ ¼±ÅÃ ½Ã ¾À ·ÎµåÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void NewGamePlay(int num)
     {
         StartCoroutine(NewGameLoadScene(num));
     } // NewGamePlay
 
-    //! ¼¼ÀÌºêµ¥ÀÌÅÍ ·Îµå ½Ã ÇØ´ç ¾À ·ÎµåÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½Ìºêµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void LoadSaveDataScene(int num)
     {
         StartCoroutine(LoadSaveDataPlayScene(num));
@@ -30,10 +30,10 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator LoadBonfireScene(BonfireData bonfire)
     {
-        // ÀÚµ¿ÀúÀå ½½·Ô¿¡ ÇöÀçµ¥ÀÌÅÍ ÀúÀå
+        // ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½çµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         DataManager.Instance.slotNum = 0;
         DataManager.Instance.SaveData();
-        // ·ÎµùÃ¢ È°¼ºÈ­
+        // ï¿½Îµï¿½Ã¢ È°ï¿½ï¿½È­
         UiManager.Instance.loadingPanel.gameObject.SetActive(true);
         float fadeTime = UiManager.Instance.loadingPanel.FadeInLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
@@ -42,35 +42,35 @@ public class GameManager : Singleton<GameManager>
         {
             yield return null;
         }
-        // ¾ÀÀÌ ºÒ·¯¿ÍÁö¸é ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ·Îµå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
         DataManager.Instance.LoadData();
         player.transform.position = bonfire.bonfirePos;
         DataManager.Instance.SaveData();
         yield return new WaitForSeconds(3f);
-        Debug.Log($"¾À·Îµå ³¡");
+        Debug.Log($"ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½");
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
-        // ·ÎµùÃ¢ ºñÈ°¼ºÈ­
+        // ï¿½Îµï¿½Ã¢ ï¿½ï¿½È°ï¿½ï¿½È­
         UiManager.Instance.loadingPanel.gameObject.SetActive(false);
     } // LoadScene
 
-    //! ´º°ÔÀÓ ¼±ÅÃ ½Ã ¾ÀÀÌµ¿ ÄÚ·çÆ¾ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ú·ï¿½Æ¾ï¿½Ô¼ï¿½
     private IEnumerator NewGameLoadScene(int num)
     {
-        // ·ÎµùÃ¢ È°¼ºÈ­
+        // ï¿½Îµï¿½Ã¢ È°ï¿½ï¿½È­
         UiManager.Instance.loadingPanel.gameObject.SetActive(true);
         float fadeTime = UiManager.Instance.loadingPanel.FadeInLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
         var asyncLoad = SceneManager.LoadSceneAsync(GData.SCENENAME_PLAY);
-        Debug.Log($"¾À·Îµå ½ÃÀÛ");
+        Debug.Log($"ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½");
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-        Debug.Log($"¾À·Îµå ³¡");
+        Debug.Log($"ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½");
         yield return new WaitForSeconds(3f);
         GameManager.Instance.player.PlayerNameSelect(DataManager.Instance.selectPlayerName);
-        // ´º°ÔÀÓ ½ÃÀÛ½Ã ¿¡½ºÆ®º´°ú Àíºû ¿¡½ºÆ®º´ °¡Áö°í ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         ItemData hpPotion = new ItemData(DataManager.Instance.itemDatas[0]);
         hpPotion.Quantity = hpPotion.maxQuantity;
         ItemData mpPotion = new ItemData(DataManager.Instance.itemDatas[1]);
@@ -81,44 +81,44 @@ public class GameManager : Singleton<GameManager>
         DataManager.Instance.SaveData();
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
-        // ·ÎµùÃ¢ ºñÈ°¼ºÈ­
+        // ï¿½Îµï¿½Ã¢ ï¿½ï¿½È°ï¿½ï¿½È­
         UiManager.Instance.loadingPanel.gameObject.SetActive(false);
     } // LoadScene
 
-    //! ¼¼ÀÌºêµ¥ÀÌÅÍ ºÒ·¯¿Í¼­ ÇØ´ç µ¥ÀÌÅÍ ÇÃ·¹ÀÌ¾À ºÒ·¯¿À´Â ÄÚ·çÆ¾ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½Ìºêµ¥ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½Ô¼ï¿½
     private IEnumerator LoadSaveDataPlayScene(int num)
     {
-        // ·ÎµùÃ¢ È°¼ºÈ­
+        // ï¿½Îµï¿½Ã¢ È°ï¿½ï¿½È­
         UiManager.Instance.loadingPanel.gameObject.SetActive(true);
         float fadeTime = UiManager.Instance.loadingPanel.FadeInLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
         var asyncLoad = SceneManager.LoadSceneAsync(GData.SCENENAME_PLAY);
-        Debug.Log($"¾À·Îµå ½ÃÀÛ");
+        Debug.Log($"ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½");
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-        Debug.Log($"¾À·Îµå ³¡");
+        Debug.Log($"ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½");
         DataManager.Instance.slotNum = num;
         DataManager.Instance.LoadData();
         InitPlayer(DataManager.Instance.playerStatusSaveData);
         yield return new WaitForSeconds(3f);
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
-        // ·ÎµùÃ¢ ºñÈ°¼ºÈ­
+        // ï¿½Îµï¿½Ã¢ ï¿½ï¿½È°ï¿½ï¿½È­
         UiManager.Instance.loadingPanel.gameObject.SetActive(false);
     } // LoadSaveDataPlayScene
 
-    //! ÇÃ·¹ÀÌ¾î Dead»óÅÂ¿¡ µû¸¥ µ¥ÀÌÅÍ ·ÎµåÇÏ´Â ÇÔ¼ö
+    //! ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Deadï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void InitPlayer(StatusSaveData _playerStatusData)
     {
         if (_playerStatusData._isPlayerDead == true)
         {
-            // ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» °æ¿ì
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             float neardistance = Mathf.Infinity;
             Vector3 revivePos = Vector3.zero;
 
-            // Á×ÀºÀ§Ä¡¿¡¼­ È°¼ºÈ­µÈ °¡Àå °¡±î¿î È­ÅêºÒÀÇ À§Ä¡¿¡¼­ ºÎÈ°½ÃÅ´
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½Å´
             for (int i = 0; i < UiManager.Instance.warp.bonfireList.Count; i++)
             {
                 float _dis = Vector3.SqrMagnitude(_playerStatusData._playerPos - UiManager.Instance.warp.bonfireList[i].bonfirePos);
@@ -129,7 +129,7 @@ public class GameManager : Singleton<GameManager>
                 }
             }
             player.transform.position = revivePos;
-            // ¼Ò¿ïÀ» ¸ðµÎ ÀÒ°í Á×Àº À§Ä¡¿¡ °¡Áö°íÀÖ´ø ¼Ò¿ïÀ» µå¶ø ½ÃÅ´
+            // ï¿½Ò¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ò¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Å´
             if (Inventory.Instance.Soul > 0)
             {
                 GameObject Soul = Instantiate(Resources.Load<GameObject>("KKS/Prefabs/Objecct/DropSoul"));
@@ -140,7 +140,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            // ÇÃ·¹ÀÌ¾î°¡ »ì¾ÆÀÖÀ» °æ¿ì
+            // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             player.transform.position = _playerStatusData._playerPos;
             player.HealthSys.HP = _playerStatusData._currentHealthPoint;
             player.HealthSys.MP = _playerStatusData._currentManaPoint;

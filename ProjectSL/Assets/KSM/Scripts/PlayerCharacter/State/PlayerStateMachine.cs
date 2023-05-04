@@ -53,6 +53,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     bool _hitFlag;
     bool _blockFlag;
+    bool _deadFlag;
     // State Var
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
@@ -67,6 +68,7 @@ public class PlayerStateMachine : MonoBehaviour
     // getter and setter
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return _characterController; } }
+    public PlayerController PlayerController { get { return _playerController; } }
     public AnimationController AnimationController { get { return _animationController; } }
     public CombatController CombatController { get { return _combatController; } }
     public EquipmentController EquipmentController { get { return _equipmentController; } }
@@ -81,6 +83,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsBackStepPressed { get { return _isBackStepPressed; } set { _isBackStepPressed = value; } }
     public bool HitFlag { get { return _hitFlag; } set { _hitFlag = value; } }
     public bool BlockFlag { get { return _blockFlag; } set { _blockFlag = value; } }
+    public bool DeadFlag { get { return _deadFlag; } set { _deadFlag = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -135,6 +138,7 @@ public class PlayerStateMachine : MonoBehaviour
         //_playerInput.PlayerCharacterInput.SwitchArm.canceled += (InputAction.CallbackContext context) => Debug.Log("SwitchArm canceled");
         Debug.Log("Player State Machine : ��ǲ ���ε�");
 
+        _playerCharacter.HealthSys.onDieHandle += () => _deadFlag = true;
         // _playerInput.PlayerCharacterInput.
 
     }
