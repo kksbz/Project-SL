@@ -137,7 +137,7 @@ public class LevelUpPanel : MonoBehaviour
     private void GetPlayerStatus()
     {
         playerStatus = new int[7];
-        PlayerStatus pStatus = GameManager.Instance.player.GetPlayerData();
+        PlayerStatus pStatus = GameManager.Instance.player.GetPlayerData()._playerStatusData;
         playerStatus[0] = pStatus.Vigor;
         playerStatus[1] = pStatus.Attunement;
         playerStatus[2] = pStatus.Endurance;
@@ -242,14 +242,14 @@ public class LevelUpPanel : MonoBehaviour
         playerStatus[selectStatusNum] = playerStatus[selectStatusNum] + increaseNum;
         UiManager.Instance.soulBag.GetSoul(-sumWantSoul);
 
-        PlayerStatus pStatus = GameManager.Instance.player.GetPlayerData();
-        pStatus.Vigor = playerStatus[0];
-        pStatus.Attunement = playerStatus[1];
-        pStatus.Endurance = playerStatus[2];
-        pStatus.Vitality = playerStatus[3];
-        pStatus.Strength = playerStatus[4];
-        pStatus.Dexterity = playerStatus[5];
-        pStatus.Level = playerStatus[6];
+        StatusSaveData pStatus = GameManager.Instance.player.GetPlayerData();
+        pStatus._playerStatusData.Vigor = playerStatus[0];
+        pStatus._playerStatusData.Attunement = playerStatus[1];
+        pStatus._playerStatusData.Endurance = playerStatus[2];
+        pStatus._playerStatusData.Vitality = playerStatus[3];
+        pStatus._playerStatusData.Strength = playerStatus[4];
+        pStatus._playerStatusData.Dexterity = playerStatus[5];
+        pStatus._playerStatusData.Level = playerStatus[6];
         // 레벨업된 스텟들의 정보를 플레이어 데이터에 저장
         GameManager.Instance.player.LoadPlayerData(pStatus);
 

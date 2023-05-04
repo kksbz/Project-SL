@@ -20,6 +20,7 @@ public class Item : MonoBehaviour
             if (id == itemID)
             {
                 itemData = new ItemData(_itemData);
+                itemData.Quantity = 1;
                 break;
             }
         }

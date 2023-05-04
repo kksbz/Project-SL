@@ -12,6 +12,7 @@ public class UiManager : Singleton<UiManager>
     public WarpController warp; // 화톳불 워프 컨트롤러
     public LoadingPanel loadingPanel; // 로딩 패널
     public GameObject levelUpPanel; // 레벨업 패널
+    public GameObject shopPanel; // 상점 패널
     public StatusPanel statusPanel; // 스테이터스 패널
     public StatusPanel invenStatusPanel; // 인벤토리 스테이터스 패널
     public OptionPanel optionPanel; // 옵션 패널
@@ -21,14 +22,14 @@ public class UiManager : Singleton<UiManager>
     //! 인벤토리 스테이터스 패널 갱신하는 함수
     public void RenewalInvenStatusPanel()
     {
-        invenStatusPanel.ShowPlayerStatusPanel(GameManager.Instance.player.GetPlayerData(),
+        invenStatusPanel.ShowPlayerStatusPanel(GameManager.Instance.player.GetPlayerData()._playerStatusData,
                 GameManager.Instance.player.GetHealth());
     } // RenewalstatusPanel
 
     //! 스테이터스 패널 갱신하는 함수
     public void RenewalStatusPanel()
     {
-        statusPanel.ShowPlayerStatusPanel(GameManager.Instance.player.GetPlayerData(),
+        statusPanel.ShowPlayerStatusPanel(GameManager.Instance.player.GetPlayerData()._playerStatusData,
             GameManager.Instance.player.GetHealth(), quickSlotBar.RightWeaponList, quickSlotBar.LeftWeaponList);
     } // RenewalStatusPanel
 } // UiManager

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IPlayerDataAccess
 {
-    PlayerStatus GetPlayerData();
-    void LoadPlayerData(PlayerStatus _playerStatusData );
+    StatusSaveData GetPlayerData();
+    void LoadPlayerData(StatusSaveData _playerStatusData );
 } // IPlayerDataAccess

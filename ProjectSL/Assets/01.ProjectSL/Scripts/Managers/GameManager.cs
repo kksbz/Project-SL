@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
         UiManager.Instance.loadingPanel.gameObject.SetActive(true);
         float fadeTime = UiManager.Instance.loadingPanel.FadeInLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
-        var asyncLoad = SceneManager.LoadSceneAsync(bonfire.activeSceneName);
+        var asyncLoad = SceneManager.LoadSceneAsync(GData.SCENENAME_PLAY);
         while (!asyncLoad.isDone)
         {
             yield return null;
@@ -45,6 +45,7 @@ public class GameManager : Singleton<GameManager>
         // 씬이 불러와지면 플레이어 데이터 로드
         DataManager.Instance.LoadData();
         player.transform.position = bonfire.bonfirePos;
+        DataManager.Instance.SaveData();
         yield return new WaitForSeconds(3f);
         Debug.Log($"씬로드 끝");
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
@@ -100,11 +101,49 @@ public class GameManager : Singleton<GameManager>
         Debug.Log($"씬로드 끝");
         DataManager.Instance.slotNum = num;
         DataManager.Instance.LoadData();
-        player.transform.position = player.GetPlayerData().PlayerPos;
+        InitPlayer(DataManager.Instance.playerStatusSaveData);
         yield return new WaitForSeconds(3f);
         UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
         yield return new WaitForSeconds(fadeTime);
         // 로딩창 비활성화
         UiManager.Instance.loadingPanel.gameObject.SetActive(false);
     } // LoadSaveDataPlayScene
+
+    //! 플레이어 Dead상태에 따른 데이터 로드하는 함수
+    public void InitPlayer(StatusSaveData _playerStatusData)
+    {
+        if (_playerStatusData._isPlayerDead == true)
+        {
+            // 플레이어가 죽었을 경우
+            float neardistance = Mathf.Infinity;
+            Vector3 revivePos = Vector3.zero;
+
+            // 죽은위치에서 활성화된 가장 가까운 화톳불의 위치에서 부활시킴
+            for (int i = 0; i < UiManager.Instance.warp.bonfireList.Count; i++)
+            {
+                float _dis = Vector3.SqrMagnitude(_playerStatusData._playerPos - UiManager.Instance.warp.bonfireList[i].bonfirePos);
+                if (_dis < neardistance)
+                {
+                    neardistance = _dis;
+                    revivePos = UiManager.Instance.warp.bonfireList[i].bonfirePos;
+                }
+            }
+            player.transform.position = revivePos;
+            // 소울을 모두 잃고 죽은 위치에 가지고있던 소울을 드랍 시킴
+            if (Inventory.Instance.Soul > 0)
+            {
+                GameObject Soul = Instantiate(Resources.Load<GameObject>("KKS/Prefabs/Objecct/DropSoul"));
+                Soul.GetComponent<DropSoul>().souls = Inventory.Instance.Soul;
+                UiManager.Instance.soulBag.GetSoul(-Inventory.Instance.Soul);
+                Soul.transform.position = _playerStatusData._playerPos;
+            }
+        }
+        else
+        {
+            // 플레이어가 살아있을 경우
+            player.transform.position = _playerStatusData._playerPos;
+            player.HealthSys.HP = _playerStatusData._currentHealthPoint;
+            player.HealthSys.MP = _playerStatusData._currentManaPoint;
+        }
+    } // InitPlayer
 } // GameManager

@@ -101,8 +101,8 @@ public class SaveAndLoadPanel : MonoBehaviour
             {
                 DataManager.Instance.slotNum = i;
                 List<string> playerDatas = DataManager.Instance.LoadPlayerInfoData();
-                PlayerStatus playerStat = JsonUtility.FromJson<PlayerStatus>(playerDatas[0]);
-                saveSlotTexts[i].text = playerStat.Name;
+                StatusSaveData playerStat = JsonUtility.FromJson<StatusSaveData>(playerDatas[0]);
+                saveSlotTexts[i].text = playerStat._playerStatusData.Name;
                 saveSlotTimeTexts[i].text = playerDatas[1];
             }
             else

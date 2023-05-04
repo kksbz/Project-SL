@@ -92,19 +92,16 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     }
 
     //! { �÷��̾� ������ ���̺� �� �ε��ϴ� �������̽��Լ�
-    public PlayerStatus GetPlayerData()
+    public StatusSaveData GetPlayerData()
     {
-        return _status;
+        StatusSaveData saveData = new StatusSaveData(_status, _healthSystem, gameObject.transform.position);
+        return saveData;
     }
-    public void LoadPlayerData(PlayerStatus _playerStatusData)
+    public void LoadPlayerData(StatusSaveData _playerStatusData)
     {
-        _status = _playerStatusData;
+        _status = _playerStatusData._playerStatusData;
     }
 
-    public void SavePlayerPos()
-    {
-        _status.PlayerPos = gameObject.transform.position;
-    }
     public void PlayerNameSelect(string _name)
     {
         _status.Name = _name;
@@ -121,7 +118,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         string hitDir = GetHitAngle(_hitTR, damageCauser.transform);
         Debug.Log($"direction : {hitDir}");
         combatController.HitAnimationTag = hitDir;
-        if(combatController.HitAnimationTag == "Hit_Light_F" && combatController.IsGuard)
+        if (combatController.HitAnimationTag == "Hit_Light_F" && combatController.IsGuard)
         {
             _stateMachine.BlockFlag = true;
         }
@@ -142,21 +139,21 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         Vector3 cross = Vector3.Cross(hit.forward, direction);
         Debug.Log($"angle : {angle}");
 
-        if(cross.y < 0f)
+        if (cross.y < 0f)
         {
             angle = 360 - angle;
         }
         //
 
-        if(angle >= 45f && angle < 135f)
+        if (angle >= 45f && angle < 135f)
         {
             resultStr = "Hit_Light_L";
         }
-        else if(angle >= 135f && angle < 225f)
+        else if (angle >= 135f && angle < 225f)
         {
             resultStr = "Hit_Light_F";
         }
-        else if(angle >= 225f && angle < 315f)
+        else if (angle >= 225f && angle < 315f)
         {
             resultStr = "Hit_Light_R";
         }

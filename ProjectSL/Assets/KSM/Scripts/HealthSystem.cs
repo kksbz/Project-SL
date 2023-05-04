@@ -11,22 +11,22 @@ public class HealthSystem
     float _manaPoint;
     float _maxManaPoint;
 
-    public HealthSystem() 
+    public HealthSystem()
     {
-        _healthPoint        = 0;
-        _maxHealthPoint     = 0;
-        _staminaPoint       = 0;
-        _maxStaminaPoint    = 0;
-        _manaPoint          = 0;
-        _maxManaPoint       = 0;  
+        _healthPoint = 0;
+        _maxHealthPoint = 0;
+        _staminaPoint = 0;
+        _maxStaminaPoint = 0;
+        _manaPoint = 0;
+        _maxManaPoint = 0;
     }
 
-    public float HP { get { return _healthPoint; } }
+    public float HP { get { return _healthPoint; } set { _healthPoint = value; } }
     public float MaxHP { get { return _maxHealthPoint; } }
     public float SP { get { return _staminaPoint; } }
     public float MaxSP { get { return _maxStaminaPoint; } }
-    public float MP { get { return _manaPoint;} }
-    public float MaxMP { get { return _maxManaPoint;} }
+    public float MP { get { return _manaPoint; } set { _manaPoint = value; } }
+    public float MaxMP { get { return _maxManaPoint; } }
 
     #region Increase, Decrease Health
     public void Increase_HP(float value_)
@@ -59,7 +59,7 @@ public class HealthSystem
     public void Damage(float damageAmount)
     {
         _healthPoint -= damageAmount;
-        if(_healthPoint <= 0f)
+        if (_healthPoint <= 0f)
         {
             // 죽음 처리?
         }
@@ -71,4 +71,9 @@ public class HealthSystem
     // 이후 추가?
 
     #endregion  // Damage, Consumption
+
+    public bool IsDead()
+    {
+        return _healthPoint <= 0f;
+    }
 }

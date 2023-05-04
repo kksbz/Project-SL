@@ -155,7 +155,8 @@ public class Inventory : Singleton<Inventory>
         {
             if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
             {
-                inventory[i] = item;
+                itemData.Quantity = item.Quantity;
+                inventory[i] = itemData;
                 //Debug.Log($"인벤토리 빈 슬롯에 추가된 아이템 : {inventory[i].itemName}");
                 InitSlotItemData();
                 return;

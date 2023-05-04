@@ -63,7 +63,7 @@ public class GoogleSheetManager
         foreach (string[] dropData in dropTableData)
         {
             string key = dropData[0].Replace("\r\n", string.Empty);
-            Debug.Log($"키값 {key}, 키값의 길이 {key.Length}");
+            //Debug.Log($"키값 {key}, 키값의 길이 {key.Length}");
             List<string> value = new List<string>();
             for (int i = 1; i < dropData.Length - 1; i++)
             {

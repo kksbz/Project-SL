@@ -27,6 +27,6 @@ public class SoulBagUi : MonoBehaviour
         GameObject getSoulObj = Instantiate(getSoulTextPrefab);
         getSoulObj.transform.SetParent(transform);
         getSoulObj.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 50, 0);
-        getSoulObj.GetComponent<TMP_Text>().text = "+" + _soul.ToString();
+        getSoulObj.GetComponent<TMP_Text>().text = _soul >= 0 ? "+" + _soul.ToString() : _soul.ToString();
     } // InstanceGetSoulText
 } // SoulBagUi

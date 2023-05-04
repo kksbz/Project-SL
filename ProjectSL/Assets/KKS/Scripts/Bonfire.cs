@@ -4,33 +4,15 @@ using UnityEngine;
 
 public class Bonfire : MonoBehaviour
 {
-    public enum sceneName
-    {
-        Lobby,
-        Test
-    }
-
     [SerializeField] private GameObject fireEffect; // 화톳불 이펙트
-    private string activeSceneName; //화톳불이 존재하는 씬이름
-    public sceneName thisSceneName;
     public string bonfireName; // 화톳불 이름
     public BonfireData bonfireData; // 화톳불 데이터
     private bool isEnterPlayer = false;
 
     private void Start()
     {
-        activeSceneName = thisSceneName.ToString();
-        bonfireData = new BonfireData(false, activeSceneName, bonfireName, transform.position);
-        foreach (BonfireData _bonfireData in UiManager.Instance.warp.bonfireList)
-        {
-            // 세이브데이터 로드 시 저장했던 화톳불이 자신과 같으면 저장했던 데이터로 덮어씀
-            if (_bonfireData.bonfireName == bonfireName)
-            {
-                bonfireData = _bonfireData;
-                fireEffect.SetActive(true);
-                break;
-            }
-        }
+        bonfireData = new BonfireData(false, bonfireName, transform.position);
+
     } // Start
 
     private void Update()
@@ -53,9 +35,36 @@ public class Bonfire : MonoBehaviour
                 UiManager.Instance.bonfirePanel.SetActive(true);
                 UiManager.Instance.interactionBar.SetActive(false);
                 UiManager.Instance.interactionText.text = null;
+                for (int i = 0; i < Inventory.Instance.inventory.Count; i++)
+                {
+                    if (Inventory.Instance.inventory[i].itemID == 1)
+                    {
+                        Inventory.Instance.inventory[i].Quantity = Inventory.Instance.inventory[i].maxQuantity;
+                    }
+                    if (Inventory.Instance.inventory[i].itemID == 2)
+                    {
+                        Inventory.Instance.inventory[i].Quantity = Inventory.Instance.inventory[i].maxQuantity;
+                        break;
+                    }
+                }
             }
         }
     } // Update
+
+    // 화톳불 데이터 초기화하는 함수
+    public void InitBonfireData()
+    {
+        foreach (BonfireData _bonfireData in UiManager.Instance.warp.bonfireList)
+        {
+            // 세이브데이터 로드 시 저장했던 화톳불이 자신과 같으면 저장했던 데이터로 덮어씀
+            if (_bonfireData.bonfireName == bonfireName)
+            {
+                bonfireData = _bonfireData;
+                fireEffect.SetActive(true);
+                break;
+            }
+        }
+    } // InitBonfireData
 
     private void OnTriggerEnter(Collider other)
     {

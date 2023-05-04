@@ -41,6 +41,10 @@ public class UiInPutManager : Singleton<UiInPutManager>
             {
                 UiManager.Instance.levelUpPanel.SetActive(false);
             }
+            else if (UiManager.Instance.shopPanel.activeInHierarchy == true)
+            {
+                UiManager.Instance.shopPanel.SetActive(false);
+            }
             else
             {
                 UiManager.Instance.quickBar.SetActive(!UiManager.Instance.quickBar.activeSelf);

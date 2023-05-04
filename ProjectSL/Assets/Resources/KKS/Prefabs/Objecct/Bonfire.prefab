@@ -440,6 +440,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireEffect: {fileID: 6710958863083129781}
   bonfireName: 
+  bonfireData:
+    hasBonfire: 0
+    bonfireName: 
+    bonfirePos: {x: 0, y: 0, z: 0}
 --- !u!135 &1941626462482436120
 SphereCollider:
   m_ObjectHideFlags: 0

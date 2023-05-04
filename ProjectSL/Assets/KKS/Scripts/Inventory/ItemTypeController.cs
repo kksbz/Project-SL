@@ -98,5 +98,5 @@ public class ItemTypeController : MonoBehaviour
             typeSprites.Add(itemTypeSprite);
             typeDic.Add(typeList[i], typeSprites[i]);
         }
-    } // TypeNameToKr
+    } // GetTypeSprites
 } // ItemTypeController
