@@ -1385,7 +1385,7 @@ GameObject:
   - component: {fileID: 1943966331370909373}
   - component: {fileID: 1943966331370909375}
   - component: {fileID: 1060097848}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: Boss_Rampage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1444,6 +1444,7 @@ MonoBehaviour:
   - {fileID: 646507835297841493}
   - {fileID: 6345031726122067705}
   - {fileID: 37852400327195953}
+  currentState: 
   _bossStatus:
     currentPhase: 1
     bossLayerMask:
@@ -1486,8 +1487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0900d80152ea2a0429d248a1d6b351af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 1943966331370909374}
+  patrolPointsInspector: []
 --- !u!114 &1943966331370909346
 MonoBehaviour:
   m_ObjectHideFlags: 0

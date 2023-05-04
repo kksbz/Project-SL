@@ -95,7 +95,6 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public virtual void TakeDamage(GameObject damageCauser, float damage)
     {
         if (Status.currentHp <= 0) return;
-
         if (Status.currentHp - damage <= 0)
         {
             Status.currentHp = 0;

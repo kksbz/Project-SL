@@ -205,6 +205,11 @@ public class DataManager : Singleton<DataManager>
             Inventory.Instance.AddItem(item);
         }
 
+        for (int i = 0; i < Inventory.Instance.inventory.Count; i++)
+        {
+            Debug.Log($"현재 인벤에 들어있는 아이템 : {Inventory.Instance.inventory[i].itemName}, 장착여부 : {Inventory.Instance.inventory[i].IsEquip}");
+        }
+
         for (int i = number; i < itemDatas.Length - 1; i++)
         {
             // wSlot 값을 만나면 그 다음 줄부턴 무기슬롯 데이터
@@ -234,6 +239,7 @@ public class DataManager : Singleton<DataManager>
             ItemData item = JsonUtility.FromJson<ItemData>(wSlotData[1]);
             foreach (ItemData _item in Inventory.Instance.inventory)
             {
+                Debug.Log($"인벤 아이템 : {_item.itemName}, 슬롯 아이템 : {item.itemName}, 장착확인 : {_item.IsEquip}");
                 // 로드한 통합 인벤토리에서 장착중인 같은 아이템을 찾아서 무기슬롯에 등록
                 if (_item.itemID == item.itemID && _item.IsEquip == true)
                 {
