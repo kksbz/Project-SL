@@ -21,16 +21,20 @@ public class Enemy_Wolf : EnemyBase
         }
 
         //  플레이어를 찾지 못했거나 플레이어를 놓쳤다면
-        if (!IsFieldOfViewFind() || IsMissed(Status.detectionRange))
+        if (!IsFieldOfViewFind() || (PreviousState is Enemy_Chase_State && !IsInRange(Status.detectionRange)))
         {
+            Debug.Log($"Thought Debug : {!IsFieldOfViewFind()}");
+            Debug.Log($"Thought Debug : {(PreviousState is Enemy_Chase_State && !IsInRange(Status.detectionRange))}");
+            if (MoveController.PatrolPoints.Count <= 1)
+            {
+                return null;
+            }
             return new Enemy_Patrol_State(this);
-
         }
         else
         {
-            Debug.Log($"IsArrive : {IsArrive(Status.attackRange)}");
             //  플레이어가 공격범위 내에 있다면
-            if (IsArrive(Status.attackRange))
+            if (IsInRange(Status.attackRange))
             {
                 return new Enemy_Attack_State(this);
             }

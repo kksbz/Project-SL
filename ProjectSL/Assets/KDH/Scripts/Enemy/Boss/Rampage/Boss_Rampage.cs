@@ -41,8 +41,6 @@ public class Boss_Rampage : BossBase
 
     public IState Phase_1_Thought()
     {
-        return new Boss_Rampage_GroundSmash_Start_State(this);
-
         float randNum = Random.value;
 
         switch (PreviousState)
@@ -61,7 +59,7 @@ public class Boss_Rampage : BossBase
         }
 
         // 플레이어가 근접공격 범위 안에 있을 때
-        if (IsRangedChecked(Status.attackRange))
+        if (IsInRange(Status.attackRange))
         {
             if (randNum <= 0.3f)
             {

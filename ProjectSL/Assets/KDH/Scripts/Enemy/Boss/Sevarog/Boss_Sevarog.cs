@@ -98,7 +98,7 @@ public class Boss_Sevarog : BossBase
         }
 
         // 플레이어가 근접공격 범위 안에 있을 때
-        if (IsRangedChecked(Status.attackRange))
+        if (IsInRange(Status.attackRange))
         {
             Debug.Log($"플레이어가 근접공격 범위 내에 있음");
             if (randNum_ <= BossStatus.swing1_Percentage)

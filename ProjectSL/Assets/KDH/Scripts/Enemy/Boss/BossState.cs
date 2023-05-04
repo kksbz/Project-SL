@@ -252,7 +252,7 @@ public class Boss_Chase_State : IState
         _boss.TargetFollow(_target);
 
         //  플레이어가 공격 범위 내에 들어왔다면 상태 전환
-        if (_boss.IsRangedChecked(_boss.Status.attackRange))
+        if (_boss.IsInRange(_boss.Status.attackRange))
         {
             _boss.SetState(new Boss_Thought_State(_boss));
             _boss.SetStop(true);
