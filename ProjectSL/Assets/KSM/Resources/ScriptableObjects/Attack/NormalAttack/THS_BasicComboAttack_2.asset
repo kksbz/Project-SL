@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorOV: {fileID: 22100000, guid: 6268910d594d72144bc2ec74fb4c7e8a, type: 2}
   damage: 10
+  staminaCost: 35

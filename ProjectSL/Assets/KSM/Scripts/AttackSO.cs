@@ -7,6 +7,7 @@ public class AttackSO : ScriptableObject
 {
     public AnimatorOverrideController animatorOV;
     public float damage = 10f;
+    public float staminaCost = 10f;
     // Start is called before the first frame update
     void Start()
     {

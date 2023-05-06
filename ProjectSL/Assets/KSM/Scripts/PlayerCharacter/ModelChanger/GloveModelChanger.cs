@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GloveModelChanger : MonoBehaviour
+public class GloveModelChanger : ModelChanger
 {
+    /*
     public List<GameObject> _gloveModels;
     public List<SkinnedMeshRenderer> _gloveMeshes;
     private void Awake()
@@ -49,4 +50,5 @@ public class GloveModelChanger : MonoBehaviour
             }
         }
     }
+    */
 }

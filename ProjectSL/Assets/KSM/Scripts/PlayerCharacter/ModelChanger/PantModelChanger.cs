@@ -2,26 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PantModelChanger : MonoBehaviour
+public class PantModelChanger : ModelChanger
 {
-    public List<GameObject> _pantModels;
-    public List<SkinnedMeshRenderer> _pantMeshes;
-    private void Awake()
+    //public List<GameObject> _pantModels;
+    //public List<SkinnedMeshRenderer> _pantMeshes;
+
+    /*
+     * Legacy Code
+    protected override void GetAllModel()
     {
-        GetAllPantModels();
-        GetAllPantMeshes();
-    }
-    private void Start()
-    {
-        UnEquipAllPantModels();
-    }
-    private void GetAllPantModels()
-    {
-        int childrenGameobjects = transform.childCount;
-        for (int i = 0; i < childrenGameobjects; i++)
-        {
-            _pantModels.Add(transform.GetChild(i).gameObject);
-        }
+        
     }
     private void GetAllPantMeshes()
     {
@@ -48,4 +38,5 @@ public class PantModelChanger : MonoBehaviour
             }
         }
     }
+    */
 }

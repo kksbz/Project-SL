@@ -66,6 +66,7 @@ public class PlayerStateMachine : MonoBehaviour
     //
 
     // getter and setter
+    public PlayerCharacter PlayerCharacter { get { return _playerCharacter; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerController PlayerController { get { return _playerController; } }
@@ -138,7 +139,6 @@ public class PlayerStateMachine : MonoBehaviour
         //_playerInput.PlayerCharacterInput.SwitchArm.canceled += (InputAction.CallbackContext context) => Debug.Log("SwitchArm canceled");
         Debug.Log("Player State Machine : ��ǲ ���ε�");
 
-        _playerCharacter.HealthSys.onDieHandle += () => _deadFlag = true;
         // _playerInput.PlayerCharacterInput.
 
     }
@@ -146,6 +146,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _cameraInput = _cameraController.cm_FreeLook.GetComponent<CinemachineInputProvider>();
+
+        _playerCharacter.HealthSys.onDieHandle += () => _deadFlag = true;
     }
 
     // Update is called once per frame
@@ -166,6 +168,11 @@ public class PlayerStateMachine : MonoBehaviour
 
         if (!_isMovementPressed)
             return;
+
+        if(_isRunPressed)
+        {
+            PlayerCharacter.HealthSys.ConsumSP(_playerController._sprintActionCost * Time.deltaTime);
+        }
 
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����

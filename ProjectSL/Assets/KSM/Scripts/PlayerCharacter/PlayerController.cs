@@ -36,6 +36,13 @@ public class PlayerController : MonoBehaviour
     public Behavior wait;
     bool isMove;
 
+    #region Action Costs
+    public float _rollActionCost = 15;
+    public float _backStepActionCost = 12;
+    public float _BlockActionCost = 30;
+    public float _sprintActionCost = 15;
+    #endregion  // Action Costs
+
     #region Die Field
     bool _isDie;
     #endregion  // Die Field
