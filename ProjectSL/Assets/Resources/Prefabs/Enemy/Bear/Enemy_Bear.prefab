@@ -939,10 +939,11 @@ MonoBehaviour:
     currentMoveSpeed: 5
     maxAttackDamage: 5
     currentAttackDamage: 5
-    detectionRange: 10
+    detectionRange: 30
     attackRange: 1.7
+    dodge_Percentage: 0
   researchStatus:
-    viewRadius: 10
+    viewRadius: 30
     viewAngle: 360
     targetLayerMask:
       serializedVersion: 2
@@ -994,6 +995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1120aa1094e583942ad1b3f4ce854097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targets: []
 --- !u!114 &8326976822425689865
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -55,19 +55,19 @@ public class SkinnedMeshController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Keypad7))
         {
-            _helmetModelChanger.EquipModelByName("Helmet_01");
+            _helmetModelChanger.EquipModelByName("Helmet_02");
         }
         if (Input.GetKeyDown(KeyCode.Keypad8))
         {
-            _chestModelChanger.EquipModelByName("Chest_01");
+            _chestModelChanger.EquipModelByName("Chest_02_Cloak");
         }
         if (Input.GetKeyDown(KeyCode.Keypad9))
         {
-            _gloveModelChanger.EquipModelByName("Glove_01");
+            _gloveModelChanger.EquipModelByName("Glove_02");
         }
         if (Input.GetKeyDown(KeyCode.Keypad6))
         {
-            _pantModelChanger.EquipModelByName("Pant_01");
+            _pantModelChanger.EquipModelByName("Pant_02");
         }
     }
     //

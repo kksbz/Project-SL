@@ -76,7 +76,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         GData.IDamageable object_ = other.GetComponent<GData.IDamageable>();
 
-        if (object_ == null || object_ == default)
+        //  { Enemy끼리 서로 데미지를 못 입히도록 예외 처리 추가
+        EnemyBase enemy_ = other.GetComponent<EnemyBase>();
+
+        if (object_ == null || object_ == default || enemy_ != null || enemy_ != default)
         {
             /*  Do Nothing  */
         }
@@ -95,6 +98,9 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public virtual void TakeDamage(GameObject damageCauser, float damage)
     {
         if (Status.currentHp <= 0) return;
+
+        ActiveHpBar();
+
         if (Status.currentHp - damage <= 0)
         {
             Status.currentHp = 0;
@@ -108,9 +114,37 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         UpdateHpBar(Status.currentHp);
     }
 
+    public virtual void OnDie()
+    {
+        DropReward();
+        Destroy(gameObject);
+    }
+
     public virtual void DropReward()
     {
+        List<string> rewardList = DataManager.Instance.dropTable[Status.name];
+        foreach (var iterator in rewardList)
+        {
+            Debug.Log($"DropReward Debug : {iterator}");
+        }
 
+        int itemIndex = default;
+
+        int randNum_ = Random.Range(0, rewardList.Count);
+
+        foreach (var iterator in DataManager.Instance.itemDatas)
+        {
+            if (rewardList[randNum_] == iterator[1])
+            {
+                itemIndex = int.Parse(iterator[0]);
+                Debug.Log($"Item Debug : 아이템 이름 {rewardList[randNum_]} / 아이템 인덱스 : {iterator[0]}");
+            }
+        }
+
+        GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemIndex}"));
+        item.transform.position = transform.position + (Vector3.up * 0.3f);
+
+        UiManager.Instance.soulBag.GetSoul(int.Parse(rewardList[0]));
     }
 
     public virtual IState Thought()
@@ -121,6 +155,10 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public void InitHpBar(float maxHp, float currentHp)
     {
         EnemyHpBar.InitHpBar(maxHp, currentHp);
+    }
+    public void ActiveHpBar()
+    {
+        EnemyHpBar.ActiveHpBar();
     }
     public void UpdateHpBar(float newHp)
     {
@@ -189,17 +227,25 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     #region IEnemyMoveController
     public Transform Target { get { return MoveController.Target; } }
-    public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
+    //public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
+    public void SetStoppingDistance(float newDistance)
+    {
+        MoveController.SetStoppingDistance(newDistance);
+        //NavMeshAgent.stoppingDistance = distance;
+    }
     public void SetSpeed(float newSpeed)
     {
+        //NavMeshAgent.speed = newSpeed;
         MoveController.SetSpeed(newSpeed);
     }
     public void SetStop(bool isStopped)
     {
+        //NavMeshAgent.isStopped = isStopped;
         MoveController.SetStop(isStopped);
     }
     public void SetUpdateRotation(bool isRotation)
     {
+        //NavMeshAgent.updateRotation = isRotation;
         MoveController.SetUpdateRotation(isRotation);
     }
     public void Patrol()
@@ -299,6 +345,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     }
     #endregion
 
+    #region Editor Func
     public Vector3 DirFromAngle(float angleDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
@@ -308,5 +355,6 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
         return new Vector3(Mathf.Cos((-angleDegrees + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees + 90) * Mathf.Deg2Rad));
     }
+    #endregion
 }
 
