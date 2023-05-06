@@ -107,14 +107,5 @@ public class Enemy_Golem : EnemyBase
     public override void DropReward()
     {
         base.DropReward();
-
-        List<string> dropList = DataManager.Instance.dropTable[Status.name];
-
-
-
-        foreach (var iterator in dropList)
-        {
-            Debug.Log($"DropReward Debug : {iterator}");
-        }
     }
 }

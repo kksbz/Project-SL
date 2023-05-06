@@ -122,6 +122,29 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     public virtual void DropReward()
     {
+        List<string> rewardList = DataManager.Instance.dropTable[Status.name];
+        foreach (var iterator in rewardList)
+        {
+            Debug.Log($"DropReward Debug : {iterator}");
+        }
+
+        int itemIndex = default;
+
+        int randNum_ = Random.Range(0, rewardList.Count);
+
+        foreach (var iterator in DataManager.Instance.itemDatas)
+        {
+            if (rewardList[randNum_] == iterator[1])
+            {
+                itemIndex = int.Parse(iterator[0]);
+                Debug.Log($"Item Debug : 아이템 이름 {rewardList[randNum_]} / 아이템 인덱스 : {iterator[0]}");
+            }
+        }
+
+        GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemIndex}"));
+        item.transform.position = transform.position + (Vector3.up * 0.3f);
+
+        UiManager.Instance.soulBag.GetSoul(int.Parse(rewardList[0]));
     }
 
     public virtual IState Thought()
