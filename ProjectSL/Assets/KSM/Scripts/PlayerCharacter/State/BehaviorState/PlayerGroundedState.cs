@@ -57,7 +57,7 @@ public class PlayerGroundedState : PlayerBaseState
             //Debug.Log("GroundedState SetSubState Jog");
             SetSubState(Factory.Jog());
         }
-        else if (Ctx.IsMovementPressed && Ctx.IsRunPressed)
+        else if (Ctx.IsMovementPressed && Ctx.IsRunPressed && Ctx.PlayerCharacter.HealthSys.IsAvailableAction())
         {
             //Debug.Log("GroundedState SetSubState Run");
             SetSubState(Factory.Run());

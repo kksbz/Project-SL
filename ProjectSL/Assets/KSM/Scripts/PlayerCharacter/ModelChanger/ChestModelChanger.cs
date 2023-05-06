@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestModelChanger : MonoBehaviour
+public class ChestModelChanger : ModelChanger
 {
+    /*
     public List<GameObject> _chestModels;
     public List<SkinnedMeshRenderer> _chestMeshes;
     private void Awake()
@@ -48,4 +49,5 @@ public class ChestModelChanger : MonoBehaviour
             }
         }
     }
+    */
 }

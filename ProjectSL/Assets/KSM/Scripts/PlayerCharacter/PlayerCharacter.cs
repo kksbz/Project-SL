@@ -17,7 +17,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     public CharacterControlProperty controlProperty { get; private set; }
 
     // Status Field
-    private HealthSystem _healthSystem = new HealthSystem();
+    private HealthSystem _healthSystem;// = new HealthSystem(this);
     private PlayerStatus _status = new PlayerStatus();
     private CombatStatus _combatStatus = new CombatStatus();
 
@@ -43,6 +43,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         if (instance == null)
         {
             instance = this;
+            _healthSystem = new HealthSystem(this);
             characterController = GetComponent<CharacterController>();
             playerController = GetComponent<PlayerController>();
             cameraController = GetComponent<CameraController>();
@@ -75,10 +76,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     // Update is called once per frame
     void Update()
     {
-        //float angle2 = GetAngleBetween3DVector(transform.position - testCube.position, transform.forward);
-        //Debug.Log($"angle2 : {angle2}");
-        // SM_Behavior?.UpdateState();
-        // SM_Look?.UpdateState();
+        _healthSystem.RegenerationStamina();
     }
     private void FixedUpdate()
     {
