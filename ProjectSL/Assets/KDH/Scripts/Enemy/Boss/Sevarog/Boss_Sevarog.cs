@@ -34,18 +34,22 @@ public class Boss_Sevarog : BossBase
 
     public override void TakeDamage(GameObject damageCauser, float damage)
     {
-        if (Status.currentHp <= 0) return;
+        base.TakeDamage(damageCauser, damage);
 
-        if (Status.currentHp - damage <= 0)
-        {
-            Status.currentHp = 0;
-            SetState(new Enemy_Die_State(this));
-        }
-        else
-        {
-            Status.currentHp -= damage;
-            BossStatus.hitCount++;
-        }
+        BossStatus.hitCount++;
+
+        // if (Status.currentHp <= 0) return;
+
+        // if (Status.currentHp - damage <= 0)
+        // {
+        //     Status.currentHp = 0;
+        //     SetState(new Enemy_Die_State(this));
+        // }
+        // else
+        // {
+        //     Status.currentHp -= damage;
+        //     BossStatus.hitCount++;
+        // }
     }
 
     public override IState Thought()

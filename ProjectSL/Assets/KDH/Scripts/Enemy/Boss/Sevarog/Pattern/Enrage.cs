@@ -71,7 +71,9 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
         foreach (var target in targets)
         {
             GData.IDamageable damageable = target.GetComponent<GData.IDamageable>();
-            if (damageable == null || damageable == default)
+            EnemyBase enemy_ = target.GetComponent<EnemyBase>();
+
+            if (damageable == null || damageable == default || enemy_ != null || enemy_ != default)
             {
                 /*  Do Nothing  */
             }

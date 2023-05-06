@@ -31,6 +31,7 @@ namespace ProjectSL.Enemy
         public const string ANIMATION_ATTACK_05 = "Attack_05";
         public const string TRIGGER_DODGE = "Dodge";
         public const string FLOAT_MOVESPEED = "MoveSpeed";
+        public const string ANIMATION_DIE = "Die";
     }
 }
 

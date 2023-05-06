@@ -8,6 +8,7 @@ public interface IEnemyMoveController : GData.IInitialize
     NavMeshAgent NavMeshAgent { get; }
     List<Transform> PatrolPoints { get; }
     Transform Target { get; }
+    void SetStoppingDistance(float newDistance);
     void SetSpeed(float newSpeed);
     void SetStop(bool isStopped);
     void SetUpdateRotation(bool isRotation);
@@ -66,6 +67,11 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         Target = PatrolPoints[_index];
 
         //_moveDelay = MoveDelay(1f);
+    }
+
+    public void SetStoppingDistance(float newDistance)
+    {
+        NavMeshAgent.stoppingDistance = newDistance;
     }
 
     public void SetSpeed(float newSpeed)
@@ -312,6 +318,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// <returns>추적 대상이 범위 내 있으면 : TRUE / 추적 대상이 유효하지 않거나 범위 내 존재하지 않으면 : FALSE </returns>
     public bool IsInRange(float ranged)
     {
+        Debug.Log($"NavMeshAgent : {NavMeshAgent.destination}");
         if (!IsValidTargetPlayer || ranged < NavMeshAgent.remainingDistance)
         {
             return false;
