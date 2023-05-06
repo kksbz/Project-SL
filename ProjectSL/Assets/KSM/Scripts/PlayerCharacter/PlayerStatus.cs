@@ -14,7 +14,7 @@ public class PlayerStatus
     [SerializeField] int _vitality;
     [SerializeField] int _strength;
     [SerializeField] int _dexterity;
-    
+
     public PlayerStatus()
     {
         _name = string.Empty;
@@ -41,6 +41,7 @@ public class PlayerStatus
 public class StatusSaveData
 {
     [SerializeField] public PlayerStatus _playerStatusData;
+    [SerializeField] public HealthSystem _healthSystemData;
     [SerializeField] public float _currentHealthPoint;
     [SerializeField] public float _currentManaPoint;
     [SerializeField] public Vector3 _playerPos;
@@ -49,6 +50,7 @@ public class StatusSaveData
     public StatusSaveData(PlayerStatus playerStatusData, HealthSystem healthSystem, Vector3 currentPlayerPos)
     {
         _playerStatusData = playerStatusData;
+        _healthSystemData = healthSystem;
         _currentHealthPoint = healthSystem.HP;
         _currentManaPoint = healthSystem.MP;
         _playerPos = currentPlayerPos;

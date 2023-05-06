@@ -98,6 +98,15 @@ public class Slot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPointerEx
         Item = null;
     } // RemoveItem
 
+    public bool SlotItemIsNull()
+    {
+        if (Item == null)
+        {
+            return true;
+        }
+        return false;
+    } // SlotItemIsNull
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         pointerEffect.SetActive(true);

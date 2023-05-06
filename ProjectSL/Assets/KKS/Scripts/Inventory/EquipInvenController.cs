@@ -5,13 +5,25 @@ using UnityEngine;
 public class EquipInvenController : MonoBehaviour
 {
     [SerializeField] private GameObject EquipSlots;
-    // Update is called once per frame
+    public GameObject WarningPanel; // ¿Â¬¯ΩΩ∑‘ ∞Ê∞Ì√¢
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             EquipSlots.SetActive(true);
             gameObject.SetActive(false);
         }
+        if (WarningPanel.activeInHierarchy == true)
+        {
+            if (Input.anyKeyDown)
+            {
+                WarningPanel.SetActive(false);
+            }
+        }
     } // Update
+
+    private void OnDisable()
+    {
+        WarningPanel.SetActive(false);
+    } // OnDisable
 } // EquipInvenController

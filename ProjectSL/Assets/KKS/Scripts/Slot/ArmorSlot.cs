@@ -80,6 +80,15 @@ public class ArmorSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoin
         equipItem = null;
     } // RemoveItem
 
+    public bool SlotItemIsNull()
+    {
+        if (Item == null)
+        {
+            return true;
+        }
+        return false;
+    } // SlotItemIsNull
+
     private void ShowInvenText()
     {
         switch (slotType)

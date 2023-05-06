@@ -102,6 +102,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         StatusSaveData saveData = new StatusSaveData(_status, _healthSystem, gameObject.transform.position);
         return saveData;
     }
+
     public void LoadPlayerData(StatusSaveData _playerStatusData)
     {
         _status = _playerStatusData._playerStatusData;
@@ -149,10 +150,6 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
 
     }
     #endregion  // Stat Initialize
-    public HealthSystem GetHealth()
-    {
-        return _healthSystem;
-    }
     //! } �÷��̾� ������ ���̺� �� �ε��ϴ� �������̽��Լ�
     void GData.IDamageable.TakeDamage(GameObject damageCauser, float damage)
     {

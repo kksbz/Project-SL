@@ -29,6 +29,10 @@ public class LevelUpPanel : MonoBehaviour
     [SerializeField] private TMP_Text[] resultStatusTexts; // 결과 스텟 텍스트 배열
     [SerializeField] private Image[] statusImages; // 스텟 이미지 배열
 
+    [Header("능력치 텍스트 모음")]
+    [SerializeField] private TMP_Text[] abilityTexts; // 능력치 텍스트 배열
+    [SerializeField] private TMP_Text[] resultAbilityTexts; // 결과 능력치 텍스트 배열
+
     [SerializeField] private GameObject warningPanel; // 경고창
     [SerializeField] private TMP_Text warningText; // 경고창 텍스트
     [SerializeField] private GameObject selectPanel; // NPC대화 선택 패널
@@ -66,7 +70,9 @@ public class LevelUpPanel : MonoBehaviour
         {
             // 패널 초기화
             statusImages[selectStatusNum].color = new Color(1, 1, 1, 0);
+            selectStatusNum = -1;
             GetPlayerStatus();
+            GetAbilityStatus();
             increaseNum = 0;
             sumWantSoul = 0;
             hasSelectBt = false;
@@ -111,8 +117,11 @@ public class LevelUpPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        selectStatusNum = -1;
         // 활성화될 때 플레이어의 현재스텟 가져옴
         GetPlayerStatus();
+        // 능력치 패널 텍스트 할당
+        GetAbilityStatus();
     } // OnEnable
 
     private void OnDisable()
@@ -204,6 +213,7 @@ public class LevelUpPanel : MonoBehaviour
 
         statusTexts[selectStatusNum].text = playerStatus[selectStatusNum].ToString();
         resultStatusTexts[selectStatusNum].text = (playerStatus[selectStatusNum] + increaseNum).ToString();
+        GetAbilityStatus();
     } // PlusBtClick
 
     //! 마이너스 버튼 클릭기능
@@ -232,6 +242,7 @@ public class LevelUpPanel : MonoBehaviour
 
         statusTexts[selectStatusNum].text = playerStatus[selectStatusNum].ToString();
         resultStatusTexts[selectStatusNum].text = (playerStatus[selectStatusNum] + increaseNum).ToString();
+        GetAbilityStatus();
     } // MinusBtClick
 
     //! 결정 버튼 클릭기능
@@ -255,9 +266,95 @@ public class LevelUpPanel : MonoBehaviour
 
         // 패널 초기화
         statusImages[selectStatusNum].color = new Color(1, 1, 1, 0);
+        selectStatusNum = -1;
         GetPlayerStatus();
+        GetAbilityStatus();
         increaseNum = 0;
         sumWantSoul = 0;
         hasSelectBt = false;
     } // DecisionBtClick
+
+    //! 능력치 패널 텍스트 할당하는 함수
+    private void GetAbilityStatus()
+    {
+        PlayerStatus pStatus = GameManager.Instance.player.GetPlayerData()._playerStatusData;
+        if (selectStatusNum == 5)
+        {
+            // 공격력 배율 텍스트 갱신
+            abilityTexts[10].text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
+            resultAbilityTexts[10].text = DataManager.Instance.statusLevelData[pStatus.Dexterity + increaseNum].damageMultiplier.ToString();
+        }
+        else if (selectStatusNum == 4)
+        {
+            // 오른손, 왼손 공격력 텍스트 갱신
+            for (int i = 4; i < abilityTexts.Length - 1; i++)
+            {
+                if (Inventory.Instance.weaponSlotList[i - 4].Item != null)
+                {
+                    abilityTexts[i].text = (GameManager.Instance.player.CombatStat.AttackPoint + Inventory.Instance.weaponSlotList[i - 4].Item.damage).ToString();
+                    resultAbilityTexts[i].text = (DataManager.Instance.statusLevelData[pStatus.Strength + increaseNum].damage + Inventory.Instance.weaponSlotList[i - 4].Item.damage).ToString();
+                }
+                else
+                {
+                    abilityTexts[i].text = GameManager.Instance.player.CombatStat.AttackPoint.ToString();
+                    resultAbilityTexts[i].text = DataManager.Instance.statusLevelData[pStatus.Strength + increaseNum].damage.ToString();
+                }
+            }
+        }
+        else if (selectStatusNum == 3)
+        {
+            // 방어력 텍스트 갱신
+            abilityTexts[selectStatusNum].text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
+            resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Vitality + increaseNum].defense.ToString();
+        }
+        else if (selectStatusNum == 2)
+        {
+            // 스테미너 텍스트 갱신
+            abilityTexts[selectStatusNum].text = GameManager.Instance.player.HealthSys.MaxSP.ToString();
+            resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Endurance + increaseNum].st.ToString();
+        }
+        else if (selectStatusNum == 1)
+        {
+            // MP 텍스트 갱신
+            abilityTexts[selectStatusNum].text = GameManager.Instance.player.HealthSys.MaxMP.ToString();
+            resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Attunement + increaseNum].mp.ToString();
+        }
+        else if (selectStatusNum == 0)
+        {
+            // HP 텍스트 갱신
+            abilityTexts[selectStatusNum].text = GameManager.Instance.player.HealthSys.MaxHP.ToString();
+            resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Vigor + increaseNum].hp.ToString();
+        }
+        else
+        {
+            // 현재 어빌리티 텍스트
+            abilityTexts[0].text = GameManager.Instance.player.HealthSys.MaxHP.ToString();
+            abilityTexts[1].text = GameManager.Instance.player.HealthSys.MaxMP.ToString();
+            abilityTexts[2].text = GameManager.Instance.player.HealthSys.MaxSP.ToString();
+            abilityTexts[3].text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
+            abilityTexts[10].text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
+
+            // 결과 어빌리티 텍스트
+            resultAbilityTexts[0].text = GameManager.Instance.player.HealthSys.MaxHP.ToString();
+            resultAbilityTexts[1].text = GameManager.Instance.player.HealthSys.MaxMP.ToString();
+            resultAbilityTexts[2].text = GameManager.Instance.player.HealthSys.MaxSP.ToString();
+            resultAbilityTexts[3].text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
+            resultAbilityTexts[10].text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
+
+            // 오른손, 왼손 공격력 텍스트
+            for (int i = 4; i < abilityTexts.Length - 1; i++)
+            {
+                if (Inventory.Instance.weaponSlotList[i - 4].Item != null)
+                {
+                    abilityTexts[i].text = (GameManager.Instance.player.CombatStat.AttackPoint + Inventory.Instance.weaponSlotList[i - 4].Item.damage).ToString();
+                    resultAbilityTexts[i].text = (GameManager.Instance.player.CombatStat.AttackPoint + Inventory.Instance.weaponSlotList[i - 4].Item.damage).ToString();
+                }
+                else
+                {
+                    abilityTexts[i].text = GameManager.Instance.player.CombatStat.AttackPoint.ToString();
+                    resultAbilityTexts[i].text = GameManager.Instance.player.CombatStat.AttackPoint.ToString();
+                }
+            }
+        }
+    } // GetAbilityStatus
 } // LevelUpPanel

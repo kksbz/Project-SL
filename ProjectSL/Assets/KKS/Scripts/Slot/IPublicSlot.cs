@@ -9,4 +9,5 @@ public interface IPublicSlot
     ItemType SlotType { get; set; }
     void AddItem(ItemData _item);
     void RemoveItem();
+    bool SlotItemIsNull();
 } // PublicSlot

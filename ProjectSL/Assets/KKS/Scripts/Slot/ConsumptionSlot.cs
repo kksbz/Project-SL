@@ -94,6 +94,15 @@ public class ConsumptionSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler,
         UiManager.Instance.quickSlotBar.LoadQuickSlotData();
     } // RemoveItem
 
+    public bool SlotItemIsNull()
+    {
+        if (Item == null)
+        {
+            return true;
+        }
+        return false;
+    } // SlotItemIsNull
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         pointerEffect.SetActive(true);

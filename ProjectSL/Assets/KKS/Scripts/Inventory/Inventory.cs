@@ -31,6 +31,7 @@ public class Inventory : Singleton<Inventory>
     public List<EquipSlot> equipSlots = new List<EquipSlot>(); // 장비인벤 슬롯
     public List<Slot> totalSlots = new List<Slot>(); // 장비인벤 슬롯
     public IPublicSlot selectSlot; // 선택한 슬롯 담을 변수
+    public EquipInvenController equipInvenController;
     [SerializeField] private int soul; // 보유소울
     public int Soul
     {
@@ -306,7 +307,8 @@ public class Inventory : Singleton<Inventory>
                                 {
                                     // 소모품슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
                                     if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
-                                        && equipSlots[i].Item.IsEquip == true)
+                                        && equipSlots[i].Item.IsEquip == true
+                                        && consumptionSlotList[j].Item.Quantity == equipSlots[i].Item.Quantity)
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
@@ -323,7 +325,8 @@ public class Inventory : Singleton<Inventory>
                                 {
                                     // 소모품슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
                                     if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
-                                        && equipSlots[i].Item.IsEquip == true)
+                                        && equipSlots[i].Item.IsEquip == true
+                                        && consumptionSlotList[j].Item.Quantity == equipSlots[i].Item.Quantity)
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
@@ -453,7 +456,7 @@ public class Inventory : Singleton<Inventory>
                         {
                             if (consumptionSlotList[j].Item != null)
                             {
-                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID && consumptionSlotList[j].Item.Quantity == inventory[i].Quantity)
+                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
                                 {
                                     consumptionSlotList[j].Item = inventory[i];
                                     break;
@@ -466,7 +469,7 @@ public class Inventory : Singleton<Inventory>
                         {
                             if (consumptionSlotList[j].Item != null)
                             {
-                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID && consumptionSlotList[j].Item.Quantity == inventory[i].Quantity)
+                                if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
                                 {
                                     consumptionSlotList[j].Item = inventory[i];
                                     break;

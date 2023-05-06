@@ -82,6 +82,15 @@ public class WeaponSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoi
         UiManager.Instance.quickSlotBar.LoadQuickSlotData();
     } // RemoveItem
 
+    public bool SlotItemIsNull()
+    {
+        if (Item == null)
+        {
+            return true;
+        }
+        return false;
+    } // SlotItemIsNull
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         pointerEffect.SetActive(true);
