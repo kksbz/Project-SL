@@ -151,6 +151,7 @@ public class QuickSlotBar : MonoBehaviour
                 }
             }
         }
+        Inventory.Instance._onEquipSlotUpdated();
     } // InPutQuickSlot
 
     //! 데이터 로드시 퀵슬롯 아이템 갱신하는 함수

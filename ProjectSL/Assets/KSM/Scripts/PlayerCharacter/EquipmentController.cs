@@ -23,6 +23,8 @@ public class EquipmentController : MonoBehaviour
     private AnimationController _animationController;
     [SerializeField]
     private CombatController _combatController;
+    [SerializeField]
+    private PlayerCharacter _playerCharacter;
     
 
     #region Equipment Model Change
@@ -132,6 +134,11 @@ public class EquipmentController : MonoBehaviour
     public EventHandler _onChangedEquipment;
     public EventHandler _onSwitchiedArmState;
 
+    [SerializeField]
+    DamageCollider _rightHand_NotWeapon_Collider;
+    [SerializeField]
+    DamageCollider _leftHand_NotWeapon_Collider;
+
     // Property
     public EArmState ArmState { get { return _currentArmState; } }
     public EWeaponState WeaponState { get { return _currentWeaponState; } }
@@ -148,6 +155,7 @@ public class EquipmentController : MonoBehaviour
     private void Awake()
     {
         // Component Init
+        _playerCharacter = GetComponent<PlayerCharacter>();
         GameObject meshObj = gameObject.FindChildObj("Mesh");
         _animator = meshObj.GetComponent<Animator>();
         _combatController = GetComponent<CombatController>();
@@ -319,12 +327,28 @@ public class EquipmentController : MonoBehaviour
         {
             _currentRightArmWeaponObj = _quickSlotBar.GetCurrentRightWeaponObject;
             AttachWeaponObj(_currentRightArmWeaponObj.transform, _rightArmSocket);
+
+            DamageCollider damageCollider = _currentRightArmWeaponObj.GetComponent<DamageCollider>();
+            damageCollider.WeaponInit(_playerCharacter, _currentRightArmWeapon, _playerCharacter.PlayerStat);
+            _combatController._currentRightWeaponCollider = damageCollider;
+        }
+        else
+        {
+            _combatController._currentRightWeaponCollider = _rightHand_NotWeapon_Collider;
         }
         _currentLeftArmWeapon = _quickSlotBar.QuickSlotLeftWeapon;
         if (_currentLeftArmWeapon != null)
         {
             _currentLeftArmWeaponObj = _quickSlotBar.GetCurrentLeftWeaponObject;
             AttachWeaponObj(_currentLeftArmWeaponObj.transform, _leftArmSocket);
+
+            DamageCollider damageCollider = _currentLeftArmWeaponObj.GetComponent<DamageCollider>();
+            damageCollider.WeaponInit(_playerCharacter, _currentLeftArmWeapon, _playerCharacter.PlayerStat);
+            _combatController._currentLeftWeaponCollider = damageCollider;
+        }
+        else
+        {
+            _combatController._currentLeftWeaponCollider = _leftHand_NotWeapon_Collider;
         }
 
         // 임시 *검밖에 없으니 검으로
