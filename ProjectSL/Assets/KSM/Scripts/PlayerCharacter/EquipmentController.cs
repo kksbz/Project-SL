@@ -25,6 +25,8 @@ public class EquipmentController : MonoBehaviour
     private CombatController _combatController;
     [SerializeField]
     private PlayerCharacter _playerCharacter;
+    [SerializeField]
+    private PlayerController _playerController;
     
 
     #region Equipment Model Change
@@ -50,7 +52,7 @@ public class EquipmentController : MonoBehaviour
     #region Equipment Item
 
     // 무기
-    [Header("현재 장비")]
+    [Header("현재 퀵슬롯에 있는 아이템")]
     [SerializeField]
     ItemData _currentRightArmWeapon = default;
     [SerializeField]
@@ -59,7 +61,16 @@ public class EquipmentController : MonoBehaviour
     ItemData _currentLeftArmWeapon = default;
     [SerializeField]
     GameObject _currentLeftArmWeaponObj = default;
+    [SerializeField]
+    ItemData _currentAttackConsumption = default;
+    [SerializeField]
+    GameObject _currentAttackConsumptionObj = default;
+    [SerializeField]
+    ItemData _currentRecoveryConsumption = default;
+    [SerializeField]
+    GameObject _currentRecoveryConsumptionObj = default;
 
+    [Header("착용중인 모든 장비")]
     // 무기
     [SerializeField]
     ItemData[] _rightWeapon = new ItemData[3];
@@ -85,6 +96,12 @@ public class EquipmentController : MonoBehaviour
     ItemData _ring_3;
     [SerializeField]
     ItemData _ring_4;
+
+    [SerializeField]
+    ItemData[] _consumption_Attack = new ItemData[3];
+    [SerializeField]
+    ItemData[] _consumption_Recovery = new ItemData[3];
+
 
     // 임시 기본 장비
     [SerializeField]
@@ -149,6 +166,22 @@ public class EquipmentController : MonoBehaviour
 
         return _currentLeftArmWeapon.itemType == ItemData.ItemType.SHIELD; 
     }
+    public bool IsUsableAttackConsumption()
+    {
+        bool usable = true;
+
+        usable = _currentAttackConsumption.Quantity > 0;
+
+        return usable;
+    }
+    public bool IsUsableRecoveryConsumption()
+    {
+        bool usable = true;
+
+        usable = _currentRecoveryConsumption.Quantity > 0;
+
+        return usable;
+    }
     // Property
 
 
@@ -160,6 +193,7 @@ public class EquipmentController : MonoBehaviour
         _animator = meshObj.GetComponent<Animator>();
         _combatController = GetComponent<CombatController>();
         _animationController = GetComponent<AnimationController>();
+        _playerController = GetComponent<PlayerController>();
 
         //_helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
         //_chestModelChanger = GetComponentInChildren<ChestModelChanger>();
@@ -322,6 +356,14 @@ public class EquipmentController : MonoBehaviour
         _armor_Gloves = Inventory.Instance.armorSlotList[2].Item;
         _armor_Pants = Inventory.Instance.armorSlotList[3].Item;
 
+        _consumption_Attack[0] = Inventory.Instance.consumptionSlotList[0].Item;
+        _consumption_Attack[1] = Inventory.Instance.consumptionSlotList[1].Item;
+        _consumption_Attack[2] = Inventory.Instance.consumptionSlotList[2].Item;
+        _consumption_Recovery[0] = Inventory.Instance.consumptionSlotList[3].Item;
+        _consumption_Recovery[1] = Inventory.Instance.consumptionSlotList[4].Item;
+        _consumption_Recovery[2] = Inventory.Instance.consumptionSlotList[5].Item;
+
+        // 오른손 장비 설정
         _currentRightArmWeapon = _quickSlotBar.QuickSlotRightWeapon;
         if (_currentRightArmWeapon != null)
         {
@@ -329,13 +371,16 @@ public class EquipmentController : MonoBehaviour
             AttachWeaponObj(_currentRightArmWeaponObj.transform, _rightArmSocket);
 
             DamageCollider damageCollider = _currentRightArmWeaponObj.GetComponent<DamageCollider>();
-            damageCollider.WeaponInit(_playerCharacter, _currentRightArmWeapon, _playerCharacter.PlayerStat);
+            damageCollider.WeaponInit(_playerCharacter, _playerCharacter.PlayerStat, _currentRightArmWeapon);
             _combatController._currentRightWeaponCollider = damageCollider;
         }
         else
         {
+            _currentRightArmWeaponObj = null;
             _combatController._currentRightWeaponCollider = _rightHand_NotWeapon_Collider;
+            _combatController._currentRightWeaponCollider.WeaponInit(_playerCharacter, _playerCharacter.PlayerStat);
         }
+        // 왼손 장비 설정
         _currentLeftArmWeapon = _quickSlotBar.QuickSlotLeftWeapon;
         if (_currentLeftArmWeapon != null)
         {
@@ -343,14 +388,43 @@ public class EquipmentController : MonoBehaviour
             AttachWeaponObj(_currentLeftArmWeaponObj.transform, _leftArmSocket);
 
             DamageCollider damageCollider = _currentLeftArmWeaponObj.GetComponent<DamageCollider>();
-            damageCollider.WeaponInit(_playerCharacter, _currentLeftArmWeapon, _playerCharacter.PlayerStat);
+            damageCollider.WeaponInit(_playerCharacter, _playerCharacter.PlayerStat, _currentLeftArmWeapon);
             _combatController._currentLeftWeaponCollider = damageCollider;
         }
         else
         {
+            _currentLeftArmWeaponObj = null;
             _combatController._currentLeftWeaponCollider = _leftHand_NotWeapon_Collider;
+            _combatController._currentLeftWeaponCollider.WeaponInit(_playerCharacter, _playerCharacter.PlayerStat);
+        }
+        // 공격 소비아이템 설정
+        _currentAttackConsumption = _quickSlotBar.QuickSlotAttackConsumption;
+        if (_currentAttackConsumption != null)
+        {
+            _currentAttackConsumptionObj = _quickSlotBar.GetCurrentAttackConsumptionObject;
+            _playerController.ItemAction_Attack = _currentAttackConsumptionObj.GetComponent<ItemAction>().ItemActionSO;
+        }
+        else
+        {
+            _currentAttackConsumptionObj = null;
+            _playerController.ItemAction_Attack = null;
+        }
+        // 회복 소비 아이템 설정
+        _currentRecoveryConsumption = _quickSlotBar.QuickSlotRecoveryConsumption;
+        if(_currentRecoveryConsumption != null)
+        {
+            _currentRecoveryConsumptionObj = _quickSlotBar.GetCurrentRecoveryConsumptionObject;
+            _playerController.ItemAction_Recovery = _currentRecoveryConsumptionObj.GetComponent<ItemAction>().ItemActionSO;
+        }
+        else
+        {
+            _currentRecoveryConsumptionObj = null;
+            _playerController.ItemAction_Recovery = null;
         }
 
+        // 모델 바꾸는거 추가할 예정
+        //
+        
         // 임시 *검밖에 없으니 검으로
         if (_currentRightArmWeapon != null)
         {

@@ -273,6 +273,7 @@ public class CombatController : MonoBehaviour
         AttackStartComboState();
         AttackAnimationPlay();
     }
+    // Legacy 테스트용 공격 함수
     public void AttackCheck()
     {
         //Debug.LogWarning("Attack Check");

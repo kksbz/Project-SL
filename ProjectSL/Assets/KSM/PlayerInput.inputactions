@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseRecoveryItem",
+                    "type": "Button",
+                    "id": "964ac204-7a53-480b-aebb-08a2a5958fe2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -243,6 +252,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "SwitchArm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8a30235-a9f2-42b7-857e-55830ecc3f03",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "UseRecoveryItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

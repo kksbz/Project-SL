@@ -25,7 +25,7 @@ public class DamageCollider : MonoBehaviour
     {
         _damageCollider.enabled = false;
     }
-    public void WeaponInit(PlayerCharacter playerCharacter, ItemData weaponData, PlayerStatus playerStatus)
+    public void WeaponInit(PlayerCharacter playerCharacter, PlayerStatus playerStatus, ItemData weaponData = null )
     {
         _playerCharacter = playerCharacter;
         _itemData = weaponData;
