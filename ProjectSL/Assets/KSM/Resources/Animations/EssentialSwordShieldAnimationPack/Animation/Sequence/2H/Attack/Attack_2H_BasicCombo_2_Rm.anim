@@ -92575,6 +92575,22 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.33333334
+    functionName: EnableRightDamageCollider
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: DisableRightDamageCollider
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.8333333
     functionName: OnSetExecuteNextCombo
     data: 

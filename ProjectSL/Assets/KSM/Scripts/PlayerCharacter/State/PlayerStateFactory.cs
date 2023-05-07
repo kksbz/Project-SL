@@ -56,4 +56,8 @@ public class PlayerStateFactory : MonoBehaviour
     {
         return new PlayerGroundedState(_context, this);
     }
+    public PlayerBaseState UseItem() 
+    {
+        return new PlayerUseItemState(_context, this);
+    }
 }

@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private CameraController cameraController;
     [SerializeField]
     private AnimationController animationController;
+    [SerializeField]
+    private EquipmentController equipmentController;
+    [SerializeField]
+    private PlayerStateMachine playerStateMachine;
 
     private float tempMoveSpeed = 5f;
 
@@ -28,7 +32,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private CharacterController characterController = default;
 
-    
+    #region ItemAction Field
+    [SerializeField]
+    ItemActionSO _currentItemAction_Attack;
+    [SerializeField]
+    ItemActionSO _currentItemAction_Recovery;
+    int _currentItemActionAnimationLayer;
+    string _itemActionAnimationTag;
+    bool _isUsingItem;
+    bool _canContinuous;
+    bool _isContinuousInputOn;
+    #endregion  // ItemAction Field
     // �ӽ�
     public Vector3 moveDir;
     public Vector3 inputDir;
@@ -48,7 +62,8 @@ public class PlayerController : MonoBehaviour
     #endregion  // Die Field
 
     public bool IsDie { get { return _isDie; } }
-
+    public ItemActionSO ItemAction_Recovery { get { return _currentItemAction_Recovery; } set { _currentItemAction_Recovery = value; } }
+    public ItemActionSO ItemAction_Attack { get { return _currentItemAction_Attack; } set { _currentItemAction_Attack = value; } }
     private void Awake()
     {
         // ������Ʈ �ʱ�ȭ
@@ -56,6 +71,8 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         cameraController = GetComponent<CameraController>();
         animationController = GetComponent<AnimationController>();
+        playerStateMachine = GetComponent<PlayerStateMachine>();
+        equipmentController = GetComponent<EquipmentController>();
 
         GameObject meshObj = gameObject.FindChildObj("Mesh");
         characterBody = meshObj.transform;
@@ -65,6 +82,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AnimationEventDispatcher _animEventDispatcher = animator.gameObject.GetComponent<AnimationEventDispatcher>();
+
+        _animEventDispatcher.onAnimationEnd.AddListener(EndedItemActionAnimation);
         // nextMove = new Move(characterController, Vector3.zero, tempMoveSpeed);
     }   //Start()
 
@@ -94,6 +114,8 @@ public class PlayerController : MonoBehaviour
         }
     }
     */
+
+    #region Die
     public void Die()
     {
         if (_isDie)
@@ -116,6 +138,86 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         UiManager.Instance.messagePanel.PlayerDeadMessage();
     }
+    #endregion  // Die
+
+    #region UseItem
+    public void UseRecoveryItem()
+    {
+        if (!CanUseRecoveryItem())
+            return;
+        
+        UseRecoveryItemStartState();
+        UseRecoveryItemLogic();
+        UseItemAnimationPlay();
+        playerStateMachine.UseItemFlag = true;
+        _isUsingItem = true;
+    }
+    // 애니메이션 설정
+    void UseRecoveryItemLogic()
+    {
+        switch(_currentItemAction_Recovery._animationType)
+        {
+            case EItemActionAnimationType.Drink:
+                _itemActionAnimationTag = "ItemAction_Drink";
+                break;
+            case EItemActionAnimationType.Throwing:
+                _itemActionAnimationTag = "Throw";
+                break;
+        }
+        if(_currentItemAction_Recovery._isWalkable)
+        {
+            _currentItemActionAnimationLayer = AnimationController.LAYERINDEX_UPPERLAYER;
+            animator.SetLayerWeight(AnimationController.LAYERINDEX_UPPERLAYER, 1);
+            animator.SetLayerWeight(AnimationController.LAYERINDEX_WALKLAYER, 1);
+        }
+        else
+        {
+            _currentItemActionAnimationLayer = AnimationController.LAYERINDEX_FULLLAYER;
+        }
+    }
+    // 아이템 사용이 가능한지를 체크
+    bool CanUseRecoveryItem()
+    {
+        bool canUseItem = true;
+
+        /*if(!(playerStateMachine.CurrentState is PlayerGroundedState))
+        {
+            canUseItem = false;
+        }*/
+
+        if(!equipmentController.IsUsableRecoveryConsumption())
+        {
+            canUseItem = false;
+        }
+
+        //if()
+
+        return canUseItem;
+    }
+
+    void UseRecoveryItemStartState()
+    {
+        _canContinuous = false;
+        _isContinuousInputOn = false;
+    }
+    void UseRecoveryItemEndState()
+    {
+        _canContinuous = false;
+        _isContinuousInputOn = false;
+        _isUsingItem = false;
+        playerStateMachine.UseItemFlag = false;
+    }
+    void ContinuousUseRecoveryItemCheck()
+    {
+
+    }
+    void UseItemAnimationPlay()
+    {
+        Debug.Log("Play ItemAction Animation");
+        PoseAction poseAction = new PoseAction(animator, _itemActionAnimationTag, _currentItemActionAnimationLayer, 0);
+        poseAction.Execute();
+    }
+    #endregion  // UseItem
 
     void SetMove()
     {
@@ -161,6 +263,27 @@ public class PlayerController : MonoBehaviour
     void MoveExecute()
     {
         nextMove.Execute();
+    }
+    public void InitializeItemActionProperty()
+    {
+        UseRecoveryItemEndState();
+    }
+    public void InitializeAllProperty()
+    {
+        UseRecoveryItemEndState();
+    }
+
+    private bool IsItemActionAnimation(string name)
+    {
+        return name.StartsWith("ItemAction");
+    }
+    public void EndedItemActionAnimation(string name)
+    {
+        if (!IsItemActionAnimation(name))
+            return;
+
+        Debug.Log("End ItemAction Animation");
+        InitializeItemActionProperty();
     }
 
     // Legacy Code

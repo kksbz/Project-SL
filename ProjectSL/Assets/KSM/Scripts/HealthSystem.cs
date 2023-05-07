@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
+public enum EHealthChangeType : byte
+{
+    Init,
+    Damage,
+    Consum,
+    Heal,
+}
+public enum EHealthType : byte
+{
+    HP,
+    MP,
+    SP
+}
+
 public class HealthSystem
 {
     PlayerCharacter _playerCharacter;
@@ -23,19 +37,7 @@ public class HealthSystem
     public delegate void HealthEventHandler_TwoParam(EHealthType type, bool isLerp);
     public HealthEventHandler onDieHandle;
     public HealthEventHandler_TwoParam onChangedHealth;
-    public enum EHealthChangeType : byte
-    {
-        Init,
-        Damage,
-        Consum,
-        Heal,
-    }
-    public enum EHealthType : byte
-    {
-        HP,
-        MP,
-        SP
-    }
+    
 
     public float HP { get { return _healthPoint; } set { _healthPoint = value; } }
     public float MaxHP { get { return _maxHealthPoint; } }

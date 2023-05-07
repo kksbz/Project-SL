@@ -94800,8 +94800,16 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.46666667
-    functionName: On_TempAttackCheck
+  - time: 0.41666666
+    functionName: EnableRightDamageCollider
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: DisableRightDamageCollider
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
       type: 3}

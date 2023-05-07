@@ -21,9 +21,13 @@ public class QuickSlotBar : MonoBehaviour
     // { Property
     public ItemData QuickSlotRightWeapon { get { return rightArm.Item; } }
     public ItemData QuickSlotLeftWeapon { get { return leftArm.Item; } }
+    public ItemData QuickSlotAttackConsumption { get { return attackC.Item; } }
+    public ItemData QuickSlotRecoveryConsumption { get { return recoveryC.Item; } }
     // } Property
     public GameObject GetCurrentRightWeaponObject { get { return rightWeaponList[rightArmNum].equipItem; } }
     public GameObject GetCurrentLeftWeaponObject { get { return leftWeaponList[leftArmNum].equipItem; } }
+    public GameObject GetCurrentAttackConsumptionObject { get { return attackC_List[attackC_Num].equipItem; } }
+    public GameObject GetCurrentRecoveryConsumptionObject { get { return recoveryC_List[recoveryC_Num].equipItem; } }
 
     public List<WeaponSlot> LeftWeaponList { get { return leftWeaponList; } }
     public List<WeaponSlot> RightWeaponList { get { return rightWeaponList; } }
@@ -154,6 +158,7 @@ public class QuickSlotBar : MonoBehaviour
                 }
             }
         }
+        Inventory.Instance._onEquipSlotUpdated();
     } // InPutQuickSlot
 
     //! 데이터 로드시 퀵슬롯 아이템 갱신하는 함수
