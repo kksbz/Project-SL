@@ -29,12 +29,12 @@ public class Enemy_Knight : EnemyBase
         //  플레이어를 찾지 못했거나 플레이어를 놓쳤다면
         if (!IsFieldOfViewFind() || (PreviousState is Enemy_Chase_State && !IsInRange(Status.detectionRange)))
         {
-            Debug.Log($"Thought Debug : {!IsFieldOfViewFind()}");
-            Debug.Log($"Thought Debug : {(PreviousState is Enemy_Chase_State && !IsInRange(Status.detectionRange))}");
-            if (MoveController.PatrolPoints.Count <= 1)
-            {
-                return null;
-            }
+            // Debug.Log($"Thought Debug : {!IsFieldOfViewFind()}");
+            // Debug.Log($"Thought Debug : {(PreviousState is Enemy_Chase_State && !IsInRange(Status.detectionRange))}");
+            // if (MoveController.PatrolPoints.Count <= 1)
+            // {
+            //     return null;
+            // }
             return new Enemy_Patrol_State(this);
         }
         else

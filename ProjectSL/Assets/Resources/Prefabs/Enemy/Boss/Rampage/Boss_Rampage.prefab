@@ -1443,6 +1443,7 @@ MonoBehaviour:
     obstacleLayerMask:
       serializedVersion: 2
       m_Bits: 512
+    isNoPatrol: 0
   attackCollider:
   - {fileID: 646507835297841493}
   - {fileID: 6345031726122067705}
@@ -1457,12 +1458,12 @@ MonoBehaviour:
     targetMask:
       serializedVersion: 2
       m_Bits: 256
-    bossLayerMaskIndex: 0
-    targetLayerMaskIndex: 0
+    bossLayerMaskIndex: 7
+    targetLayerMaskIndex: 8
     groundSmashDistance: 0
     groundSmashMaxHeight: 10
     bodyTackleDistance: 20
-    bodyTackleSpeed: 10
+    bodyTackleSpeed: 15
     dodgeSpeed: 20
     dodgeMaxHeight: 5
     attack_A_Percentage: 0

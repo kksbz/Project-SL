@@ -20,12 +20,18 @@ public class InteractionObject : MonoBehaviour
         if (other.tag == GData.PLAYER_MARK && !isInteraction)
         {
             isEnterPlayer = false;
+            OnInteraction();
         }
     }
 
     private void Update()
     {
         if (isEnterPlayer && Input.GetKeyDown(KeyCode.E))
+        {
+            OnInteraction();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
             OnInteraction();
         }

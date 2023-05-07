@@ -248,9 +248,12 @@ MonoBehaviour:
   doors:
   - {fileID: 9124670676059474093}
   - {fileID: 9124670677107294754}
-  doorsRotation:
-  - {x: 0, y: -0.5, z: 0, w: 0.8660254}
-  - {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  doorsOpenRotation:
+  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: 0, w: 0}
+  doorsCloseRotation:
+  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: 0, w: 0}
   rotationSpeed: 1
   isDoorOpened: 0
 --- !u!135 &9124670677547786153

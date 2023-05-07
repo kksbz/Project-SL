@@ -89,18 +89,21 @@ public class Boss_Ramapage_BodyTackle_State : IState
 
     public void OnExit()
     {
+        _boss.BodyTackleComplete();
+        OnAction();
     }
 
     public void Update()
     {
-
+        if (_boss.MoveCompleteCheck(0.7f))
+        {
+            _boss.SetState(new Boss_Thought_State(_boss));
+        }
     }
 
     IEnumerator BodyTackleEnd()
     {
         yield return new WaitForSeconds(0.7f);
-        OnAction();
-        _boss.BodyTackleComplete();
         _boss.SetState(new Boss_Thought_State(_boss));
     }
 }

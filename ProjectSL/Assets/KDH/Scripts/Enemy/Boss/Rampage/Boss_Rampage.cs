@@ -23,7 +23,7 @@ public class Boss_Rampage : BossBase
 
         _rb = GetComponent<Rigidbody>();
 
-        BossStatus.bossLayerMaskIndex = LayerMask.NameToLayer("Enemy");
+        BossStatus.bossLayerMaskIndex = LayerMask.NameToLayer("Character");
         BossStatus.targetLayerMaskIndex = LayerMask.NameToLayer("Target");
     }
 
@@ -133,15 +133,18 @@ public class Boss_Rampage : BossBase
         RigidbodyMoveStart(freezePosition);
 
         targetPos = Target.position;
-        targetPos.y = 0f;
+        targetPos.y = transform.position.y;
 
-        Vector3 direction = targetPos - _rb.position;
+        Vector3 direction_ = (targetPos - transform.position).normalized;
+        targetPos = targetPos + direction_ * 5f;
+        Debug.Log($"TargetPos : {targetPos}");
 
-        Vector3 velocity = direction.normalized * BossStatus.bodyTackleSpeed;
+        Vector3 velocity_ = direction_.normalized * BossStatus.bodyTackleSpeed;
 
-        _rb.velocity = velocity;
+        Debug.Log($"Velocity : {velocity_}");
+        _rb.velocity = velocity_;
 
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
+        // transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
     }
 
     public void BodyTackleComplete()

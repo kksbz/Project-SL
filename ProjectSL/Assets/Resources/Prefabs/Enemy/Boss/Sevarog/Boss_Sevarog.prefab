@@ -4708,6 +4708,7 @@ MonoBehaviour:
     obstacleLayerMask:
       serializedVersion: 2
       m_Bits: 512
+    isNoPatrol: 0
   attackCollider:
   - {fileID: 8237715822438640074}
   currentState: 
