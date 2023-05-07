@@ -944,7 +944,7 @@ MonoBehaviour:
     dodge_Percentage: 0
   researchStatus:
     viewRadius: 30
-    viewAngle: 360
+    viewAngle: 90
     targetLayerMask:
       serializedVersion: 2
       m_Bits: 256

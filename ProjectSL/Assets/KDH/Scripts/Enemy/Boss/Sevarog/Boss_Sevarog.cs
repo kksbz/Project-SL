@@ -56,50 +56,52 @@ public class Boss_Sevarog : BossBase
     {
         float randNum_ = Random.value;
 
-        // if (Status.currentHp <= Status.maxHp * 0.5f && BossStatus.enrageCount < 1)
-        // {
-        //     BossStatus.enrageCount++;
-        //     return new Boss_Sevarog_Teleport_State(this);
-        // }
+        if (Status.currentHp <= Status.maxHp * 0.5f && BossStatus.enrageCount < 1)
+        {
+            BossStatus.enrageCount++;
+            return new Boss_Sevarog_Teleport_State(this);
+        }
 
-        // //  피격 횟수가 5회 이상이면 텔레포트
-        // if (5 <= BossStatus.hitCount)
-        // {
-        //     return new Boss_Sevarog_Teleport_State(this);
-        // }
+        //  피격 횟수가 5회 이상이면 텔레포트
+        if (5 <= BossStatus.hitCount)
+        {
+            return new Boss_Sevarog_Teleport_State(this);
+        }
 
-        // Debug.Log($"Previous State : {PreviousState.ToString()}");
+        Debug.Log($"Previous State : {PreviousState.ToString()}");
 
-        // switch (PreviousState)
-        // {
-        //     case Boss_Sevarog_Swing2_1_Attack_State:
-        //         if (randNum_ <= BossStatus.swing3_Percentage)
-        //         {
-        //             //  뒤로 텔포
-        //             Debug.Log($"뒤로 텔포");
-        //             BossStatus.backTeleport = true;
-        //             return new Boss_Sevarog_Teleport_State(this);
-        //         }
-        //         break;
-        //     case Boss_Sevarog_Swing1_Return_State:
-        //     case Boss_Sevarog_Swing3_Attack_State:
-        //         if (randNum_ <= BossStatus.teleport_Percentage)
-        //         {
-        //             return new Boss_Sevarog_Teleport_State(this);
-        //         }
-        //         break;
-        //     case Boss_Sevarog_Teleport_State:
-        //         if (BossStatus.enrageCount == 1)
-        //         {
-        //             BossStatus.enrageCount++;
-        //             return new Boss_Sevarog_Enrage_State(this);
-        //         }
-        //         if (BossStatus.backTeleport)
-        //         {
-        //             return new Boss_Sevarog_Swing3_Attack_State(this);
-        //         }
-        //         return new Boss_Sevarog_Subjugation_State(this);
-        // }
+        switch (PreviousState)
+        {
+            case Boss_Idle_State:
+                return new Boss_Chase_State(this);
+            case Boss_Sevarog_Swing2_1_Attack_State:
+                if (randNum_ <= BossStatus.swing3_Percentage)
+                {
+                    //  뒤로 텔포
+                    Debug.Log($"뒤로 텔포");
+                    BossStatus.backTeleport = true;
+                    return new Boss_Sevarog_Teleport_State(this);
+                }
+                break;
+            case Boss_Sevarog_Swing1_Return_State:
+            case Boss_Sevarog_Swing3_Attack_State:
+                if (randNum_ <= BossStatus.teleport_Percentage)
+                {
+                    return new Boss_Sevarog_Teleport_State(this);
+                }
+                break;
+            case Boss_Sevarog_Teleport_State:
+                if (BossStatus.enrageCount == 1)
+                {
+                    BossStatus.enrageCount++;
+                    return new Boss_Sevarog_Enrage_State(this);
+                }
+                if (BossStatus.backTeleport)
+                {
+                    return new Boss_Sevarog_Swing3_Attack_State(this);
+                }
+                return new Boss_Sevarog_Subjugation_State(this);
+        }
 
         // 플레이어가 근접공격 범위 안에 있을 때
         if (IsInRange(Status.attackRange))

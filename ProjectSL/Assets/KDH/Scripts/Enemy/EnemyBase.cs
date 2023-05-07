@@ -38,7 +38,6 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     protected void Start()
     {
         Init();
-        Invoke("DropReward", 1f);
     }
 
     protected virtual void Init()

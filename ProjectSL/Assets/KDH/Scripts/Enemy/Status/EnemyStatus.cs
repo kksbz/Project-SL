@@ -16,4 +16,5 @@ public class EnemyResearchStatus
     public float viewAngle = default;
     public LayerMask targetLayerMask = default;
     public LayerMask obstacleLayerMask = default;
+    public bool isNoPatrol;
 }
