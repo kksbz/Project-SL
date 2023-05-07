@@ -4689,18 +4689,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status:
     name: Sevarog
-    info: "\uCD5C\uC885\uBCF4\uC2A4"
+    info: Petrified Sevarog
     maxHp: 1000
     currentHp: 1000
     maxMoveSpeed: 5
     currentMoveSpeed: 5
     maxAttackDamage: 10
     currentAttackDamage: 10
-    detectionRange: 50
+    detectionRange: 35
     attackRange: 5
     dodge_Percentage: 0
   researchStatus:
-    viewRadius: 50
+    viewRadius: 35
     viewAngle: 360
     targetLayerMask:
       serializedVersion: 2
@@ -4711,6 +4711,7 @@ MonoBehaviour:
   attackCollider:
   - {fileID: 8237715822438640074}
   currentState: 
+  bonfire: {fileID: 0}
   _bossStatus:
     currentPhase: 1
     patternCount: 0
@@ -4721,8 +4722,8 @@ MonoBehaviour:
     swing2_Percentage: 0.75
     swing3_Percentage: 1
     teleport_swing3_Percentage: 0.5
-    subjugation_Percentage: 0.4
-    enemySpawn_Percentage: 0.15
+    subjugation_Percentage: 0.3
+    enemySpawn_Percentage: 0.1
     teleport_Percentage: 0.2
   subjugationPrefab: {fileID: 6966130419290751147, guid: c965604f10162484cad3ee123a12673c,
     type: 3}
@@ -6542,6 +6543,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boss_HpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869148249598900027, guid: aaa6612f611e53a4aa0ef25cc77c3888,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2994568652154382284, guid: aaa6612f611e53a4aa0ef25cc77c3888,
         type: 3}

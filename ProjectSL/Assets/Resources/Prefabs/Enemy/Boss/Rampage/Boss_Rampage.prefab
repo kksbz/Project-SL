@@ -1424,7 +1424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   status:
     name: Rampage
-    info: Rampage
+    info: Rampage Deep Sea King
     maxHp: 1000
     currentHp: 1000
     maxMoveSpeed: 5
@@ -1448,6 +1448,7 @@ MonoBehaviour:
   - {fileID: 6345031726122067705}
   - {fileID: 37852400327195953}
   currentState: 
+  bonfire: {fileID: 0}
   _bossStatus:
     currentPhase: 1
     bossLayerMask:
@@ -7251,6 +7252,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boss_HpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1869148249598900027, guid: aaa6612f611e53a4aa0ef25cc77c3888,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2994568652154382284, guid: aaa6612f611e53a4aa0ef25cc77c3888,
         type: 3}

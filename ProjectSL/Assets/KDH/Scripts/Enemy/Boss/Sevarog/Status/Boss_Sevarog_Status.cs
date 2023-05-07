@@ -25,8 +25,8 @@ public class Boss_Sevarog_Status : BossStatus
     public float swing1_Percentage = 0.5f;
     public float swing2_Percentage = 0.75f;
     public float swing3_Percentage = 1f;
-    public float teleport_swing3_Percentage = 0.5f;
-    public float subjugation_Percentage = 0.4f;
-    public float enemySpawn_Percentage = 0.05f;
-    public float teleport_Percentage = 0.2f;
+    public float teleport_swing3_Percentage = default;
+    public float subjugation_Percentage = default;
+    public float enemySpawn_Percentage = default;
+    public float teleport_Percentage = default;
 }

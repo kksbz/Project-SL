@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class BossBase : EnemyBase
 {
+    [Header("보스 사망시 나타날 화톳불")]
+    public GameObject bonfire;
 
     public bool IsPlayerJoined { get; protected set; }
     public bool IsIntroPlay { get; protected set; }
@@ -42,4 +44,9 @@ public class BossBase : EnemyBase
     {
     }
 
+    public override void OnDie()
+    {
+        bonfire.SetActive(true);
+        base.OnDie();
+    }
 }
