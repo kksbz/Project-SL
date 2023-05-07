@@ -103,7 +103,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: MENU_LOAD_OF_CINDER_FALLEN_Behind
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 229
+        width: 1506
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39e1495cfb1919f409bd35e12163706c
+      internalID: 899331274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MENU_LOAD_OF_CINDER_FALLEN_Front
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 35
+        width: 1506
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b88b4cff6b18314088189da77f7e9c8
+      internalID: -807477576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +156,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MENU_LOAD_OF_CINDER_FALLEN_Behind: 899331274
+      MENU_LOAD_OF_CINDER_FALLEN_Front: -807477576
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

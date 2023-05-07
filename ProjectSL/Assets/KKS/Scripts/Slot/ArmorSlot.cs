@@ -13,7 +13,6 @@ public class ArmorSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoin
     [SerializeField] List<Sprite> itemSprites = new List<Sprite>(); // 장비인벤 상단에 표시될 방어구 스프라이트 리스트
     private Sprite invenSprite; // 장비인벤 상단에 표시될 선택한 방어구 스프라이트
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
-    public GameObject equipItem; // 슬롯에 장착한 방어구 아이템 오브젝트
     public GameObject SlotObj { get { return gameObject; } }
 
     [SerializeField] private ItemType slotType; // 슬롯에 담길 아이템타입 제한 변수
@@ -64,20 +63,11 @@ public class ArmorSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoin
     public void AddItem(ItemData _item)
     {
         Item = _item;
-        if (_item != null)
-        {
-            equipItem = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{_item.itemID}"));
-            equipItem.GetComponent<Item>().pickupArea.SetActive(false);
-            equipItem.SetActive(false);
-        }
     } // AddItem
 
     public void RemoveItem()
     {
         Item = null;
-        // 생성된 아이템 파괴
-        Destroy(equipItem);
-        equipItem = null;
     } // RemoveItem
 
     public bool SlotItemIsNull()

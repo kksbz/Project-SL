@@ -68,6 +68,10 @@ public class LevelUpPanel : MonoBehaviour
         // 취소 버튼
         cancelBt.onClick.AddListener(() =>
         {
+            if (selectStatusNum < 0)
+            {
+                return;
+            }
             // 패널 초기화
             statusImages[selectStatusNum].color = new Color(1, 1, 1, 0);
             selectStatusNum = -1;
@@ -126,6 +130,9 @@ public class LevelUpPanel : MonoBehaviour
 
     private void OnDisable()
     {
+        GameManager.Instance.player.StateMachine.ResetInput();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         potionUpPanel.SetActive(false);
         levelUpPanel.SetActive(false);
         selectPanel.SetActive(true);
@@ -189,6 +196,10 @@ public class LevelUpPanel : MonoBehaviour
     //! 플러스 버튼 클릭기능
     private void PlusBtClick()
     {
+        if (selectStatusNum < 0)
+        {
+            return;
+        }
         hasSelectBt = true;
         increaseNum += 1;
         // 다음 레벨업에 필요한 경험치량을 경험치데이터테이블에서 가져옴
@@ -219,6 +230,10 @@ public class LevelUpPanel : MonoBehaviour
     //! 마이너스 버튼 클릭기능
     private void MinusBtClick()
     {
+        if (selectStatusNum < 0)
+        {
+            return;
+        }
         if (increaseNum == 0)
         {
             // 경고창 팝업
@@ -272,6 +287,10 @@ public class LevelUpPanel : MonoBehaviour
         increaseNum = 0;
         sumWantSoul = 0;
         hasSelectBt = false;
+
+        // 레벨업 확정하면 자동저장 슬롯에 플레이어 데이터 저장
+        DataManager.Instance.slotNum = 0;
+        DataManager.Instance.SaveData();
     } // DecisionBtClick
 
     //! 능력치 패널 텍스트 할당하는 함수

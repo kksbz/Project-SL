@@ -46,36 +46,24 @@ public class Inventory : Singleton<Inventory>
     public delegate void EventHandler();
     public EventHandler _onEquipSlotUpdated;
 
-    private void Awake()
+    public override void InitManager()
     {
-        _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+        
     }
-    //
-    private void Start()
+
+    private void Awake()
     {
         InitSlot();
         Soul = 0;
-    } // Start
+        _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+    }
+    //
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
             UiManager.Instance.soulBag.GetSoul(5000);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            UiManager.Instance.loadingPanel.gameObject.SetActive(!UiManager.Instance.loadingPanel.gameObject.activeSelf);
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            DataManager.Instance.slotNum = 0;
-            DataManager.Instance.SaveData();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            DataManager.Instance.slotNum = 0;
-            DataManager.Instance.LoadData();
         }
     } // Update
 

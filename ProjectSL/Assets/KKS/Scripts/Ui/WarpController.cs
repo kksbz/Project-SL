@@ -27,6 +27,7 @@ public class WarpController : MonoBehaviour
             GameManager.Instance.LoadBonfire(selectWarp.bonfire);
             warpSelect.SetActive(false);
             warpPanel.SetActive(false);
+            GameManager.Instance.player.StateMachine.ResetInput();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         });

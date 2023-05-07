@@ -40,6 +40,9 @@ public class ShopSelectPanel : MonoBehaviour
         exitBt.onClick.AddListener(() =>
         {
             UiManager.Instance.shopPanel.SetActive(false);
+            GameManager.Instance.player.StateMachine.ResetInput();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         });
     } // Start
 

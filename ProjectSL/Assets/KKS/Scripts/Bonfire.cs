@@ -12,7 +12,6 @@ public class Bonfire : MonoBehaviour
     private void Start()
     {
         bonfireData = new BonfireData(false, bonfireName, transform.position);
-
     } // Start
 
     private void Update()
@@ -21,10 +20,13 @@ public class Bonfire : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                GameManager.Instance.player.StateMachine.LockInput();
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 if (bonfireData.hasBonfire == false)
                 {
+                    // 화톳불 활성화 메시지 표시
+                    UiManager.Instance.messagePanel.BonfireMessage();
                     // 화톳불을 처음 활성화시키면 화염이펙트 활성화
                     bonfireData.hasBonfire = true;
                     fireEffect.SetActive(true);
@@ -35,6 +37,12 @@ public class Bonfire : MonoBehaviour
                 UiManager.Instance.bonfirePanel.SetActive(true);
                 UiManager.Instance.interactionBar.SetActive(false);
                 UiManager.Instance.interactionText.text = null;
+
+                // 플레이어 HP, MP, ST 풀로 회복
+                GameManager.Instance.player.HealthSys.HealHP(GameManager.Instance.player.GetPlayerData()._healthSystemData.MaxHP);
+                GameManager.Instance.player.HealthSys.HealMP(GameManager.Instance.player.GetPlayerData()._healthSystemData.MaxMP);
+
+                // 화톳불 사용시 에스트병 보유 수량 최대로 회복
                 for (int i = 0; i < Inventory.Instance.inventory.Count; i++)
                 {
                     if (Inventory.Instance.inventory[i].itemID == 1)

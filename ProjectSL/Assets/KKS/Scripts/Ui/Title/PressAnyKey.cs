@@ -9,7 +9,7 @@ public class PressAnyKey : MonoBehaviour
     [SerializeField] GameObject selectEffect;
     private TMP_Text pressText;
     private bool isPresskey = false;
-    private void Start()
+    private void OnEnable()
     {
         pressText = gameObject.GetComponent<TMP_Text>();
         StartCoroutine(FadeInSelf());

@@ -108,6 +108,13 @@ public class PlayerController : MonoBehaviour
         PoseAction poseAction = new PoseAction(animator, "Die_Light_1", AnimationController.LAYERINDEX_FULLLAYER, 0);
         // nextPA = poseAction;
         poseAction.Execute();
+        StartCoroutine(EndDieAnimation());
+    }
+
+    private IEnumerator EndDieAnimation()
+    {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        UiManager.Instance.messagePanel.PlayerDeadMessage();
     }
 
     void SetMove()
