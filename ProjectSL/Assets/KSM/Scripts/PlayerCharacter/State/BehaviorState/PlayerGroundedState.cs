@@ -43,7 +43,7 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Hit());
         }
-        else if(Ctx.IsUseRecoveryItemPressed)
+        else if(Ctx.IsUseRecoveryItemPressed && Ctx.EquipmentController.IsUsableRecoveryConsumption())
         {
             SwitchState(Factory.UseItem());
         }

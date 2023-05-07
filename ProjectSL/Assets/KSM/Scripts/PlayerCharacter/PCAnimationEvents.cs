@@ -8,6 +8,8 @@ public class PCAnimationEvents : MonoBehaviour
     private CombatController _combatController;
     [SerializeField]
     private CharacterController _characterController;
+    [SerializeField]
+    private PlayerController _playerController;
 
     private Animator _animator;
 
@@ -17,6 +19,7 @@ public class PCAnimationEvents : MonoBehaviour
     {
         //_animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
         _animator = GetComponent<Animator>();
+        _playerController = transform.parent.gameObject.GetComponent<PlayerController>();
     }
     private void Start()
     {
@@ -54,6 +57,10 @@ public class PCAnimationEvents : MonoBehaviour
     public void On_TempAttackCheck()
     {
         _combatController.AttackCheck();
+    }
+    public void OnConsumRecoveryItem()
+    {
+        _playerController.ConsumRecoveryItem();
     }
     public void EnableRightDamageCollider()
     {

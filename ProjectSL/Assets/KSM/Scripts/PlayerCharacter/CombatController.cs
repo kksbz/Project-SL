@@ -415,8 +415,9 @@ public class CombatController : MonoBehaviour
         if (_isHit)
             return;
 
-        _isHit= true;
+        HitStartState();
         HitAnimationPlay();
+        _isHit = true;
     }
 
     void HitAnimationPlay()
@@ -424,6 +425,11 @@ public class CombatController : MonoBehaviour
         PoseAction poseAction = new PoseAction(_animator, HitAnimationTag, AnimationController.LAYERINDEX_FULLLAYER, 0);
         nextPA = poseAction;
         poseAction.Execute();
+    }
+    void HitStartState()
+    {
+        _animator.enabled = false;
+        _animator.enabled = true;
     }
     void HitEndState()
     {

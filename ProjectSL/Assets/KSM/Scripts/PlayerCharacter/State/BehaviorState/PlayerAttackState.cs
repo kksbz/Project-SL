@@ -40,9 +40,13 @@ public class PlayerAttackState : PlayerBaseState
         {
             SwitchState(Factory.Grounded());
         }
-        if(Ctx.IsRollPressed) 
+        else if(Ctx.IsRollPressed) 
         {
             SwitchState(Factory.Roll());
+        }
+        else if(Ctx.HitFlag)
+        {
+            SwitchState(Factory.Hit());
         }
     }
     public override void InitializeSubState()

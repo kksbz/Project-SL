@@ -28,6 +28,7 @@ public class PlayerRunState : PlayerBaseState
         {
             Debug.Log("JogState FixedUpdateState context nextBehavior.Execute()");
             Ctx.NextBehavior.Execute();
+            Ctx.NextBehavior = null;
         }
     }
     public override void ExitState()

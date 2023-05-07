@@ -45,6 +45,7 @@ public class Inventory : Singleton<Inventory>
     //
     public delegate void EventHandler();
     public EventHandler _onEquipSlotUpdated;
+    public EventHandler _onEquipArmorUpdated;
 
     public override void InitManager()
     {
@@ -56,6 +57,7 @@ public class Inventory : Singleton<Inventory>
         InitSlot();
         Soul = 0;
         _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+        _onEquipArmorUpdated = new EventHandler(() => Debug.Log("Armor Updated"));
     }
     //
 
@@ -339,6 +341,7 @@ public class Inventory : Singleton<Inventory>
                                     }
                                 }
                             }
+                            _onEquipArmorUpdated();
                             break;
                     } // switch
                 }

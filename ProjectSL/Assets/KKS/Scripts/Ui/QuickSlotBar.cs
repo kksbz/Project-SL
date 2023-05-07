@@ -75,7 +75,7 @@ public class QuickSlotBar : MonoBehaviour
                     }
                     rightArmNum++;
                     rightArm.Item = rightWeaponList[rightArmNum].Item;
-
+                    Inventory.Instance._onEquipSlotUpdated();
                     // 퀵슬롯에 무기가 있을 때
                     if (rightWeaponList[rightArmNum].Item != null)
                     {
@@ -99,7 +99,7 @@ public class QuickSlotBar : MonoBehaviour
                     }
                     leftArmNum++;
                     leftArm.Item = leftWeaponList[leftArmNum].Item;
-
+                    Inventory.Instance._onEquipSlotUpdated();
                     // 퀵슬롯에 무기가 있을 때
                     if (leftWeaponList[leftArmNum].Item != null)
                     {
@@ -127,7 +127,7 @@ public class QuickSlotBar : MonoBehaviour
                     }
                     attackC_Num++;
                     attackC.Item = attackC_List[attackC_Num].Item;
-
+                    Inventory.Instance._onEquipSlotUpdated();
                     // 퀵슬롯에 공격용 소모품이 있을 때
                     if (attackC_List[attackC_Num].Item != null)
                     {
@@ -149,7 +149,7 @@ public class QuickSlotBar : MonoBehaviour
                     }
                     recoveryC_Num++;
                     recoveryC.Item = recoveryC_List[recoveryC_Num].Item;
-
+                    Inventory.Instance._onEquipSlotUpdated();
                     // 퀵슬롯에 회복용 소모품이 있을 때
                     if (recoveryC_List[recoveryC_Num].Item != null)
                     {
@@ -158,7 +158,6 @@ public class QuickSlotBar : MonoBehaviour
                 }
             }
         }
-        Inventory.Instance._onEquipSlotUpdated();
     } // InPutQuickSlot
 
     //! 데이터 로드시 퀵슬롯 아이템 갱신하는 함수
