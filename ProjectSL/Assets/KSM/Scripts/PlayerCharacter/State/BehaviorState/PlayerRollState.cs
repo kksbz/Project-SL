@@ -11,7 +11,6 @@ public class PlayerRollState : PlayerBaseState
     }
     public override void EnterState()
     {
-        Debug.Log("Attack State Enter");
         // Dodge 애니메이션 실행
         Ctx.CharacterAnimator.applyRootMotion = true;
         if(Ctx.IsRollPressed)

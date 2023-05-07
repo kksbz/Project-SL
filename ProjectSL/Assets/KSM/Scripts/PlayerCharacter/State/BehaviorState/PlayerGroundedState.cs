@@ -43,6 +43,10 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Hit());
         }
+        else if(Ctx.IsUseRecoveryItemPressed)
+        {
+            SwitchState(Factory.UseItem());
+        }
 
     }
     public override void InitializeSubState()

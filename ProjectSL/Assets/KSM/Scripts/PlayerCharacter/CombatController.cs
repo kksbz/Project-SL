@@ -13,6 +13,9 @@ public class CombatController : MonoBehaviour
 
     #region Attack Field
 
+    public DamageCollider _currentRightWeaponCollider;
+    public DamageCollider _currentLeftWeaponCollider;
+
     public LayerMask EnemyMask;
     public float attackRadius;
 
@@ -175,6 +178,9 @@ public class CombatController : MonoBehaviour
         _canNextCombo = false;
         isComboInputOn = false;
         _isExecuteImmediateNextCombo = false;
+        // 무기 콜라이더 Disable
+        _currentRightWeaponCollider.DisableDamageCollider();
+        _currentLeftWeaponCollider.DisableDamageCollider();
 
         if (!CheckComboAssert(_currentCombo, 0, _maxCombo))
         {
@@ -190,6 +196,10 @@ public class CombatController : MonoBehaviour
         _isExecuteImmediateNextCombo = false;
         _currentCombo = 0;
         Debug.LogWarning("_isAttacking False");
+        // damage collider 끄기
+        _currentRightWeaponCollider.DisableDamageCollider();
+        _currentLeftWeaponCollider.DisableDamageCollider();
+
         _isAttacking = false;
         _controlProperty.isAttacking = false;
     }
@@ -263,6 +273,7 @@ public class CombatController : MonoBehaviour
         AttackStartComboState();
         AttackAnimationPlay();
     }
+    // Legacy 테스트용 공격 함수
     public void AttackCheck()
     {
         //Debug.LogWarning("Attack Check");

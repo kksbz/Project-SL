@@ -94808,8 +94808,8 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.46666667
-    functionName: On_TempAttackCheck
+  - time: 0.41666666
+    functionName: EnableRightDamageCollider
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
       type: 3}
@@ -94818,6 +94818,14 @@ AnimationClip:
     messageOptions: 0
   - time: 0.75
     functionName: OnSetExecuteNextCombo
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: DisableRightDamageCollider
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
       type: 3}
