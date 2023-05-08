@@ -17,7 +17,7 @@ public class InteractionObject : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == GData.PLAYER_MARK && !isInteraction)
+        if (other.tag == GData.PLAYER_MARK)
         {
             isEnterPlayer = false;
             OnInteraction();
@@ -27,11 +27,6 @@ public class InteractionObject : MonoBehaviour
     private void Update()
     {
         if (isEnterPlayer && Input.GetKeyDown(KeyCode.E))
-        {
-            OnInteraction();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
         {
             OnInteraction();
         }
