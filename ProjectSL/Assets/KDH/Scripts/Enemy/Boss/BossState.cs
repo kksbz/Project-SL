@@ -334,9 +334,9 @@ public class Boss_Die_State : IState
     }
     public void OnEnter()
     {
-        _boss.SetTrigger("Death");
+        _boss.SetTrigger("Die");
 
-        AudioClip deathSFX_ = _boss.FindAudioClip("Die");
+        AudioClip deathSFX_ = _boss.FindAudioClip("Death");
         _boss.SFX_Play(deathSFX_, true);
     }
 

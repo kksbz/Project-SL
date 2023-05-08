@@ -73,7 +73,7 @@ public class AnimationEventDispatcher : MonoBehaviour
         animationEndEvent.time = clip.length - 0.0001f;
         if (clip.name == "ItemAction_Potion")
         {
-            Debug.Log($"clip length : {clip.length}, AnimationEndEventTime = {animationEndEvent.time}");
+            //Debug.Log($"clip length : {clip.length}, AnimationEndEventTime = {animationEndEvent.time}");
         }
         animationEndEvent.functionName = "AnimationEndHandler";
         animationEndEvent.stringParameter = clip.name;
@@ -84,12 +84,12 @@ public class AnimationEventDispatcher : MonoBehaviour
 
     public void AnimationStartHandler(string name)
     {
-        Debug.Log($"{name} animation start.");
+        //Debug.Log($"{name} animation start.");
         onAnimationStart?.Invoke(name);
     }
     public void AnimationEndHandler(string name)
     {
-        Debug.Log($"{name} animation end");
+        //Debug.Log($"{name} animation end");
         onAnimationEnd?.Invoke(name);
     }
 }

@@ -26,9 +26,9 @@ public class QuickWarpPanel : MonoBehaviour
                     break;
                 }
             }
-            GameManager.Instance.LoadBonfire(pontiffBonfire);
-            UiManager.Instance.quickBar.SetActive(false);
             gameObject.SetActive(false);
+            UiManager.Instance.quickBar.SetActive(false);
+            GameManager.Instance.LoadBonfire(pontiffBonfire);
         });
         // ��� ��ư
         cancleBt.onClick.AddListener(() =>

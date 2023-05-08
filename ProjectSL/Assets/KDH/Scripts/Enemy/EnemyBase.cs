@@ -122,6 +122,14 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     public virtual void DropReward()
     {
+        if (this is Boss_Rampage)
+        {
+            UiManager.Instance.messagePanel.KillNormalBossMessage();
+        }
+        else if (this is Boss_Sevarog)
+        {
+            UiManager.Instance.messagePanel.KillLastBossMessage();
+        }
         List<string> rewardList = DataManager.Instance.dropTable[Status.name];
         foreach (var iterator in rewardList)
         {

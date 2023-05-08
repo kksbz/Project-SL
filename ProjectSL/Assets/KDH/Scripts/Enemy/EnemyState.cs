@@ -93,7 +93,7 @@ public class Enemy_Thought_State : IState
     {
         // _isCoroutinePlay = true;
         yield return new WaitForSeconds(delay);
-        Debug.Log($"Name : {_enemy.ToString()}");
+        //Debug.Log($"Name : {_enemy.ToString()}");
         Thought();
         // _isCoroutinePlay = false;
     }
@@ -344,7 +344,7 @@ public class Enemy_Dodge_State : IState
         Quaternion targetRotation = Quaternion.LookRotation(-targetDirection, Vector3.up);
         _enemy.transform.rotation = targetRotation;
 
-        Debug.Log($"targetposition : {targetPosition}");
+        //Debug.Log($"targetposition : {targetPosition}");
         _enemy.TargetFollow(targetPosition);
     }
 

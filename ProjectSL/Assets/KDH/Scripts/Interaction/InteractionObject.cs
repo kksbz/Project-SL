@@ -11,6 +11,8 @@ public class InteractionObject : MonoBehaviour
     {
         if (other.tag == GData.PLAYER_MARK)
         {
+            UiManager.Instance.interactionText.text = "문을 연다 : E 키";
+            UiManager.Instance.interactionBar.SetActive(true);
             isEnterPlayer = true;
         }
     }
@@ -19,6 +21,8 @@ public class InteractionObject : MonoBehaviour
     {
         if (other.tag == GData.PLAYER_MARK)
         {
+            UiManager.Instance.interactionBar.SetActive(false);
+            UiManager.Instance.interactionText.text = null;
             isEnterPlayer = false;
             OnInteraction();
         }

@@ -10,7 +10,7 @@ public class PlayerAttackState : PlayerBaseState
     }
     public override void EnterState(PlayerBaseState prevState = null)
     {
-        Debug.Log("Attack State Enter");
+        //Debug.Log("Attack State Enter");
         // Attack 애니메이션 실행
         Ctx.CharacterAnimator.applyRootMotion = true;
         Ctx.CombatController.Attack();
@@ -30,7 +30,7 @@ public class PlayerAttackState : PlayerBaseState
     }
     public override void ExitState(PlayerBaseState nextState = null)
     {
-        Debug.Log("Attack State Exit");
+        //Debug.Log("Attack State Exit");
         // Ctx.CombatController.ResetAnimatorController();
         Ctx.CharacterAnimator.applyRootMotion = false;
     }
