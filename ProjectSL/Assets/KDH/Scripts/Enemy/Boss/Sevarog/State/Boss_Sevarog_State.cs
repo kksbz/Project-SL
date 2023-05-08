@@ -16,6 +16,24 @@ public class Boss_Sevarog_Swing1_Attack_State : IState
 
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SWING1);
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudioClip_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudioClip_);
     }
 
     public void OnExit()
@@ -74,6 +92,24 @@ public class Boss_Sevarog_Swing2_Attack_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SWING2);
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudioClip_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudioClip_);
     }
 
     public void OnExit()
@@ -103,6 +139,24 @@ public class Boss_Sevarog_Swing2_1_Attack_State : IState
     public void OnEnter()
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SWING2_1);
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudioClip_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudioClip_);
     }
 
     public void OnExit()
@@ -132,6 +186,24 @@ public class Boss_Sevarog_Swing3_Attack_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SWING3);
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudioClip_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudioClip_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudioClip_);
     }
 
     public void OnExit()
@@ -162,6 +234,12 @@ public class Boss_Sevarog_Teleport_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_TELEPORT);
         _boss.Teleport();
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudioClip_ = _boss.FindAudioClip("Teleport");
+
+        _boss.SFX_Play(attackAudioClip_);
     }
 
     public void OnExit()
@@ -191,6 +269,11 @@ public class Boss_Sevarog_Subjugation_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SUBJUGATION);
+
+
+        AudioClip attackAudioClip_ = _boss.FindAudioClip("Subjuagtion");
+
+        _boss.SFX_Play(attackAudioClip_);
 
         //  원거리 공격 수행 예정
         _boss.SubjugationPattern();
@@ -222,15 +305,23 @@ public class Boss_Sevarog_Enrage_State : IState
     }
     public void OnEnter()
     {
+        _boss.SetStop(true);
+
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.StartCoroutine(AnimationDelay());
 
-        //  원거리 공격 수행 예정
+
+
+        AudioClip attackAudioClip_ = _boss.FindAudioClip("Enrage");
+
+        _boss.SFX_Play(attackAudioClip_);
+
         _boss.EnragePattern();
     }
 
     public void OnExit()
     {
+        _boss.SetStop(false);
     }
 
     public void Update()
@@ -263,6 +354,10 @@ public class Boss_Sevarog_EnemySpawn_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger(EnemyDefineData.TRIGGER_SUBJUGATION);
+
+        AudioClip attackAudioClip_ = _boss.FindAudioClip("EnemySpawn");
+
+        _boss.SFX_Play(attackAudioClip_);
 
         _boss.StartCoroutine(SpawnDelay());
     }

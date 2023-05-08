@@ -28,10 +28,13 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
     [SerializeField]
     private LayerMask _obstacleMask;
 
-    public List<GameObject> pillars;
+    public GameObject pillar;
 
     public GameObject unActiveObj;
     public GameObject[] activeObj;
+
+    public AudioSource audioSource;
+    public AudioClip audioClip;
 
     private void OnEnable()
     {
@@ -47,18 +50,24 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
             iterator.SetActive(true);
         }
         Explosion();
+        Debug.Log($"explosion End");
 
         yield return new WaitForSeconds(1f);
+
+        Debug.Log($"explosion End / pillar : {pillar.name} / {pillar.GetComponent<Animator>().name}");
+
+        pillar.GetComponent<Animator>().SetTrigger("DownPillar");
         unActiveObj.SetActive(true);
         foreach (var iterator in activeObj)
         {
             iterator.SetActive(false);
         }
-        foreach (var iterator in pillars)
-        {
-            Destroy(iterator);
-        }
+
+        yield return new WaitForSeconds(1f);
+        Destroy(pillar);
+
         gameObject.SetActive(false);
+
     }
 
 
@@ -67,6 +76,9 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
     /// </summary>
     public void Explosion()
     {
+        audioSource.clip = audioClip;
+        audioSource.Play();
+
         List<Transform> targets = GFunc.FindTargetInRange(transform, _radius, _ANGLE, _targetMask, _obstacleMask);
         foreach (var target in targets)
         {
@@ -82,6 +94,8 @@ public class Enrage : MonoBehaviour, GData.IGiveDamageable
                 GiveDamage(damageable, damage);
             }
         }
+        Debug.Log($"explosion End Func");
+
     }
 
     public void GiveDamage(GData.IDamageable damageable, float damage)
