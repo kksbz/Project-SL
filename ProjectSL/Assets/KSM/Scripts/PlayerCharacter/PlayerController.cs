@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerStateMachine playerStateMachine;
 
+    [SerializeField]
+    private QuickSlotBar _quickSlotBar;
+
     private float tempMoveSpeed = 5f;
 
     public CharacterControlProperty controlProperty = new CharacterControlProperty();
@@ -73,6 +76,8 @@ public class PlayerController : MonoBehaviour
         animationController = GetComponent<AnimationController>();
         playerStateMachine = GetComponent<PlayerStateMachine>();
         equipmentController = GetComponent<EquipmentController>();
+
+        _quickSlotBar = UiManager.Instance.quickSlotBar;
 
         GameObject meshObj = gameObject.FindChildObj("Mesh");
         characterBody = meshObj.transform;
@@ -184,7 +189,6 @@ public class PlayerController : MonoBehaviour
         {
             canUseItem = false;
         }*/
-
         if(!equipmentController.IsUsableRecoveryConsumption())
         {
             canUseItem = false;
@@ -194,11 +198,25 @@ public class PlayerController : MonoBehaviour
 
         return canUseItem;
     }
+    public void ConsumRecoveryItem()
+    {
+        // 갯수 줄이고
+        if (_quickSlotBar.QuickSlotRecoveryConsumption == null)
+            return;
+
+        _quickSlotBar.QuickSlotRecoveryConsumption.Quantity = _quickSlotBar.QuickSlotRecoveryConsumption.Quantity - 1;
+        playerCharacter.HealthSys.HealHP(_quickSlotBar.QuickSlotRecoveryConsumption.vigor);
+        Inventory.Instance.InitSlotItemData();
+        _quickSlotBar.LoadQuickSlotData();
+    }
 
     void UseRecoveryItemStartState()
     {
         _canContinuous = false;
         _isContinuousInputOn = false;
+        // 장비 숨기기
+        equipmentController.HideLeftWeapon();
+        equipmentController.ShowRecoveryConsumption();
     }
     void UseRecoveryItemEndState()
     {
@@ -206,6 +224,8 @@ public class PlayerController : MonoBehaviour
         _isContinuousInputOn = false;
         _isUsingItem = false;
         playerStateMachine.UseItemFlag = false;
+        equipmentController.ShowLeftWeapon();
+        equipmentController.HideRecoveryConsumption();
     }
     void ContinuousUseRecoveryItemCheck()
     {
@@ -277,6 +297,13 @@ public class PlayerController : MonoBehaviour
     {
         return name.StartsWith("ItemAction");
     }
+    public void StartedItemActionAnimation(string name)
+    {
+        if (!IsItemActionAnimation(name))
+            return;
+
+
+    }
     public void EndedItemActionAnimation(string name)
     {
         if (!IsItemActionAnimation(name))
@@ -284,6 +311,11 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("End ItemAction Animation");
         InitializeItemActionProperty();
+        // 장비 숨겼다면 해제하기
+        if(equipmentController.IsHideRightWeapon())
+            equipmentController.ShowRightWeapon();
+        if(equipmentController.IsHideLeftWeapon())
+            equipmentController.ShowLeftWeapon();
     }
 
     // Legacy Code

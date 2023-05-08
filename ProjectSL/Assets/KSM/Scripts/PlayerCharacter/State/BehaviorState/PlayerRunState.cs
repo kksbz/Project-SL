@@ -8,15 +8,16 @@ public class PlayerRunState : PlayerBaseState
     {
 
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         Ctx.AnimationController.SetWeight(AnimationController.LAYERINDEX_RUNLAYER, 1);
     }
     public override void UpdateState()
     {
         CheckSwitchStates();
+
         Ctx.SetMoveDirection();
-        
+
         // 임시로 달리는 속도 8 * 나중에 스탯에서 가져올수 있음
         Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 8f);
         Ctx.NextBehavior = nextMove;
@@ -26,11 +27,13 @@ public class PlayerRunState : PlayerBaseState
         Debug.Log("JogState FixedUpdateState()");
         if (Ctx.NextBehavior != null)
         {
+            Ctx.PlayerCharacter.HealthSys.Decrease_SP(Ctx.PlayerController._sprintActionCost * Time.deltaTime);
             Debug.Log("JogState FixedUpdateState context nextBehavior.Execute()");
             Ctx.NextBehavior.Execute();
+            Ctx.NextBehavior = null;
         }
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         Ctx.AnimationController.SetWeight(AnimationController.LAYERINDEX_RUNLAYER, 0);
     }
@@ -44,7 +47,7 @@ public class PlayerRunState : PlayerBaseState
         {
             SwitchState(Factory.Walk());
         }
-        else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.PlayerCharacter.HealthSys.IsAvailableAction())
+        else if ( (Ctx.IsMovementPressed && !Ctx.IsRunPressed) || !Ctx.PlayerCharacter.HealthSys.IsAvailableAction())
         {
             SwitchState(Factory.Jog());
         }

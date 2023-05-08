@@ -302,24 +302,29 @@ public class CombatController : MonoBehaviour
 
     #region Guard
 
-    public void OnGuard()
+    public void OnGuard(PlayerBaseState prevState)
     {
         if (_isGuard)
             return;
 
         // 스태미너 회복 리젠율 감소
         _playerCharacter.HealthSys._staminaRegenMultiplier = 0.5f;
+
         _isGuard = true;
         // animation Set Layer Weight
-        _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 1);
-        _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 1);
-        // transition
-        // _animator.SetBool("IsGuard", _isGuard);
-        TransitionAnimationPlay();
+        GuardOnOffState();
+
+
+        if (prevState != null && prevState is PlayerBlockState)
+        {
+            Debug.Log("OnGuard PrevState : BlockState");
+            return;
+        }
+        GuardTransitionState();
         // guard
 
     }
-    public void OffGuard()
+    public void OffGuard(PlayerBaseState nextState)
     {
         if (!_isGuard)
             return;
@@ -328,9 +333,32 @@ public class CombatController : MonoBehaviour
 
         _isGuard = false;
         // animation Set Layer Weight
+        GuardOnOffState();
+
+        if(nextState != null && nextState is PlayerBlockState)
+        {
+            _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 1);
+            Debug.Log("OnGuard nextState : BlockState");
+            return;
+        }
+
+        GuardTransitionState();
+    }
+    public void GuardOnOffState()
+    {
+        if(_isGuard)
+        {
+            _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 1);
+        }
+        else
+        {
+            _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 0);
+        }
+    }
+
+    public void GuardTransitionState()
+    {
         _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 1);
-        _animator.SetLayerWeight(AnimationController.LAYERINDEX_GUARDLAYER, 0);
-        // _animator.SetBool("IsGuard", _isGuard);
         TransitionAnimationPlay();
     }
 
@@ -415,8 +443,12 @@ public class CombatController : MonoBehaviour
         if (_isHit)
             return;
 
-        _isHit= true;
+        if (_isDodging)
+            return;
+
+        HitStartState();
         HitAnimationPlay();
+        _isHit = true;
     }
 
     void HitAnimationPlay()
@@ -424,6 +456,10 @@ public class CombatController : MonoBehaviour
         PoseAction poseAction = new PoseAction(_animator, HitAnimationTag, AnimationController.LAYERINDEX_FULLLAYER, 0);
         nextPA = poseAction;
         poseAction.Execute();
+    }
+    void HitStartState()
+    {
+        
     }
     void HitEndState()
     {
@@ -521,17 +557,6 @@ public class CombatController : MonoBehaviour
         HitEndState();
         _animationController.InitializeAnimController();
     }
-    public void RootMotionRepositioning(string name)
-    {
-        if (!IsRootMotionAnimation(name))
-            return;
-
-        Debug.Log("Root Motion Animation Ended, Player Character Repositioning");
-        playerObjTR.position = meshObjTR.position;
-        meshObjTR.localPosition = Vector3.zero;
-
-    }
-    
     private bool IsAttackAnimation(string name)
     {
         return name.StartsWith("Attack");
@@ -604,5 +629,16 @@ public class CombatController : MonoBehaviour
         Debug.LogWarning("Playing Root Motion");
         transform.position = meshObjTR.position - meshObjTR.localPosition;
     }
-    
+    public void RootMotionRepositioning(string name)
+    {
+        if (!IsRootMotionAnimation(name))
+            return;
+
+        Debug.Log("Root Motion Animation Ended, Player Character Repositioning");
+        playerObjTR.position = meshObjTR.position;
+        meshObjTR.localPosition = Vector3.zero;
+
+    }
+
+
 }

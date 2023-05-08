@@ -16,6 +16,23 @@ public class SkinnedMeshController : MonoBehaviour
     ModelChanger _gloveModelChanger;
     [SerializeField]
     ModelChanger _pantModelChanger;
+
+    public ModelChanger HelmetModelChanger
+    {
+        get { return _helmetModelChanger; }
+    }
+    public ModelChanger ChestModelChanger
+    {
+        get { return _chestModelChanger; }
+    }
+    public ModelChanger GloveModelChanger
+    {
+        get { return _gloveModelChanger; }
+    }
+    public ModelChanger PantModelChanger
+    {
+        get { return _pantModelChanger; }
+    }
     
 
     private void Awake()
@@ -26,6 +43,8 @@ public class SkinnedMeshController : MonoBehaviour
         _chestModelChanger = GetComponentInChildren<ChestModelChanger>();
         _gloveModelChanger = GetComponentInChildren<GloveModelChanger>();
         _pantModelChanger = GetComponentInChildren<PantModelChanger>();
+
+        
     }
     // Start is called before the first frame update
     void Start()

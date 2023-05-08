@@ -289,6 +289,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UiInput"",
+            ""id"": ""f5ad38c5-52aa-4631-8336-4615d7fc95c3"",
+            ""actions"": [
+                {
+                    ""name"": ""ESC"",
+                    ""type"": ""Button"",
+                    ""id"": ""30cdc3f4-a4f3-4917-bbd8-526bfd0ef961"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f2c8beb9-361b-4e30-a781-60fe182499d5"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ESC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -320,6 +348,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerCharacterInput_Dodge = m_PlayerCharacterInput.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerCharacterInput_SwitchArm = m_PlayerCharacterInput.FindAction("SwitchArm", throwIfNotFound: true);
         m_PlayerCharacterInput_UseRecoveryItem = m_PlayerCharacterInput.FindAction("UseRecoveryItem", throwIfNotFound: true);
+        // UiInput
+        m_UiInput = asset.FindActionMap("UiInput", throwIfNotFound: true);
+        m_UiInput_ESC = m_UiInput.FindAction("ESC", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -479,6 +510,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public PlayerCharacterInputActions @PlayerCharacterInput => new PlayerCharacterInputActions(this);
+
+    // UiInput
+    private readonly InputActionMap m_UiInput;
+    private List<IUiInputActions> m_UiInputActionsCallbackInterfaces = new List<IUiInputActions>();
+    private readonly InputAction m_UiInput_ESC;
+    public struct UiInputActions
+    {
+        private @PlayerInput m_Wrapper;
+        public UiInputActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ESC => m_Wrapper.m_UiInput_ESC;
+        public InputActionMap Get() { return m_Wrapper.m_UiInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UiInputActions set) { return set.Get(); }
+        public void AddCallbacks(IUiInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UiInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UiInputActionsCallbackInterfaces.Add(instance);
+            @ESC.started += instance.OnESC;
+            @ESC.performed += instance.OnESC;
+            @ESC.canceled += instance.OnESC;
+        }
+
+        private void UnregisterCallbacks(IUiInputActions instance)
+        {
+            @ESC.started -= instance.OnESC;
+            @ESC.performed -= instance.OnESC;
+            @ESC.canceled -= instance.OnESC;
+        }
+
+        public void RemoveCallbacks(IUiInputActions instance)
+        {
+            if (m_Wrapper.m_UiInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUiInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UiInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UiInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UiInputActions @UiInput => new UiInputActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -498,5 +575,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnSwitchArm(InputAction.CallbackContext context);
         void OnUseRecoveryItem(InputAction.CallbackContext context);
+    }
+    public interface IUiInputActions
+    {
+        void OnESC(InputAction.CallbackContext context);
     }
 }

@@ -267,6 +267,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UiInput",
+            "id": "f5ad38c5-52aa-4631-8336-4615d7fc95c3",
+            "actions": [
+                {
+                    "name": "ESC",
+                    "type": "Button",
+                    "id": "30cdc3f4-a4f3-4917-bbd8-526bfd0ef961",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2c8beb9-361b-4e30-a781-60fe182499d5",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "ESC",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

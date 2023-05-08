@@ -8,7 +8,7 @@ public class PlayerDeadState : PlayerBaseState
     {
         IsRootState = true;
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         Ctx.CharacterAnimator.applyRootMotion = true;
         Ctx.PlayerController.Die();
@@ -22,7 +22,7 @@ public class PlayerDeadState : PlayerBaseState
     {
 
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         
     }

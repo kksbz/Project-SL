@@ -8,7 +8,7 @@ public class PlayerIdleState : PlayerBaseState
     {
 
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
 
     }
@@ -26,7 +26,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
 
     }

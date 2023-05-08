@@ -101,6 +101,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TargetDeadCheck();
         SearchTarget();
         InputAction();
     }
@@ -110,7 +111,24 @@ public class CameraController : MonoBehaviour
         LookTarget();
         CameraArmFollowMesh();
     }
-
+    private void TargetDeadCheck()
+    {
+        if(IsLockOn && target == null)
+        {
+            GameObject newTargetObject = FindNearestTarget();
+            CharacterBase newTargetCharacter = newTargetObject.GetComponent<CharacterBase>();
+            if(newTargetCharacter != null)
+            {
+                target = newTargetCharacter;
+                UpdateLockTargets();
+            }
+            else
+            {
+                ReleasePlayerLockOn();
+                UpdateLockTargets();
+            }
+        }
+    }
     void InputAction()
     {
         Input_LockOn();
@@ -139,8 +157,9 @@ public class CameraController : MonoBehaviour
     {
         if (IsLockOn)
         {
+            targetGroup.m_Targets = new CinemachineTargetGroup.Target[0];
             targetGroup.AddMember(transform, 0.9f, 0f);
-            targetGroup.AddMember(target.gameObject.transform, 0.6f, 0);
+            targetGroup.AddMember(target.gameObject.FindChildObj("LockOnTarget").transform, 0.6f, 0);
 
             camera.gameObject.GetComponent<CinemachineController>().LockCamera();
             camera.gameObject.GetComponent<CinemachineController>().FollowTarget(cameraArm);
@@ -149,7 +168,7 @@ public class CameraController : MonoBehaviour
         else
         {
             camera.gameObject.GetComponent<CinemachineController>().FreeCamera();
-            targetGroup.m_Targets = new CinemachineTargetGroup.Target[0];
+            
         }
     }
     void LookAround()
@@ -243,21 +262,7 @@ public class CameraController : MonoBehaviour
             return;
         }
         Debug.Log("락온상태 아님");
-        GameObject newTarget = default;
-        float minDistance = float.MaxValue;
-
-        // 가장 가까운 캐릭터 찾기
-        foreach(var targetTf in targetsInView)
-        {
-            Debug.Log("가까운 캐릭터 찾는중");
-            Vector3 offset = targetTf.position - transform.position;
-            float sqrLen = offset.sqrMagnitude;
-            if(minDistance > sqrLen)
-            {
-                minDistance = sqrLen;
-                newTarget = targetTf.gameObject;
-            }
-        }
+        GameObject newTarget = FindNearestTarget();
 
         // 시야범위에 캐릭터가 없는 경우
         if (newTarget == default)
@@ -276,6 +281,23 @@ public class CameraController : MonoBehaviour
         Debug.Log("락온상태로 변경");
         controlProperty.isLockOn = true;
         cameraState = ECameraState.LOCKON;
+    }
+    GameObject FindNearestTarget()
+    {
+        GameObject searchTarget = default;
+        float minDistance = float.MaxValue;
+        foreach (var targetTf in targetsInView)
+        {
+            Debug.Log("가까운 캐릭터 찾는중");
+            Vector3 offset = targetTf.position - transform.position;
+            float sqrLen = offset.sqrMagnitude;
+            if (minDistance > sqrLen)
+            {
+                minDistance = sqrLen;
+                searchTarget = targetTf.gameObject;
+            }
+        }
+        return searchTarget;
     }
     void ReleasePlayerLockOn()
     {

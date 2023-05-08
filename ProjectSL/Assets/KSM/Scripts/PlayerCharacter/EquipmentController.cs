@@ -27,6 +27,8 @@ public class EquipmentController : MonoBehaviour
     private PlayerCharacter _playerCharacter;
     [SerializeField]
     private PlayerController _playerController;
+    [SerializeField]
+    private SkinnedMeshController _skinnedMeshController;
     
 
     #region Equipment Model Change
@@ -131,11 +133,14 @@ public class EquipmentController : MonoBehaviour
     private Transform _backRWSocket;
     [SerializeField]
     private Transform _backLWSocket;
+    [SerializeField]
+    private Transform _leftRecConsumptionSocket;
 
     public static readonly string WEAPONSOCKET_RIGHT_ARM = "RightArmWeaponSocket";
     public static readonly string WEAPONSOCKET_LEFT_ARM = "LeftArmShieldSocket";
     public static readonly string WEAPONSOCKET_BACK_RIGHTWP = "BackRightWeaponSocket";
     public static readonly string WEAPONSOCKET_BACK_LEFTWP = "BackLeftShieldSocket";
+    public static readonly string CONSUMPTIONSOCKET_LEFT_ARM = "LeftArmConsumptionSocket";
 
     #endregion  // Weapon Socket
 
@@ -159,7 +164,9 @@ public class EquipmentController : MonoBehaviour
     // Property
     public EArmState ArmState { get { return _currentArmState; } }
     public EWeaponState WeaponState { get { return _currentWeaponState; } }
-    public bool IsEquipShieldToLeftArm() 
+
+    
+    public bool IsAviliableGuard() 
     {
         if (_currentLeftArmWeapon == null)
             return false;
@@ -170,6 +177,11 @@ public class EquipmentController : MonoBehaviour
     {
         bool usable = true;
 
+        if(_currentAttackConsumption == null)
+        {
+            return false;
+        }
+
         usable = _currentAttackConsumption.Quantity > 0;
 
         return usable;
@@ -177,6 +189,11 @@ public class EquipmentController : MonoBehaviour
     public bool IsUsableRecoveryConsumption()
     {
         bool usable = true;
+
+        if (_currentRecoveryConsumption == null)
+        { 
+            return false;
+        }
 
         usable = _currentRecoveryConsumption.Quantity > 0;
 
@@ -194,6 +211,7 @@ public class EquipmentController : MonoBehaviour
         _combatController = GetComponent<CombatController>();
         _animationController = GetComponent<AnimationController>();
         _playerController = GetComponent<PlayerController>();
+        _skinnedMeshController = GetComponentInChildren<SkinnedMeshController>();
 
         //_helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
         //_chestModelChanger = GetComponentInChildren<ChestModelChanger>();
@@ -205,6 +223,7 @@ public class EquipmentController : MonoBehaviour
         _leftArmSocket = gameObject.FindChildObj(WEAPONSOCKET_LEFT_ARM).transform;
         _backRWSocket = gameObject.FindChildObj(WEAPONSOCKET_BACK_RIGHTWP).transform;
         _backLWSocket = gameObject.FindChildObj(WEAPONSOCKET_BACK_LEFTWP).transform;
+        _leftRecConsumptionSocket = gameObject.FindChildObj(CONSUMPTIONSOCKET_LEFT_ARM).transform;
 
 
 
@@ -246,6 +265,7 @@ public class EquipmentController : MonoBehaviour
 
         // 인벤토리 델리게이트 함수 바인딩
         Inventory.Instance._onEquipSlotUpdated += UpdateEquipmentItem;
+        Inventory.Instance._onEquipArmorUpdated += SkinnedMeshPartsChange;
         // 애니메이션 오버라이드 컨트롤러 시작 끝 이벤트 바인딩
 
         // Mannequin Mesh Hide
@@ -414,6 +434,7 @@ public class EquipmentController : MonoBehaviour
         if(_currentRecoveryConsumption != null)
         {
             _currentRecoveryConsumptionObj = _quickSlotBar.GetCurrentRecoveryConsumptionObject;
+            AttachWeaponObj(_currentRecoveryConsumptionObj.transform, _leftRecConsumptionSocket);
             _playerController.ItemAction_Recovery = _currentRecoveryConsumptionObj.GetComponent<ItemAction>().ItemActionSO;
         }
         else
@@ -421,9 +442,6 @@ public class EquipmentController : MonoBehaviour
             _currentRecoveryConsumptionObj = null;
             _playerController.ItemAction_Recovery = null;
         }
-
-        // 모델 바꾸는거 추가할 예정
-        //
         
         // 임시 *검밖에 없으니 검으로
         if (_currentRightArmWeapon != null)
@@ -441,6 +459,78 @@ public class EquipmentController : MonoBehaviour
         // 추후 반지 업데이트?
         //_ring_1 = Inventory.Instance
     }
+    public void SkinnedMeshPartsChange()
+    {
+        if (_skinnedMeshController == null)
+            return;
+
+        string headArmorTag = string.Empty;
+        string chestArmorTag = string.Empty;
+        string gloveArmorTag = string.Empty;
+        string pantArmorTag = string.Empty;
+
+        // 머리 설정
+        if (_armor_Helmet != Inventory.Instance.armorSlotList[0].Item)
+        {
+            _armor_Helmet = Inventory.Instance.armorSlotList[0].Item;
+        }
+        if(_armor_Helmet == null)
+        {
+            headArmorTag = "NakedHead";
+        }
+        else
+        {
+            headArmorTag = _armor_Helmet.itemID.ToString();
+        }
+        _skinnedMeshController.HelmetModelChanger.EquipModelByName(headArmorTag);
+
+        // 가슴 설정
+        if (_armor_Chest != Inventory.Instance.armorSlotList[1].Item)
+        {
+            _armor_Chest = Inventory.Instance.armorSlotList[1].Item;
+        }
+        if (_armor_Chest == null)
+        {
+            chestArmorTag = "NakedChest";
+        }
+        else
+        {
+            chestArmorTag = _armor_Chest.itemID.ToString();
+        }
+        _skinnedMeshController.ChestModelChanger.EquipModelByName(chestArmorTag);
+
+        // 장갑 설정
+        if (_armor_Gloves != Inventory.Instance.armorSlotList[2].Item)
+        {
+            _armor_Gloves = Inventory.Instance.armorSlotList[2].Item;
+        }
+        if (_armor_Gloves == null)
+        {
+            gloveArmorTag = "NakedHands";
+        }
+        else
+        {
+            gloveArmorTag = _armor_Gloves.itemID.ToString();
+        }
+        _skinnedMeshController.GloveModelChanger.EquipModelByName(gloveArmorTag);
+
+        // 바지 설정
+        if (_armor_Pants != Inventory.Instance.armorSlotList[3].Item)
+        {
+            _armor_Pants = Inventory.Instance.armorSlotList[3].Item;
+        }
+        if (_armor_Pants == null)
+        {
+            pantArmorTag = "NakedPant";
+        }
+        else
+        {
+            pantArmorTag = _armor_Pants.itemID.ToString();
+        }
+        _skinnedMeshController.PantModelChanger.EquipModelByName(pantArmorTag);
+
+
+    }
     private void SetWeaponState(EWeaponState newState)
     {
         _currentWeaponState = newState;
@@ -449,5 +539,80 @@ public class EquipmentController : MonoBehaviour
     {
         _currentArmState = newState;
     }
-    // public void 
+    public bool IsHideRightWeapon()
+    {
+        bool isHide = true;
+
+        if (_currentRightArmWeaponObj == null)
+            return false;
+
+        isHide = !_currentRightArmWeaponObj.activeSelf;
+
+        return isHide;
+    }
+    public bool IsHideLeftWeapon() 
+    {
+        bool isHide = true;
+
+        if (_currentLeftArmWeaponObj == null)
+            return false;
+
+        isHide = !_currentLeftArmWeaponObj.activeSelf;
+
+        return isHide;
+    }
+    public bool IsHideRecoveryConsumption()
+    {
+        bool isHide = true;
+
+        if (_currentRecoveryConsumptionObj == null)
+            return false;
+
+        isHide = !_currentRecoveryConsumptionObj.activeSelf;
+
+        return isHide;
+    }
+    public void ShowRightWeapon()
+    {
+        if (_currentRightArmWeaponObj == null)
+            return;
+
+        _currentRightArmWeaponObj.SetActive(true);
+    }
+    public void ShowLeftWeapon()
+    {
+        if (_currentLeftArmWeaponObj == null)
+            return;
+
+        _currentLeftArmWeaponObj.SetActive(true);
+    }
+    public void ShowRecoveryConsumption()
+    {
+        if (_currentRecoveryConsumptionObj == null)
+            return;
+
+        _currentRecoveryConsumptionObj.SetActive(true);
+    }
+    public void HideRightWeapon()
+    {
+        if (_currentRightArmWeaponObj == null)
+            return;
+
+        _currentRightArmWeaponObj.SetActive(false);
+    }
+    public void HideLeftWeapon()
+    {
+        if (_currentLeftArmWeaponObj == null)
+            return;
+
+        _currentLeftArmWeaponObj.SetActive(false);
+    }
+    public void HideRecoveryConsumption()
+    {
+        if (_currentRecoveryConsumptionObj == null)
+            return;
+
+        _currentRecoveryConsumptionObj.SetActive(false);
+    }
+
 }
