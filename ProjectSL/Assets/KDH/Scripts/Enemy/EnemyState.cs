@@ -132,7 +132,11 @@ public class Enemy_Patrol_State : IState
         _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 0f);
 
         _enemy.Patrol();
-        _enemy.StartCoroutine(MoveDelay());
+
+        _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+        _enemy.SetStop(false);
+
+        //_enemy.StartCoroutine(MoveDelay());
 
         _coroutine = _enemy.FieldOfViewSearch(0.2f);
 
@@ -142,7 +146,7 @@ public class Enemy_Patrol_State : IState
     public void OnExit()
     {
         _enemy.StopCoroutine(_coroutine);
-        //_enemy.PatrolStop();
+        _enemy.PatrolStop();
     }
 
     public void Update()
@@ -260,6 +264,8 @@ public class Enemy_Attack_State : IState
 
     public void OnEnter()
     {
+        _enemy.TargetFollow(_enemy.Target, true);
+
         _enemy.SetStop(true);
 
         float randNum_ = Random.value;
@@ -440,6 +446,7 @@ public class Enemy_Die_State : IState
         //  사망 애니메이션이 종료된 이후 감지
         if (_enemy.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
         {
+            Debug.Log($"몬스터 사망");
             _enemy.OnDie();
         }
     }

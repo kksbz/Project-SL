@@ -169,7 +169,7 @@ public class Boss_Thought_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        _boss.StartCoroutine(StateChangedDelay(0.5f));
+        _boss.StartCoroutine(StateChangedDelay(1f));
 
         _boss.TargetFollow(_boss.Target, false);
     }
@@ -336,7 +336,7 @@ public class Boss_Die_State : IState
     {
         _boss.SetTrigger("Die");
 
-        AudioClip deathSFX_ = _boss.FindAudioClip("Death");
+        AudioClip deathSFX_ = _boss.FindAudioClip("Die");
         _boss.SFX_Play(deathSFX_, true);
     }
 

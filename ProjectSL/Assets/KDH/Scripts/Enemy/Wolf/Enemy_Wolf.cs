@@ -51,16 +51,17 @@ public class Enemy_Wolf : EnemyBase
 
     public override int RandomAttack()
     {
-        float randNum_ = Random.value;
+        // float randNum_ = Random.value;
 
-        if (randNum_ <= 0.5f)
-        {
-            return 1;
-        }
-        else
-        {
-            return 2;
-        }
+        // if (randNum_ <= 0.5f)
+        // {
+        //     return 1;
+        // }
+        // else
+        // {
+        //     return 2;
+        // }
+        return 1;
     }
 
     public override void Attack(string CurrentAnimationName, int onActionIndex)
@@ -70,9 +71,9 @@ public class Enemy_Wolf : EnemyBase
             case EnemyDefineData.ANIMATION_ATTACK_01:
                 NotAttackColliderEnabled(0);
                 break;
-            case EnemyDefineData.ANIMATION_ATTACK_02:
-                NotAttackColliderEnabled(0);
-                break;
+                // case EnemyDefineData.ANIMATION_ATTACK_02:
+                //     NotAttackColliderEnabled(0);
+                //     break;
         }
     }
 }

@@ -4725,7 +4725,7 @@ MonoBehaviour:
     name: Sevarog
     info: Petrified Sevarog
     maxHp: 1000
-    currentHp: 500
+    currentHp: 1000
     maxMoveSpeed: 5
     currentMoveSpeed: 5
     maxAttackDamage: 10
