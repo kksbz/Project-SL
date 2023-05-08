@@ -113,6 +113,7 @@ public class Boss_Idle_State : IState
     public void OnExit()
     {
         _boss.StopCoroutine(_coroutine);
+        _boss.ActiveHpBar();
     }
 
     public void Update()

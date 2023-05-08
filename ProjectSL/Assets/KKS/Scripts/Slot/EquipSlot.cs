@@ -13,6 +13,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [SerializeField] private TMP_Text quantity; // 수량표시 Text
     [SerializeField] private GameObject pointerEffect; // 커서가 슬롯에 들어올 시 나올 이펙트
     private ItemDescriptionPanel descriptionPanel; // 아이템 설명 패널
+    private EquipInvenController equipInvenController;
     public IPublicSlot equipSlot; // 선택한 장비 슬롯
     [SerializeField] private ItemData item; // 슬롯에 담길 아이템 변수
     public ItemData Item
@@ -60,6 +61,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         button = GetComponent<Button>();
         descriptionPanel = Inventory.Instance.descriptionPanel;
+        equipInvenController = Inventory.Instance.equipInvenController;
         button.onClick.AddListener(() =>
         {
             if (item == null)
@@ -70,6 +72,11 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             {
                 // 아이템 장착
                 SelectSlot();
+                if (equipSlot.SlotItemIsNull() == false)
+                {
+                    equipInvenController.WarningPanel.SetActive(true);
+                    return;
+                }
                 equipSlot.AddItem(item);
                 Inventory.Instance.equipSlotPanel.SetActive(true);
                 Inventory.Instance.equipInvenPanel.SetActive(false);

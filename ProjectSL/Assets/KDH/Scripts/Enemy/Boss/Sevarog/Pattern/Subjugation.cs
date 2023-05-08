@@ -31,7 +31,9 @@ public class Subjugation : MonoBehaviour
     {
         GData.IDamageable object_ = other.GetComponent<GData.IDamageable>();
 
-        if (object_ == null || object_ == default)
+        EnemyBase enemy_ = other.GetComponent<EnemyBase>();
+
+        if (object_ == null || object_ == default || enemy_ != null || enemy_ != default)
         {
             /*  Do Nothing  */
         }

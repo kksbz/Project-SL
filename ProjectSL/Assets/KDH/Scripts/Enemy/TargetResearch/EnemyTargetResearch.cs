@@ -25,7 +25,9 @@ public class EnemyTargetResearch : MonoBehaviour, IEnemyTargetResearch
     public EnemyResearchStatus ResearchStatus { get; private set; }
     public IFieldOfView FieldOfView { get; private set; }
 
-    public List<Transform> Targets { get; private set; }
+    [SerializeField]
+    private List<Transform> _targets;
+    public List<Transform> Targets { get { return _targets; } private set { _targets = value; } }
 
     public void Init(EnemyResearchStatus newResearchStatus, IFieldOfView newFieldOfView)
     {
@@ -43,10 +45,6 @@ public class EnemyTargetResearch : MonoBehaviour, IEnemyTargetResearch
     {
         get
         {
-            foreach (var element in FieldOfView.VisibleTargets)
-            {
-                Debug.Log($"찾은 오브젝트 : {element.name}");
-            }
             if (0 < FieldOfView.VisibleTargets.Count)
             {
                 Targets = FieldOfView.VisibleTargets;

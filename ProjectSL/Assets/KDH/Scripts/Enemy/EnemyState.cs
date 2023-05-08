@@ -40,7 +40,9 @@ public class Enemy_Idle_State : IState
 public class Enemy_Thought_State : IState
 {
     private EnemyBase _enemy;
-    private IEnumerator _coroutine;
+    private IEnumerator _fovCoroutine;
+    private IEnumerator _thoughtCoroutine;
+    private bool _isCoroutinePlay;
     public Enemy_Thought_State(EnemyBase newEnemy)
     {
         _enemy = newEnemy;
@@ -50,27 +52,33 @@ public class Enemy_Thought_State : IState
     {
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        _enemy.StartCoroutine(Thought(0.2f));
-
-        if (_enemy.MoveController.PatrolPoints.Count <= 1)
+        if (_enemy.MoveController.PatrolPoints.Count <= 1 && (!_enemy.IsFieldOfViewFind()))
         {
-            _coroutine = _enemy.FieldOfViewSearch(0.2f);
-            _enemy.StartCoroutine(_coroutine);
+            _fovCoroutine = _enemy.FieldOfViewSearch(0.2f);
+            _enemy.StartCoroutine(_fovCoroutine);
         }
 
+        _thoughtCoroutine = Thought(0.5f);
+        _enemy.StartCoroutine(_thoughtCoroutine);
     }
 
     public void OnExit()
     {
-        if (_enemy.MoveController.PatrolPoints.Count <= 1)
+        if (_fovCoroutine == null || _fovCoroutine == default)
         {
-            _enemy.StopCoroutine(_coroutine);
+            /* Do Nothing */
         }
+        else
+        {
+            _enemy.StopCoroutine(_fovCoroutine);
+        }
+
+        _enemy.StopCoroutine(_thoughtCoroutine);
     }
 
     public void Update()
     {
-        if (_enemy.IsFieldOfViewFind() && _enemy.MoveController.PatrolPoints.Count <= 1)
+        if (!_isCoroutinePlay && _enemy.IsFieldOfViewFind() && _enemy.MoveController.PatrolPoints.Count <= 1)
         {
             Thought();
         }
@@ -82,9 +90,11 @@ public class Enemy_Thought_State : IState
 
     IEnumerator Thought(float delay)
     {
+        _isCoroutinePlay = true;
         yield return new WaitForSeconds(delay);
 
         Thought();
+        _isCoroutinePlay = false;
     }
 
     void Thought()
@@ -114,6 +124,7 @@ public class Enemy_Patrol_State : IState
 
     public void OnEnter()
     {
+        _enemy.SetStoppingDistance(0f);
         _enemy.SetStop(false);
 
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed * 0.5f);
@@ -184,6 +195,7 @@ public class Enemy_Chase_State : IState
 
     public void OnEnter()
     {
+        _enemy.SetStoppingDistance(_enemy.Status.attackRange);
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed);
 
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
@@ -211,6 +223,7 @@ public class Enemy_Chase_State : IState
 
     public void OnExit()
     {
+        _enemy.SetStoppingDistance(0f);
         _enemy.SetStop(true);
     }
 
@@ -279,6 +292,7 @@ public class Enemy_Attack_State : IState
     public void OnExit()
     {
         _enemy.SetInt(EnemyDefineData.INT_ATTACK_INDEX, 0);
+        _enemy.TargetFollow(_enemy.Target, true);
     }
 
     public void Update()
@@ -287,15 +301,6 @@ public class Enemy_Attack_State : IState
         if (_enemy.IsAnimationEnd(_currentAnimationName))
         {
             _enemy.SetState(new Enemy_Thought_State(_enemy));
-            // // 타겟이 범위를 벗어났다면 놓친것으로 간주 PatrolState로 전환 그렇지 않다면 ChaseState로 전환
-            // if (enemy.IsMissed(enemy.Status.detectionRange))
-            // {
-            //     enemy.SetState(new Enemy_Patrol_State(enemy));
-            // }
-            // else
-            // {
-            //     enemy.SetState(new Enemy_Chase_State(enemy));
-            // }
         }
     }
     public void OnAction()
@@ -325,8 +330,11 @@ public class Enemy_Dodge_State : IState
         Quaternion currentRotation = _transform.rotation;
 
         Vector3 backwardDirection = -_transform.forward;
-        Vector3 randomOffset = new Vector3(Random.Range(-3f, 3f), 0f, Random.Range(-3f, 0f));
-        Vector3 targetPosition = currentPosition + backwardDirection + randomOffset;
+        //Vector3 randomOffset = new Vector3(Random.Range(-3f, 3f), 0f, Random.Range(-3f, 0f));
+        //Vector3 randomOffset = new Vector3(0f, 0f, Random.Range(-5f, -1f));
+        //float randomOffset = Random.Range(-5f, -1f);
+        float randomOffset = Random.Range(1f, 5f);
+        Vector3 targetPosition = currentPosition + backwardDirection * randomOffset;
 
         Vector3 targetDirection = (targetPosition - currentPosition).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(-targetDirection, Vector3.up);
@@ -365,6 +373,7 @@ public class Enemy_Hit_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResearchStatus.viewAngle = 360f;
         _enemy.SetStop(true);
 
         Vector3 direction_ = (_enemy.transform.position - _enemy.Target.position).normalized;
@@ -424,6 +433,11 @@ public class Enemy_Die_State : IState
 
     public void Update()
     {
+        //  사망 애니메이션이 종료된 이후 감지
+        if (_enemy.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
+        {
+            _enemy.OnDie();
+        }
     }
     public void OnAction()
     {

@@ -89,6 +89,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseRecoveryItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""964ac204-7a53-480b-aebb-08a2a5958fe2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -267,6 +276,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchArm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8a30235-a9f2-42b7-857e-55830ecc3f03"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""UseRecoveryItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -299,6 +319,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerCharacterInput_Guard = m_PlayerCharacterInput.FindAction("Guard", throwIfNotFound: true);
         m_PlayerCharacterInput_Dodge = m_PlayerCharacterInput.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerCharacterInput_SwitchArm = m_PlayerCharacterInput.FindAction("SwitchArm", throwIfNotFound: true);
+        m_PlayerCharacterInput_UseRecoveryItem = m_PlayerCharacterInput.FindAction("UseRecoveryItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -367,6 +388,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerCharacterInput_Guard;
     private readonly InputAction m_PlayerCharacterInput_Dodge;
     private readonly InputAction m_PlayerCharacterInput_SwitchArm;
+    private readonly InputAction m_PlayerCharacterInput_UseRecoveryItem;
     public struct PlayerCharacterInputActions
     {
         private @PlayerInput m_Wrapper;
@@ -378,6 +400,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Guard => m_Wrapper.m_PlayerCharacterInput_Guard;
         public InputAction @Dodge => m_Wrapper.m_PlayerCharacterInput_Dodge;
         public InputAction @SwitchArm => m_Wrapper.m_PlayerCharacterInput_SwitchArm;
+        public InputAction @UseRecoveryItem => m_Wrapper.m_PlayerCharacterInput_UseRecoveryItem;
         public InputActionMap Get() { return m_Wrapper.m_PlayerCharacterInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -408,6 +431,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SwitchArm.started += instance.OnSwitchArm;
             @SwitchArm.performed += instance.OnSwitchArm;
             @SwitchArm.canceled += instance.OnSwitchArm;
+            @UseRecoveryItem.started += instance.OnUseRecoveryItem;
+            @UseRecoveryItem.performed += instance.OnUseRecoveryItem;
+            @UseRecoveryItem.canceled += instance.OnUseRecoveryItem;
         }
 
         private void UnregisterCallbacks(IPlayerCharacterInputActions instance)
@@ -433,6 +459,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SwitchArm.started -= instance.OnSwitchArm;
             @SwitchArm.performed -= instance.OnSwitchArm;
             @SwitchArm.canceled -= instance.OnSwitchArm;
+            @UseRecoveryItem.started -= instance.OnUseRecoveryItem;
+            @UseRecoveryItem.performed -= instance.OnUseRecoveryItem;
+            @UseRecoveryItem.canceled -= instance.OnUseRecoveryItem;
         }
 
         public void RemoveCallbacks(IPlayerCharacterInputActions instance)
@@ -468,5 +497,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnGuard(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnSwitchArm(InputAction.CallbackContext context);
+        void OnUseRecoveryItem(InputAction.CallbackContext context);
     }
 }

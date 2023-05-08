@@ -16,6 +16,7 @@ public class PlayerRunState : PlayerBaseState
     {
         CheckSwitchStates();
         Ctx.SetMoveDirection();
+        
         // 임시로 달리는 속도 8 * 나중에 스탯에서 가져올수 있음
         Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 8f);
         Ctx.NextBehavior = nextMove;
@@ -43,7 +44,7 @@ public class PlayerRunState : PlayerBaseState
         {
             SwitchState(Factory.Walk());
         }
-        else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed)
+        else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed && !Ctx.PlayerCharacter.HealthSys.IsAvailableAction())
         {
             SwitchState(Factory.Jog());
         }

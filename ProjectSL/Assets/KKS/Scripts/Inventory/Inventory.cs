@@ -31,6 +31,7 @@ public class Inventory : Singleton<Inventory>
     public List<EquipSlot> equipSlots = new List<EquipSlot>(); // 장비인벤 슬롯
     public List<Slot> totalSlots = new List<Slot>(); // 장비인벤 슬롯
     public IPublicSlot selectSlot; // 선택한 슬롯 담을 변수
+    public EquipInvenController equipInvenController;
     [SerializeField] private int soul; // 보유소울
     public int Soul
     {
@@ -45,36 +46,24 @@ public class Inventory : Singleton<Inventory>
     public delegate void EventHandler();
     public EventHandler _onEquipSlotUpdated;
 
-    private void Awake()
+    public override void InitManager()
     {
-        _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+        
     }
-    //
-    private void Start()
+
+    private void Awake()
     {
         InitSlot();
         Soul = 0;
-    } // Start
+        _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+    }
+    //
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
             UiManager.Instance.soulBag.GetSoul(5000);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            UiManager.Instance.loadingPanel.gameObject.SetActive(!UiManager.Instance.loadingPanel.gameObject.activeSelf);
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            DataManager.Instance.slotNum = 0;
-            DataManager.Instance.SaveData();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            DataManager.Instance.slotNum = 0;
-            DataManager.Instance.LoadData();
         }
     } // Update
 
@@ -138,7 +127,28 @@ public class Inventory : Singleton<Inventory>
                     // 같은 아이템이 있고 보유수량이 최대수량보다 작을 때
                     if (_item.Quantity < itemData.maxQuantity)
                     {
-                        _item.Quantity++;
+                        // 아이템의 보유수량과 획득한 아이템의 보유수량의 합이 최대보유수량 을 초과할 때
+                        if ((_item.Quantity + item.Quantity) > itemData.maxQuantity)
+                        {
+                            // 최대보유수량으로 나눈 나머지값을 구함
+                            int remainQuantity = (_item.Quantity + item.Quantity) % itemData.maxQuantity;
+                            // 아이템의 보유수량을 최대수량으로 적용
+                            _item.Quantity = itemData.maxQuantity;
+                            for (int i = 0; i < inventory.Count; i++)
+                            {
+                                if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
+                                {
+                                    // 새로운 아이템의 보유수량을 구한 나머지값으로 적용한 후 인벤토리에 넣음
+                                    itemData.Quantity = remainQuantity;
+                                    inventory[i] = itemData;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            _item.Quantity += item.Quantity;
+                        }
                         InitSlotItemData();
                         if (_item.IsEquip == true)
                         {
@@ -156,6 +166,7 @@ public class Inventory : Singleton<Inventory>
             if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
             {
                 itemData.Quantity = item.Quantity;
+                itemData.IsEquip = item.IsEquip;
                 inventory[i] = itemData;
                 //Debug.Log($"인벤토리 빈 슬롯에 추가된 아이템 : {inventory[i].itemName}");
                 InitSlotItemData();
@@ -188,7 +199,7 @@ public class Inventory : Singleton<Inventory>
             {
                 // 버리는 아이템의 프리팹을 인스턴스하고 아이템데이터 대입
                 GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemData.itemID}"));
-                item.transform.position = GameManager.Instance.player.gameObject.transform.position + (Vector3.up * 0.5f);
+                item.transform.position = GameManager.Instance.player.gameObject.transform.position + (Vector3.up * 0.3f);
                 item.GetComponent<Item>().itemData = itemData;
                 inventory[i] = null;
                 return;
@@ -284,7 +295,8 @@ public class Inventory : Singleton<Inventory>
                                 {
                                     // 소모품슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
                                     if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
-                                        && equipSlots[i].Item.IsEquip == true)
+                                        && equipSlots[i].Item.IsEquip == true
+                                        && consumptionSlotList[j].Item.Quantity == equipSlots[i].Item.Quantity)
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
@@ -301,7 +313,8 @@ public class Inventory : Singleton<Inventory>
                                 {
                                     // 소모품슬롯의 아이템과 장착슬롯의 아이템이 같고 장착슬롯의 아이템이 장착 중일 때
                                     if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
-                                        && equipSlots[i].Item.IsEquip == true)
+                                        && equipSlots[i].Item.IsEquip == true
+                                        && consumptionSlotList[j].Item.Quantity == equipSlots[i].Item.Quantity)
                                     {
                                         // 슬롯 연동
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
@@ -434,6 +447,7 @@ public class Inventory : Singleton<Inventory>
                                 if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
                                 {
                                     consumptionSlotList[j].Item = inventory[i];
+                                    break;
                                 }
                             }
                         }
@@ -446,6 +460,7 @@ public class Inventory : Singleton<Inventory>
                                 if (consumptionSlotList[j].Item.itemID == inventory[i].itemID)
                                 {
                                     consumptionSlotList[j].Item = inventory[i];
+                                    break;
                                 }
                             }
                         }
@@ -456,6 +471,7 @@ public class Inventory : Singleton<Inventory>
                             if (aSlot.Item != null && aSlot.Item.itemID == inventory[i].itemID)
                             {
                                 aSlot.Item = inventory[i];
+                                break;
                             }
                         }
                         break;

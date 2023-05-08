@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class CombatController : MonoBehaviour
@@ -15,6 +12,9 @@ public class CombatController : MonoBehaviour
     private AnimationEventDispatcher _animEventDispatcher;
 
     #region Attack Field
+
+    public DamageCollider _currentRightWeaponCollider;
+    public DamageCollider _currentLeftWeaponCollider;
 
     public LayerMask EnemyMask;
     public float attackRadius;
@@ -51,6 +51,7 @@ public class CombatController : MonoBehaviour
 
     #region Block Field
     bool _isBlock;
+    string _blockAnimationTag;
     #endregion  // Block Field
 
     #region Attack Data
@@ -143,6 +144,9 @@ public class CombatController : MonoBehaviour
         if (!_canAttack)
             return;
 
+        if (!_playerCharacter.HealthSys.IsAvailableAction())
+            return;
+
         AttackLogic();
     }
     void AttackLogic()
@@ -174,6 +178,9 @@ public class CombatController : MonoBehaviour
         _canNextCombo = false;
         isComboInputOn = false;
         _isExecuteImmediateNextCombo = false;
+        // 무기 콜라이더 Disable
+        _currentRightWeaponCollider.DisableDamageCollider();
+        _currentLeftWeaponCollider.DisableDamageCollider();
 
         if (!CheckComboAssert(_currentCombo, 0, _maxCombo))
         {
@@ -189,6 +196,10 @@ public class CombatController : MonoBehaviour
         _isExecuteImmediateNextCombo = false;
         _currentCombo = 0;
         Debug.LogWarning("_isAttacking False");
+        // damage collider 끄기
+        _currentRightWeaponCollider.DisableDamageCollider();
+        _currentLeftWeaponCollider.DisableDamageCollider();
+
         _isAttacking = false;
         _controlProperty.isAttacking = false;
     }
@@ -207,6 +218,9 @@ public class CombatController : MonoBehaviour
     }
     void AttackAnimationPlay()
     {
+        // 스태미너 감소
+        _playerCharacter.HealthSys.ConsumSP(combo[_currentCombo-1].staminaCost);
+
         PoseAction poseAction = new PoseAction(_animator, "Attack", AnimationController.LAYERINDEX_FULLLAYER, 0, combo[_currentCombo - 1].animatorOV);
         nextPA = poseAction;
         // playerCharacter.SM_Behavior.ChangeState(EBehaviorStateName.ATTACK);
@@ -259,6 +273,7 @@ public class CombatController : MonoBehaviour
         AttackStartComboState();
         AttackAnimationPlay();
     }
+    // Legacy 테스트용 공격 함수
     public void AttackCheck()
     {
         //Debug.LogWarning("Attack Check");
@@ -292,6 +307,8 @@ public class CombatController : MonoBehaviour
         if (_isGuard)
             return;
 
+        // 스태미너 회복 리젠율 감소
+        _playerCharacter.HealthSys._staminaRegenMultiplier = 0.5f;
         _isGuard = true;
         // animation Set Layer Weight
         _animator.SetLayerWeight(AnimationController.LAYERINDEX_TRANSITIONLAYER, 1);
@@ -306,6 +323,8 @@ public class CombatController : MonoBehaviour
     {
         if (!_isGuard)
             return;
+        // 스태미너 회복 리젠율 초기화
+        _playerCharacter.HealthSys._staminaRegenMultiplier = 1f;
 
         _isGuard = false;
         // animation Set Layer Weight
@@ -336,9 +355,15 @@ public class CombatController : MonoBehaviour
         if (!_canDodge)
             return;
 
+        // 스태미너 체크
+        if (!_playerCharacter.HealthSys.IsAvailableAction())
+            return;
+
         if(!_isDodging)
         {
             DodgeStartState();
+            // 스태미너 감소
+            _playerCharacter.HealthSys.ConsumSP(_playerController._rollActionCost);
             DodgeAnimationPlay("Roll");
         }
     }
@@ -349,6 +374,8 @@ public class CombatController : MonoBehaviour
         if(!_isDodging)
         {
             DodgeStartState();
+            // 스태미너 감소
+            _playerCharacter.HealthSys.ConsumSP(_playerController._backStepActionCost);
             DodgeAnimationPlay("BackStep");
         }
     }
@@ -365,6 +392,7 @@ public class CombatController : MonoBehaviour
 
     void DodgeAnimationPlay(string dodge)
     {
+
         PoseAction poseAction = new PoseAction(_animator, dodge, AnimationController.LAYERINDEX_FULLLAYER, 0);
         nextPA = poseAction;
         poseAction.Execute();
@@ -417,16 +445,31 @@ public class CombatController : MonoBehaviour
         if (_isBlock)
             return;
 
-        _isBlock = true;
+        BlockStartState();
         BlockAnimationPlay();
     }
 
     void BlockAnimationPlay()
     {
-        PoseAction poseAction = new PoseAction(_animator, "Block", AnimationController.LAYERINDEX_FULLLAYER, 0);
+        PoseAction poseAction = new PoseAction(_animator, _blockAnimationTag, AnimationController.LAYERINDEX_FULLLAYER, 0);
         nextPA = poseAction;
         poseAction.Execute();
     }
+    void BlockStartState()
+    {
+        _isBlock = true;
+        // 스태미너 소비 후
+        _playerCharacter.HealthSys.ConsumSP(_playerController._BlockActionCost);
+        if(!_playerCharacter.HealthSys.IsAvailableAction())
+        {
+            _blockAnimationTag = "Block_Break";
+        }
+        else
+        {
+            _blockAnimationTag = "Block";
+        }
+    }
+
     void BlockEndState()
     {
         _isBlock = false;

@@ -5,6 +5,7 @@ public class EnemyStatus : StatusBase
 {
     public float detectionRange = default;
     public float attackRange = default;
+    public float dodge_Percentage = default;
 }
 
 [Serializable]
@@ -15,4 +16,5 @@ public class EnemyResearchStatus
     public float viewAngle = default;
     public LayerMask targetLayerMask = default;
     public LayerMask obstacleLayerMask = default;
+    public bool isNoPatrol;
 }

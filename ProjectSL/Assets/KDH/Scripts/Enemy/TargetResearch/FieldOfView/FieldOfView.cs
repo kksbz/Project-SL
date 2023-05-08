@@ -45,8 +45,8 @@ public class FieldOfView : IFieldOfView
         VisibleTargets.Clear();
         while (true)
         {
-            yield return new WaitForSeconds(delay);
             FindVisibleTargets();
+            yield return new WaitForSeconds(delay);
         }
     }
 

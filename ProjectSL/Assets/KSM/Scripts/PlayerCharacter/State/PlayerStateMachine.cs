@@ -48,12 +48,14 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isRollPressed;
     bool _isBackStepPressed;
     bool _isSwitchingArmPressed;
+    bool _isUseRecoveryItemPressed;
     float _dodgePressedRate = 0.5f;
     float _dodgeStartTime = 0f;
 
     bool _hitFlag;
     bool _blockFlag;
     bool _deadFlag;
+    bool _useItemFlag;
     // State Var
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
@@ -66,6 +68,7 @@ public class PlayerStateMachine : MonoBehaviour
     //
 
     // getter and setter
+    public PlayerCharacter PlayerCharacter { get { return _playerCharacter; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerController PlayerController { get { return _playerController; } }
@@ -81,9 +84,11 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsGuardPressed { get { return _isGuardPressed; } }
     public bool IsRollPressed { get { return _isRollPressed; } set { _isRollPressed = value; } }
     public bool IsBackStepPressed { get { return _isBackStepPressed; } set { _isBackStepPressed = value; } }
+    public bool IsUseRecoveryItemPressed { get { return _isUseRecoveryItemPressed; } }
     public bool HitFlag { get { return _hitFlag; } set { _hitFlag = value; } }
     public bool BlockFlag { get { return _blockFlag; } set { _blockFlag = value; } }
     public bool DeadFlag { get { return _deadFlag; } set { _deadFlag = value; } }
+    public bool UseItemFlag { get { return _useItemFlag; } set { _useItemFlag = value; } }
     public float AppliedMovementX { get { return _appliedMovement.x; } set { _appliedMovement.x = value; } }
     public float AppliedMovementY { get { return _appliedMovement.y; } set { _appliedMovement.y = value; } }
     public float AppliedMovementZ { get { return _appliedMovement.z; } set { _appliedMovement.z = value; } }
@@ -91,6 +96,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector3 CurrentMovement { get { return _currentMovement; } }
     public Vector3 AppliedMovement { get { return _appliedMovement; } }
     public Behavior NextBehavior { get { return _nextBehavior; } set { _nextBehavior = value; } }
+    public PlayerInput PlayerInput { get { return _playerInput; } }
 
     private void Awake()
     {
@@ -133,12 +139,13 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInputPress;
         _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInputRelease;
         _playerInput.PlayerCharacterInput.SwitchArm.performed += OnSwitchingArmInput;
+        _playerInput.PlayerCharacterInput.UseRecoveryItem.started += OnUseRecoveryItemInput;
+        _playerInput.PlayerCharacterInput.UseRecoveryItem.canceled += OnUseRecoveryItemInput;
         //_playerInput.PlayerCharacterInput.SwitchArm.started += (InputAction.CallbackContext context) => Debug.Log("SwitchArm Started");
         //_playerInput.PlayerCharacterInput.SwitchArm.performed += (InputAction.CallbackContext context) => Debug.Log("SwitchArm performed");
         //_playerInput.PlayerCharacterInput.SwitchArm.canceled += (InputAction.CallbackContext context) => Debug.Log("SwitchArm canceled");
         Debug.Log("Player State Machine : ��ǲ ���ε�");
 
-        _playerCharacter.HealthSys.onDieHandle += () => _deadFlag = true;
         // _playerInput.PlayerCharacterInput.
 
     }
@@ -146,6 +153,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         _cameraInput = _cameraController.cm_FreeLook.GetComponent<CinemachineInputProvider>();
+
+        _playerCharacter.HealthSys.onDieHandle += () => _deadFlag = true;
     }
 
     // Update is called once per frame
@@ -166,6 +175,11 @@ public class PlayerStateMachine : MonoBehaviour
 
         if (!_isMovementPressed)
             return;
+
+        if(_isRunPressed)
+        {
+            PlayerCharacter.HealthSys.ConsumSP(_playerController._sprintActionCost * Time.deltaTime);
+        }
 
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����
@@ -237,6 +251,10 @@ public class PlayerStateMachine : MonoBehaviour
     void OnGuardInput(InputAction.CallbackContext context)
     {
         _isGuardPressed = context.ReadValueAsButton();
+    }
+    void OnUseRecoveryItemInput(InputAction.CallbackContext context)
+    {
+        _isUseRecoveryItemPressed = context.ReadValueAsButton();
     }
 
     /**

@@ -45,6 +45,7 @@ public class PCAnimationEvents : MonoBehaviour
     public void OnSetExecuteNextCombo()
     {
         _combatController.Event_SetOnExecuteNextCombo();
+
     }
     public void OnSetOffExecuteNextCombo()
     {
@@ -53,5 +54,33 @@ public class PCAnimationEvents : MonoBehaviour
     public void On_TempAttackCheck()
     {
         _combatController.AttackCheck();
+    }
+    public void EnableRightDamageCollider()
+    {
+        if (_combatController._currentRightWeaponCollider == null)
+            return;
+
+        _combatController._currentRightWeaponCollider.EnableDamageCollider();
+    }
+    public void DisableRightDamageCollider()
+    {
+        if (_combatController._currentRightWeaponCollider == null)
+            return;
+
+        _combatController._currentRightWeaponCollider.DisableDamageCollider();
+    }
+    public void EnableLeftDamageCollider()
+    {
+        if (_combatController._currentLeftWeaponCollider == null)
+            return;
+
+        _combatController._currentLeftWeaponCollider.EnableDamageCollider();
+    }
+    public void DisableLeftDamageCollider()
+    {
+        if (_combatController._currentLeftWeaponCollider == null)
+            return;
+
+        _combatController._currentLeftWeaponCollider.DisableDamageCollider();
     }
 }

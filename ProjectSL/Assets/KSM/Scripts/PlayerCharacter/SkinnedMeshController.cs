@@ -9,21 +9,23 @@ public class SkinnedMeshController : MonoBehaviour
     SkinnedMeshRenderer _mannequinMesh;
 
     [SerializeField]
-    HelmetModelChanger _helmetModelChanger;
+    ModelChanger _helmetModelChanger;
     [SerializeField]
-    ChestModelChanger _chestModelChanger;
+    ModelChanger _chestModelChanger;
     [SerializeField]
-    GloveModelChanger _gloveModelChanger;
+    ModelChanger _gloveModelChanger;
     [SerializeField]
-    PantModelChanger _pantModelChanger;
+    ModelChanger _pantModelChanger;
+    
 
     private void Awake()
     {
+        GameObject meshObj = transform.parent.gameObject;
+        _mannequinMesh = meshObj.GetComponent<SkinnedMeshRenderer>();
         _helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
         _chestModelChanger = GetComponentInChildren<ChestModelChanger>();
         _gloveModelChanger = GetComponentInChildren<GloveModelChanger>();
         _pantModelChanger = GetComponentInChildren<PantModelChanger>();
-
     }
     // Start is called before the first frame update
     void Start()
@@ -43,50 +45,51 @@ public class SkinnedMeshController : MonoBehaviour
     {
         yield return null;
 
-        _helmetModelChanger.EquipHelmetModelByName("NakedHead");
-        _chestModelChanger.EquipChestModelByName("NakedChest");
-        _gloveModelChanger.EquipGloveModelByName("NakedHands");
-        _pantModelChanger.EquipPantModelByName("NakedPant");
+        _helmetModelChanger.EquipModelByName("NakedHead");
+        _chestModelChanger.EquipModelByName("NakedChest");
+        _gloveModelChanger.EquipModelByName("NakedHands");
+        _pantModelChanger.EquipModelByName("NakedPant");
         _mannequinMesh.enabled = false;
     }
     void Equip()
     {
         if(Input.GetKeyDown(KeyCode.Keypad7))
         {
-            _helmetModelChanger.EquipHelmetModelByName("Helmet_01");
+            _helmetModelChanger.EquipModelByName("Helmet_02");
         }
         if (Input.GetKeyDown(KeyCode.Keypad8))
         {
-            _chestModelChanger.EquipChestModelByName("Chest_01");
+            _chestModelChanger.EquipModelByName("Chest_02_Cloak");
         }
         if (Input.GetKeyDown(KeyCode.Keypad9))
         {
-            _gloveModelChanger.EquipGloveModelByName("Glove_01");
+            _gloveModelChanger.EquipModelByName("Glove_02");
         }
         if (Input.GetKeyDown(KeyCode.Keypad6))
         {
-            _pantModelChanger.EquipPantModelByName("Pant_01");
+            _pantModelChanger.EquipModelByName("Pant_02");
         }
     }
     //
     void AllUnEquipModels()
     {
-        _helmetModelChanger.UnEquipAllHelmetModels();
-        _chestModelChanger.UnEquipAllChestModels();
-        _gloveModelChanger.UnEquipAllGloveModels();
-        _pantModelChanger.UnEquipAllPantModels();
+        _helmetModelChanger.UnEquipAllModel();
+        _chestModelChanger.UnEquipAllModel();
+        _gloveModelChanger.UnEquipAllModel();
+        _pantModelChanger.UnEquipAllModel();
     }
     void MatchingBoneAllArmorMesh()
     {
         List<SkinnedMeshRenderer> allMeshes = new List<SkinnedMeshRenderer>();
         //_helmetModelChanger._helmetMeshes
-        allMeshes.AddRange(_helmetModelChanger._helmetMeshes);
-        allMeshes.AddRange(_chestModelChanger._chestMeshes);
-        allMeshes.AddRange(_gloveModelChanger._gloveMeshes);
-        allMeshes.AddRange(_pantModelChanger._pantMeshes);
+        allMeshes.AddRange(_helmetModelChanger.ModelMeshes);
+        allMeshes.AddRange(_chestModelChanger.ModelMeshes);
+        allMeshes.AddRange(_gloveModelChanger.ModelMeshes);
+        allMeshes.AddRange(_pantModelChanger.ModelMeshes);
 
         foreach (var mesh in allMeshes)
         {
+            Debug.Log($"Start Matching Mesh : {mesh.name}");
             MatchingBoneArmorMesh(mesh, _mannequinMesh);
         }
     }
@@ -130,6 +133,7 @@ public class SkinnedMeshController : MonoBehaviour
         }
         */
         matchMesh.bones = bones;
+        
         //matchMesh.transform
         //_chestMesh.bones = 
         // _chestMesh.

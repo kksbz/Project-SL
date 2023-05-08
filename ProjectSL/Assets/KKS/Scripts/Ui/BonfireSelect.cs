@@ -19,7 +19,18 @@ public class BonfireSelect : MonoBehaviour
 
         exitBt.onClick.AddListener(() =>
         {
+            GameManager.Instance.player.StateMachine.ResetInput();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             gameObject.SetActive(false);
         });
     } // Start
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+        }
+    }
 } // BonfireSelect

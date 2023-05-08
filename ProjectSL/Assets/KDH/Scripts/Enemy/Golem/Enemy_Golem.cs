@@ -13,11 +13,17 @@ public class Enemy_Golem : EnemyBase
 
     public override IState Thought()
     {
+        float randNum_ = Random.value;
         //  이전 상태에 따른 상태 전환
         switch (PreviousState)
         {
             case Enemy_Attack_State:
-                return new Enemy_Dodge_State(this);
+                //  플레이어가 일정 범위 내에 있다면 일정 확률로 회피 진행
+                if (IsInRange(Status.attackRange) && randNum_ <= Status.dodge_Percentage)
+                {
+                    return new Enemy_Dodge_State(this);
+                }
+                break;
         }
 
         //  플레이어를 찾지 못했거나 플레이어를 놓쳤다면
@@ -96,5 +102,10 @@ public class Enemy_Golem : EnemyBase
                 NotAttackColliderEnabled(1);
                 break;
         }
+    }
+
+    public override void DropReward()
+    {
+        base.DropReward();
     }
 }

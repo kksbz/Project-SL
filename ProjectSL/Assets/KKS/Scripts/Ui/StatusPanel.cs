@@ -18,63 +18,72 @@ public class StatusPanel : MonoBehaviour
     [SerializeField] private TMP_Text stText; // ST
     [SerializeField] private List<TMP_Text> rightWeaponList; // 오른손무기 리스트
     [SerializeField] private List<TMP_Text> leftWeaponList; // 왼손무기 리스트
+    [SerializeField] private TMP_Text defenceText; // 방어력
+    [SerializeField] private TMP_Text damageMultiplierText; // 공격력 배율
     [SerializeField] private TMP_Text possessionSoul; // 보유소울
 
     //! 인벤토리 스테이터스 패널 갱신하는 함수
-    public void ShowPlayerStatusPanel(PlayerStatus _playerStatus, HealthSystem _healthSystem)
+    public void ShowPlayerStatusPanel(StatusSaveData _playerStatus)
     {
-        nameText.text = _playerStatus.Name;
-        levelText.text = _playerStatus.Level.ToString();
-        vigorText.text = _playerStatus.Vigor.ToString();
-        attunementText.text = _playerStatus.Attunement.ToString();
-        enduranceText.text = _playerStatus.Endurance.ToString();
-        vitalityText.text = _playerStatus.Vitality.ToString();
-        strengthText.text = _playerStatus.Strength.ToString();
-        dexterityText.text = _playerStatus.Dexterity.ToString();
+        nameText.text = _playerStatus._playerStatusData.Name;
+        levelText.text = _playerStatus._playerStatusData.Level.ToString();
+        vigorText.text = _playerStatus._playerStatusData.Vigor.ToString();
+        attunementText.text = _playerStatus._playerStatusData.Attunement.ToString();
+        enduranceText.text = _playerStatus._playerStatusData.Endurance.ToString();
+        vitalityText.text = _playerStatus._playerStatusData.Vitality.ToString();
+        strengthText.text = _playerStatus._playerStatusData.Strength.ToString();
+        dexterityText.text = _playerStatus._playerStatusData.Dexterity.ToString();
 
-        hpText.text = $"{_healthSystem.HP} / {_healthSystem.MaxHP}";
-        mpText.text = $"{_healthSystem.MP} / {_healthSystem.MaxMP}";
-        stText.text = $"{_healthSystem.SP} / {_healthSystem.MaxSP}";
+        hpText.text = $"{_playerStatus._healthSystemData.HP} / {_playerStatus._healthSystemData.MaxHP}";
+        mpText.text = $"{_playerStatus._healthSystemData.MP} / {_playerStatus._healthSystemData.MaxMP}";
+        stText.text = $"{_playerStatus._healthSystemData.SP} / {_playerStatus._healthSystemData.MaxSP}";
     } // ShowPlayerStatusPanel
 
     //! 스테이터스 패널 갱신하는 함수
-    public void ShowPlayerStatusPanel(PlayerStatus _playerStatus, HealthSystem _healthSystem, List<WeaponSlot> _rightWeaponList, List<WeaponSlot> _leftWeaponList)
+    public void ShowPlayerStatusPanel(StatusSaveData _playerStatus, List<WeaponSlot> _weaponSlots)
     {
-        nameText.text = _playerStatus.Name;
-        levelText.text = _playerStatus.Level.ToString();
+        nameText.text = _playerStatus._playerStatusData.Name;
+        levelText.text = _playerStatus._playerStatusData.Level.ToString();
         possessionSoul.text = Inventory.Instance.Soul.ToString();
-        vigorText.text = _playerStatus.Vigor.ToString();
-        attunementText.text = _playerStatus.Attunement.ToString();
-        enduranceText.text = _playerStatus.Endurance.ToString();
-        vitalityText.text = _playerStatus.Vitality.ToString();
-        strengthText.text = _playerStatus.Strength.ToString();
-        dexterityText.text = _playerStatus.Dexterity.ToString();
+        vigorText.text = _playerStatus._playerStatusData.Vigor.ToString();
+        attunementText.text = _playerStatus._playerStatusData.Attunement.ToString();
+        enduranceText.text = _playerStatus._playerStatusData.Endurance.ToString();
+        vitalityText.text = _playerStatus._playerStatusData.Vitality.ToString();
+        strengthText.text = _playerStatus._playerStatusData.Strength.ToString();
+        dexterityText.text = _playerStatus._playerStatusData.Dexterity.ToString();
 
-        hpText.text = $"{_healthSystem.HP} / {_healthSystem.MaxHP}";
-        mpText.text = $"{_healthSystem.MP} / {_healthSystem.MaxMP}";
-        stText.text = $"{_healthSystem.SP} / {_healthSystem.MaxSP}";
+        hpText.text = $"{_playerStatus._healthSystemData.HP} / {_playerStatus._healthSystemData.MaxHP}";
+        mpText.text = $"{_playerStatus._healthSystemData.MP} / {_playerStatus._healthSystemData.MaxMP}";
+        stText.text = $"{_playerStatus._healthSystemData.SP} / {_playerStatus._healthSystemData.MaxSP}";
+        defenceText.text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
+        damageMultiplierText.text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
 
-        for (int i = 0; i < _rightWeaponList.Count; i++)
+        for (int i = 0; i < _weaponSlots.Count; i++)
         {
-            if (_rightWeaponList[i].Item != null)
+            if (_weaponSlots[i].Item != null)
             {
-                rightWeaponList[i].text = _rightWeaponList[i].Item.damage.ToString();
+                if (i < 3)
+                {
+                    // 오른손무기 데미지 = 플레이어 기본데미지 + 무기데미지
+                    rightWeaponList[i].text = (GameManager.Instance.player.CombatStat.AttackPoint + _weaponSlots[i].Item.damage).ToString();
+                }
+                else
+                {
+                    // 왼손무기 데미지 = 플레이어 기본데미지 + 무기데미지
+                    leftWeaponList[i - 3].text = (GameManager.Instance.player.CombatStat.AttackPoint + _weaponSlots[i].Item.damage).ToString();
+                }
             }
             else
             {
-                rightWeaponList[i].text = "0";
-            }
-        }
-
-        for (int i = 0; i < _leftWeaponList.Count; i++)
-        {
-            if (_leftWeaponList[i].Item != null)
-            {
-                leftWeaponList[i].text = _leftWeaponList[i].Item.damage.ToString();
-            }
-            else
-            {
-                leftWeaponList[i].text = "0";
+                // 무기가 없으면 기본데미지 표시
+                if (i < 3)
+                {
+                    rightWeaponList[i].text = GameManager.Instance.player.CombatStat.AttackPoint.ToString();
+                }
+                else
+                {
+                    leftWeaponList[i - 3].text = GameManager.Instance.player.CombatStat.AttackPoint.ToString();
+                }
             }
         }
     } // ShowPlayerStatusPanel

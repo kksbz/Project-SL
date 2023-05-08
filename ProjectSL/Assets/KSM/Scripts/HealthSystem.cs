@@ -4,8 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
+public enum EHealthChangeType : byte
+{
+    Init,
+    Damage,
+    Consum,
+    Heal,
+}
+public enum EHealthType : byte
+{
+    HP,
+    MP,
+    SP
+}
+
 public class HealthSystem
 {
+    PlayerCharacter _playerCharacter;
+
     float _healthPoint;
     float _maxHealthPoint;
     float _staminaPoint;
@@ -13,23 +29,15 @@ public class HealthSystem
     float _manaPoint;
     float _maxManaPoint;
 
+    public float _staminaRegerationAmount = 20f;
+    public float _staminaRegenMultiplier = 1f;
+    public float _staminaRegenTimer = default;
+    
     public delegate void HealthEventHandler();
     public delegate void HealthEventHandler_TwoParam(EHealthType type, bool isLerp);
     public HealthEventHandler onDieHandle;
     public HealthEventHandler_TwoParam onChangedHealth;
-    public enum EHealthChangeType : byte
-    {
-        Init,
-        Damage,
-        Consum,
-        Heal,
-    }
-    public enum EHealthType : byte
-    {
-        HP,
-        MP,
-        SP
-    }
+    
 
     public float HP { get { return _healthPoint; } set { _healthPoint = value; } }
     public float MaxHP { get { return _maxHealthPoint; } }
@@ -42,8 +50,9 @@ public class HealthSystem
     }
     public float MaxMP { get { return _maxManaPoint; } }
 
-    public HealthSystem() 
+    public HealthSystem(PlayerCharacter bindingPC) 
     {
+        _playerCharacter = bindingPC;
         _healthPoint        = 0;
         _maxHealthPoint     = 0;
         _staminaPoint       = 0;
@@ -81,7 +90,7 @@ public class HealthSystem
         _manaPoint = Mathf.Clamp(_manaPoint - value_, 0f, _maxManaPoint);
     }
     #endregion  // Increase Decrease Health
-    #region Damage, Consumption
+    #region Damage, Consumption, Regeneration
 
     public void Damage(float damageAmount)
     {
@@ -112,6 +121,22 @@ public class HealthSystem
     {
         _staminaPoint -= value_;
         onChangedHealth(EHealthType.SP, true);
+    }
+    public void RegenerationStamina()
+    {
+        if(_playerCharacter.combatController.IsPlayingRootMotion || _playerCharacter.StateMachine.IsRunPressed)
+        {
+            _staminaRegenTimer = 0f;
+        }
+        else
+        {
+            _staminaRegenTimer += Time.deltaTime;
+            if (_staminaPoint < _maxStaminaPoint && _staminaRegenTimer > 1f)
+            {
+                _staminaPoint += _staminaRegerationAmount * _staminaRegenMultiplier * Time.deltaTime;
+                onChangedHealth(EHealthType.SP, false);
+            }
+        }
     }
     void OnChangedHealth(EHealthType healthType, bool isLerp)
     {
@@ -171,6 +196,10 @@ public class HealthSystem
         _staminaPoint = _maxStaminaPoint;
         onChangedHealth(EHealthType.SP, false);
         // ������ ���� �� PlayerStatus ��ġ�� ���� Data Table �����Ͽ� HealthSystem �ʱ�ȭ
+    }
+    public bool IsAvailableAction()
+    {
+        return _staminaPoint >= 1f;
     }
 
     public bool IsDead()

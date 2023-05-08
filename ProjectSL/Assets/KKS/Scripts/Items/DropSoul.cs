@@ -13,6 +13,8 @@ public class DropSoul : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                // 잃어버린 소울 획득시 UI에 메시지 표시
+                UiManager.Instance.messagePanel.GetSoulBackMessage();
                 UiManager.Instance.soulBag.GetSoul(souls);
                 UiManager.Instance.interactionBar.SetActive(false);
                 UiManager.Instance.interactionText.text = null;

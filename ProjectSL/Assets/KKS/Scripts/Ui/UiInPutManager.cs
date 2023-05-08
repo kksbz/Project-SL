@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class UiInPutManager : Singleton<UiInPutManager>
 {
+    private bool isExitUi = false;
     void Update()
     {
         UiInPutSystem();
@@ -13,41 +12,59 @@ public class UiInPutManager : Singleton<UiInPutManager>
 
     private void UiInPutSystem()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != GData.SCENENAME_TITLE)
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.CheckActiveTitleScene() == true)
         {
-            //GameManager.Instance.player.StateMachine.LockInput();
+            GameManager.Instance.player.StateMachine.LockInput();
+            isExitUi = false;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             if (Inventory.Instance.invenObj.activeInHierarchy == true)
             {
                 ExitUiPanel();
+                isExitUi = true;
             }
             else if (UiManager.Instance.statusPanel.gameObject.activeInHierarchy == true)
             {
                 UiManager.Instance.statusPanel.gameObject.SetActive(false);
+                isExitUi = true;
             }
             else if (UiManager.Instance.warp.warpPanel.activeInHierarchy == true)
             {
                 UiManager.Instance.warp.warpPanel.SetActive(false);
+                isExitUi = true;
             }
             else if (UiManager.Instance.optionPanel.gameObject.activeInHierarchy == true)
             {
                 if (UiManager.Instance.optionPanel.goBackText.activeInHierarchy == false)
                 {
                     UiManager.Instance.optionPanel.gameObject.SetActive(false);
+                    isExitUi = true;
                 }
             }
             else if (UiManager.Instance.levelUpPanel.activeInHierarchy == true)
             {
                 UiManager.Instance.levelUpPanel.SetActive(false);
+                isExitUi = true;
             }
             else if (UiManager.Instance.shopPanel.activeInHierarchy == true)
             {
                 UiManager.Instance.shopPanel.SetActive(false);
+                isExitUi = true;
             }
             else
             {
                 UiManager.Instance.quickBar.SetActive(!UiManager.Instance.quickBar.activeSelf);
+                if (UiManager.Instance.quickBar.activeInHierarchy == false)
+                {
+                    isExitUi = true;
+                }
+            }
+
+            if (isExitUi == true)
+            {
+                GameManager.Instance.player.StateMachine.ResetInput();
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
     } // UiInPutSystem

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelmetModelChanger : MonoBehaviour
+public class HelmetModelChanger : ModelChanger
 {
+    /*
     public List<GameObject> _helmetModels;
     public List<SkinnedMeshRenderer> _helmetMeshes;
     private void Awake()
@@ -48,4 +49,5 @@ public class HelmetModelChanger : MonoBehaviour
             }
         }
     }
+    */
 }

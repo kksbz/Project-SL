@@ -9,6 +9,12 @@ public class GameManager : Singleton<GameManager>
     public GameObject playerRightArm;
     public PlayerCharacter player;
 
+    //! 현재 씬이 타이틀씬인지 아닌지 확인하는 함수
+    public bool CheckActiveTitleScene()
+    {
+        return SceneManager.GetActiveScene().name != GData.SCENENAME_TITLE;
+    } // CheckActiveTitleScene
+
     //! ȭ��� �̿�� �� �ε��ϴ� �Լ�
     public void LoadBonfire(BonfireData bonfire)
     {
@@ -27,6 +33,12 @@ public class GameManager : Singleton<GameManager>
     {
         StartCoroutine(LoadSaveDataPlayScene(num));
     } // LoadSaveDataScene
+
+    //! 타이틀씬 불러오는 함수
+    public void GoTitleScene()
+    {
+        StartCoroutine(LoadTitleScene());
+    } // GoTitleScene
 
     private IEnumerator LoadBonfireScene(BonfireData bonfire)
     {
@@ -116,7 +128,7 @@ public class GameManager : Singleton<GameManager>
         {
             // �÷��̾ �׾��� ���
             float neardistance = Mathf.Infinity;
-            Vector3 revivePos = Vector3.zero;
+            Vector3 revivePos = new Vector3(78f, 9.28726578f, -11f);
 
             // ������ġ���� Ȱ��ȭ�� ���� ����� ȭ����� ��ġ���� ��Ȱ��Ŵ
             for (int i = 0; i < UiManager.Instance.warp.bonfireList.Count; i++)
@@ -133,7 +145,8 @@ public class GameManager : Singleton<GameManager>
             if (Inventory.Instance.Soul > 0)
             {
                 GameObject Soul = Instantiate(Resources.Load<GameObject>("KKS/Prefabs/Objecct/DropSoul"));
-                Soul.GetComponent<DropSoul>().souls = Inventory.Instance.Soul;
+                int _soul = Inventory.Instance.Soul;
+                Soul.GetComponent<DropSoul>().souls = _soul;
                 UiManager.Instance.soulBag.GetSoul(-Inventory.Instance.Soul);
                 Soul.transform.position = _playerStatusData._playerPos;
             }
@@ -146,4 +159,25 @@ public class GameManager : Singleton<GameManager>
             player.HealthSys.MP = _playerStatusData._currentManaPoint;
         }
     } // InitPlayer
+
+    //! 타이틀씬 불러오는 코루틴함수
+    private IEnumerator LoadTitleScene()
+    {
+        // 자동저장슬롯에 데이터 저장
+        DataManager.Instance.slotNum = 0;
+        DataManager.Instance.SaveData();
+        UiManager.Instance.optionPanel.gameObject.SetActive(false);
+        UiManager.Instance.loadingPanel.gameObject.SetActive(true);
+        float fadeTime = UiManager.Instance.loadingPanel.FadeInLoadingPanel();
+        yield return new WaitForSeconds(fadeTime);
+        var asyncLoad = SceneManager.LoadSceneAsync(GData.SCENENAME_TITLE);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        yield return new WaitForSeconds(3f);
+        UiManager.Instance.loadingPanel.FadeOutLoadingPanel();
+        yield return new WaitForSeconds(fadeTime);
+        UiManager.Instance.loadingPanel.gameObject.SetActive(false);
+    } // GoTitleScene
 } // GameManager
