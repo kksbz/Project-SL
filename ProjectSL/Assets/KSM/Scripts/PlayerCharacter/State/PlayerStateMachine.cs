@@ -49,6 +49,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isBackStepPressed;
     bool _isSwitchingArmPressed;
     bool _isUseRecoveryItemPressed;
+    bool _isESCPressed;
     float _dodgePressedRate = 0.5f;
     float _dodgeStartTime = 0f;
 
@@ -141,6 +142,12 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInput.PlayerCharacterInput.SwitchArm.performed += OnSwitchingArmInput;
         _playerInput.PlayerCharacterInput.UseRecoveryItem.started += OnUseRecoveryItemInput;
         _playerInput.PlayerCharacterInput.UseRecoveryItem.canceled += OnUseRecoveryItemInput;
+
+        // Ui Input Binding
+        _playerInput.UiInput.ESC.started += OnESCInput;
+
+
+        //
         //_playerInput.PlayerCharacterInput.SwitchArm.started += (InputAction.CallbackContext context) => Debug.Log("SwitchArm Started");
         //_playerInput.PlayerCharacterInput.SwitchArm.performed += (InputAction.CallbackContext context) => Debug.Log("SwitchArm performed");
         //_playerInput.PlayerCharacterInput.SwitchArm.canceled += (InputAction.CallbackContext context) => Debug.Log("SwitchArm canceled");
@@ -175,11 +182,6 @@ public class PlayerStateMachine : MonoBehaviour
 
         if (!_isMovementPressed)
             return;
-
-        if(_isRunPressed)
-        {
-            PlayerCharacter.HealthSys.ConsumSP(_playerController._sprintActionCost * Time.deltaTime);
-        }
 
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����
@@ -295,6 +297,15 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
     }
+    public void OnESCInput(InputAction.CallbackContext context)
+    {
+        _isESCPressed = context.ReadValueAsButton();
+
+        UiInPutManager.Instance.UiInPutSystem();
+        
+    }
+
+
     public void LockInput()
     {
         _playerInput.PlayerCharacterInput.Disable();
@@ -309,6 +320,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnEnable()
     {
         _playerInput.PlayerCharacterInput.Enable();
+        _playerInput.UiInput.Enable();
     }
     private void OnDisable()
     {

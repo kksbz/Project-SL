@@ -4285,6 +4285,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 964ac204-7a53-480b-aebb-08a2a5958fe2
     m_ActionName: PlayerCharacterInput/UseRecoveryItem[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 30cdc3f4-a4f3-4917-bbd8-526bfd0ef961
+    m_ActionName: UiInput/ESC[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerCharacterInput
@@ -4557,7 +4561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionMode: 0
   m_RotationMode: 1
-  m_UpdateMethod: 1
+  m_UpdateMethod: 0
   m_Targets: []
 --- !u!1 &8315091646026729325
 GameObject:

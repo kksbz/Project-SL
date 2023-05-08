@@ -20,3 +20,4 @@
 2023-05-06 Solve Equip Issue, WeaponCollider Based Attack</br>
 2023-05-07 ItemAction Base</br>
 2023-05-08 Improve ItemAction, Armor mesh change UI Based and solve issue</br>
+2023-05-08 Solve Some Issue</br>

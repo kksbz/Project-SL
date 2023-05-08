@@ -9,7 +9,7 @@ public class PlayerRollState : PlayerBaseState
     {
         IsRootState = true;
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         // Dodge 애니메이션 실행
         Ctx.CharacterAnimator.applyRootMotion = true;
@@ -34,7 +34,7 @@ public class PlayerRollState : PlayerBaseState
     {
 
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         Ctx.CharacterAnimator.applyRootMotion = false;
     }

@@ -206,6 +206,8 @@ public class PlayerController : MonoBehaviour
 
         _quickSlotBar.QuickSlotRecoveryConsumption.Quantity = _quickSlotBar.QuickSlotRecoveryConsumption.Quantity - 1;
         playerCharacter.HealthSys.HealHP(_quickSlotBar.QuickSlotRecoveryConsumption.vigor);
+        Inventory.Instance.InitSlotItemData();
+        _quickSlotBar.LoadQuickSlotData();
     }
 
     void UseRecoveryItemStartState()

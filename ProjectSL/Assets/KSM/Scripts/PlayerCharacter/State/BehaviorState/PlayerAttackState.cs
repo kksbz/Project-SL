@@ -8,7 +8,7 @@ public class PlayerAttackState : PlayerBaseState
     {
         IsRootState = true;
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         Debug.Log("Attack State Enter");
         // Attack 애니메이션 실행
@@ -28,7 +28,7 @@ public class PlayerAttackState : PlayerBaseState
     {
 
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         Debug.Log("Attack State Exit");
         // Ctx.CombatController.ResetAnimatorController();

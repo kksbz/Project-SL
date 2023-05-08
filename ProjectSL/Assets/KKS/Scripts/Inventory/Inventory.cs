@@ -414,7 +414,7 @@ public class Inventory : Singleton<Inventory>
     } // InitSameTypeTotalSlot
 
     //! 장착슬롯 데이터 초기화 함수
-    private void InitSlotItemData()
+    public void InitSlotItemData()
     {
         for (int i = 0; i < inventory.Count; i++)
         {

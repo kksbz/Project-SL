@@ -9,10 +9,10 @@ public class PlayerGuardState : PlayerBaseState
         IsRootState = true;
         InitializeSubState();
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         Debug.Log("Enter Guard State");
-        Ctx.CombatController.OnGuard();
+        Ctx.CombatController.OnGuard(prevState);
     }
     public override void UpdateState()
     {
@@ -23,9 +23,9 @@ public class PlayerGuardState : PlayerBaseState
     {
         
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
-        Ctx.CombatController.OffGuard();
+        Ctx.CombatController.OffGuard(nextState);
     }
     public override void CheckSwitchStates()
     {
@@ -44,6 +44,10 @@ public class PlayerGuardState : PlayerBaseState
         else if (Ctx.BlockFlag)
         {
             SwitchState(Factory.Block());
+        }
+        else if(Ctx.HitFlag)
+        {
+            SwitchState(Factory.Hit());
         }
     }
     public override void InitializeSubState()

@@ -165,7 +165,8 @@ public class EquipmentController : MonoBehaviour
     public EArmState ArmState { get { return _currentArmState; } }
     public EWeaponState WeaponState { get { return _currentWeaponState; } }
 
-    public bool IsEquipShieldToLeftArm() 
+    
+    public bool IsAviliableGuard() 
     {
         if (_currentLeftArmWeapon == null)
             return false;
