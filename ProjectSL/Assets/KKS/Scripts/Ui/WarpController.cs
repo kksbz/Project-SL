@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class WarpController : MonoBehaviour
     public GameObject warpSelect; // 워프선택 패널
     private Button warpSelectBt; // 워프선택 패널 선택버튼
     private Button warpSelectExitBt; // 워프선택 패널 나가기버튼
+    private List<WarpSlot> warpSlots = new List<WarpSlot>();
     public List<BonfireData> bonfireList = new List<BonfireData>(); // 화톳불 리스트
     public WarpSlot selectWarp; // 선택한 워프슬롯
 
@@ -41,8 +43,15 @@ public class WarpController : MonoBehaviour
     //! 워프슬롯 생성하는 함수
     public void CreateWarpSlot(BonfireData _bonfire)
     {
-        GameObject warpSlot = Instantiate(warpSlotPrefab);
-        warpSlot.transform.parent = warpSlotList.transform;
-        warpSlot.GetComponent<WarpSlot>().bonfire = _bonfire;
+        GameObject warpSlotObj = Instantiate(warpSlotPrefab);
+        WarpSlot warpSlot = warpSlotObj.GetComponent<WarpSlot>();
+        warpSlot.bonfire = _bonfire;
+        warpSlots.Add(warpSlot);
+        warpSlots = warpSlots.OrderBy(x => x.bonfire.bonfireID).ToList();
+        for (int i = 0; i < warpSlots.Count; i++)
+        {
+            warpSlots[i].transform.SetParent(null);
+            warpSlots[i].transform.parent = warpSlotList.transform;
+        }
     } // CreateWarpSlot
 } // WarpController

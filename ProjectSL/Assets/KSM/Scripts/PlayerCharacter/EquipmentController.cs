@@ -16,7 +16,7 @@ public enum EWeaponState
 }
 public class EquipmentController : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ®
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     [SerializeField]
     private Animator _animator;
     [SerializeField]
@@ -53,8 +53,8 @@ public class EquipmentController : MonoBehaviour
 
     #region Equipment Item
 
-    // ¹«±â
-    [Header("ÇöÀç Äü½½·Ô¿¡ ÀÖ´Â ¾ÆÀÌÅÛ")]
+    // ï¿½ï¿½ï¿½ï¿½
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     ItemData _currentRightArmWeapon = default;
     [SerializeField]
@@ -72,13 +72,13 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     GameObject _currentRecoveryConsumptionObj = default;
 
-    [Header("Âø¿ëÁßÀÎ ¸ðµç Àåºñ")]
-    // ¹«±â
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½")]
+    // ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     ItemData[] _rightWeapon = new ItemData[3];
     [SerializeField]
     ItemData[] _leftWeapon = new ItemData[3];
-    // ¹æ¾î±¸
+    // ï¿½ï¿½î±¸
     [SerializeField]
     ItemData _armor_Helmet;
     [SerializeField]
@@ -89,7 +89,7 @@ public class EquipmentController : MonoBehaviour
     ItemData _armor_Pants;
 
 
-    // ¹ÝÁö
+    // ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     ItemData _ring_1;
     [SerializeField]
@@ -105,7 +105,7 @@ public class EquipmentController : MonoBehaviour
     ItemData[] _consumption_Recovery = new ItemData[3];
 
 
-    // ÀÓ½Ã ±âº» Àåºñ
+    // ï¿½Ó½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½
     [SerializeField]
     private GameObject _defaultRightWeaponPrefab;
     [SerializeField]
@@ -247,7 +247,7 @@ public class EquipmentController : MonoBehaviour
         */
         //
 
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ¿À¹ö¶óÀÌµå ÄÁÆ®·Ñ·¯ ÀÌº¥Æ® ¹ÙÀÎµù
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½Îµï¿½
         AnimationEventDispatcher aed = meshObj.GetComponent<AnimationEventDispatcher>();
         aed.AddAnimationStartEndByAnimOV(_SSH_2H_AnimOV);
 
@@ -255,7 +255,7 @@ public class EquipmentController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // ÀÓ½Ã ºÎÂø
+        // ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_defaultRightWeaponPrefab != null)
             AttachWeaponObj(_defaultRightWeaponPrefab.transform, _rightArmSocket);
         if (_defaultLeftShieldPrefab != null)
@@ -263,10 +263,10 @@ public class EquipmentController : MonoBehaviour
         // default overrideController caching
         _default_AnimController = _animator.runtimeAnimatorController as AnimatorController;
 
-        // ÀÎº¥Åä¸® µ¨¸®°ÔÀÌÆ® ÇÔ¼ö ¹ÙÀÎµù
+        // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½Îµï¿½
         Inventory.Instance._onEquipSlotUpdated += UpdateEquipmentItem;
         Inventory.Instance._onEquipArmorUpdated += SkinnedMeshPartsChange;
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ¿À¹ö¶óÀÌµå ÄÁÆ®·Ñ·¯ ½ÃÀÛ ³¡ ÀÌº¥Æ® ¹ÙÀÎµù
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½Îµï¿½
 
         // Mannequin Mesh Hide
         // _mannequinMesh.enabled = false;
@@ -332,7 +332,7 @@ public class EquipmentController : MonoBehaviour
             }
         }
         _onSwitchiedArmState();
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà ÈÄ ÀÏÁ¤ ½Ã°£ µÚ¿¡ ¹«±â¸¦ °¢°¢ ¸Â´Â ¼ÒÄÏ¿¡ ºÙÀÌ±â
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½
         _isSwitching = false;
     }
     private void SwitchingArmAnimationPlay(string stateTag)
@@ -346,7 +346,7 @@ public class EquipmentController : MonoBehaviour
         poseAction.Execute();
     }
 
-    // Äü½½·Ô ¿À¸¥¼Õ Àåºñ °Ë»ö ÈÄ ¼ÒÄÏ¿¡ ÀÚ½ÄÀ¸·Î ºÙ¿©ÁÖ±â * ÀÓ½Ã
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½Ö±ï¿½ * ï¿½Ó½ï¿½
     public void AttachWeaponObj(Transform targetTR, Transform attachTR)
     {
         if (targetTR != null)
@@ -365,7 +365,7 @@ public class EquipmentController : MonoBehaviour
         _rightWeapon[1] = Inventory.Instance.weaponSlotList[1].Item;
         _rightWeapon[2] = Inventory.Instance.weaponSlotList[2].Item;
 
-        Debug.Log("Åë°ú!");
+        Debug.Log("ï¿½ï¿½ï¿½!");
 
         _leftWeapon[0] = Inventory.Instance.weaponSlotList[3].Item;
         _leftWeapon[1] = Inventory.Instance.weaponSlotList[4].Item;
@@ -383,7 +383,7 @@ public class EquipmentController : MonoBehaviour
         _consumption_Recovery[1] = Inventory.Instance.consumptionSlotList[4].Item;
         _consumption_Recovery[2] = Inventory.Instance.consumptionSlotList[5].Item;
 
-        // ¿À¸¥¼Õ Àåºñ ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _currentRightArmWeapon = _quickSlotBar.QuickSlotRightWeapon;
         if (_currentRightArmWeapon != null)
         {
@@ -400,7 +400,7 @@ public class EquipmentController : MonoBehaviour
             _combatController._currentRightWeaponCollider = _rightHand_NotWeapon_Collider;
             _combatController._currentRightWeaponCollider.WeaponInit(_playerCharacter, _playerCharacter.PlayerStat);
         }
-        // ¿Þ¼Õ Àåºñ ¼³Á¤
+        // ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _currentLeftArmWeapon = _quickSlotBar.QuickSlotLeftWeapon;
         if (_currentLeftArmWeapon != null)
         {
@@ -417,7 +417,7 @@ public class EquipmentController : MonoBehaviour
             _combatController._currentLeftWeaponCollider = _leftHand_NotWeapon_Collider;
             _combatController._currentLeftWeaponCollider.WeaponInit(_playerCharacter, _playerCharacter.PlayerStat);
         }
-        // °ø°Ý ¼Òºñ¾ÆÀÌÅÛ ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Òºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _currentAttackConsumption = _quickSlotBar.QuickSlotAttackConsumption;
         if (_currentAttackConsumption != null)
         {
@@ -429,7 +429,7 @@ public class EquipmentController : MonoBehaviour
             _currentAttackConsumptionObj = null;
             _playerController.ItemAction_Attack = null;
         }
-        // È¸º¹ ¼Òºñ ¾ÆÀÌÅÛ ¼³Á¤
+        // È¸ï¿½ï¿½ ï¿½Òºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _currentRecoveryConsumption = _quickSlotBar.QuickSlotRecoveryConsumption;
         if(_currentRecoveryConsumption != null)
         {
@@ -443,7 +443,7 @@ public class EquipmentController : MonoBehaviour
             _playerController.ItemAction_Recovery = null;
         }
         
-        // ÀÓ½Ã *°Ë¹Û¿¡ ¾øÀ¸´Ï °ËÀ¸·Î
+        // ï¿½Ó½ï¿½ *ï¿½Ë¹Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (_currentRightArmWeapon != null)
         {
             SetWeaponState(EWeaponState.Sword_OneHanded);
@@ -456,7 +456,7 @@ public class EquipmentController : MonoBehaviour
         SetArmState(EArmState.OneHanded);
 
         _onChangedEquipment();
-        // ÃßÈÄ ¹ÝÁö ¾÷µ¥ÀÌÆ®?
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®?
         //_ring_1 = Inventory.Instance
     }
     public void SkinnedMeshPartsChange()
@@ -469,7 +469,7 @@ public class EquipmentController : MonoBehaviour
         string gloveArmorTag = string.Empty;
         string pantArmorTag = string.Empty;
 
-        // ¸Ó¸® ¼³Á¤
+        // ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_armor_Helmet != Inventory.Instance.armorSlotList[0].Item)
         {
             _armor_Helmet = Inventory.Instance.armorSlotList[0].Item;
@@ -484,7 +484,7 @@ public class EquipmentController : MonoBehaviour
         }
         _skinnedMeshController.HelmetModelChanger.EquipModelByName(headArmorTag);
 
-        // °¡½¿ ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_armor_Chest != Inventory.Instance.armorSlotList[1].Item)
         {
             _armor_Chest = Inventory.Instance.armorSlotList[1].Item;
@@ -499,7 +499,7 @@ public class EquipmentController : MonoBehaviour
         }
         _skinnedMeshController.ChestModelChanger.EquipModelByName(chestArmorTag);
 
-        // Àå°© ¼³Á¤
+        // ï¿½å°© ï¿½ï¿½ï¿½ï¿½
         if (_armor_Gloves != Inventory.Instance.armorSlotList[2].Item)
         {
             _armor_Gloves = Inventory.Instance.armorSlotList[2].Item;
@@ -514,7 +514,7 @@ public class EquipmentController : MonoBehaviour
         }
         _skinnedMeshController.GloveModelChanger.EquipModelByName(gloveArmorTag);
 
-        // ¹ÙÁö ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (_armor_Pants != Inventory.Instance.armorSlotList[3].Item)
         {
             _armor_Pants = Inventory.Instance.armorSlotList[3].Item;

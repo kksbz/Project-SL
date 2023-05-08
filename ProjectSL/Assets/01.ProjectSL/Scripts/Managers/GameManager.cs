@@ -145,7 +145,8 @@ public class GameManager : Singleton<GameManager>
             if (Inventory.Instance.Soul > 0)
             {
                 GameObject Soul = Instantiate(Resources.Load<GameObject>("KKS/Prefabs/Objecct/DropSoul"));
-                Soul.GetComponent<DropSoul>().souls = Inventory.Instance.Soul;
+                int _soul = Inventory.Instance.Soul;
+                Soul.GetComponent<DropSoul>().souls = _soul;
                 UiManager.Instance.soulBag.GetSoul(-Inventory.Instance.Soul);
                 Soul.transform.position = _playerStatusData._playerPos;
             }

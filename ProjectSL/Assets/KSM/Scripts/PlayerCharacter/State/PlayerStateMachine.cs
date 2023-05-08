@@ -184,6 +184,11 @@ public class PlayerStateMachine : MonoBehaviour
         if (!_isMovementPressed)
             return;
 
+        if(_isRunPressed)
+        {
+            PlayerCharacter.HealthSys.ConsumSP(_playerController._sprintActionCost * Time.deltaTime);
+        }
+
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����
         if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed || _combatController.IsDodging)

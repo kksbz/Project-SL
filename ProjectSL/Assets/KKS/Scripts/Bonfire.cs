@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Bonfire : MonoBehaviour
 {
     [SerializeField] private GameObject fireEffect; // È­ÅêºÒ ÀÌÆåÆ®
+    public int bonfireID; // È­ÅêºÒ ÀÎµ¦½º
     public string bonfireName; // È­ÅêºÒ ÀÌ¸§
     public BonfireData bonfireData; // È­ÅêºÒ µ¥ÀÌÅÍ
     private bool isEnterPlayer = false;
 
     private void Start()
     {
-        bonfireData = new BonfireData(false, bonfireName, transform.position);
+        bonfireData = new BonfireData(bonfireID, false, bonfireName, transform.position);
     } // Start
 
     private void Update()
@@ -32,6 +34,7 @@ public class Bonfire : MonoBehaviour
                     fireEffect.SetActive(true);
                     // ¿öÇÁÄÁÆ®·Ñ·¯ È­ÅêºÒ¸®½ºÆ®¿¡ È­ÅêºÒ Ãß°¡ ¹× ¿öÇÁ½½·Ô »ý¼º
                     UiManager.Instance.warp.bonfireList.Add(bonfireData);
+                    UiManager.Instance.warp.bonfireList.OrderBy(x => x.bonfireID).ToList();
                     UiManager.Instance.warp.CreateWarpSlot(bonfireData);
                 }
                 UiManager.Instance.bonfirePanel.SetActive(true);

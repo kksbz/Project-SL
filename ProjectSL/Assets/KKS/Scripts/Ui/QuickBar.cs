@@ -10,6 +10,7 @@ public class QuickBar : MonoBehaviour
     public Button stat; // 플레이어 스텟
     public Button warp; // 화톳불 이동창
     public Button option; // 옵션
+    [SerializeField] private QuickWarpPanel quickWarpPanel;
     public GameObject inventory;
     public Sprite equipInven;
     public Sprite totalInven;
@@ -48,7 +49,17 @@ public class QuickBar : MonoBehaviour
         warp.onClick.AddListener(() =>
         {
             Debug.Log("화톳불 이동창 선택함");
-            gameObject.SetActive(false);
+            foreach (BonfireData _bonfire in UiManager.Instance.warp.bonfireList)
+            {
+                if (_bonfire.bonfireID == 0)
+                {
+                    quickWarpPanel.quickWarpPanel.SetActive(true);
+                    quickWarpPanel.gameObject.SetActive(true);
+                    return;
+                }
+            }
+            quickWarpPanel.WarningPanel.SetActive(true);
+            quickWarpPanel.gameObject.SetActive(true);
         });
 
         option.onClick.AddListener(() =>

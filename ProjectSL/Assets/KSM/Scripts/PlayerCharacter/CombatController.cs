@@ -309,7 +309,6 @@ public class CombatController : MonoBehaviour
 
         // 스태미너 회복 리젠율 감소
         _playerCharacter.HealthSys._staminaRegenMultiplier = 0.5f;
-
         _isGuard = true;
         // animation Set Layer Weight
         GuardOnOffState();

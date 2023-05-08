@@ -25,4 +25,12 @@ public class BonfireSelect : MonoBehaviour
             gameObject.SetActive(false);
         });
     } // Start
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+        }
+    }
 } // BonfireSelect

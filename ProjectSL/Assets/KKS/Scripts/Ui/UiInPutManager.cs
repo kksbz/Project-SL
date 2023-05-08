@@ -10,7 +10,6 @@ public class UiInPutManager : Singleton<UiInPutManager>
 
     public void UiInPutSystem()
     {
-        Debug.Log("UIInputSystem ON");
         GameManager.Instance.player.StateMachine.LockInput();
         isExitUi = false;
         Cursor.lockState = CursorLockMode.None;
@@ -50,7 +49,6 @@ public class UiInPutManager : Singleton<UiInPutManager>
         }
         else
         {
-            Debug.Log($"UIInputSystem Open : {UiManager.Instance.quickBar.activeSelf} / {UiManager.Instance.quickBar.name}");
             UiManager.Instance.quickBar.SetActive(!UiManager.Instance.quickBar.activeSelf);
             if (UiManager.Instance.quickBar.activeInHierarchy == false)
             {
