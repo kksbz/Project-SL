@@ -9,6 +9,7 @@ public class PlayerStateMachine : MonoBehaviour
 {
     CharacterController _characterController;
     Animator _animator;
+    [SerializeField]
     PlayerInput _playerInput;
     CinemachineInputProvider _cameraInput;
 
@@ -16,10 +17,10 @@ public class PlayerStateMachine : MonoBehaviour
     Transform _characterBody;
 
     // �÷��̾� ������Ʈ
-    PlayerCharacter     _playerCharacter;
-    PlayerController    _playerController;
-    CameraController    _cameraController;
-    CombatController    _combatController;
+    PlayerCharacter _playerCharacter;
+    PlayerController _playerController;
+    CameraController _cameraController;
+    CombatController _combatController;
     AnimationController _animationController;
     EquipmentController _equipmentController;
     AnimationEventDispatcher _animationEventDispatcher;
@@ -37,7 +38,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isRunPressed;
     bool _isWalkPressed;
     float runPressedRate = 0.5f;
-    
+
 
     // ���
     int _zero = 0;
@@ -81,7 +82,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsMovementPressed { get { return _isMovementPressed; } }
     public bool IsWalkPressed { get { return _isWalkPressed; } }
     public bool IsRunPressed { get { return _isRunPressed; } }
-    public bool IsAttackPressed {  get { return _isAttackPressed; } }
+    public bool IsAttackPressed { get { return _isAttackPressed; } }
     public bool IsGuardPressed { get { return _isGuardPressed; } }
     public bool IsRollPressed { get { return _isRollPressed; } set { _isRollPressed = value; } }
     public bool IsBackStepPressed { get { return _isBackStepPressed; } set { _isBackStepPressed = value; } }
@@ -107,12 +108,12 @@ public class PlayerStateMachine : MonoBehaviour
         _characterBody = gameObject.FindChildObj("Mesh").transform;
         _animator = _characterBody.gameObject.GetComponent<Animator>();
 
-        _playerCharacter    = GetComponent<PlayerCharacter>();
-        _playerController   = GetComponent<PlayerController>();
-        _cameraController   = GetComponent<CameraController>();
-        _combatController   = GetComponent<CombatController>();
-        _animationController= GetComponent<AnimationController>();
-        _equipmentController= GetComponent<EquipmentController>();
+        _playerCharacter = GetComponent<PlayerCharacter>();
+        _playerController = GetComponent<PlayerController>();
+        _cameraController = GetComponent<CameraController>();
+        _combatController = GetComponent<CombatController>();
+        _animationController = GetComponent<AnimationController>();
+        _equipmentController = GetComponent<EquipmentController>();
         _animationEventDispatcher = _characterBody.gameObject.GetComponent<AnimationEventDispatcher>();
 
         _controlProperty = _playerController.controlProperty;
@@ -126,17 +127,17 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("Player State Machine : ������Ʈ �ʱ�ȭ");
 
         // �÷��̾� �Է� �ݹ� ����
-        _playerInput.PlayerCharacterInput.Move.started      += OnMovementInput;
-        _playerInput.PlayerCharacterInput.Move.canceled     += OnMovementInput;
-        _playerInput.PlayerCharacterInput.Move.performed    += OnMovementInput;
-        _playerInput.PlayerCharacterInput.Walk.started  += OnWalkInput;
+        _playerInput.PlayerCharacterInput.Move.started += OnMovementInput;
+        _playerInput.PlayerCharacterInput.Move.canceled += OnMovementInput;
+        _playerInput.PlayerCharacterInput.Move.performed += OnMovementInput;
+        _playerInput.PlayerCharacterInput.Walk.started += OnWalkInput;
         _playerInput.PlayerCharacterInput.Walk.canceled += OnWalkInput;
-        _playerInput.PlayerCharacterInput.Run.performed   += OnRunInput;
+        _playerInput.PlayerCharacterInput.Run.performed += OnRunInput;
         _playerInput.PlayerCharacterInput.Run.canceled += OnRunInput;
         _playerInput.PlayerCharacterInput.Attack.started += OnAttackInput;
-        _playerInput.PlayerCharacterInput.Attack.canceled+= OnAttackInput;
+        _playerInput.PlayerCharacterInput.Attack.canceled += OnAttackInput;
         _playerInput.PlayerCharacterInput.Guard.started += OnGuardInput;
-        _playerInput.PlayerCharacterInput.Guard.canceled+= OnGuardInput;
+        _playerInput.PlayerCharacterInput.Guard.canceled += OnGuardInput;
         _playerInput.PlayerCharacterInput.Dodge.started += OnDodgeInputPress;
         _playerInput.PlayerCharacterInput.Dodge.canceled += OnDodgeInputRelease;
         _playerInput.PlayerCharacterInput.SwitchArm.performed += OnSwitchingArmInput;
@@ -198,7 +199,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector3 CalculateCurrentMovement()
     {
         Vector3 newCurMovement = Vector3.zero;
-        
+
         return newCurMovement;
     }
     public void SetCurrentMovement()
@@ -248,6 +249,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void OnAttackInput(InputAction.CallbackContext context)
     {
+        Debug.Log("Debugging Attack Pressed");
         _isAttackPressed = context.ReadValueAsButton();
     }
     void OnGuardInput(InputAction.CallbackContext context)
@@ -291,7 +293,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnSwitchingArmInput(InputAction.CallbackContext context)
     {
         _isSwitchingArmPressed = context.ReadValueAsButton();
-        if(_isSwitchingArmPressed ) 
+        if (_isSwitchingArmPressed)
         {
             _equipmentController.SwitchArmState();
         }
@@ -300,9 +302,9 @@ public class PlayerStateMachine : MonoBehaviour
     public void OnESCInput(InputAction.CallbackContext context)
     {
         _isESCPressed = context.ReadValueAsButton();
-
+        Debug.Log("Debugging UIInput Pressed");
         UiInPutManager.Instance.UiInPutSystem();
-        
+
     }
 
 
@@ -325,5 +327,6 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.PlayerCharacterInput.Disable();
+        _playerInput.UiInput.Disable();
     }
 }

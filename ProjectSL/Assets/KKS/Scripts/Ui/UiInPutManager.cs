@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class UiInPutManager : Singleton<UiInPutManager>
 {
     private bool isExitUi = false;
-    
+
 
     public void UiInPutSystem()
     {
@@ -50,6 +50,7 @@ public class UiInPutManager : Singleton<UiInPutManager>
         }
         else
         {
+            Debug.Log($"UIInputSystem Open : {UiManager.Instance.quickBar.activeSelf} / {UiManager.Instance.quickBar.name}");
             UiManager.Instance.quickBar.SetActive(!UiManager.Instance.quickBar.activeSelf);
             if (UiManager.Instance.quickBar.activeInHierarchy == false)
             {
@@ -65,7 +66,7 @@ public class UiInPutManager : Singleton<UiInPutManager>
         }
     } // UiInPutSystem
 
-    //! ESC¹öÆ° ±â´É ÇÔ¼ö
+    //! ESCï¿½ï¿½Æ° ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     private void ExitUiPanel()
     {
         Cursor.lockState = CursorLockMode.Locked;
