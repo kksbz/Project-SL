@@ -15,6 +15,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     public AnimationController animationController { get; private set; }
     public Animator animator { get; private set; }
     public CharacterControlProperty controlProperty { get; private set; }
+    public EquipmentController equipmentController { get; private set; }
 
     // Status Field
     private HealthSystem _healthSystem;// = new HealthSystem(this);
@@ -50,6 +51,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
             combatController = GetComponent<CombatController>();
             animationController = GetComponent<AnimationController>();
             _stateMachine = GetComponent<PlayerStateMachine>();
+            equipmentController = GetComponent<EquipmentController>();
             GameObject ownMeshObj = gameObject.FindChildObj("Mesh");
             animator = ownMeshObj.GetComponent<Animator>();
             // _hitTR = ownMeshObj.transform;
@@ -137,7 +139,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
             return;
 
         // 체력 초기화 * 임시 아이템 스탯 정보도 추가해야되나?
-        _healthSystem.InitializeHealthSystem(_status);
+        _healthSystem.InitializeHealthSystem(_status, equipmentController);
         _combatStatus.InitializeCombatStatus(_status);
 
         // 현재 체력, 마나를 맥스로 회복시켜주는 부분인데, 세이브데이터 로드시
@@ -155,7 +157,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         string hitDir = GetHitAngle(_hitTR, damageCauser.transform);
         Debug.Log($"direction : {hitDir}");
         combatController.HitAnimationTag = hitDir;
-        if (combatController.HitAnimationTag == "Hit_Light_F" && combatController.IsGuard)
+        if (combatController.HitAnimationTag == "Hit_Light_F" && (_stateMachine.CurrentState is PlayerGuardState || _stateMachine.CurrentState is PlayerBlockState))
         {
             _stateMachine.BlockFlag = true;
         }

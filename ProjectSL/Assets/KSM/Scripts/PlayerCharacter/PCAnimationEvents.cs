@@ -10,6 +10,8 @@ public class PCAnimationEvents : MonoBehaviour
     private CharacterController _characterController;
     [SerializeField]
     private PlayerController _playerController;
+    [SerializeField]
+    private PlayerStateMachine _playerStateMachine;
 
     private Animator _animator;
 
@@ -20,6 +22,7 @@ public class PCAnimationEvents : MonoBehaviour
         //_animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
         _animator = GetComponent<Animator>();
         _playerController = transform.parent.gameObject.GetComponent<PlayerController>();
+        _playerStateMachine = transform.parent.gameObject.GetComponent<PlayerStateMachine>();
     }
     private void Start()
     {
@@ -89,5 +92,9 @@ public class PCAnimationEvents : MonoBehaviour
             return;
 
         _combatController._currentLeftWeaponCollider.DisableDamageCollider();
+    }
+    public void OnRotateDuringAttack()
+    {
+        _playerStateMachine.SetDirectionByAttack();
     }
 }

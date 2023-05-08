@@ -44,6 +44,10 @@ public class PlayerUseItemState : PlayerBaseState
         {
             SwitchState(Factory.Grounded());
         }
+        else if(Ctx.HitFlag)
+        {
+            SwitchState(Factory.Hit());
+        }
     }
     public override void InitializeSubState()
     {

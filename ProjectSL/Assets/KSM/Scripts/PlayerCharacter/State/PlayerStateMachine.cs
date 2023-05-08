@@ -39,7 +39,6 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isWalkPressed;
     float runPressedRate = 0.5f;
 
-
     // ���
     int _zero = 0;
 
@@ -99,6 +98,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector3 AppliedMovement { get { return _appliedMovement; } }
     public Behavior NextBehavior { get { return _nextBehavior; } set { _nextBehavior = value; } }
     public PlayerInput PlayerInput { get { return _playerInput; } }
+    public bool CanRotate { get { return _canRotate; } set { _canRotate = value; } }
 
     private void Awake()
     {
@@ -184,11 +184,6 @@ public class PlayerStateMachine : MonoBehaviour
         if (!_isMovementPressed)
             return;
 
-        if(_isRunPressed)
-        {
-            PlayerCharacter.HealthSys.ConsumSP(_playerController._sprintActionCost * Time.deltaTime);
-        }
-
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����
         if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed || _combatController.IsDodging)
@@ -226,6 +221,15 @@ public class PlayerStateMachine : MonoBehaviour
         // _currentDirection = newBodyDirection;
         _characterBody.forward = newBodyDirection;
         // transform.forward = newBodyDirection;
+    }
+    public void SetDirectionByAttack()
+    {
+        if (_currentMovement == Vector3.zero)
+            return;
+        if (_cameraController.CameraState == ECameraState.LOCKON)
+            return;
+
+        _characterBody.forward = _currentMovement;
     }
 
     public void RotateCharacterBody()
@@ -283,6 +287,9 @@ public class PlayerStateMachine : MonoBehaviour
         if (!(pressRate < _dodgePressedRate))
             return;
 
+        if (CombatController.IsDodging)
+            return;
+
         if (_currentMovementInput != Vector2.zero)
         {
             Debug.LogWarning($"isRollPressed, Read Value : {context.ReadValueAsButton()}");
@@ -311,7 +318,6 @@ public class PlayerStateMachine : MonoBehaviour
         UiInPutManager.Instance.UiInPutSystem();
 
     }
-
 
     public void LockInput()
     {

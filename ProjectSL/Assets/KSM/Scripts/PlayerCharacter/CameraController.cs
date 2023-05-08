@@ -25,6 +25,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Animator cmCamAnimator;
 
+    [SerializeField]
+    float _lockOnLimitDist = 10f;
+
     private PlayerController playerController;
     private CharacterController characterController;
     private AnimationController animationController;
@@ -101,8 +104,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TargetDeadCheck();
         SearchTarget();
+        TargetDeadCheck();
+        TargetDistanceCheck();
         InputAction();
     }
     private void FixedUpdate()
@@ -115,18 +119,44 @@ public class CameraController : MonoBehaviour
     {
         if(IsLockOn && target == null)
         {
+            Debug.Log("TargetDeadCheck");
             GameObject newTargetObject = FindNearestTarget();
-            CharacterBase newTargetCharacter = newTargetObject.GetComponent<CharacterBase>();
-            if(newTargetCharacter != null)
+            if(newTargetObject != null)
             {
-                target = newTargetCharacter;
-                UpdateLockTargets();
+                CharacterBase newTargetCharacter = newTargetObject.GetComponent<CharacterBase>();
+                if (newTargetCharacter != null)
+                {
+                    Debug.Log("TargetDeadCheck newTarget is not null");
+                    target = newTargetCharacter;
+                    UpdateLockTargets();
+                }
+                else
+                {
+                    Debug.Log("TargetDeadCheck newTarget is null");
+                    ReleasePlayerLockOn();
+                    UpdateLockTargets();
+                }
             }
             else
             {
                 ReleasePlayerLockOn();
                 UpdateLockTargets();
             }
+        }
+    }
+    private void TargetDistanceCheck()
+    {
+        if (!IsLockOn)
+            return;
+
+        if (target == null)
+            return;
+
+        float toTargetDistance = Vector3.Distance(transform.position, target.gameObject.transform.position);
+        if (toTargetDistance > _lockOnLimitDist)
+        {
+            ReleasePlayerLockOn();
+            UpdateLockTargets();
         }
     }
     void InputAction()
@@ -203,6 +233,8 @@ public class CameraController : MonoBehaviour
         {
             return;
         }
+        if (target == null)
+            return;
         // юс╫ц
         Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - cameraArm.position);
         // camera.rotation = Quaternion.Lerp(camera.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);

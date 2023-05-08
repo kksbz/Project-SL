@@ -104,6 +104,19 @@ public class EquipmentController : MonoBehaviour
     [SerializeField]
     ItemData[] _consumption_Recovery = new ItemData[3];
 
+    #region Equipment Item Data Property
+    public ItemData ItemData_CurrentRightWeapon { get { return _currentRightArmWeapon; } }
+    public ItemData ItemData_CurrentLeftWeapon { get { return _currentLeftArmWeapon; } }
+    public ItemData ItemData_Helmet { get { return _armor_Helmet; } }
+    public ItemData ItemData_Chest { get { return _armor_Chest; } }
+    public ItemData ItemData_Glove { get { return _armor_Gloves; } }
+    public ItemData ItemData_Pants { get { return _armor_Pants; } }
+    public ItemData ItemData_Ring_1 { get { return _ring_1; } }
+    public ItemData ItemData_Ring_2 { get { return _ring_2; } }
+    public ItemData ItemData_Ring_3 { get { return _ring_3; } }
+    public ItemData ItemData_Ring_4 { get { return _ring_4; } }
+    #endregion  // Equipment Item Data Property
+
 
     // �ӽ� �⺻ ���
     [SerializeField]

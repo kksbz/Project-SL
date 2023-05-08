@@ -439,8 +439,8 @@ public class CombatController : MonoBehaviour
 
     public void Hit()
     {
-        if (_isHit)
-            return;
+        //if (_isHit)
+        //   return;
 
         if (_isDodging)
             return;

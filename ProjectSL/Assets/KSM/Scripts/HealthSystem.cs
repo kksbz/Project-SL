@@ -137,7 +137,7 @@ public class HealthSystem
         else
         {
             _staminaRegenTimer += Time.deltaTime;
-            if (_staminaPoint < _maxStaminaPoint && _staminaRegenTimer > 1f)
+            if (_staminaPoint < _maxStaminaPoint && _staminaRegenTimer > 0.5f)
             {
                 Increase_SP(_staminaRegerationAmount * _staminaRegenMultiplier * Time.deltaTime);
             }
@@ -191,16 +191,76 @@ public class HealthSystem
         return currentValue / maxValue;
     }
 
-    public void InitializeHealthSystem(PlayerStatus playerStatus)
+    public void InitializeHealthSystem(PlayerStatus playerStatus, EquipmentController equipmentController)
     {
-        // ��� ���� �߰� ���ɼ� ����
-        _maxHealthPoint = DataManager.Instance.statusLevelData[playerStatus.Vigor].hp;
-        _maxManaPoint = DataManager.Instance.statusLevelData[playerStatus.Attunement].mp;
-        _maxStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.Endurance].st;
+        Debug.Log("InitializeHealthSystem");
+        // Set Max Health Value
+        // #1 Set Health Base PlayerStatus
+        // 메인 코드
+        /*
+        float psHealthPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedVigor].hp;
+        float psManaPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedAttunement].mp;
+        float psStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedEndurance].st;
+        */
+        // 임시 코드
+        float psHealthPoint = DataManager.Instance.statusLevelData[playerStatus.Vigor].hp;
+        float psManaPoint = DataManager.Instance.statusLevelData[playerStatus.Attunement].mp;
+        float psStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.Endurance].st;
+
+        // #2 Set Health Base Equipment(Ring)
+        float[] eqHealthList = new float[3];
+        eqHealthList = CalculateEquipmentHealth(psHealthPoint, psManaPoint, psStaminaPoint, equipmentController);
+
+        _maxHealthPoint = psHealthPoint + eqHealthList[0];
+        _maxManaPoint = psManaPoint + eqHealthList[1];
+        _maxStaminaPoint = psStaminaPoint + eqHealthList[2];
 
         _staminaPoint = _maxStaminaPoint;
         onChangedHealth(EHealthType.SP, false);
         // ������ ���� �� PlayerStatus ��ġ�� ���� Data Table �����Ͽ� HealthSystem �ʱ�ȭ
+    }
+    float[] CalculateEquipmentHealth(float psHP, float psMP, float psSP, EquipmentController equipmentController)
+    {
+        float[] healthArr = new float[3];
+
+        List<ItemData> ringList = new List<ItemData>();
+
+        if(equipmentController.ItemData_Ring_1 != null)
+        {
+            ringList.Add(equipmentController.ItemData_Ring_1);
+        }
+        if (equipmentController.ItemData_Ring_2 != null)
+        {
+            ringList.Add(equipmentController.ItemData_Ring_2);
+        }
+        if (equipmentController.ItemData_Ring_3 != null)
+        {
+            ringList.Add(equipmentController.ItemData_Ring_3);
+        }
+        if (equipmentController.ItemData_Ring_4 != null)
+        {
+            ringList.Add(equipmentController.ItemData_Ring_4);
+        }
+
+        int hpAdder = 0;
+        int mpAdder = 0;
+        int spAdder = 0;
+
+        foreach(var ring in ringList)
+        {
+            hpAdder += ring.vigor;
+            mpAdder += ring.attunement;
+            spAdder += ring.endurance;
+        }
+        float hpMultiplier = psHP * (float)(hpAdder / 100);
+        float mpMultiplier = psMP * (float)(mpAdder / 100);
+        float spMultiplier = psSP * (float)(spAdder / 100);
+
+        healthArr[0] = hpMultiplier;
+        healthArr[1] = mpMultiplier;
+        healthArr[2] = spMultiplier;
+
+        return healthArr;
     }
     public bool IsAvailableAction()
     {
