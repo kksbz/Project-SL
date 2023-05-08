@@ -12,6 +12,7 @@ public class Enemy_Idle_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_IDLE);
 
         _enemy.SetState(new Enemy_Thought_State(_enemy));
@@ -50,6 +51,7 @@ public class Enemy_Thought_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
         // if (_enemy.MoveController.PatrolPoints.Count <= 1 && (!_enemy.IsFieldOfViewFind()))
@@ -125,6 +127,7 @@ public class Enemy_Patrol_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetStoppingDistance(0f);
         _enemy.SetStop(false);
 
@@ -200,13 +203,15 @@ public class Enemy_Chase_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetStoppingDistance(_enemy.Status.attackRange);
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed);
 
         if (!(_enemy.PreviousState is Enemy_Patrol_State))
         {
-            _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
         }
+        _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+
         _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 1f);
 
         if (1 < _enemy.ChaseTargets.Count)
@@ -264,6 +269,8 @@ public class Enemy_Attack_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
         _enemy.TargetFollow(_enemy.Target, true);
 
         _enemy.SetStop(true);
@@ -332,6 +339,8 @@ public class Enemy_Dodge_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_DODGE);
         _enemy.SetUpdateRotation(false);
         _enemy.SetStop(false);
@@ -383,6 +392,8 @@ public class Enemy_Hit_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
         _enemy.ResearchStatus.viewAngle = 360f;
         _enemy.SetStop(true);
 
@@ -394,7 +405,7 @@ public class Enemy_Hit_State : IState
         _enemy.SetFloat(EnemyDefineData.FLOAT_HIT_Y, posY_);
 
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_HIT);
-
+        Debug.Log($"Aniamtion Time : {_enemy.EnemyAnimator.CurrentStateInfo.normalizedTime}");
     }
 
     public void OnExit()
@@ -404,7 +415,7 @@ public class Enemy_Hit_State : IState
 
     public void Update()
     {
-        if (_enemy.IsAnimationEnd())
+        if (_enemy.IsAnimationEnd("Hit"))
         {
             _enemy.SetState(new Enemy_Thought_State(_enemy));
         }
@@ -425,6 +436,8 @@ public class Enemy_Die_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
         _enemy.SetStop(true);
 
         Vector3 direction_ = (_enemy.transform.position - _enemy.Target.position).normalized;

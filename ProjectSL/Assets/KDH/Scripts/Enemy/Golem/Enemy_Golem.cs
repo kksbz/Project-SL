@@ -103,9 +103,4 @@ public class Enemy_Golem : EnemyBase
                 break;
         }
     }
-
-    public override void DropReward()
-    {
-        base.DropReward();
-    }
 }

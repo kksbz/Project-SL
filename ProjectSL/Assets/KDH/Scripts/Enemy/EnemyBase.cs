@@ -331,6 +331,15 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         EnemyAnimator.SetTrigger(parameter);
     }
+    public void ResetTrigger(string parameter)
+    {
+        EnemyAnimator.ResetTrigger(parameter);
+    }
+    public void ResetTrigger()
+    {
+        EnemyAnimator.ResetTrigger();
+    }
+
     public void SetBool(string parameter, bool value)
     {
         EnemyAnimator.SetBool(parameter, value);
