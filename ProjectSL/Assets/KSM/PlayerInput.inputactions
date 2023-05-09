@@ -267,6 +267,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UiInput",
+            "id": "f5ad38c5-52aa-4631-8336-4615d7fc95c3",
+            "actions": [
+                {
+                    "name": "ESC",
+                    "type": "Button",
+                    "id": "30cdc3f4-a4f3-4917-bbd8-526bfd0ef961",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NUM0",
+                    "type": "Button",
+                    "id": "05030b8b-c250-48a3-b1be-f2c06a46a1ba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NUM1",
+                    "type": "Button",
+                    "id": "2fe214b3-c326-4b4c-986f-443e33603c13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2c8beb9-361b-4e30-a781-60fe182499d5",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "ESC",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "029946ea-61e2-4331-b091-a317432dd4ae",
+                    "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NUM0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba9dd932-70c3-45ad-9d56-74d6e2957c58",
+                    "path": "<Keyboard>/numpad1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NUM1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -70,8 +70,11 @@ public class AnimationEventDispatcher : MonoBehaviour
     public void AddEndAnimationEvent(AnimationClip clip)
     {
         AnimationEvent animationEndEvent = new AnimationEvent();
-        animationEndEvent.time = clip.length - 0.01f;
-        //Debug.Log($"clip length : {clip.length}, AnimationEndEventTime = {animationEndEvent.time}");
+        animationEndEvent.time = clip.length - 0.0001f;
+        if (clip.name == "ItemAction_Potion")
+        {
+            //Debug.Log($"clip length : {clip.length}, AnimationEndEventTime = {animationEndEvent.time}");
+        }
         animationEndEvent.functionName = "AnimationEndHandler";
         animationEndEvent.stringParameter = clip.name;
 

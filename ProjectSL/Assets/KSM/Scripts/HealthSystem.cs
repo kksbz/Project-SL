@@ -68,26 +68,32 @@ public class HealthSystem
     public void Increase_HP(float value_)
     {
         _healthPoint = Mathf.Clamp(_healthPoint + value_, 0f, _maxHealthPoint);
+        onChangedHealth(EHealthType.HP, false);
     }
     public void Decrease_HP(float value_)
     {
         _healthPoint = Mathf.Clamp(_healthPoint - value_, 0f, _maxHealthPoint);
+        onChangedHealth(EHealthType.HP, false);
     }
     public void Increase_SP(float value_)
     {
         _staminaPoint = Mathf.Clamp(_staminaPoint + value_, 0f, _maxStaminaPoint);
+        onChangedHealth(EHealthType.SP, false);
     }
     public void Decrease_SP(float value_)
     {
         _staminaPoint = Mathf.Clamp(_staminaPoint - value_, 0f, _maxStaminaPoint);
+        onChangedHealth(EHealthType.SP, false);
     }
     public void Increase_MP(float value_)
     {
         _manaPoint = Mathf.Clamp(_manaPoint + value_, 0f, _maxManaPoint);
+        onChangedHealth(EHealthType.MP, false);
     }
     public void Decrease_MP(float value_)
     {
         _manaPoint = Mathf.Clamp(_manaPoint - value_, 0f, _maxManaPoint);
+        onChangedHealth(EHealthType.MP, false);
     }
     #endregion  // Increase Decrease Health
     #region Damage, Consumption, Regeneration
@@ -133,8 +139,7 @@ public class HealthSystem
             _staminaRegenTimer += Time.deltaTime;
             if (_staminaPoint < _maxStaminaPoint && _staminaRegenTimer > 1f)
             {
-                _staminaPoint += _staminaRegerationAmount * _staminaRegenMultiplier * Time.deltaTime;
-                onChangedHealth(EHealthType.SP, false);
+                Increase_SP(_staminaRegerationAmount * _staminaRegenMultiplier * Time.deltaTime);
             }
         }
     }

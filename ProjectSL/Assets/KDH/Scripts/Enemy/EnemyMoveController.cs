@@ -158,7 +158,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         float randY_ = Random.Range(transform.position.z - RANDOM_Y_RANGE, transform.position.z + RANDOM_Y_RANGE);
 
         Vector3 randPos = new Vector3(randX_, 0f, randY_);
-        Debug.Log($"Warp Pos : {randPos}");
+        //Debug.Log($"Warp Pos : {randPos}");
         if (IsPositionValid(randPos))
         {
             NavMeshAgent.Warp(randPos);
@@ -217,11 +217,11 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
         // TargetFollow(_target);
 
         _index++;
-        Debug.Log($"Patrol Debug : Targets.Count : {PatrolPoints.Count} / currentIndex : {_index} ");
+        //Debug.Log($"Patrol Debug : Targets.Count : {PatrolPoints.Count} / currentIndex : {_index} ");
         if (PatrolPoints.Count <= _index)
         {
             _index = 0;
-            Debug.Log($"_index = 0");
+            //Debug.Log($"_index = 0");
         }
         Target = PatrolPoints[_index];
         TargetFollow(Target, true);
@@ -318,7 +318,7 @@ public class EnemyMoveController : MonoBehaviour, IEnemyMoveController
     /// <returns>추적 대상이 범위 내 있으면 : TRUE / 추적 대상이 유효하지 않거나 범위 내 존재하지 않으면 : FALSE </returns>
     public bool IsInRange(float ranged)
     {
-        Debug.Log($"NavMeshAgent : {NavMeshAgent.destination}");
+        //Debug.Log($"NavMeshAgent : {NavMeshAgent.destination}");
         if (!IsValidTargetPlayer || ranged < NavMeshAgent.remainingDistance)
         {
             return false;

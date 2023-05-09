@@ -69,4 +69,9 @@ public class QuickBar : MonoBehaviour
             gameObject.SetActive(false);
         });
     } // Start
+
+    private void OnEnable()
+    {
+        quickWarpPanel.gameObject.SetActive(false);
+    } // OnEnable
 } // QuickSlotBar

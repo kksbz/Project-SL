@@ -15,6 +15,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     protected IEnemyAnimator enemyAnimator = default;
     protected IEnemyTargetResearch targetResearch = default;
     protected IEnemyHpBar enemyHpBar = default;
+    protected ISFX_Object enemy_SFX = default;
 
     [Tooltip("공격시 활성화 될 공격 범위 콜라이더")]
     [SerializeField]
@@ -28,9 +29,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public IEnemyAnimator EnemyAnimator { get { return enemyAnimator; } protected set { enemyAnimator = value; } }
     public IEnemyTargetResearch TargetResearch { get { return targetResearch; } protected set { targetResearch = value; } }
     public IEnemyHpBar EnemyHpBar { get { return enemyHpBar; } protected set { enemyHpBar = value; } }
-    public List<Transform> PatrolPoints { get { return MoveController.PatrolPoints; } }
-    public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
-    public List<Collider> AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
+    public ISFX_Object Enemy_SFX { get { return enemy_SFX; } protected set { enemy_SFX = value; } }
     #endregion
 
     public string currentState;
@@ -44,22 +43,24 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         StateMachine = new EnemyStateMachine();
 
+        TryGetComponent<IEnemyAnimator>(out enemyAnimator);
         TryGetComponent<IEnemyMoveController>(out moveController);
         TryGetComponent<IEnemyTargetResearch>(out targetResearch);
-        TryGetComponent<IEnemyAnimator>(out enemyAnimator);
         TryGetComponent<IEnemyHpBar>(out enemyHpBar);
+
+        EnemyAnimator.Init();
 
         MoveController.Init();
         SetSpeed(Status.currentMoveSpeed);
 
-        EnemyAnimator.Init();
-
         TargetResearch.Init(ResearchStatus, new FieldOfView(transform, ResearchStatus));
 
-        if (EnemyHpBar != null && EnemyHpBar != default)
+        EnemyHpBar.Init();
+        InitHpBar(Status.maxHp, Status.currentHp);
+
+        if (TryGetComponent<ISFX_Object>(out enemy_SFX))
         {
-            EnemyHpBar.Init();
-            InitHpBar(Status.maxHp, Status.currentHp);
+            Enemy_SFX.Init();
         }
 
         //SetState(new Enemy_Idle_State(this));
@@ -121,6 +122,14 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     public virtual void DropReward()
     {
+        if (this is Boss_Rampage)
+        {
+            UiManager.Instance.messagePanel.KillNormalBossMessage();
+        }
+        else if (this is Boss_Sevarog)
+        {
+            UiManager.Instance.messagePanel.KillLastBossMessage();
+        }
         List<string> rewardList = DataManager.Instance.dropTable[Status.name];
         foreach (var iterator in rewardList)
         {
@@ -150,22 +159,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         return null;
     }
-    #region EnemyHpBar
-    public void InitHpBar(float maxHp, float currentHp)
-    {
-        EnemyHpBar.InitHpBar(maxHp, currentHp);
-    }
-    public void ActiveHpBar()
-    {
-        EnemyHpBar.ActiveHpBar();
-    }
-    public void UpdateHpBar(float newHp)
-    {
-        EnemyHpBar.UpdateHpBar(newHp);
-    }
-    #endregion
 
-    #region AttackCollider
     public virtual void Attack(string CurrentAnimationName, int onActionIndex)
     {
 
@@ -186,6 +180,24 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
         Quaternion rotation = Quaternion.LookRotation(dir_);
         transform.rotation = rotation;
     }
+
+    #region EnemyHpBar
+    public void InitHpBar(float maxHp, float currentHp)
+    {
+        EnemyHpBar.InitHpBar(maxHp, currentHp);
+    }
+    public void ActiveHpBar()
+    {
+        EnemyHpBar.ActiveHpBar();
+    }
+    public void UpdateHpBar(float newHp)
+    {
+        EnemyHpBar.UpdateHpBar(newHp);
+    }
+    #endregion
+
+    #region AttackCollider
+    public List<Collider> AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
     public void SetAttackColliderEnabled(bool newEnabled)
     {
         foreach (var iterator in AttackCollider)
@@ -210,7 +222,6 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     }
     #endregion
 
-
     #region StateMachine
     public IState CurrentState { get { return StateMachine.CurrentState; } }
     public IState PreviousState { get { return StateMachine.PreviousState; } }
@@ -225,6 +236,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     #endregion
 
     #region IEnemyMoveController
+    public List<Transform> PatrolPoints { get { return MoveController.PatrolPoints; } }
     public Transform Target { get { return MoveController.Target; } }
     //public UnityEngine.AI.NavMeshAgent NavMeshAgent { get { return MoveController.NavMeshAgent; } }
     public void SetStoppingDistance(float newDistance)
@@ -298,6 +310,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     #endregion
 
     #region EnemyTargetResearch
+    public List<Transform> ChaseTargets { get { return TargetResearch.Targets; } }
     public IEnumerator FieldOfViewSearch(float delay)
     {
         return TargetResearch.FieldOfViewSearch(delay);
@@ -341,6 +354,45 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public bool IsAnimationPlaying(string animationName)
     {
         return enemyAnimator.IsAnimationPlaying(animationName);
+    }
+    #endregion
+
+    #region ISFX_Object
+    public void SetAudioClip(AudioClip audioClip)
+    {
+        Enemy_SFX.SetAudioClip(audioClip);
+    }
+
+    public void SFX_Play()
+    {
+        Enemy_SFX.SFX_Play();
+    }
+
+    public void SFX_Play(AudioClip audioClip)
+    {
+        Enemy_SFX.SFX_Play(audioClip);
+    }
+
+    public void SFX_Play(AudioClip audioClip, bool isOneShot)
+    {
+        Enemy_SFX.SFX_Play(audioClip, isOneShot);
+    }
+    public void SFX_Play_Loop(AudioClip audioClip)
+    {
+        Enemy_SFX.SFX_Play_Loop(audioClip);
+    }
+
+    public void SFX_Stop()
+    {
+        Enemy_SFX.SFX_Stop();
+    }
+
+    public AudioClip FindAudioClip(string audioClipName)
+    {
+        AudioClip findClip_ = Enemy_SFX.FindAudioClip(audioClipName);
+        Debug.Log($"findClip : {findClip_.name}");
+        return findClip_;
+        //return null;
     }
     #endregion
 

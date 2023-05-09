@@ -8,9 +8,9 @@ public class PlayerAttackState : PlayerBaseState
     {
         IsRootState = true;
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
-        Debug.Log("Attack State Enter");
+        //Debug.Log("Attack State Enter");
         // Attack 애니메이션 실행
         Ctx.CharacterAnimator.applyRootMotion = true;
         Ctx.CombatController.Attack();
@@ -28,9 +28,9 @@ public class PlayerAttackState : PlayerBaseState
     {
 
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
-        Debug.Log("Attack State Exit");
+        //Debug.Log("Attack State Exit");
         // Ctx.CombatController.ResetAnimatorController();
         Ctx.CharacterAnimator.applyRootMotion = false;
     }
@@ -40,9 +40,13 @@ public class PlayerAttackState : PlayerBaseState
         {
             SwitchState(Factory.Grounded());
         }
-        if(Ctx.IsRollPressed) 
+        else if(Ctx.IsRollPressed) 
         {
             SwitchState(Factory.Roll());
+        }
+        else if(Ctx.HitFlag)
+        {
+            SwitchState(Factory.Hit());
         }
     }
     public override void InitializeSubState()

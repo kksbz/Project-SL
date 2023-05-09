@@ -8,7 +8,7 @@ public class PlayerWalkState : PlayerBaseState
     {
 
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         Ctx.AnimationController.SetWeight(AnimationController.LAYERINDEX_WALKLAYER, 1);
     }
@@ -27,9 +27,10 @@ public class PlayerWalkState : PlayerBaseState
         {
             Debug.Log("JogState FixedUpdateState context nextBehavior.Execute()");
             Ctx.NextBehavior.Execute();
+            Ctx.NextBehavior = null;
         }
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         Ctx.AnimationController.SetWeight(AnimationController.LAYERINDEX_WALKLAYER, 0);
     }

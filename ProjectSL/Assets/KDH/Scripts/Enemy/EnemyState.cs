@@ -40,9 +40,9 @@ public class Enemy_Idle_State : IState
 public class Enemy_Thought_State : IState
 {
     private EnemyBase _enemy;
-    private IEnumerator _fovCoroutine;
+    // private IEnumerator _fovCoroutine;
     private IEnumerator _thoughtCoroutine;
-    private bool _isCoroutinePlay;
+    // private bool _isCoroutinePlay;
     public Enemy_Thought_State(EnemyBase newEnemy)
     {
         _enemy = newEnemy;
@@ -52,36 +52,37 @@ public class Enemy_Thought_State : IState
     {
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        if (_enemy.MoveController.PatrolPoints.Count <= 1 && (!_enemy.IsFieldOfViewFind()))
-        {
-            _fovCoroutine = _enemy.FieldOfViewSearch(0.2f);
-            _enemy.StartCoroutine(_fovCoroutine);
-        }
+        // if (_enemy.MoveController.PatrolPoints.Count <= 1 && (!_enemy.IsFieldOfViewFind()))
+        // {
+        //     _fovCoroutine = _enemy.FieldOfViewSearch(0.2f);
+        //     _enemy.StartCoroutine(_fovCoroutine);
+        // }
 
-        _thoughtCoroutine = Thought(0.5f);
-        _enemy.StartCoroutine(_thoughtCoroutine);
+        // _thoughtCoroutine = Thought(0.5f);
+        // _enemy.StartCoroutine(_thoughtCoroutine);
+        _enemy.StartCoroutine(Thought(0.5f));
     }
 
     public void OnExit()
     {
-        if (_fovCoroutine == null || _fovCoroutine == default)
-        {
-            /* Do Nothing */
-        }
-        else
-        {
-            _enemy.StopCoroutine(_fovCoroutine);
-        }
+        // if (_fovCoroutine == null || _fovCoroutine == default)
+        // {
+        //     /* Do Nothing */
+        // }
+        // else
+        // {
+        //     _enemy.StopCoroutine(_fovCoroutine);
+        // }
 
-        _enemy.StopCoroutine(_thoughtCoroutine);
+        // _enemy.StopCoroutine(_thoughtCoroutine);
     }
 
     public void Update()
     {
-        if (!_isCoroutinePlay && _enemy.IsFieldOfViewFind() && _enemy.MoveController.PatrolPoints.Count <= 1)
-        {
-            Thought();
-        }
+        // if (!_isCoroutinePlay && _enemy.IsFieldOfViewFind() && _enemy.MoveController.PatrolPoints.Count <= 1)
+        // {
+        //     Thought();
+        // }
     }
     public void OnAction()
     {
@@ -90,11 +91,11 @@ public class Enemy_Thought_State : IState
 
     IEnumerator Thought(float delay)
     {
-        _isCoroutinePlay = true;
+        // _isCoroutinePlay = true;
         yield return new WaitForSeconds(delay);
-
+        //Debug.Log($"Name : {_enemy.ToString()}");
         Thought();
-        _isCoroutinePlay = false;
+        // _isCoroutinePlay = false;
     }
 
     void Thought()
@@ -198,7 +199,10 @@ public class Enemy_Chase_State : IState
         _enemy.SetStoppingDistance(_enemy.Status.attackRange);
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed);
 
-        _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+        if (!(_enemy.PreviousState is Enemy_Patrol_State))
+        {
+            _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+        }
         _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 1f);
 
         if (1 < _enemy.ChaseTargets.Count)
@@ -340,7 +344,7 @@ public class Enemy_Dodge_State : IState
         Quaternion targetRotation = Quaternion.LookRotation(-targetDirection, Vector3.up);
         _enemy.transform.rotation = targetRotation;
 
-        Debug.Log($"targetposition : {targetPosition}");
+        //Debug.Log($"targetposition : {targetPosition}");
         _enemy.TargetFollow(targetPosition);
     }
 

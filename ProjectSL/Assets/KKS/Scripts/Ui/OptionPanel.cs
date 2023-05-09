@@ -6,72 +6,72 @@ using UnityEngine.UI;
 
 public class OptionPanel : MonoBehaviour
 {
-    [SerializeField] List<Sprite> panelSprites; // ªÛ¥‹∆–≥Œ Ω∫«¡∂Û¿Ã∆Æ ∏ÆΩ∫∆Æ
-    [SerializeField] private Image panelImage; // ªÛ¥‹∆–≥Œ ¿ÃπÃ¡ˆ
-    [SerializeField] private TMP_Text panelText; // ªÛ¥‹∆–≥Œ ≈ÿΩ∫∆Æ
-    [SerializeField] private SaveAndLoadPanel saveAndLoadPanel; // ºº¿Ã∫Í,∑ŒµÂ ∆–≥Œ
-    [SerializeField] private GameObject manualPanel; // «√∑π¿ÃæÓ ¡∂¿€π˝ ∆–≥Œ
-    [SerializeField] private GameObject checkPanel; // »Æ¿Œ ∆–≥Œ
-    [SerializeField] private TMP_Text checkText; // »Æ¿Œ ∆–≥Œ ≈ÿΩ∫∆Æ
-    [SerializeField] private Button checkPanelSelectBt; // »Æ¿Œ ∆–≥Œ º±≈√ πˆ∆∞
-    [SerializeField] private Button checkPanelCancleBt; // »Æ¿Œ ∆–≥Œ √Îº“ πˆ∆∞
-    [SerializeField] private Button goTitleBt; // ≈∏¿Ã∆≤∑Œ ∞°±‚ πˆ∆∞
-    [SerializeField] private Button OptionBt; // ø…º« πˆ∆∞
-    [SerializeField] private Button SaveBt; // ¿˙¿Â«œ±‚ πˆ∆∞
-    [SerializeField] private Button LoadBt; // ∑ŒµÂ«œ±‚ πˆ∆∞
-    [SerializeField] private Button ExitBt; // ∞‘¿”¡æ∑· πˆ∆∞
-    public GameObject goBackText; // «œ¥‹∆–≥Œ µ⁄∑Œ∞°±‚ ≈ÿΩ∫∆Æ
+    [SerializeField] List<Sprite> panelSprites; // ÔøΩÔøΩÔøΩÔøΩ–≥ÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩÔøΩÔøΩÔøΩ∆Æ
+    [SerializeField] private Image panelImage; // ÔøΩÔøΩÔøΩÔøΩ–≥ÔøΩ ÔøΩÃπÔøΩÔøΩÔøΩ
+    [SerializeField] private TMP_Text panelText; // ÔøΩÔøΩÔøΩÔøΩ–≥ÔøΩ ÔøΩÿΩÔøΩ∆Æ
+    [SerializeField] private SaveAndLoadPanel saveAndLoadPanel; // ÔøΩÔøΩÔøΩÃ∫ÔøΩ,ÔøΩŒµÔøΩ ÔøΩ–≥ÔøΩ
+    [SerializeField] private GameObject checkPanel; // »ÆÔøΩÔøΩ ÔøΩ–≥ÔøΩ
+    [SerializeField] private GameObject manualPanel;
+    [SerializeField] private TMP_Text checkText; // »ÆÔøΩÔøΩ ÔøΩ–≥ÔøΩ ÔøΩÿΩÔøΩ∆Æ
+    [SerializeField] private Button checkPanelSelectBt; // »ÆÔøΩÔøΩ ÔøΩ–≥ÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
+    [SerializeField] private Button checkPanelCancleBt; // »ÆÔøΩÔøΩ ÔøΩ–≥ÔøΩ ÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
+    [SerializeField] private Button goTitleBt; // ≈∏ÔøΩÔøΩ∆≤ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
+    [SerializeField] private Button OptionBt; // ÔøΩ…ºÔøΩ ÔøΩÔøΩ∆∞
+    [SerializeField] private Button SaveBt; // ÔøΩÔøΩÔøΩÔøΩÔøΩœ±ÔøΩ ÔøΩÔøΩ∆∞
+    [SerializeField] private Button LoadBt; // ÔøΩŒµÔøΩÔøΩœ±ÔøΩ ÔøΩÔøΩ∆∞
+    [SerializeField] private Button ExitBt; // ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
+    public GameObject goBackText; // ÔøΩœ¥ÔøΩÔøΩ–≥ÔøΩ ÔøΩ⁄∑Œ∞ÔøΩÔøΩÔøΩ ÔøΩÿΩÔøΩ∆Æ
     private bool isExitGame = false;
 
     private void Start()
     {
-        // ≈∏¿Ã∆≤∑Œ ∞°±‚ πˆ∆∞
+        // ≈∏ÔøΩÔøΩ∆≤ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
         goTitleBt.onClick.AddListener(() =>
         {
-            checkText.text = "≈∏¿Ã∆≤»≠∏È¿∏∑Œ ∞°Ω√∞⁄Ω¿¥œ±Ó?";
+            checkText.text = "≈∏ÔøΩÔøΩ∆≤»≠ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩ√∞⁄ΩÔøΩÔøΩœ±ÔøΩ?";
             isExitGame = false;
             checkPanel.SetActive(true);
         });
-        // ∞‘¿”¡æ∑· πˆ∆∞
+        // ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
         ExitBt.onClick.AddListener(() =>
         {
-            checkText.text = "∞‘¿”¿ª ¡æ∑·«œΩ√∞⁄Ω¿¥œ±Ó?";
+            checkText.text = "ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩœΩ√∞⁄ΩÔøΩÔøΩœ±ÔøΩ?";
             isExitGame = true;
             checkPanel.SetActive(true);
         });
-        // ø…º« πˆ∆∞
+        // ÔøΩ…ºÔøΩ ÔøΩÔøΩ∆∞
         OptionBt.onClick.AddListener(() =>
         {
             panelImage.sprite = panelSprites[1];
-            panelText.text = "¡∂¿€π˝";
+            panelText.text = "ÔøΩÔøΩÔøΩ€πÔøΩ";
             manualPanel.SetActive(true);
             goBackText.SetActive(true);
         });
-        // ºº¿Ã∫Í πˆ∆∞
+        // ÔøΩÔøΩÔøΩÃ∫ÔøΩ ÔøΩÔøΩ∆∞
         SaveBt.onClick.AddListener(() =>
         {
             panelImage.sprite = panelSprites[2];
-            panelText.text = "¿˙¿Â«œ±‚";
+            panelText.text = "ÔøΩÔøΩÔøΩÔøΩÔøΩœ±ÔøΩ";
             saveAndLoadPanel.isSave = true;
             saveAndLoadPanel.gameObject.SetActive(true);
             goBackText.SetActive(true);
         });
-        // ∑ŒµÂ πˆ∆∞
+        // ÔøΩŒµÔøΩ ÔøΩÔøΩ∆∞
         LoadBt.onClick.AddListener(() =>
         {
             panelImage.sprite = panelSprites[3];
-            panelText.text = "∫“∑Øø¿±‚";
+            panelText.text = "ÔøΩ“∑ÔøΩÔøΩÔøΩÔøΩÔøΩ";
             saveAndLoadPanel.isSave = false;
             saveAndLoadPanel.gameObject.SetActive(true);
             goBackText.SetActive(true);
         });
 
-        // »Æ¿Œ ∆–≥Œ º±≈√ πˆ∆∞
+        // »ÆÔøΩÔøΩ ÔøΩ–≥ÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
         checkPanelSelectBt.onClick.AddListener(() =>
         {
             if (isExitGame == true)
             {
-                // ¿⁄µø¿˙¿Â »ƒ ∞‘¿”¡æ∑·
+                // ÔøΩ⁄µÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
                 DataManager.Instance.slotNum = 0;
                 DataManager.Instance.SaveData();
                 Application.Quit();
@@ -79,12 +79,12 @@ public class OptionPanel : MonoBehaviour
             }
             else
             {
-                // ≈∏¿Ã∆≤æ¿¿∏∑Œ ¿Ãµø
+                // ≈∏ÔøΩÔøΩ∆≤ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÃµÔøΩ
                 checkPanel.SetActive(false);
                 GameManager.Instance.GoTitleScene();
             }
         });
-        // »Æ¿Œ ∆–≥Œ √Îº“ πˆ∆∞
+        // »ÆÔøΩÔøΩ ÔøΩ–≥ÔøΩ ÔøΩÔøΩÔøΩ ÔøΩÔøΩ∆∞
         checkPanelCancleBt.onClick.AddListener(() =>
         {
             checkPanel.SetActive(false);
@@ -94,7 +94,7 @@ public class OptionPanel : MonoBehaviour
     private void OnEnable()
     {
         panelImage.sprite = panelSprites[0];
-        panelText.text = "º≥¡§";
+        panelText.text = "ÔøΩÔøΩÔøΩÔøΩ";
         goBackText.SetActive(false);
         manualPanel.SetActive(false);
         saveAndLoadPanel.gameObject.SetActive(false);
@@ -109,7 +109,7 @@ public class OptionPanel : MonoBehaviour
                 saveAndLoadPanel.gameObject.SetActive(false);
                 manualPanel.SetActive(false);
                 panelImage.sprite = panelSprites[0];
-                panelText.text = "º≥¡§";
+                panelText.text = "ÔøΩÔøΩÔøΩÔøΩ";
                 goBackText.SetActive(false);
             }
         }

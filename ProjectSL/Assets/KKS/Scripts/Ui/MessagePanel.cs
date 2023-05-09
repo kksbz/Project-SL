@@ -73,6 +73,7 @@ public class MessagePanel : MonoBehaviour
             // 플레이어가 죽었을 경우 자동저장슬롯에 저장한 후 부활
             DataManager.Instance.slotNum = 0;
             DataManager.Instance.SaveData();
+            Inventory.Instance.Soul = 0;
             yield return new WaitForSeconds(1f);
             GameManager.Instance.LoadSaveDataScene(0);
         }

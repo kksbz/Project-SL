@@ -114,6 +114,9 @@ public class Boss_Idle_State : IState
     {
         _boss.StopCoroutine(_coroutine);
         _boss.ActiveHpBar();
+
+        AudioClip introSfx_ = _boss.FindAudioClip("Intro");
+        _boss.SFX_Play(introSfx_, true);
     }
 
     public void Update()
@@ -141,7 +144,7 @@ public class Boss_Idle_State : IState
             }
 
             Debug.Log($"target : {target_.name}");
-            //_boss.TargetFollow(target_, false);
+            _boss.TargetFollow(target_, false);
 
             _boss.SetState(new Boss_Thought_State(_boss));
         }
@@ -166,7 +169,7 @@ public class Boss_Thought_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        _boss.StartCoroutine(StateChangedDelay(0.1f));
+        _boss.StartCoroutine(StateChangedDelay(0.5f));
 
         _boss.TargetFollow(_boss.Target, false);
     }
@@ -195,7 +198,7 @@ public class Boss_Thought_State : IState
 
         if (newState_ == null || newState_ == default)
         {
-            _boss.SetState(new Boss_Thought_State(_boss));
+            //_boss.SetState(new Boss_Thought_State(_boss));
             yield break;
         }
 
@@ -219,6 +222,9 @@ public class Boss_Chase_State : IState
     public void OnEnter()
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+
+        AudioClip runSFX_ = _boss.FindAudioClip("Run");
+        _boss.SFX_Play_Loop(runSFX_);
 
         _boss.SetStop(false);
 
@@ -248,6 +254,7 @@ public class Boss_Chase_State : IState
     public void OnExit()
     {
         _boss.StopCoroutine(_thoughtDelay);
+        _boss.SFX_Stop();
     }
 
     public void Update()
@@ -289,101 +296,6 @@ public class Boss_Chase_State : IState
 }
 
 /// <summary>
-/// 대치 상태 플레이어를 주기적으로 쫓아가거나 바라보다 플레이어가 공격 범위 내에 있다면 공격 상태로 전환
-/// </summary>
-public class Boss_Confrontation_State : IState
-{
-    private BossBase _boss;
-    private Transform _target;
-    private float _distance = float.MaxValue;
-    public Boss_Confrontation_State(BossBase newBoss)
-    {
-        _boss = newBoss;
-    }
-    public void OnEnter()
-    {
-        _boss.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
-
-        if (1 < _boss.ChaseTargets.Count)
-        {
-            foreach (var element in _boss.ChaseTargets)
-            {
-                float distance_ = Vector3.Distance(_boss.transform.position, element.position);
-                if (distance_ < _distance)
-                {
-                    _distance = distance_;
-                    _target = element;
-                }
-            }
-        }
-        else
-        {
-            _target = _boss.ChaseTargets[0];
-        }
-
-        _boss.TargetFollow(_target);
-    }
-
-    public void OnExit()
-    {
-    }
-
-    public void Update()
-    {
-        //  타겟을 따라감
-        _boss.TargetFollow(_target);
-
-        Debug.Log($"TARGET : {_target.name}");
-
-        //  타겟이 공격 범위 내에 위치한다면 공격 상태로 전환
-        if (_boss.IsArrive(_boss.Status.attackRange))
-        {
-            Debug.Log($"distance : {_boss.Status.attackRange}");
-            _boss.SetState(new Boss_Attack_State(_boss));
-        }
-    }
-    public void OnAction()
-    {
-
-    }
-}
-
-
-
-/// <summary>
-/// 공격 상태 일정 확률로 정해진 공격 패턴을 수행 시킬 예정
-/// </summary>
-public class Boss_Attack_State : IState
-{
-    private BossBase _boss;
-    public Boss_Attack_State(BossBase newBoss)
-    {
-        _boss = newBoss;
-    }
-    public void OnEnter()
-    {
-        _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
-        _boss.SetTrigger("Swing1");
-    }
-
-    public void OnExit()
-    {
-    }
-
-    public void Update()
-    {
-        if (1f <= _boss.CurrentStateInfo.normalizedTime && !_boss.CurrentStateInfo.loop)
-        {
-            _boss.SetState(new Boss_Idle_State(_boss));
-        }
-    }
-    public void OnAction()
-    {
-
-    }
-}
-
-/// <summary>
 /// 그로기 상태 구현은 미정
 /// </summary>
 public class Boss_Groggy_State : IState
@@ -422,6 +334,10 @@ public class Boss_Die_State : IState
     }
     public void OnEnter()
     {
+        _boss.SetTrigger("Die");
+
+        AudioClip deathSFX_ = _boss.FindAudioClip("Death");
+        _boss.SFX_Play(deathSFX_, true);
     }
 
     public void OnExit()
@@ -430,6 +346,11 @@ public class Boss_Die_State : IState
 
     public void Update()
     {
+        //  사망 애니메이션이 종료된 이후 감지
+        if (_boss.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
+        {
+            _boss.OnDie();
+        }
     }
     public void OnAction()
     {

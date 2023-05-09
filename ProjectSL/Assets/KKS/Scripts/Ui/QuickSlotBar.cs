@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class QuickSlotBar : MonoBehaviour
 {
-    [SerializeField] private QuickSlot leftArm; // ¿Þ¼Õ Äü½½·Ô
-    [SerializeField] private QuickSlot rightArm; // ¿À¸¥¼Õ Äü½½·Ô
-    [SerializeField] private QuickSlot attackC; // °ø°Ý¿ë ¼Ò¸ðÇ° Äü½½·Ô
-    [SerializeField] private QuickSlot recoveryC; // È¸º¹¿ë ¼Ò¸ðÇ° Äü½½·Ô
-    [SerializeField] private List<WeaponSlot> leftWeaponList; // ¿Þ¼Õ ¹«±â ¸®½ºÆ®
-    [SerializeField] private List<WeaponSlot> rightWeaponList; // ¿À¸¥¼Õ ¹«±â ¸®½ºÆ®
-    [SerializeField] private List<ConsumptionSlot> attackC_List; // °ø°Ý¿ë ¼Ò¸ðÇ° ¸®½ºÆ®
-    [SerializeField] private List<ConsumptionSlot> recoveryC_List; // È¸º¹¿ë ¼Ò¸ðÇ° ¸®½ºÆ®
+    [SerializeField] private QuickSlot leftArm; // ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private QuickSlot rightArm; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private QuickSlot attackC; // ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private QuickSlot recoveryC; // È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private List<WeaponSlot> leftWeaponList; // ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    [SerializeField] private List<WeaponSlot> rightWeaponList; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    [SerializeField] private List<ConsumptionSlot> attackC_List; // ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Æ®
+    [SerializeField] private List<ConsumptionSlot> recoveryC_List; // È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Æ®
     public int leftArmNum = 0;
     public int rightArmNum = 0;
     public int attackC_Num = 0;
@@ -52,7 +52,7 @@ public class QuickSlotBar : MonoBehaviour
         InPutQuickSlot();
     } // Update
 
-    //! Äü½½·Ô »ç¿ë Ä¿¸àµå
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½
     private void InPutQuickSlot()
     {
         if (GameManager.Instance.CheckActiveTitleScene() == true)
@@ -60,111 +60,110 @@ public class QuickSlotBar : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 float scroll = Input.GetAxis("Mouse ScrollWheel");
-                // ¸¶¿ì½º ÈÙÀ» À§·Î ½ºÅ©·ÑÇßÀ» ¶§ ¿À¸¥¼Õ ¹«±â ÀåÂø
+                // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (scroll > 0f)
                 {
                     if (rightWeaponList[rightArmNum].Item != null)
                     {
-                        // ÀÌÀü ½½·ÔÀÇ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
                         rightWeaponList[rightArmNum].equipItem.SetActive(false);
                     }
-                    // ½½·ÔÀÇ Å©±â¸¦ ¹þ¾î³ª¸é ÀÎµ¦½º ÃÊ±âÈ­
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     if (rightArmNum == rightWeaponList.Count - 1)
                     {
                         rightArmNum = -1;
                     }
                     rightArmNum++;
                     rightArm.Item = rightWeaponList[rightArmNum].Item;
-
-                    // Äü½½·Ô¿¡ ¹«±â°¡ ÀÖÀ» ¶§
+                    Inventory.Instance._onEquipSlotUpdated();
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                     if (rightWeaponList[rightArmNum].Item != null)
                     {
-                        // ¹«±â ¿ÀºêÁ§Æ®¸¦ ÇÃ·¹ÀÌ¾îÀÇ ¿À¸¥¼ÕÀ¸·Î À§Ä¡ Á¶Á¤ÇÏ°í È°¼ºÈ­
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ È°ï¿½ï¿½È­
                         rightWeaponList[rightArmNum].equipItem.SetActive(true);
-                        //Debug.Log($"½¬ÇÁÆ®+ÈÙ¾÷ : {rightArmNum}");
+                        //Debug.Log($"ï¿½ï¿½ï¿½ï¿½Æ®+ï¿½Ù¾ï¿½ : {rightArmNum}");
                     }
                 }
-                // ¸¶¿ì½º ÈÙÀ» ¾Æ·¡·Î ½ºÅ©·ÑÇßÀ» ¶§ ¿Þ¼Õ ¹«±â ÀåÂø
+                // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 else if (scroll < 0f)
                 {
                     if (leftWeaponList[leftArmNum].Item != null)
                     {
-                        // ÀÌÀü ½½·ÔÀÇ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
                         leftWeaponList[leftArmNum].equipItem.SetActive(false);
                     }
-                    // ½½·ÔÀÇ Å©±â¸¦ ¹þ¾î³ª¸é ÀÎµ¦½º ÃÊ±âÈ­
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     if (leftArmNum == leftWeaponList.Count - 1)
                     {
                         leftArmNum = -1;
                     }
                     leftArmNum++;
                     leftArm.Item = leftWeaponList[leftArmNum].Item;
-
-                    // Äü½½·Ô¿¡ ¹«±â°¡ ÀÖÀ» ¶§
+                    Inventory.Instance._onEquipSlotUpdated();
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                     if (leftWeaponList[leftArmNum].Item != null)
                     {
-                        // ¹«±â ¿ÀºêÁ§Æ®¸¦ ÇÃ·¹ÀÌ¾îÀÇ ¿À¸¥¼ÕÀ¸·Î À§Ä¡ Á¶Á¤ÇÏ°í È°¼ºÈ­
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ È°ï¿½ï¿½È­
                         leftWeaponList[leftArmNum].equipItem.SetActive(true);
-                        //Debug.Log($"½¬ÇÁÆ®+ÈÙ´Ù¿î : {leftArmNum}");
+                        //Debug.Log($"ï¿½ï¿½ï¿½ï¿½Æ®+ï¿½Ù´Ù¿ï¿½ : {leftArmNum}");
                     }
                 }
             }
             else
             {
                 float scroll = Input.GetAxis("Mouse ScrollWheel");
-                // ¸¶¿ì½º ÈÙÀ» À§·Î ½ºÅ©·ÑÇßÀ» ¶§ °ø°Ý¿ë ¼Ò¸ðÇ° ÀåÂø
+                // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
                 if (scroll > 0f)
                 {
                     if (attackC_List[attackC_Num].Item != null)
                     {
-                        // ÀÌÀü ½½·ÔÀÇ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
                         attackC_List[attackC_Num].equipItem.SetActive(false);
                     }
-                    // ½½·ÔÀÇ Å©±â¸¦ ¹þ¾î³ª¸é ÀÎµ¦½º ÃÊ±âÈ­
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     if (attackC_Num == attackC_List.Count - 1)
                     {
                         attackC_Num = -1;
                     }
                     attackC_Num++;
                     attackC.Item = attackC_List[attackC_Num].Item;
-
-                    // Äü½½·Ô¿¡ °ø°Ý¿ë ¼Ò¸ðÇ°ÀÌ ÀÖÀ» ¶§
+                    Inventory.Instance._onEquipSlotUpdated();
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                     if (attackC_List[attackC_Num].Item != null)
                     {
-                        // °ø°Ý¿ë ¼Ò¸ðÇ° ¿ÀºêÁ§Æ®¸¦ ÇÃ·¹ÀÌ¾îÀÇ ¿À¸¥¼ÕÀ¸·Î À§Ä¡ Á¶Á¤ÇÏ°í È°¼ºÈ­
+                        // ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ È°ï¿½ï¿½È­
                     }
                 }
-                // ¸¶¿ì½º ÈÙÀ» ¾Æ·¡·Î ½ºÅ©·ÑÇßÀ» ¶§ È¸º¹¿ë ¼Ò¸ðÇ° ÀåÂø
+                // ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
                 else if (scroll < 0f)
                 {
                     if (recoveryC_List[recoveryC_Num].Item != null)
                     {
-                        // ÀÌÀü ½½·ÔÀÇ ¾ÆÀÌÅÛ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È°ï¿½ï¿½È­
                         recoveryC_List[recoveryC_Num].equipItem.SetActive(false);
                     }
-                    // ½½·ÔÀÇ Å©±â¸¦ ¹þ¾î³ª¸é ÀÎµ¦½º ÃÊ±âÈ­
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
                     if (recoveryC_Num == recoveryC_List.Count - 1)
                     {
                         recoveryC_Num = -1;
                     }
                     recoveryC_Num++;
                     recoveryC.Item = recoveryC_List[recoveryC_Num].Item;
-
-                    // Äü½½·Ô¿¡ È¸º¹¿ë ¼Ò¸ðÇ°ÀÌ ÀÖÀ» ¶§
+                    Inventory.Instance._onEquipSlotUpdated();
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                     if (recoveryC_List[recoveryC_Num].Item != null)
                     {
-                        // È¸º¹¿ë ¼Ò¸ðÇ° ¿ÀºêÁ§Æ®¸¦ ÇÃ·¹ÀÌ¾îÀÇ ¿À¸¥¼ÕÀ¸·Î À§Ä¡ Á¶Á¤ÇÏ°í È°¼ºÈ­
+                        // È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ È°ï¿½ï¿½È­
                     }
                 }
             }
         }
-        Inventory.Instance._onEquipSlotUpdated();
     } // InPutQuickSlot
 
-    //! µ¥ÀÌÅÍ ·Îµå½Ã Äü½½·Ô ¾ÆÀÌÅÛ °»½ÅÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void LoadQuickSlotData()
     {
-        // ¿À¸¥¼Õ ¹«±â Äü½½·Ô °»½Å
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (rightWeaponList[rightArmNum].Item != null && rightWeaponList[rightArmNum].equipItem != null)
         {
             rightArm.Item = rightWeaponList[rightArmNum].Item;
@@ -175,7 +174,7 @@ public class QuickSlotBar : MonoBehaviour
             rightArm.Item = null;
         }
 
-        // ¿Þ¼Õ ¹«±â Äü½½·Ô °»½Å
+        // ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (leftWeaponList[leftArmNum].Item != null && leftWeaponList[leftArmNum].equipItem != null)
         {
             leftArm.Item = leftWeaponList[leftArmNum].Item;
@@ -186,7 +185,7 @@ public class QuickSlotBar : MonoBehaviour
             leftArm.Item = null;
         }
 
-        // °ø°Ý¿ë ¼Ò¸ðÇ° Äü½½·Ô °»½Å
+        // ï¿½ï¿½ï¿½Ý¿ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (attackC_List[attackC_Num].Item != null && attackC_List[attackC_Num].equipItem != null)
         {
             attackC.Item = attackC_List[attackC_Num].Item;
@@ -196,7 +195,7 @@ public class QuickSlotBar : MonoBehaviour
             attackC.Item = null;
         }
 
-        // È¸º¹¿ë ¼Ò¸ðÇ° Äü½½·Ô °»½Å
+        // È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (recoveryC_List[recoveryC_Num].Item != null && recoveryC_List[recoveryC_Num].equipItem != null)
         {
             recoveryC.Item = recoveryC_List[recoveryC_Num].Item;

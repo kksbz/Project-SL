@@ -338,6 +338,7 @@ public class DataManager : Singleton<DataManager>
                 UiManager.Instance.warp.CreateWarpSlot(bonfire);
             }
         }
+
         Bonfire[] bonfires = GameObject.FindGameObjectsWithTag(GData.BONFIRE_MARK).Select(go => go.GetComponent<Bonfire>()).ToArray();
         for (int i = 0; i < bonfires.Length; i++)
         {

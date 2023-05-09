@@ -8,7 +8,7 @@ public class PlayerJogState : PlayerBaseState
     {
 
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         
     }
@@ -27,9 +27,10 @@ public class PlayerJogState : PlayerBaseState
         {
             //Debug.Log("JogState FixedUpdateState context nextBehavior.Execute()");
             Ctx.NextBehavior.Execute();
+            Ctx.NextBehavior = null;
         }
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
 
     }
@@ -39,7 +40,7 @@ public class PlayerJogState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsMovementPressed && Ctx.IsRunPressed)
+        else if (Ctx.IsMovementPressed && Ctx.IsRunPressed && Ctx.PlayerCharacter.HealthSys.IsAvailableAction())
         {
             SwitchState(Factory.Run());
         }

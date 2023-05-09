@@ -68,6 +68,7 @@ public class Boss_Rampage_RockThrow_Staet : IState
 public class Boss_Ramapage_BodyTackle_State : IState
 {
     private Boss_Rampage _boss;
+    private IEnumerator bodyTackleEndCoroutine;
     public Boss_Ramapage_BodyTackle_State(Boss_Rampage boss)
     {
         _boss = boss;
@@ -84,23 +85,33 @@ public class Boss_Ramapage_BodyTackle_State : IState
         _boss.BodyTackle();
         OnAction();
 
-        _boss.StartCoroutine(BodyTackleEnd());
+        AudioClip bodyTackleAudio_ = _boss.FindAudioClip("BodyTackle");
+
+        _boss.SFX_Play(bodyTackleAudio_);
+
+        bodyTackleEndCoroutine = BodyTackleEnd();
+        _boss.StartCoroutine(bodyTackleEndCoroutine);
     }
 
     public void OnExit()
     {
+        _boss.StopCoroutine(bodyTackleEndCoroutine);
+        _boss.BodyTackleComplete();
+        _boss.TargetFollow(_boss.Target, false);
+        OnAction();
     }
 
     public void Update()
     {
-
+        if (_boss.MoveCompleteCheck(0.7f))
+        {
+            _boss.SetState(new Boss_Thought_State(_boss));
+        }
     }
 
     IEnumerator BodyTackleEnd()
     {
-        yield return new WaitForSeconds(0.7f);
-        OnAction();
-        _boss.BodyTackleComplete();
+        yield return new WaitForSeconds(1f);
         _boss.SetState(new Boss_Thought_State(_boss));
     }
 }
@@ -126,6 +137,13 @@ public class Boss_Rampage_GroundSmash_Start_State : IState
         //_boss.Target.TransformPoint(dir_ * 2f);
         Debug.Log($"Ground Smash Start Debug : {targetPos}");
         _boss.Jump(targetPos, _boss.BossStatus.groundSmashMaxHeight);
+
+        int randNum_ = Random.Range(0, 3);
+
+
+        AudioClip groundSmashAudio_ = _boss.FindAudioClip("GroundSmash");
+
+        _boss.SFX_Play(groundSmashAudio_);
     }
 
     public void OnExit()
@@ -160,6 +178,7 @@ public class Boss_Rampage_GroundSmash_End_State : IState
 
     public void OnExit()
     {
+        _boss.TargetFollow(_boss.Target, false);
     }
 
     public void Update()
@@ -189,10 +208,29 @@ public class Boss_Rampage_Attack_A_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger("Attack_A");
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudio_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudio_);
     }
 
     public void OnExit()
     {
+        _boss.TargetFollow(_boss.Target, false);
     }
 
     public void Update()
@@ -219,10 +257,29 @@ public class Boss_Rampage_Attack_B_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger("Attack_B");
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudio_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudio_);
     }
 
     public void OnExit()
     {
+        _boss.TargetFollow(_boss.Target, false);
     }
 
     public void Update()
@@ -249,10 +306,29 @@ public class Boss_Rampage_Attack_C_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
         _boss.SetTrigger("Attack_C");
+
+        int randNum_ = Random.Range(0, 3);
+
+        AudioClip attackAudio_ = default;
+        if (randNum_ == 0)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_1");
+        }
+        else if (randNum_ == 1)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_2");
+        }
+        else if (randNum_ == 2)
+        {
+            attackAudio_ = _boss.FindAudioClip("Attack_3");
+        }
+
+        _boss.SFX_Play(attackAudio_);
     }
 
     public void OnExit()
     {
+        _boss.TargetFollow(_boss.Target, false);
     }
 
     public void Update()
@@ -282,11 +358,24 @@ public class Boss_Rampage_Dodge_Start_State : IState
         _boss.SetTrigger("Dodge_Start");
 
         _boss.StartCoroutine(DodgeDelay());
+
+        int randNum_ = Random.Range(0, 2);
+
+        AudioClip dodgeAudio_ = default;
+        if (randNum_ == 0)
+        {
+            dodgeAudio_ = _boss.FindAudioClip("Dodge_1");
+        }
+        else if (randNum_ == 1)
+        {
+            dodgeAudio_ = _boss.FindAudioClip("Dodge_2");
+        }
+
+        _boss.SFX_Play(dodgeAudio_);
     }
 
     public void OnExit()
     {
-
     }
 
     public void Update()
@@ -382,6 +471,7 @@ public class Boss_Rampage_Dodge_End_State : IState
 
     public void OnExit()
     {
+        _boss.TargetFollow(_boss.Target, false);
     }
 
     public void Update()
@@ -393,90 +483,4 @@ public class Boss_Rampage_Dodge_End_State : IState
         }
     }
 }
-#endregion
-
-#region Lagacy Code
-// public class Boss_Rampage_Dodge_Left_State : IState
-// {
-//     private Boss_Rampage _boss;
-//     public Boss_Rampage_Dodge_Left_State(Boss_Rampage boss)
-//     {
-//         _boss = boss;
-//     }
-//     public void OnAction()
-//     {
-//     }
-
-//     public void OnEnter()
-//     {
-//     }
-
-//     public void OnExit()
-//     {
-//     }
-
-//     public void Update()
-//     {
-//     }
-// }
-
-// public class Boss_Rampage_Dodge_Right_State : IState
-// {
-//     private Boss_Rampage _boss;
-//     public Boss_Rampage_Dodge_Right_State(Boss_Rampage boss)
-//     {
-//         _boss = boss;
-//     }
-//     public void OnAction()
-//     {
-//     }
-
-//     public void OnEnter()
-//     {
-//     }
-
-//     public void OnExit()
-//     {
-//     }
-
-//     public void Update()
-//     {
-//     }
-// }
-
-// public class Boss_Rampage_Dodge_Back_State : IState
-// {
-//     private Boss_Rampage _boss;
-//     public Boss_Rampage_Dodge_Back_State(Boss_Rampage boss)
-//     {
-//         _boss = boss;
-//     }
-//     public void OnAction()
-//     {
-//     }
-
-//     public void OnEnter()
-//     {
-//         _boss.Dodge();
-//         _boss.SetTrigger("Dodge");
-//     }
-
-//     public void OnExit()
-//     {
-//     }
-
-//     public void Update()
-//     {
-//         // if (_boss.IsAnimationEnd("Dodge") && _boss.IsNavMeshRangeChecked(1f))
-//         // {
-//         //     _boss.DodgeComplete();
-//         //     _boss.SetState(new Boss_Thought_State(_boss));
-//         // }
-//         if (_boss.IsNavMeshRangeChecked(0.1f))
-//         {
-//             _boss.DodgeComplete();
-//             _boss.SetState(new Boss_Thought_State(_boss));
-//         }
-//     }
-// }
 #endregion

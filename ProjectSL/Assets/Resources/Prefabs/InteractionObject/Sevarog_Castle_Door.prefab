@@ -212,7 +212,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &9124670677547786159
 Transform:
@@ -248,9 +248,12 @@ MonoBehaviour:
   doors:
   - {fileID: 9124670676059474093}
   - {fileID: 9124670677107294754}
-  doorsRotation:
+  doorsOpenRotation:
   - {x: 0, y: -0.5, z: 0, w: 0.8660254}
   - {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  doorsCloseRotation:
+  - {x: 0, y: 0.08715574, z: 0, w: 0.9961947}
+  - {x: 0, y: 0.08715574, z: 0, w: 0.9961947}
   rotationSpeed: 1
   isDoorOpened: 0
 --- !u!135 &9124670677547786153
@@ -261,7 +264,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9124670677547786156}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 5

@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class QuickWarpPanel : MonoBehaviour
 {
-    public GameObject quickWarpPanel; // ºü¸¥ÀÌµ¿ ÆÐ³Î
-    public GameObject WarningPanel; // °æ°í ÆÐ³Î
-    [SerializeField] private Button selectBt; // ¼±ÅÃ¹öÆ°
-    [SerializeField] private Button cancleBt; // Ãë¼Ò¹öÆ°
+    public GameObject quickWarpPanel; // ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ð³ï¿½
+    public GameObject WarningPanel; // ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
+    [SerializeField] private Button selectBt; // ï¿½ï¿½ï¿½Ã¹ï¿½Æ°
+    [SerializeField] private Button cancleBt; // ï¿½ï¿½Ò¹ï¿½Æ°
 
     private void Start()
     {
-        // ¼±ÅÃ ¹öÆ°
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
         selectBt.onClick.AddListener(() =>
         {
             int soul = Inventory.Instance.Soul;
@@ -26,11 +26,11 @@ public class QuickWarpPanel : MonoBehaviour
                     break;
                 }
             }
-            GameManager.Instance.LoadBonfire(pontiffBonfire);
-            UiManager.Instance.quickBar.SetActive(false);
             gameObject.SetActive(false);
+            UiManager.Instance.quickBar.SetActive(false);
+            GameManager.Instance.LoadBonfire(pontiffBonfire);
         });
-        // Ãë¼Ò ¹öÆ°
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
         cancleBt.onClick.AddListener(() =>
         {
             gameObject.SetActive(false);

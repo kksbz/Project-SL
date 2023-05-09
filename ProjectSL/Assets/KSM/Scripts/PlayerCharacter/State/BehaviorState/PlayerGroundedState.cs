@@ -9,9 +9,14 @@ public class PlayerGroundedState : PlayerBaseState
         IsRootState = true;
         InitializeSubState();
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         //Debug.Log("Enter Grounded State");
+        if(prevState != null && prevState is PlayerBlockState)
+        {
+            Ctx.CombatController.GuardOnOffState();
+            Ctx.CombatController.GuardTransitionState();
+        }
     }
     public override void UpdateState()
     {
@@ -21,7 +26,7 @@ public class PlayerGroundedState : PlayerBaseState
     {
 
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         //Debug.Log("Exit Grounded State");
     }
@@ -35,7 +40,7 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Roll());
         }
-        else if (Ctx.IsGuardPressed && Ctx.EquipmentController.IsEquipShieldToLeftArm())
+        else if (Ctx.IsGuardPressed && Ctx.EquipmentController.IsAviliableGuard())
         {
             SwitchState(Factory.Guard());
         }
@@ -43,7 +48,7 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SwitchState(Factory.Hit());
         }
-        else if(Ctx.IsUseRecoveryItemPressed)
+        else if(Ctx.IsUseRecoveryItemPressed && Ctx.EquipmentController.IsUsableRecoveryConsumption())
         {
             SwitchState(Factory.UseItem());
         }

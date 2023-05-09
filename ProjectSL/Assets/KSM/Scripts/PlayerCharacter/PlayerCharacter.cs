@@ -151,6 +151,10 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     //! } �÷��̾� ������ ���̺� �� �ε��ϴ� �������̽��Լ�
     void GData.IDamageable.TakeDamage(GameObject damageCauser, float damage)
     {
+        if(UiInPutManager.Instance.isInvincibility == true)
+        {
+            return;
+        }
         _healthSystem.Damage(damage);
         string hitDir = GetHitAngle(_hitTR, damageCauser.transform);
         Debug.Log($"direction : {hitDir}");

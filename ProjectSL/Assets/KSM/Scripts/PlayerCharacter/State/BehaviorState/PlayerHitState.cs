@@ -8,11 +8,26 @@ public class PlayerHitState : PlayerBaseState
     {
         IsRootState = true;
     }
-    public override void EnterState()
+    public override void EnterState(PlayerBaseState prevState = null)
     {
         Debug.Log("Hit State Enter");
         Ctx.CharacterAnimator.applyRootMotion = true;
         Ctx.CombatController.Hit();
+
+        // 아이템 사용중 맞은경우에 무기, 소비아이템 숨김 체크해서 다시 보이게 하거나 숨기기
+        if(Ctx.EquipmentController.IsHideRightWeapon())
+        {
+            Ctx.EquipmentController.ShowRightWeapon();
+        }
+        if(Ctx.EquipmentController.IsHideLeftWeapon())
+        {
+            Ctx.EquipmentController.ShowLeftWeapon();
+        }
+        if(!Ctx.EquipmentController.IsHideRecoveryConsumption())
+        {
+            Ctx.EquipmentController.HideRecoveryConsumption();
+        }
+        
         Ctx.HitFlag = false;
     }
     public override void UpdateState()
@@ -23,7 +38,7 @@ public class PlayerHitState : PlayerBaseState
     {
 
     }
-    public override void ExitState()
+    public override void ExitState(PlayerBaseState nextState = null)
     {
         Debug.Log("Hit State Exit");
         Ctx.CharacterAnimator.applyRootMotion = false;

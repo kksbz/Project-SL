@@ -289,6 +289,74 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UiInput"",
+            ""id"": ""f5ad38c5-52aa-4631-8336-4615d7fc95c3"",
+            ""actions"": [
+                {
+                    ""name"": ""ESC"",
+                    ""type"": ""Button"",
+                    ""id"": ""30cdc3f4-a4f3-4917-bbd8-526bfd0ef961"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NUM0"",
+                    ""type"": ""Button"",
+                    ""id"": ""05030b8b-c250-48a3-b1be-f2c06a46a1ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NUM1"",
+                    ""type"": ""Button"",
+                    ""id"": ""2fe214b3-c326-4b4c-986f-443e33603c13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f2c8beb9-361b-4e30-a781-60fe182499d5"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ESC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""029946ea-61e2-4331-b091-a317432dd4ae"",
+                    ""path"": ""<Keyboard>/numpad0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NUM0"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba9dd932-70c3-45ad-9d56-74d6e2957c58"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NUM1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -320,6 +388,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerCharacterInput_Dodge = m_PlayerCharacterInput.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerCharacterInput_SwitchArm = m_PlayerCharacterInput.FindAction("SwitchArm", throwIfNotFound: true);
         m_PlayerCharacterInput_UseRecoveryItem = m_PlayerCharacterInput.FindAction("UseRecoveryItem", throwIfNotFound: true);
+        // UiInput
+        m_UiInput = asset.FindActionMap("UiInput", throwIfNotFound: true);
+        m_UiInput_ESC = m_UiInput.FindAction("ESC", throwIfNotFound: true);
+        m_UiInput_NUM0 = m_UiInput.FindAction("NUM0", throwIfNotFound: true);
+        m_UiInput_NUM1 = m_UiInput.FindAction("NUM1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -479,6 +552,68 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public PlayerCharacterInputActions @PlayerCharacterInput => new PlayerCharacterInputActions(this);
+
+    // UiInput
+    private readonly InputActionMap m_UiInput;
+    private List<IUiInputActions> m_UiInputActionsCallbackInterfaces = new List<IUiInputActions>();
+    private readonly InputAction m_UiInput_ESC;
+    private readonly InputAction m_UiInput_NUM0;
+    private readonly InputAction m_UiInput_NUM1;
+    public struct UiInputActions
+    {
+        private @PlayerInput m_Wrapper;
+        public UiInputActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ESC => m_Wrapper.m_UiInput_ESC;
+        public InputAction @NUM0 => m_Wrapper.m_UiInput_NUM0;
+        public InputAction @NUM1 => m_Wrapper.m_UiInput_NUM1;
+        public InputActionMap Get() { return m_Wrapper.m_UiInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UiInputActions set) { return set.Get(); }
+        public void AddCallbacks(IUiInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UiInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UiInputActionsCallbackInterfaces.Add(instance);
+            @ESC.started += instance.OnESC;
+            @ESC.performed += instance.OnESC;
+            @ESC.canceled += instance.OnESC;
+            @NUM0.started += instance.OnNUM0;
+            @NUM0.performed += instance.OnNUM0;
+            @NUM0.canceled += instance.OnNUM0;
+            @NUM1.started += instance.OnNUM1;
+            @NUM1.performed += instance.OnNUM1;
+            @NUM1.canceled += instance.OnNUM1;
+        }
+
+        private void UnregisterCallbacks(IUiInputActions instance)
+        {
+            @ESC.started -= instance.OnESC;
+            @ESC.performed -= instance.OnESC;
+            @ESC.canceled -= instance.OnESC;
+            @NUM0.started -= instance.OnNUM0;
+            @NUM0.performed -= instance.OnNUM0;
+            @NUM0.canceled -= instance.OnNUM0;
+            @NUM1.started -= instance.OnNUM1;
+            @NUM1.performed -= instance.OnNUM1;
+            @NUM1.canceled -= instance.OnNUM1;
+        }
+
+        public void RemoveCallbacks(IUiInputActions instance)
+        {
+            if (m_Wrapper.m_UiInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUiInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UiInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UiInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UiInputActions @UiInput => new UiInputActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -498,5 +633,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnSwitchArm(InputAction.CallbackContext context);
         void OnUseRecoveryItem(InputAction.CallbackContext context);
+    }
+    public interface IUiInputActions
+    {
+        void OnESC(InputAction.CallbackContext context);
+        void OnNUM0(InputAction.CallbackContext context);
+        void OnNUM1(InputAction.CallbackContext context);
     }
 }

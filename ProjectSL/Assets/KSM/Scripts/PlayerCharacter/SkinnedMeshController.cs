@@ -16,7 +16,24 @@ public class SkinnedMeshController : MonoBehaviour
     ModelChanger _gloveModelChanger;
     [SerializeField]
     ModelChanger _pantModelChanger;
-    
+
+    public ModelChanger HelmetModelChanger
+    {
+        get { return _helmetModelChanger; }
+    }
+    public ModelChanger ChestModelChanger
+    {
+        get { return _chestModelChanger; }
+    }
+    public ModelChanger GloveModelChanger
+    {
+        get { return _gloveModelChanger; }
+    }
+    public ModelChanger PantModelChanger
+    {
+        get { return _pantModelChanger; }
+    }
+
 
     private void Awake()
     {
@@ -26,6 +43,8 @@ public class SkinnedMeshController : MonoBehaviour
         _chestModelChanger = GetComponentInChildren<ChestModelChanger>();
         _gloveModelChanger = GetComponentInChildren<GloveModelChanger>();
         _pantModelChanger = GetComponentInChildren<PantModelChanger>();
+
+
     }
     // Start is called before the first frame update
     void Start()
@@ -34,42 +53,15 @@ public class SkinnedMeshController : MonoBehaviour
         AllUnEquipModels();
         StartCoroutine(DefaultEquipAfterOneFrame());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Equip();
-    }
-    // ÀÓ½Ã ÀåÂø?
-    IEnumerator DefaultEquipAfterOneFrame() // * ½ÃÀÛ ½Ã Àåºñ °Ë»ç ÈÄ ¸Â°Ô ¹Ù²ãÁÖ±â?
+    // ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½?
+    IEnumerator DefaultEquipAfterOneFrame() // * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½ï¿½ ï¿½Â°ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½?
     {
         yield return null;
-
-        _helmetModelChanger.EquipModelByName("NakedHead");
-        _chestModelChanger.EquipModelByName("NakedChest");
-        _gloveModelChanger.EquipModelByName("NakedHands");
-        _pantModelChanger.EquipModelByName("NakedPant");
+        Inventory.Instance._onEquipSlotUpdated();
+        Inventory.Instance._onEquipArmorUpdated();
         _mannequinMesh.enabled = false;
     }
-    void Equip()
-    {
-        if(Input.GetKeyDown(KeyCode.Keypad7))
-        {
-            _helmetModelChanger.EquipModelByName("Helmet_02");
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-        {
-            _chestModelChanger.EquipModelByName("Chest_02_Cloak");
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad9))
-        {
-            _gloveModelChanger.EquipModelByName("Glove_02");
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            _pantModelChanger.EquipModelByName("Pant_02");
-        }
-    }
+
     //
     void AllUnEquipModels()
     {
@@ -133,7 +125,7 @@ public class SkinnedMeshController : MonoBehaviour
         }
         */
         matchMesh.bones = bones;
-        
+
         //matchMesh.transform
         //_chestMesh.bones = 
         // _chestMesh.

@@ -18,10 +18,10 @@ public abstract class PlayerBaseState
         _factory = stateFactory;
     }
 
-    public abstract void EnterState();
+    public abstract void EnterState(PlayerBaseState prevState = null);
     public abstract void UpdateState();
     public abstract void FixedUpdateState();
-    public abstract void ExitState();
+    public abstract void ExitState(PlayerBaseState nextState = null);
     public abstract void CheckSwitchStates();
     public abstract void InitializeSubState();
 
@@ -43,9 +43,9 @@ public abstract class PlayerBaseState
     }
     protected void SwitchState(PlayerBaseState newState)
     {
-        ExitState();
+        ExitState(newState);
 
-        newState.EnterState();
+        newState.EnterState(this);
 
         if(_isRootState)
         {

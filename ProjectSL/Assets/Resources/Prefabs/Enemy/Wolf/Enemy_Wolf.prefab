@@ -533,6 +533,7 @@ Transform:
   m_Children:
   - {fileID: 1694343279452725971}
   - {fileID: 4517996471046498891}
+  - {fileID: 8885806744893697258}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -557,11 +558,11 @@ MonoBehaviour:
     currentMoveSpeed: 5
     maxAttackDamage: 4
     currentAttackDamage: 4
-    detectionRange: 30
+    detectionRange: 20
     attackRange: 1.5
     dodge_Percentage: 0
   researchStatus:
-    viewRadius: 30
+    viewRadius: 20
     viewAngle: 75
     targetLayerMask:
       serializedVersion: 2
@@ -569,6 +570,7 @@ MonoBehaviour:
     obstacleLayerMask:
       serializedVersion: 2
       m_Bits: 512
+    isNoPatrol: 0
   attackCollider:
   - {fileID: 8879821529787051606}
   currentState: 
@@ -636,7 +638,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 1000
   avoidancePriority: 50
   m_AngularSpeed: 240
   m_StoppingDistance: 0
@@ -659,7 +661,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -1330,6 +1332,37 @@ Transform:
   m_Father: {fileID: 1886960193985394314}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5585543574689151243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8885806744893697258}
+  m_Layer: 0
+  m_Name: LockOnTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8885806744893697258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585543574689151243}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2175354548720861022}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5588846361173254175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1883,7 +1916,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1674773400735665543
 PrefabInstance:

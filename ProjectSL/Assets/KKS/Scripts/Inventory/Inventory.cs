@@ -10,29 +10,29 @@ public class Inventory : Singleton<Inventory>
 {
     private int invenCount = 52;
     public GameObject invenObj;
-    public GameObject equipSlotPrefab; // Àåºñ½½·Ô ÇÁ¸®ÆÕ
-    public GameObject totalSlotPrefab; // ÅëÇÕÀÎº¥ ½½·Ô ÇÁ¸®ÆÕ
-    public GameObject equipSlotPanel; // Àåºñ½½·Ô ÆÐ³Î
-    public GameObject equipInvenPanel; // ÀåºñÀÎº¥Åä¸® ÆÐ³Î
-    public GameObject totalInvenPanel; // ÅëÇÕÀÎº¥ ÆÐ³Î
-    public Image equipInvenImage; // ÀåºñÀÎº¥Åä¸® ÆÐ³Î »ó´Ü ÀÌ¹ÌÁö
-    public ItemDescriptionPanel descriptionPanel; // ¾ÆÀÌÅÛ ¼³¸í ÆÐ³Î
-    public SelectPanel selectPanel; // ¼±ÅÃÃ¢ ÆÐ³Î
-    public Image topImage; // »ó´ÜÆÐ³Î ÀÌ¹ÌÁö
-    public TMP_Text topText; // »ó´ÜÆÐ³Î ÅØ½ºÆ®
-    public TMP_Text possessionSoul; // »ó´ÜÆÐ³Î º¸À¯¼Ò¿ï
-    public GameObject goBack; // ¹ÙÅÒ µÚ·Î°¡±âÆÐ³Î
+    public GameObject equipSlotPrefab; // ï¿½ï¿½ñ½½·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject totalSlotPrefab; // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public GameObject equipSlotPanel; // ï¿½ï¿½ñ½½·ï¿½ ï¿½Ð³ï¿½
+    public GameObject equipInvenPanel; // ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ä¸® ï¿½Ð³ï¿½
+    public GameObject totalInvenPanel; // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½Ð³ï¿½
+    public Image equipInvenImage; // ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ä¸® ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    public ItemDescriptionPanel descriptionPanel; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
+    public SelectPanel selectPanel; // ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½Ð³ï¿½
+    public Image topImage; // ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+    public TMP_Text topText; // ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ ï¿½Ø½ï¿½Æ®
+    public TMP_Text possessionSoul; // ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½
+    public GameObject goBack; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·Î°ï¿½ï¿½ï¿½ï¿½Ð³ï¿½
 
-    public List<WeaponSlot> weaponSlotList; // ¹«±â,¹æÆÐ ÀåÂø½½·Ô ¸®½ºÆ®
-    public List<ArmorSlot> armorSlotList; // ¹æ¾î±¸ ÀåÂø½½·Ô ¸®½ºÆ®
-    public List<ConsumptionSlot> consumptionSlotList; // ¼Ò¸ðÇ° ÀåÂø½½·Ô ¸®½ºÆ®
+    public List<WeaponSlot> weaponSlotList; // ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    public List<ArmorSlot> armorSlotList; // ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    public List<ConsumptionSlot> consumptionSlotList; // ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 
-    public List<ItemData> inventory = new List<ItemData>(); // ÀÎº¥Åä¸®
-    public List<EquipSlot> equipSlots = new List<EquipSlot>(); // ÀåºñÀÎº¥ ½½·Ô
-    public List<Slot> totalSlots = new List<Slot>(); // ÀåºñÀÎº¥ ½½·Ô
-    public IPublicSlot selectSlot; // ¼±ÅÃÇÑ ½½·Ô ´ãÀ» º¯¼ö
+    public List<ItemData> inventory = new List<ItemData>(); // ï¿½Îºï¿½ï¿½ä¸®
+    public List<EquipSlot> equipSlots = new List<EquipSlot>(); // ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½
+    public List<Slot> totalSlots = new List<Slot>(); // ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½
+    public IPublicSlot selectSlot; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public EquipInvenController equipInvenController;
-    [SerializeField] private int soul; // º¸À¯¼Ò¿ï
+    [SerializeField] private int soul; // ï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½
     public int Soul
     {
         get { return soul; }
@@ -45,29 +45,18 @@ public class Inventory : Singleton<Inventory>
     //
     public delegate void EventHandler();
     public EventHandler _onEquipSlotUpdated;
+    public EventHandler _onEquipArmorUpdated;
 
     public override void InitManager()
-    {
-        
-    }
-
-    private void Awake()
     {
         InitSlot();
         Soul = 0;
         _onEquipSlotUpdated = new EventHandler(() => Debug.Log("Equipment Updated"));
+        _onEquipArmorUpdated = new EventHandler(() => Debug.Log("Armor Updated"));
     }
     //
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            UiManager.Instance.soulBag.GetSoul(5000);
-        }
-    } // Update
-
-    //! ½½·Ô ÃÊ±âÈ­
+    //! ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
     public void InitSlot()
     {
         for (int i = 0; i < weaponSlotList.Count; i++)
@@ -87,11 +76,11 @@ public class Inventory : Singleton<Inventory>
 
         for (int i = 0; i < invenCount; i++)
         {
-            // ÀåºñÀÎº¥ ½½·Ô ¼¼ÆÃ
+            // ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject slot = Instantiate(equipSlotPrefab);
             EquipSlot equipSlot = slot.GetComponent<EquipSlot>();
             slot.transform.SetParent(equipInvenPanel.transform.Find("Scroll View/Viewport/Content").transform);
-            // ÅëÇÕÀÎº¥ ½½·Ô ¼¼ÆÃ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             GameObject tSlot = Instantiate(totalSlotPrefab);
             Slot totalSlot = tSlot.GetComponent<Slot>();
             tSlot.transform.SetParent(totalInvenPanel.transform.Find("Scroll View/Viewport/Content").transform);
@@ -103,42 +92,42 @@ public class Inventory : Singleton<Inventory>
         }
     } // InitSlot
 
-    //! ÀÎº¥Åä¸®¿¡ ¾ÆÀÌÅÛ Ãß°¡ÇÏ´Â ÇÔ¼ö
+    //! ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void AddItem(ItemData item)
     {
         ItemData itemData = null;
         foreach (string[] _itemData in DataManager.Instance.itemDatas)
         {
-            // ¾ÆÀÌÅÛµ¥ÀÌÅÍ Å×ÀÌºí¿¡¼­ ÀÔ·Â¹ÞÀº IDÀÇ ¾ÆÀÌÅÛµ¥ÀÌÅÍ¸¦ °¡Á®¿È
+            // ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â¹ï¿½ï¿½ï¿½ IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (int.Parse(_itemData[0]) == item.itemID)
             {
                 itemData = new ItemData(_itemData);
             }
         }
-        //Debug.Log($"ÀÎº¥¿¡ ³Ö±â Àü È¹µæÇÑ ¾ÆÀÌÅÛ : {itemData.itemName}");
+        //Debug.Log($"ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : {itemData.itemName}");
 
-        // ÀÎº¥Åä¸®¿¡ °°Àº ¾ÆÀÌÅÛÀÌ ÀÖ´ÂÁö Ã¼Å©
+        // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
         foreach (ItemData _item in inventory)
         {
             if (_item != null)
             {
                 if (_item.itemID == item.itemID)
                 {
-                    // °°Àº ¾ÆÀÌÅÛÀÌ ÀÖ°í º¸À¯¼ö·®ÀÌ ÃÖ´ë¼ö·®º¸´Ù ÀÛÀ» ¶§
+                    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                     if (_item.Quantity < itemData.maxQuantity)
                     {
-                        // ¾ÆÀÌÅÛÀÇ º¸À¯¼ö·®°ú È¹µæÇÑ ¾ÆÀÌÅÛÀÇ º¸À¯¼ö·®ÀÇ ÇÕÀÌ ÃÖ´ëº¸À¯¼ö·® À» ÃÊ°úÇÒ ¶§
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ëº¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ ï¿½ï¿½
                         if ((_item.Quantity + item.Quantity) > itemData.maxQuantity)
                         {
-                            // ÃÖ´ëº¸À¯¼ö·®À¸·Î ³ª´« ³ª¸ÓÁö°ªÀ» ±¸ÇÔ
+                            // ï¿½Ö´ëº¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             int remainQuantity = (_item.Quantity + item.Quantity) % itemData.maxQuantity;
-                            // ¾ÆÀÌÅÛÀÇ º¸À¯¼ö·®À» ÃÖ´ë¼ö·®À¸·Î Àû¿ë
+                            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             _item.Quantity = itemData.maxQuantity;
                             for (int i = 0; i < inventory.Count; i++)
                             {
                                 if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
                                 {
-                                    // »õ·Î¿î ¾ÆÀÌÅÛÀÇ º¸À¯¼ö·®À» ±¸ÇÑ ³ª¸ÓÁö°ªÀ¸·Î Àû¿ëÇÑ ÈÄ ÀÎº¥Åä¸®¿¡ ³ÖÀ½
+                                    // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                     itemData.Quantity = remainQuantity;
                                     inventory[i] = itemData;
                                     break;
@@ -160,7 +149,7 @@ public class Inventory : Singleton<Inventory>
             }
         }
 
-        // ÀÎº¥Åä¸®¿¡ °°Àº ¾ÆÀÌÅÛÀÌ ¾øÀ» °æ¿ì
+        // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         for (int i = 0; i < inventory.Count; i++)
         {
             if (inventory[i] == null || inventory[i].itemType.Equals(ItemType.NONE))
@@ -168,19 +157,19 @@ public class Inventory : Singleton<Inventory>
                 itemData.Quantity = item.Quantity;
                 itemData.IsEquip = item.IsEquip;
                 inventory[i] = itemData;
-                //Debug.Log($"ÀÎº¥Åä¸® ºó ½½·Ô¿¡ Ãß°¡µÈ ¾ÆÀÌÅÛ : {inventory[i].itemName}");
+                //Debug.Log($"ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : {inventory[i].itemName}");
                 InitSlotItemData();
                 return;
             }
         }
-        // ÀÎº¥Åä¸®°¡ ²ËÂù °æ¿ì »õ·Î¿î ½½·Ô Ãß°¡
-        // ÀåºñÀÎº¥ ½½·Ô Ãß°¡
+        // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        // ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         GameObject slot = Instantiate(equipSlotPrefab);
         EquipSlot equipSlot = slot.GetComponent<EquipSlot>();
         slot.transform.parent = equipInvenPanel.transform.Find("Scroll View/Viewport/Content").transform;
         equipSlot.Item = null;
         equipSlots.Add(equipSlot);
-        // ÅëÇÕÀÎº¥ ½½·Ô Ãß°¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         GameObject tSlot = Instantiate(totalSlotPrefab);
         Slot totalSlot = tSlot.GetComponent<Slot>();
         tSlot.transform.parent = totalInvenPanel.transform.Find("Scroll View/Viewport/Content").transform;
@@ -190,14 +179,14 @@ public class Inventory : Singleton<Inventory>
         InitSlotItemData();
     } // AddItem
 
-    //! ¾ÆÀÌÅÛ ¹ö¸®´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public void ThrowItem(ItemData itemData)
     {
         for (int i = 0; i < inventory.Count; i++)
         {
             if (inventory[i] == itemData)
             {
-                // ¹ö¸®´Â ¾ÆÀÌÅÛÀÇ ÇÁ¸®ÆÕÀ» ÀÎ½ºÅÏ½ºÇÏ°í ¾ÆÀÌÅÛµ¥ÀÌÅÍ ´ëÀÔ
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemData.itemID}"));
                 item.transform.position = GameManager.Instance.player.gameObject.transform.position + (Vector3.up * 0.3f);
                 item.GetComponent<Item>().itemData = itemData;
@@ -207,7 +196,7 @@ public class Inventory : Singleton<Inventory>
         }
     } // ThrowItem
 
-    //! ¾ÆÀÌÅÛ ÆÄ±«ÇÏ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void RemoveItem(ItemData itemData)
     {
         for (int i = 0; i < inventory.Count; i++)
@@ -220,13 +209,13 @@ public class Inventory : Singleton<Inventory>
         }
     } // RemoveItem
 
-    //! Á¤ÇØÁø itemTypeÀ» ÀåºñÇØ¾ßÇÏ´Â ½½·ÔÀÏ °æ¿ì ÀåºñÀÎº¥½½·Ô¿¡ °°Àº itemTypeÀÎ ¾ÆÀÌÅÛ¸¸ º¸¿©ÁÖ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ itemTypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ itemTypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     public void InitSameTypeEquipSlot(ItemType _itemType)
     {
         List<ItemData> sameTypes = new List<ItemData>();
         foreach (ItemData _item in inventory)
         {
-            // °°Àº Å¸ÀÔÀÇ ¾ÆÀÌÅÛ¸¸ µû·Î Ä³½Ì
+            // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½
             if (_itemType == ItemType.WEAPON || _itemType == ItemType.SHIELD)
             {
                 if (_item != null && (_item.itemType == ItemType.WEAPON || _item.itemType == ItemType.SHIELD))
@@ -240,15 +229,15 @@ public class Inventory : Singleton<Inventory>
             }
         }
 
-        // itemID ±âÁØÀ¸·Î ¿À¸§Â÷¼ø Á¤·Ä
+        // itemID ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         sameTypes = sameTypes.OrderBy(x => x.itemID).ToList();
         for (int i = 0; i < equipSlots.Count; i++)
         {
             if (i < sameTypes.Count)
             {
-                // Ä³½ÌÇØµÐ °°Àº Å¸ÀÔÀÇ ¾ÆÀÌÅÛÀ» ½½·Ô¿¡ Ç¥½Ã
+                // Ä³ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ Ç¥ï¿½ï¿½
                 equipSlots[i].Item = sameTypes[i];
-                // ¼¼ÀÌºê µ¥ÀÌÅÍ ·Îµå ½Ã Àåºñ½½·Ô°ú ÀåÂø½½·Ô ¿¬µ¿ Ã³¸®
+                // ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½ñ½½·Ô°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 if (equipSlots[i].Item.IsEquip == true)
                 {
                     switch (equipSlots[i].Item.itemType)
@@ -256,14 +245,14 @@ public class Inventory : Singleton<Inventory>
                         case ItemType.WEAPON:
                             for (int j = 0; j < weaponSlotList.Count; j++)
                             {
-                                // ¹«±â½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÒ °æ¿ì
+                                // ï¿½ï¿½ï¿½â½½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                                 if (weaponSlotList[j].Item != null)
                                 {
-                                    // ¹«±â½½·ÔÀÇ ¾ÆÀÌÅÛ°ú ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ °°°í ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÏ ¶§
+                                    // ï¿½ï¿½ï¿½â½½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                                     if (weaponSlotList[j].Item.itemID == equipSlots[i].Item.itemID
                                         && equipSlots[i].Item.IsEquip == true)
                                     {
-                                        // ½½·Ô ¿¬µ¿
+                                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                         equipSlots[i].equipSlot = weaponSlotList[j];
                                         weaponSlotList[j].Item = equipSlots[i].Item;
                                     }
@@ -273,14 +262,14 @@ public class Inventory : Singleton<Inventory>
                         case ItemType.SHIELD:
                             for (int j = 0; j < weaponSlotList.Count; j++)
                             {
-                                // ¹«±â½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÒ °æ¿ì
+                                // ï¿½ï¿½ï¿½â½½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                                 if (weaponSlotList[j].Item != null)
                                 {
-                                    // ¹«±â½½·ÔÀÇ ¾ÆÀÌÅÛ°ú ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ °°°í ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÏ ¶§
+                                    // ï¿½ï¿½ï¿½â½½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                                     if (weaponSlotList[j].Item.itemID == equipSlots[i].Item.itemID
                                         && equipSlots[i].Item.IsEquip == true)
                                     {
-                                        // ½½·Ô ¿¬µ¿
+                                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                         equipSlots[i].equipSlot = weaponSlotList[j];
                                         weaponSlotList[j].Item = equipSlots[i].Item;
                                     }
@@ -290,15 +279,15 @@ public class Inventory : Singleton<Inventory>
                         case ItemType.ATTACK_CONSUMPTION:
                             for (int j = 0; j < 3; j++)
                             {
-                                // ¼Ò¸ðÇ°½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÒ °æ¿ì
+                                // ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                                 if (consumptionSlotList[j].Item != null)
                                 {
-                                    // ¼Ò¸ðÇ°½½·ÔÀÇ ¾ÆÀÌÅÛ°ú ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ °°°í ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÏ ¶§
+                                    // ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                                     if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
                                         && equipSlots[i].Item.IsEquip == true
                                         && consumptionSlotList[j].Item.Quantity == equipSlots[i].Item.Quantity)
                                     {
-                                        // ½½·Ô ¿¬µ¿
+                                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
                                         consumptionSlotList[j].Item = equipSlots[i].Item;
                                     }
@@ -308,15 +297,15 @@ public class Inventory : Singleton<Inventory>
                         case ItemType.RECOVERY_CONSUMPTION:
                             for (int j = 3; j < consumptionSlotList.Count; j++)
                             {
-                                // ¼Ò¸ðÇ°½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÒ °æ¿ì
+                                // ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                                 if (consumptionSlotList[j].Item != null)
                                 {
-                                    // ¼Ò¸ðÇ°½½·ÔÀÇ ¾ÆÀÌÅÛ°ú ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ °°°í ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÏ ¶§
+                                    // ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                                     if (consumptionSlotList[j].Item.itemID == equipSlots[i].Item.itemID
                                         && equipSlots[i].Item.IsEquip == true
                                         && consumptionSlotList[j].Item.Quantity == equipSlots[i].Item.Quantity)
                                     {
-                                        // ½½·Ô ¿¬µ¿
+                                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                         equipSlots[i].equipSlot = consumptionSlotList[j];
                                         consumptionSlotList[j].Item = equipSlots[i].Item;
                                     }
@@ -326,42 +315,43 @@ public class Inventory : Singleton<Inventory>
                         default:
                             for (int j = 0; j < armorSlotList.Count; j++)
                             {
-                                // ¹æ¾î±¸½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ Á¸ÀçÇÒ °æ¿ì
+                                // ï¿½ï¿½î±¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                                 if (armorSlotList[j].Item != null)
                                 {
-                                    // ¹æ¾î±¸½½·ÔÀÇ ¾ÆÀÌÅÛ°ú ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ °°°í ÀåÂø½½·ÔÀÇ ¾ÆÀÌÅÛÀÌ ÀåÂø ÁßÀÏ ¶§
+                                    // ï¿½ï¿½î±¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                                     if (armorSlotList[j].Item.itemID == equipSlots[i].Item.itemID
                                         && equipSlots[i].Item.IsEquip == true)
                                     {
-                                        // ½½·Ô ¿¬µ¿
+                                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                                         equipSlots[i].equipSlot = armorSlotList[j];
                                         armorSlotList[j].Item = equipSlots[i].Item;
                                     }
                                 }
                             }
+                            _onEquipArmorUpdated();
                             break;
                     } // switch
                 }
             }
             else
             {
-                // ºó°÷ Ç¥½Ã¸¦ À§ÇÑ null°ª
+                // ï¿½ï¿½ï¿½ Ç¥ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½
                 equipSlots[i].Item = null;
             }
         }
     } // InitEquipInven
 
-    //! ¼±ÅÃÇÑ itemTypeÀÎ ¾ÆÀÌÅÛ¸¸ ÅëÇÕÀÎº¥¿¡ º¸¿©ÁÖ´Â ÇÔ¼ö
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ itemTypeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
     public void InitSameTypeTotalSlot(ItemType _itemType)
     {
-        // NONEÀÌ¸é ¸ðµçÅ¸ÀÔÀÇ ¾ÆÀÌÅÛÀ» º¸¿©ÁÜ
+        // NONEï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (_itemType == ItemType.NONE)
         {
-            // ±âÁ¸ ÀÎº¥Åä¸® Å©±â Ä³½Ì
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® Å©ï¿½ï¿½ Ä³ï¿½ï¿½
             int num = inventory.Count;
-            // ÀÎº¥Åä¸®°¡ ºñ¾îÀÖÁö ¾ÊÀ» °æ¿ì¸¸ itemID ¼øÀ¸·Î Á¤·Ä
+            // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¸¸ itemID ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             inventory = inventory.Where(x => x != null).OrderBy(x => x.itemID).ToList();
-            // nullÀ» Á¦¿ÜÇÑ ¾ÆÀÌÅÛÀ¸·Î Á¤·ÄÇß±â ¶§¹®¿¡ ÀÎº¥ÀÇ Å©±â°¡ º¯°æµÊ => ±âÁ¸ Å©±â¸¸Å­ ³ª¸ÓÁö null·Î Ã¤¿ò
+            // nullï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ Å©ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¸Å­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½ Ã¤ï¿½ï¿½
             for (int i = inventory.Count; i < num; i++)
             {
                 inventory.Add(null);
@@ -371,12 +361,12 @@ public class Inventory : Singleton<Inventory>
             {
                 if (inventory[i] != null)
                 {
-                    // ÀÎº¥Åä¸® ¾ÆÀÌÅÛÀ» ½½·Ô¿¡ Ç¥½Ã
+                    // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ Ç¥ï¿½ï¿½
                     totalSlots[i].Item = inventory[i];
                 }
                 else
                 {
-                    // ºó°÷ Ç¥½Ã¸¦ À§ÇÑ null°ª
+                    // ï¿½ï¿½ï¿½ Ç¥ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½
                     totalSlots[i].Item = null;
                 }
             }
@@ -386,32 +376,32 @@ public class Inventory : Singleton<Inventory>
         List<ItemData> sameTypes = new List<ItemData>();
         foreach (ItemData _item in inventory)
         {
-            // °°Àº Å¸ÀÔÀÇ ¾ÆÀÌÅÛ¸¸ µû·Î Ä³½Ì
+            // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½
             if (_item != null && _item.itemType == _itemType)
             {
                 sameTypes.Add(_item);
             }
         }
         //Debug.Log($"{sameTypes.Count}");
-        // itemID ±âÁØÀ¸·Î ¿À¸§Â÷¼ø Á¤·Ä
+        // itemID ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         sameTypes = sameTypes.OrderBy(x => x.itemID).ToList();
         for (int i = 0; i < totalSlots.Count; i++)
         {
             if (i < sameTypes.Count)
             {
-                // Ä³½ÌÇØµÐ °°Àº Å¸ÀÔÀÇ ¾ÆÀÌÅÛÀ» ½½·Ô¿¡ Ç¥½Ã
+                // Ä³ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ Ç¥ï¿½ï¿½
                 totalSlots[i].Item = sameTypes[i];
             }
             else
             {
-                // ºó°÷ Ç¥½Ã¸¦ À§ÇÑ null°ª
+                // ï¿½ï¿½ï¿½ Ç¥ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½
                 totalSlots[i].Item = null;
             }
         }
     } // InitSameTypeTotalSlot
 
-    //! ÀåÂø½½·Ô µ¥ÀÌÅÍ ÃÊ±âÈ­ ÇÔ¼ö
-    private void InitSlotItemData()
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Ô¼ï¿½
+    public void InitSlotItemData()
     {
         for (int i = 0; i < inventory.Count; i++)
         {
