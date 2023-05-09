@@ -8,6 +8,8 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
 {
     public static PlayerCharacter Instance { get { return instance; } }
 
+    public Rigidbody rigidBody { get; private set; }
+
     public CharacterController characterController { get; private set; }
     public PlayerController playerController { get; private set; }
     public CameraController cameraController { get; private set; }
@@ -45,6 +47,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         {
             instance = this;
             _healthSystem = new HealthSystem(this);
+            rigidBody = GetComponent<Rigidbody>();
             characterController = GetComponent<CharacterController>();
             playerController = GetComponent<PlayerController>();
             cameraController = GetComponent<CameraController>();
@@ -128,7 +131,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     */
     IEnumerator TestStatInit()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         StatInitialize();
     }
     public void StatInitialize()

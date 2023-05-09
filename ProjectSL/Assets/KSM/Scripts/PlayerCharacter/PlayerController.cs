@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
             else if(cameraController.CameraState == ECameraState.LOCKON)
                 characterBody.forward = cameraController.cameraArm.forward;
 
-            nextMove = new Move(characterController, moveDir, tempMoveSpeed);
+            nextMove = new Move(GetComponent<Rigidbody>(), moveDir, tempMoveSpeed);
         }
         else 
         {

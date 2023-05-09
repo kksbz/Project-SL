@@ -5,9 +5,9 @@ using UnityEngine;
 public class Move : Behavior
 {
     
-    public Move(CharacterController controller, Vector3 moveDirection, float moveSpeed)
+    public Move(Rigidbody rigidbody, Vector3 moveDirection, float moveSpeed)
     {
-        this.controller = controller;
+        this.rigidbody = rigidbody;
         this.moveDirection = moveDirection;
         this.moveSpeed = moveSpeed;
     }
@@ -15,7 +15,10 @@ public class Move : Behavior
     {
         // base.Execute();
         // Debug.Log($"moveDirection : {moveDirection}");
-        controller.SimpleMove(moveDirection * moveSpeed);
+        rigidbody.velocity = moveDirection * moveSpeed;
+        // rigidbody.MovePosition((moveDirection * moveSpeed).normalized);
+        // rigidbody.AddForce(moveDirection);
+        //controller.SimpleMove(moveDirection * moveSpeed);
     }
     public override void Undo()
     {

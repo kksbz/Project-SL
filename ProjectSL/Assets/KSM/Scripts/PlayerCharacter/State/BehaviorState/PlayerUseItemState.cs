@@ -18,7 +18,7 @@ public class PlayerUseItemState : PlayerBaseState
         if(Ctx.PlayerController.ItemAction_Recovery._isWalkable && Ctx.IsMovementPressed)
         {
             Ctx.SetMoveDirection();
-            Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 2f);
+            Move nextMove = new Move(Ctx.Rigidbody, Ctx.AppliedMovement, 2f);
             Ctx.NextBehavior = nextMove;
         }
     }

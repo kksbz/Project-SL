@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerStateMachine : MonoBehaviour
 {
+    Rigidbody _rigidbody;
     CharacterController _characterController;
     Animator _animator;
     [SerializeField]
@@ -71,6 +72,7 @@ public class PlayerStateMachine : MonoBehaviour
     // getter and setter
     public PlayerCharacter PlayerCharacter { get { return _playerCharacter; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
+    public Rigidbody Rigidbody { get { return _rigidbody; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerController PlayerController { get { return _playerController; } }
     public AnimationController AnimationController { get { return _animationController; } }
@@ -104,6 +106,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         // ��ǲ, ������Ʈ �ʱ�ȭ
         _playerInput = new PlayerInput();
+        _rigidbody = GetComponent<Rigidbody>();
         _characterController = GetComponent<CharacterController>();
         _characterBody = gameObject.FindChildObj("Mesh").transform;
         _animator = _characterBody.gameObject.GetComponent<Animator>();

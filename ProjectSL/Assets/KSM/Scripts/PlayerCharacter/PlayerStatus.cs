@@ -39,6 +39,14 @@ public class PlayerStatus
         _vitality = 10;
         _strength = 10;
         _dexterity = 10;
+
+        _applied_Vigor= 10;
+        _applied_Attunement= 10;
+        _applied_Endurance= 10;
+        _applied_Vitality= 10;
+        _applied_Strength= 10;
+        _applied_Dexterity= 10;
+
         InitializeAdderValue();
     }
     public void AdderEquipmentValueInit(EquipmentController equipmentController)

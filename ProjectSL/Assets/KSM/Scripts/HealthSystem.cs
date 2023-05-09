@@ -197,15 +197,15 @@ public class HealthSystem
         // Set Max Health Value
         // #1 Set Health Base PlayerStatus
         // 메인 코드
-        /*
+        
         float psHealthPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedVigor].hp;
         float psManaPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedAttunement].mp;
         float psStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedEndurance].st;
-        */
+        
         // 임시 코드
-        float psHealthPoint = DataManager.Instance.statusLevelData[playerStatus.Vigor].hp;
-        float psManaPoint = DataManager.Instance.statusLevelData[playerStatus.Attunement].mp;
-        float psStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.Endurance].st;
+        //float psHealthPoint = DataManager.Instance.statusLevelData[playerStatus.Vigor].hp;
+        //float psManaPoint = DataManager.Instance.statusLevelData[playerStatus.Attunement].mp;
+        //float psStaminaPoint = DataManager.Instance.statusLevelData[playerStatus.Endurance].st;
 
         // #2 Set Health Base Equipment(Ring)
         float[] eqHealthList = new float[3];

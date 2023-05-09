@@ -7,6 +7,8 @@ public class PCAnimationEvents : MonoBehaviour
     [SerializeField]
     private CombatController _combatController;
     [SerializeField]
+    private Rigidbody _rigidbody;
+    [SerializeField]
     private CharacterController _characterController;
     [SerializeField]
     private PlayerController _playerController;
@@ -21,6 +23,7 @@ public class PCAnimationEvents : MonoBehaviour
     {
         //_animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
         _animator = GetComponent<Animator>();
+        _rigidbody = transform.parent.gameObject.GetComponent<Rigidbody>();
         _playerController = transform.parent.gameObject.GetComponent<PlayerController>();
         _playerStateMachine = transform.parent.gameObject.GetComponent<PlayerStateMachine>();
     }
@@ -38,7 +41,8 @@ public class PCAnimationEvents : MonoBehaviour
         Vector3 deltaPosition = _animator.deltaPosition;
         deltaPosition.y = 0f;
         Vector3 velocity = deltaPosition / delta;
-        _characterController.SimpleMove(velocity);
+        _rigidbody.velocity = velocity;
+        //_characterController.SimpleMove(velocity);
     }
     public void OnSetCanNextCombo()
     {
