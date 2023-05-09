@@ -299,6 +299,7 @@ public class Boss_Sevarog_Subjugation_State : IState
 public class Boss_Sevarog_Enrage_State : IState
 {
     private Boss_Sevarog _boss;
+    private IEnumerator _coroutine;
     public Boss_Sevarog_Enrage_State(Boss_Sevarog newBoss)
     {
         _boss = newBoss;
@@ -308,7 +309,8 @@ public class Boss_Sevarog_Enrage_State : IState
         _boss.SetStop(true);
 
         _boss.SetTrigger(EnemyDefineData.TRIGGER_ATTACK);
-        _boss.StartCoroutine(AnimationDelay());
+        _coroutine = AnimationDelay();
+        _boss.StartCoroutine(_coroutine);
 
 
 
@@ -322,6 +324,7 @@ public class Boss_Sevarog_Enrage_State : IState
     public void OnExit()
     {
         _boss.SetStop(false);
+        _boss.StopCoroutine(_coroutine);
     }
 
     public void Update()
@@ -346,6 +349,7 @@ public class Boss_Sevarog_Enrage_State : IState
 public class Boss_Sevarog_EnemySpawn_State : IState
 {
     private Boss_Sevarog _boss;
+    private IEnumerator _coroutine;
     public Boss_Sevarog_EnemySpawn_State(Boss_Sevarog newBoss)
     {
         _boss = newBoss;
@@ -359,11 +363,13 @@ public class Boss_Sevarog_EnemySpawn_State : IState
 
         _boss.SFX_Play(attackAudioClip_);
 
-        _boss.StartCoroutine(SpawnDelay());
+        _coroutine = SpawnDelay();
+        _boss.StartCoroutine(_coroutine);
     }
 
     public void OnExit()
     {
+        _boss.StopCoroutine(_coroutine);
     }
 
     public void Update()

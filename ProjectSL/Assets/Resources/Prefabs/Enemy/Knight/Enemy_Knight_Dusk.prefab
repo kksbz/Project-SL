@@ -58,15 +58,15 @@ MonoBehaviour:
   status:
     name: Knight_Dusk
     info: Kinght_Dusk
-    maxHp: 700
-    currentHp: 700
+    maxHp: 1300
+    currentHp: 1300
     maxMoveSpeed: 5
     currentMoveSpeed: 5
-    maxAttackDamage: 8
-    currentAttackDamage: 8
+    maxAttackDamage: 80
+    currentAttackDamage: 80
     detectionRange: 30
     attackRange: 1.5
-    dodge_Percentage: 0
+    dodge_Percentage: 0.1
   researchStatus:
     viewRadius: 30
     viewAngle: 360
@@ -108,7 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0900d80152ea2a0429d248a1d6b351af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPointsInspector: []
+  patrolPointsInspector:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &796338785868428892
 MonoBehaviour:
   m_ObjectHideFlags: 0

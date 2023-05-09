@@ -552,15 +552,15 @@ MonoBehaviour:
   status:
     name: Wolf
     info: Wolf
-    maxHp: 50
-    currentHp: 50
+    maxHp: 800
+    currentHp: 800
     maxMoveSpeed: 5
     currentMoveSpeed: 5
-    maxAttackDamage: 4
-    currentAttackDamage: 4
+    maxAttackDamage: 80
+    currentAttackDamage: 80
     detectionRange: 20
     attackRange: 1.5
-    dodge_Percentage: 0
+    dodge_Percentage: 0.1
   researchStatus:
     viewRadius: 20
     viewAngle: 75

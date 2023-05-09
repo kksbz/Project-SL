@@ -2165,15 +2165,15 @@ MonoBehaviour:
   status:
     name: Knight_Dawn
     info: Kinght_Dawn
-    maxHp: 700
-    currentHp: 700
+    maxHp: 1100
+    currentHp: 1100
     maxMoveSpeed: 5
     currentMoveSpeed: 5
-    maxAttackDamage: 8
-    currentAttackDamage: 8
+    maxAttackDamage: 100
+    currentAttackDamage: 100
     detectionRange: 30
     attackRange: 1.5
-    dodge_Percentage: 0
+    dodge_Percentage: 0.1
   researchStatus:
     viewRadius: 30
     viewAngle: 360

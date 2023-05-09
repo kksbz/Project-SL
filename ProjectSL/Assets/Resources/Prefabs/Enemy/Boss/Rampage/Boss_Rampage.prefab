@@ -1459,12 +1459,12 @@ MonoBehaviour:
   status:
     name: Rampage
     info: Rampage Deep Sea King
-    maxHp: 1000
-    currentHp: 1000
+    maxHp: 2500
+    currentHp: 2500
     maxMoveSpeed: 5
     currentMoveSpeed: 5
-    maxAttackDamage: 5
-    currentAttackDamage: 5
+    maxAttackDamage: 130
+    currentAttackDamage: 130
     detectionRange: 50
     attackRange: 5
     dodge_Percentage: 0
@@ -1583,7 +1583,7 @@ MonoBehaviour:
   sfxList:
   - SFX_Name: Intro
     SFX_AudioClip: {fileID: 8300000, guid: b0f8602cfdc12724eab4eed0f337e54f, type: 3}
-  - SFX_Name: Death
+  - SFX_Name: Die
     SFX_AudioClip: {fileID: 8300000, guid: 294a56bf657935640b2aa3cec3e6476c, type: 3}
   - SFX_Name: Run
     SFX_AudioClip: {fileID: 8300000, guid: 49c6bfedf7aaf924689a3d8683747a92, type: 3}
@@ -7421,7 +7421,7 @@ PrefabInstance:
     - target: {fileID: 1869148249598900027, guid: aaa6612f611e53a4aa0ef25cc77c3888,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2994568652154382284, guid: aaa6612f611e53a4aa0ef25cc77c3888,
         type: 3}
@@ -7528,6 +7528,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6165140482269262777, guid: aaa6612f611e53a4aa0ef25cc77c3888,
+        type: 3}
+      propertyPath: m_text
+      value: "\uC7AC\uC758 \uC2EC\uD310\uC790 \uAD70\uB2E4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165140482269262777, guid: aaa6612f611e53a4aa0ef25cc77c3888,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 42a61b02a95529d4da0e96e58959dc5e,
+        type: 2}
+    - target: {fileID: 6165140482269262777, guid: aaa6612f611e53a4aa0ef25cc77c3888,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7624907625329411321, guid: 42a61b02a95529d4da0e96e58959dc5e,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa6612f611e53a4aa0ef25cc77c3888, type: 3}
 --- !u!114 &1092752899119268344 stripped
