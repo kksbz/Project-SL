@@ -9,6 +9,8 @@ namespace ProjectSL.Enemy
         Animator Animator { get; }
         AnimatorStateInfo CurrentStateInfo { get; }
         void SetTrigger(string parameter);
+        void ResetTrigger(string parameter);
+        void ResetTrigger();
         void SetBool(string parameter, bool value);
         void SetFloat(string parameter, float value);
         void SetInt(string parameter, int value);
@@ -46,6 +48,21 @@ namespace ProjectSL.Enemy
         {
             Animator.SetTrigger(parameter);
         }
+        public void ResetTrigger(string parameter)
+        {
+            Animator.ResetTrigger(parameter);
+        }
+        public void ResetTrigger()
+        {
+            AnimatorControllerParameter[] parameters = Animator.parameters;
+            foreach (var iterator in parameters)
+            {
+                if (iterator.type.Equals(AnimatorControllerParameterType.Trigger))
+                {
+                    Animator.ResetTrigger(iterator.name);
+                }
+            }
+        }
         public void SetBool(string parameter, bool value)
         {
             Animator.SetBool(parameter, value);
@@ -65,6 +82,7 @@ namespace ProjectSL.Enemy
 
         public bool IsAnimationEnd()
         {
+            Debug.Log($"Animation Time : {CurrentStateInfo.normalizedTime}");
             if (1f <= CurrentStateInfo.normalizedTime && !CurrentStateInfo.loop)
             {
                 return true;
@@ -83,14 +101,7 @@ namespace ProjectSL.Enemy
                 return false;
             }
 
-            if (1f <= CurrentStateInfo.normalizedTime && !CurrentStateInfo.loop)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return IsAnimationEnd();
         }
 
         public bool IsAnimationPlaying(string animationName)

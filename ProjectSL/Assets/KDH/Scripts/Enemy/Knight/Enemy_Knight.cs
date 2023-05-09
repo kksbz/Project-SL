@@ -71,28 +71,15 @@ public class Enemy_Knight : EnemyBase
         switch (CurrentAnimationName)
         {
             case EnemyDefineData.ANIMATION_ATTACK_01:
-                NotAttackColliderEnabled(0);
+                NotAttackColliderEnabled(1);
                 break;
             case EnemyDefineData.ANIMATION_ATTACK_02:
                 NotAttackColliderEnabled(1);
                 break;
             case EnemyDefineData.ANIMATION_ATTACK_03:
-                if (onActionIndex < 2)
-                {
-                    NotAttackColliderEnabled(0);
-                }
-                else
-                {
-                    NotAttackColliderEnabled(1);
-                }
-                break;
-            case EnemyDefineData.ANIMATION_ATTACK_04:
-                NotAttackColliderEnabled(0);
-                break;
-            case EnemyDefineData.ANIMATION_ATTACK_05:
-                NotAttackColliderEnabled(0);
                 NotAttackColliderEnabled(1);
                 break;
+
         }
     }
 }

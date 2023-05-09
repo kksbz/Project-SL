@@ -22,6 +22,7 @@ public class StateMachineBase : IStateMachine
     /// <param name="newState">변경할 상태</param>
     public void SetState(IState newState)
     {
+
         if (CurrentState == null || CurrentState == default)
         {
             CurrentState = newState;
@@ -38,7 +39,6 @@ public class StateMachineBase : IStateMachine
             {
                 PreviousState = CurrentState;
             }
-
             CurrentState = newState;
             OnEnter();
         }

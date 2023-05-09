@@ -345,6 +345,7 @@ public class Boss_Rampage_Attack_C_State : IState
 public class Boss_Rampage_Dodge_Start_State : IState
 {
     private Boss_Rampage _boss;
+    private IEnumerator _coroutine;
     public Boss_Rampage_Dodge_Start_State(Boss_Rampage boss)
     {
         _boss = boss;
@@ -357,7 +358,9 @@ public class Boss_Rampage_Dodge_Start_State : IState
     {
         _boss.SetTrigger("Dodge_Start");
 
-        _boss.StartCoroutine(DodgeDelay());
+        _coroutine = DodgeDelay();
+
+        _boss.StartCoroutine(_coroutine);
 
         int randNum_ = Random.Range(0, 2);
 
@@ -376,6 +379,7 @@ public class Boss_Rampage_Dodge_Start_State : IState
 
     public void OnExit()
     {
+        _boss.StopCoroutine(_coroutine);
     }
 
     public void Update()

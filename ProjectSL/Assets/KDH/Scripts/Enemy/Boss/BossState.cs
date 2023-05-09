@@ -161,6 +161,7 @@ public class Boss_Idle_State : IState
 public class Boss_Thought_State : IState
 {
     private BossBase _boss;
+    private IEnumerator _coroutine;
     public Boss_Thought_State(BossBase newBoss)
     {
         _boss = newBoss;
@@ -169,13 +170,15 @@ public class Boss_Thought_State : IState
     {
         _boss.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
-        _boss.StartCoroutine(StateChangedDelay(0.5f));
+        _coroutine = StateChangedDelay(1f);
+        _boss.StartCoroutine(_coroutine);
 
-        _boss.TargetFollow(_boss.Target, false);
+        _boss.TargetFollow(_boss.Target, true);
     }
 
     public void OnExit()
     {
+        _boss.StopCoroutine(_coroutine);
     }
 
     public void Update()
@@ -336,7 +339,7 @@ public class Boss_Die_State : IState
     {
         _boss.SetTrigger("Die");
 
-        AudioClip deathSFX_ = _boss.FindAudioClip("Death");
+        AudioClip deathSFX_ = _boss.FindAudioClip("Die");
         _boss.SFX_Play(deathSFX_, true);
     }
 
@@ -347,13 +350,13 @@ public class Boss_Die_State : IState
     public void Update()
     {
         //  사망 애니메이션이 종료된 이후 감지
-        if (_boss.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
-        {
-            _boss.OnDie();
-        }
+        // if (_boss.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
+        // {
+        //     _boss.OnDie();
+        // }
     }
     public void OnAction()
     {
-
+        _boss.OnDie();
     }
 }

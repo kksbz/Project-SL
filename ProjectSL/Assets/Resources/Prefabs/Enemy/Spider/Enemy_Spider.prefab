@@ -403,15 +403,15 @@ MonoBehaviour:
   status:
     name: Spider
     info: Spider
-    maxHp: 50
-    currentHp: 50
+    maxHp: 700
+    currentHp: 700
     maxMoveSpeed: 4
     currentMoveSpeed: 4
-    maxAttackDamage: 3
-    currentAttackDamage: 3
+    maxAttackDamage: 60
+    currentAttackDamage: 60
     detectionRange: 30
     attackRange: 1.5
-    dodge_Percentage: 0
+    dodge_Percentage: 0.1
   researchStatus:
     viewRadius: 30
     viewAngle: 75

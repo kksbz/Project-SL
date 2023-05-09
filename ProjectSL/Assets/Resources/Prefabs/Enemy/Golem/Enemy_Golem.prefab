@@ -58,12 +58,12 @@ MonoBehaviour:
   status:
     name: Golem
     info: Golem
-    maxHp: 100
-    currentHp: 100
+    maxHp: 1500
+    currentHp: 1500
     maxMoveSpeed: 3
     currentMoveSpeed: 3
-    maxAttackDamage: 5
-    currentAttackDamage: 5
+    maxAttackDamage: 50
+    currentAttackDamage: 50
     detectionRange: 30
     attackRange: 2
     dodge_Percentage: 0.3

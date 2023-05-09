@@ -934,15 +934,15 @@ MonoBehaviour:
   status:
     name: Bear
     info: Bear
-    maxHp: 100
-    currentHp: 100
+    maxHp: 1200
+    currentHp: 1200
     maxMoveSpeed: 5
     currentMoveSpeed: 5
-    maxAttackDamage: 5
-    currentAttackDamage: 5
+    maxAttackDamage: 70
+    currentAttackDamage: 70
     detectionRange: 30
     attackRange: 1.7
-    dodge_Percentage: 0
+    dodge_Percentage: 0.1
   researchStatus:
     viewRadius: 30
     viewAngle: 90

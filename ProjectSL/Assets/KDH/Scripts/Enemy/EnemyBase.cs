@@ -138,7 +138,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
         int itemIndex = default;
 
-        int randNum_ = Random.Range(0, rewardList.Count);
+        int randNum_ = Random.Range(1, rewardList.Count);
 
         foreach (var iterator in DataManager.Instance.itemDatas)
         {
@@ -148,7 +148,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
                 Debug.Log($"Item Debug : 아이템 이름 {rewardList[randNum_]} / 아이템 인덱스 : {iterator[0]}");
             }
         }
-
+        Debug.Log($"Die Debug : (itemIndex : {itemIndex})");
         GameObject item = Instantiate(Resources.Load<GameObject>($"KKS/Prefabs/Item/{itemIndex}"));
         item.transform.position = transform.position + (Vector3.up * 0.3f);
 
@@ -172,6 +172,7 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         Vector3 dir_ = Target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(dir_);
+        rotation = new Quaternion(0f, rotation.y, 0f, rotation.w);
         transform.rotation = rotation;
     }
     public virtual void TargetLook(Transform newTarget)
@@ -198,6 +199,13 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
 
     #region AttackCollider
     public List<Collider> AttackCollider { get { return attackCollider; } protected set { attackCollider = value; } }
+    public void NotActiveAttackCollider()
+    {
+        foreach (var iterator in AttackCollider)
+        {
+            iterator.enabled = false;
+        }
+    }
     public void SetAttackColliderEnabled(bool newEnabled)
     {
         foreach (var iterator in AttackCollider)
@@ -227,10 +235,12 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     public IState PreviousState { get { return StateMachine.PreviousState; } }
     public void SetState(IState newState)
     {
+        //Debug.Log($"State Debug : Change State : {newState.ToString()} / {Status.name}");
         StateMachine.SetState(newState);
     }
     public void OnAction()
     {
+        //Debug.Log($"State Debug : CurrentState Action : {StateMachine.CurrentState.ToString()}");
         StateMachine.OnAction();
     }
     #endregion
@@ -331,6 +341,15 @@ public class EnemyBase : CharacterBase, GData.IDamageable, GData.IGiveDamageable
     {
         EnemyAnimator.SetTrigger(parameter);
     }
+    public void ResetTrigger(string parameter)
+    {
+        EnemyAnimator.ResetTrigger(parameter);
+    }
+    public void ResetTrigger()
+    {
+        EnemyAnimator.ResetTrigger();
+    }
+
     public void SetBool(string parameter, bool value)
     {
         EnemyAnimator.SetBool(parameter, value);

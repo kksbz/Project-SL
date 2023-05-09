@@ -12,6 +12,7 @@ public class Enemy_Idle_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_IDLE);
 
         _enemy.SetState(new Enemy_Thought_State(_enemy));
@@ -50,6 +51,7 @@ public class Enemy_Thought_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_THOUGHT);
 
         // if (_enemy.MoveController.PatrolPoints.Count <= 1 && (!_enemy.IsFieldOfViewFind()))
@@ -58,23 +60,14 @@ public class Enemy_Thought_State : IState
         //     _enemy.StartCoroutine(_fovCoroutine);
         // }
 
-        // _thoughtCoroutine = Thought(0.5f);
-        // _enemy.StartCoroutine(_thoughtCoroutine);
-        _enemy.StartCoroutine(Thought(0.5f));
+        _thoughtCoroutine = Thought(0.5f);
+        _enemy.StartCoroutine(_thoughtCoroutine);
+        //_enemy.StartCoroutine(Thought(0.5f));
     }
 
     public void OnExit()
     {
-        // if (_fovCoroutine == null || _fovCoroutine == default)
-        // {
-        //     /* Do Nothing */
-        // }
-        // else
-        // {
-        //     _enemy.StopCoroutine(_fovCoroutine);
-        // }
-
-        // _enemy.StopCoroutine(_thoughtCoroutine);
+        _enemy.StopCoroutine(_thoughtCoroutine);
     }
 
     public void Update()
@@ -125,6 +118,7 @@ public class Enemy_Patrol_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetStoppingDistance(0f);
         _enemy.SetStop(false);
 
@@ -132,7 +126,11 @@ public class Enemy_Patrol_State : IState
         _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 0f);
 
         _enemy.Patrol();
-        _enemy.StartCoroutine(MoveDelay());
+
+        _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+        _enemy.SetStop(false);
+
+        //_enemy.StartCoroutine(MoveDelay());
 
         _coroutine = _enemy.FieldOfViewSearch(0.2f);
 
@@ -142,29 +140,11 @@ public class Enemy_Patrol_State : IState
     public void OnExit()
     {
         _enemy.StopCoroutine(_coroutine);
-        //_enemy.PatrolStop();
+        _enemy.PatrolStop();
     }
 
     public void Update()
     {
-        // //  순찰 포인트가 1개 이하라면
-        // if (_enemy.MoveController.PatrolPoints.Count <= 1)
-        // {
-        //     // 플레이어를 발견했다면
-        //     if (_enemy.IsFieldOfViewFind())
-        //     {
-
-        //         _enemy.SetState(new Enemy_Thought_State(_enemy));
-        //     }
-        // }
-        // else
-        // {
-        //     //  순찰 지점에 도달했거나, 플레이어를 발견했다면
-        //     if (_enemy.IsArrive(0.2f) || _enemy.IsFieldOfViewFind())
-        //     {
-        //         _enemy.SetState(new Enemy_Thought_State(_enemy));
-        //     }
-        // }
         //  순찰 지점에 도달했거나, 타겟을 발견했다면
         if (_enemy.IsArrivePatrol(0.2f) || _enemy.IsFieldOfViewFind())
         {
@@ -196,13 +176,15 @@ public class Enemy_Chase_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
         _enemy.SetStoppingDistance(_enemy.Status.attackRange);
         _enemy.SetSpeed(_enemy.Status.maxMoveSpeed);
 
         if (!(_enemy.PreviousState is Enemy_Patrol_State))
         {
-            _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
         }
+        _enemy.SetTrigger(EnemyDefineData.TRIGGER_MOVE);
+
         _enemy.SetFloat(EnemyDefineData.FLOAT_MOVESPEED, 1f);
 
         if (1 < _enemy.ChaseTargets.Count)
@@ -260,6 +242,10 @@ public class Enemy_Attack_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
+        _enemy.TargetFollow(_enemy.Target, true);
+
         _enemy.SetStop(true);
 
         float randNum_ = Random.value;
@@ -297,6 +283,8 @@ public class Enemy_Attack_State : IState
     {
         _enemy.SetInt(EnemyDefineData.INT_ATTACK_INDEX, 0);
         _enemy.TargetFollow(_enemy.Target, true);
+        Debug.Log($"Attack State Escape");
+        _enemy.NotActiveAttackCollider();
     }
 
     public void Update()
@@ -326,6 +314,8 @@ public class Enemy_Dodge_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_DODGE);
         _enemy.SetUpdateRotation(false);
         _enemy.SetStop(false);
@@ -377,6 +367,10 @@ public class Enemy_Hit_State : IState
 
     public void OnEnter()
     {
+        _enemy.NotActiveAttackCollider();
+
+        _enemy.ResetTrigger();
+
         _enemy.ResearchStatus.viewAngle = 360f;
         _enemy.SetStop(true);
 
@@ -388,7 +382,7 @@ public class Enemy_Hit_State : IState
         _enemy.SetFloat(EnemyDefineData.FLOAT_HIT_Y, posY_);
 
         _enemy.SetTrigger(EnemyDefineData.TRIGGER_HIT);
-
+        Debug.Log($"Aniamtion Time : {_enemy.EnemyAnimator.CurrentStateInfo.normalizedTime}");
     }
 
     public void OnExit()
@@ -398,14 +392,11 @@ public class Enemy_Hit_State : IState
 
     public void Update()
     {
-        if (_enemy.IsAnimationEnd())
-        {
-            _enemy.SetState(new Enemy_Thought_State(_enemy));
-        }
     }
     public void OnAction()
     {
-
+        Debug.Log($"Hit Complete : {_enemy.name}");
+        _enemy.SetState(new Enemy_Thought_State(_enemy));
     }
 }
 
@@ -419,6 +410,8 @@ public class Enemy_Die_State : IState
 
     public void OnEnter()
     {
+        _enemy.ResetTrigger();
+
         _enemy.SetStop(true);
 
         Vector3 direction_ = (_enemy.transform.position - _enemy.Target.position).normalized;
@@ -438,14 +431,16 @@ public class Enemy_Die_State : IState
     public void Update()
     {
         //  사망 애니메이션이 종료된 이후 감지
-        if (_enemy.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
-        {
-            _enemy.OnDie();
-        }
+        // if (_enemy.IsAnimationEnd(EnemyDefineData.ANIMATION_DIE))
+        // {
+        //     Debug.Log($"몬스터 사망");
+        //     _enemy.OnDie();
+        // }
     }
     public void OnAction()
     {
-
+        Debug.Log($"Die Complete : {_enemy.name}");
+        _enemy.OnDie();
     }
 }
 

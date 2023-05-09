@@ -155,7 +155,7 @@ public class PlayerStateMachine : MonoBehaviour
         //_playerInput.PlayerCharacterInput.SwitchArm.started += (InputAction.CallbackContext context) => Debug.Log("SwitchArm Started");
         //_playerInput.PlayerCharacterInput.SwitchArm.performed += (InputAction.CallbackContext context) => Debug.Log("SwitchArm performed");
         //_playerInput.PlayerCharacterInput.SwitchArm.canceled += (InputAction.CallbackContext context) => Debug.Log("SwitchArm canceled");
-        Debug.Log("Player State Machine : ��ǲ ���ε�");
+        //Debug.Log("Player State Machine : ��ǲ ���ε�");
 
         // _playerInput.PlayerCharacterInput.
 
@@ -253,7 +253,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnRunInput(InputAction.CallbackContext context)
     {
         _isRunPressed = context.ReadValueAsButton();
-        Debug.Log($"Run Input : {_isRunPressed}");
+        //Debug.Log($"Run Input : {_isRunPressed}");
     }
     void OnWalkInput(InputAction.CallbackContext context)
     {
@@ -261,7 +261,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void OnAttackInput(InputAction.CallbackContext context)
     {
-        Debug.Log("Debugging Attack Pressed");
+        //Debug.Log("Debugging Attack Pressed");
         _isAttackPressed = context.ReadValueAsButton();
     }
     void OnGuardInput(InputAction.CallbackContext context)
@@ -286,7 +286,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnDodgeInputRelease(InputAction.CallbackContext context)
     {
         float pressRate = Time.time - _dodgeStartTime;
-        Debug.Log($"Dodge Press Rate : {pressRate}");
+        //Debug.Log($"Dodge Press Rate : {pressRate}");
         if (!(pressRate < _dodgePressedRate))
             return;
 
@@ -295,12 +295,12 @@ public class PlayerStateMachine : MonoBehaviour
 
         if (_currentMovementInput != Vector2.zero)
         {
-            Debug.LogWarning($"isRollPressed, Read Value : {context.ReadValueAsButton()}");
+            //Debug.LogWarning($"isRollPressed, Read Value : {context.ReadValueAsButton()}");
             _isRollPressed = true;
         }
         else
         {
-            Debug.LogWarning($"isBackStepPressed, Read Value : {context.ReadValueAsButton()}");
+            //Debug.LogWarning($"isBackStepPressed, Read Value : {context.ReadValueAsButton()}");
             _isBackStepPressed = true;
         }
     }
