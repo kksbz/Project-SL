@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using UnityEngine.Animations;
 using UnityEngine;
 
 public enum EArmState
@@ -274,7 +274,7 @@ public class EquipmentController : MonoBehaviour
         if (_defaultLeftShieldPrefab != null)
             AttachWeaponObj(_defaultLeftShieldPrefab.transform, _leftArmSocket);
         // default overrideController caching
-        _default_AnimController = _animator.runtimeAnimatorController as AnimatorController;
+        _default_AnimController = _animator.runtimeAnimatorController as RuntimeAnimatorController;
 
         // �κ��丮 ��������Ʈ �Լ� ���ε�
         Inventory.Instance._onEquipSlotUpdated += UpdateEquipmentItem;

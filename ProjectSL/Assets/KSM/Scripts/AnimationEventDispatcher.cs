@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Animations;
+using UnityEngine.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,7 +42,7 @@ public class AnimationEventDispatcher : MonoBehaviour
         }
     }
 
-    public void AddAnimationStartEndByAnimOV(AnimatorController animOV)
+    public void AddAnimationStartEndByAnimOV(RuntimeAnimatorController animOV)
     {
         for (int i = 0; i < animOV.animationClips.Length; i++)
         {
