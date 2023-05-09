@@ -94800,6 +94800,14 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0.25
+    functionName: OnRotateDuringAttack
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.41666666
     functionName: EnableRightDamageCollider
     data: 

@@ -17,6 +17,8 @@ public class PlayerGroundedState : PlayerBaseState
             Ctx.CombatController.GuardOnOffState();
             Ctx.CombatController.GuardTransitionState();
         }
+
+        Ctx.CharacterAnimator.SetLayerWeight(AnimationController.LAYERINDEX_BASELAYER, 1);
     }
     public override void UpdateState()
     {

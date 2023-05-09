@@ -13,6 +13,7 @@ public class PlayerGuardState : PlayerBaseState
     {
         Debug.Log("Enter Guard State");
         Ctx.CombatController.OnGuard(prevState);
+        Ctx.CharacterAnimator.SetLayerWeight(AnimationController.LAYERINDEX_BASELAYER, 1);
     }
     public override void UpdateState()
     {

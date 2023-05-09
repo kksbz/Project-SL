@@ -5,6 +5,7 @@ using UnityEngine;
 public class Behavior : ICommand
 {
     // { Move
+    protected Rigidbody rigidbody;
     protected CharacterController controller;
     protected Vector3 moveDirection;
     protected float moveSpeed;

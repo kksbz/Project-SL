@@ -33,6 +33,11 @@ public class PlayerHitState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        if(Ctx.HitFlag)
+        {
+            Ctx.CombatController.Hit();
+            Ctx.HitFlag = false;
+        }
     }
     public override void FixedUpdateState()
     {

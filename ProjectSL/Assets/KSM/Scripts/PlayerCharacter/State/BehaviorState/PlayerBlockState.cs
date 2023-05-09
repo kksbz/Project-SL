@@ -18,6 +18,11 @@ public class PlayerBlockState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        if (Ctx.BlockFlag)
+        {
+            Ctx.CombatController.Block();
+            Ctx.BlockFlag = false;
+        }
     }
     public override void FixedUpdateState()
     {

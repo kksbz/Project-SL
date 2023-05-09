@@ -19,7 +19,7 @@ public class PlayerRunState : PlayerBaseState
         Ctx.SetMoveDirection();
 
         // 임시로 달리는 속도 8 * 나중에 스탯에서 가져올수 있음
-        Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 8f);
+        Move nextMove = new Move(Ctx.Rigidbody, Ctx.AppliedMovement, 8f);
         Ctx.NextBehavior = nextMove;
     }
     public override void FixedUpdateState()

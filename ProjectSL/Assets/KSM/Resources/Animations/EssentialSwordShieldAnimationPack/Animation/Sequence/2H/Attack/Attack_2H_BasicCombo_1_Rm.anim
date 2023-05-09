@@ -101580,6 +101580,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.25
+    functionName: OnRotateDuringAttack
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.33333334
     functionName: EnableRightDamageCollider
     data: 
@@ -101592,6 +101600,14 @@ AnimationClip:
     functionName: OnSetCanNextCombo
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 1a67247396e775240b892594ffe3542c,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.43333334
+    functionName: OnSwingTHS
+    data: 
+    objectReferenceParameter: {fileID: 11500000, guid: ec0d35b25501e6f4fab98bcd9437d51e,
       type: 3}
     floatParameter: 0
     intParameter: 0

@@ -25,6 +25,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Animator cmCamAnimator;
 
+    [SerializeField]
+    float _lockOnLimitDist = 10f;
+
     private PlayerController playerController;
     private CharacterController characterController;
     private AnimationController animationController;
@@ -67,7 +70,7 @@ public class CameraController : MonoBehaviour
     public EventHandler_void_GameObject onSetPlayerLockOn;
     public EventHandler_void onReleasePlayerLockOn;
 
-    [Header("Temp Debugging ´Ù Áö¿ï°Å")]
+    [Header("Temp Debugging ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [Range(1f, 100f)]
     public float rotationLerpSpeed = 10f;
 
@@ -93,7 +96,7 @@ public class CameraController : MonoBehaviour
         targetsInView = new List<Transform>();
         controlProperty = playerController.controlProperty;
 
-        // Ä¿¼­ ¾Èº¸ÀÌ°Ô
+        // Ä¿ï¿½ï¿½ ï¿½Èºï¿½ï¿½Ì°ï¿½
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -103,6 +106,8 @@ public class CameraController : MonoBehaviour
     {
         TargetDeadCheck();
         SearchTarget();
+        TargetDeadCheck();
+        TargetDistanceCheck();
         InputAction();
     }
     private void FixedUpdate()
@@ -115,18 +120,44 @@ public class CameraController : MonoBehaviour
     {
         if(IsLockOn && target == null)
         {
+            Debug.Log("TargetDeadCheck");
             GameObject newTargetObject = FindNearestTarget();
-            CharacterBase newTargetCharacter = newTargetObject.GetComponent<CharacterBase>();
-            if(newTargetCharacter != null)
+            if(newTargetObject != null)
             {
-                target = newTargetCharacter;
-                UpdateLockTargets();
+                CharacterBase newTargetCharacter = newTargetObject.GetComponent<CharacterBase>();
+                if (newTargetCharacter != null)
+                {
+                    Debug.Log("TargetDeadCheck newTarget is not null");
+                    target = newTargetCharacter;
+                    UpdateLockTargets();
+                }
+                else
+                {
+                    Debug.Log("TargetDeadCheck newTarget is null");
+                    ReleasePlayerLockOn();
+                    UpdateLockTargets();
+                }
             }
             else
             {
                 ReleasePlayerLockOn();
                 UpdateLockTargets();
             }
+        }
+    }
+    private void TargetDistanceCheck()
+    {
+        if (!IsLockOn)
+            return;
+
+        if (target == null)
+            return;
+
+        float toTargetDistance = Vector3.Distance(transform.position, target.gameObject.transform.position);
+        if (toTargetDistance > _lockOnLimitDist)
+        {
+            ReleasePlayerLockOn();
+            UpdateLockTargets();
         }
     }
     void InputAction()
@@ -137,7 +168,7 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(2))
         {
-            Debug.Log("ÈÙ ÀÔ·Â ¹Þ³ª¿ä?");
+            Debug.Log("ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Þ³ï¿½ï¿½ï¿½?");
             switch (cameraState)
             {
                 case ECameraState.DEFAULT:
@@ -173,7 +204,7 @@ public class CameraController : MonoBehaviour
     }
     void LookAround()
     {
-        // ¶ô¿Â »óÅÂÀÏ °æ¿ì
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if(IsLockOn)
         {
             return;
@@ -198,12 +229,14 @@ public class CameraController : MonoBehaviour
     }
     void LookTarget()
     {
-        // ¶ô¿Â »óÅÂ°¡ ¾Æ´Ò °æ¿ì
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
         if(!IsLockOn)
         {
             return;
         }
-        // ÀÓ½Ã
+        if (target == null)
+            return;
+        // ï¿½Ó½ï¿½
         Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - cameraArm.position);
         // camera.rotation = Quaternion.Lerp(camera.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
         // cameraArm.rotation = Quaternion.Lerp(cameraArm.rotation, targetRotation, Time.deltaTime * rotationLerpSpeed);
@@ -248,7 +281,7 @@ public class CameraController : MonoBehaviour
         bool result = Enumerable.SequenceEqual(tempTargetsInView, targetsInView);
         if(!result)
         {
-            Debug.Log("targetsInView °»½Å");
+            Debug.Log("targetsInView ï¿½ï¿½ï¿½ï¿½");
             targetsInView = tempTargetsInView;
         }
     }
@@ -256,29 +289,29 @@ public class CameraController : MonoBehaviour
     void SetPlayerLockOn()
     {
         Debug.Log("Enter SetPlayerLockOn");
-        // ÀÌ¹Ì ¶ô¿Â »óÅÂÀÏ °æ¿ì
+        // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if (IsLockOn)
         {
             return;
         }
-        Debug.Log("¶ô¿Â»óÅÂ ¾Æ´Ô");
+        Debug.Log("ï¿½ï¿½ï¿½Â»ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½");
         GameObject newTarget = FindNearestTarget();
 
-        // ½Ã¾ß¹üÀ§¿¡ Ä³¸¯ÅÍ°¡ ¾ø´Â °æ¿ì
+        // ï¿½Ã¾ß¹ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         if (newTarget == default)
         {
-            Debug.Log("½Ã¾ß¹üÀ§¿¡ Ä³¸¯ÅÍ ¾øÀ½");
+            Debug.Log("ï¿½Ã¾ß¹ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 
         target = newTarget.GetComponent<CharacterBase>();
 
-        // Å¸°ÙÀÌ Ä³¸¯ÅÍº£ÀÌ½º¸¦ °¡Áö°íÀÖ´ÂÁö Ã¼Å©
+        // Å¸ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
         if (target == null || target == default)
         {
             return;
         }
-        Debug.Log("¶ô¿Â»óÅÂ·Î º¯°æ");
+        Debug.Log("ï¿½ï¿½ï¿½Â»ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½");
         controlProperty.isLockOn = true;
         cameraState = ECameraState.LOCKON;
     }
@@ -288,7 +321,7 @@ public class CameraController : MonoBehaviour
         float minDistance = float.MaxValue;
         foreach (var targetTf in targetsInView)
         {
-            Debug.Log("°¡±î¿î Ä³¸¯ÅÍ Ã£´ÂÁß");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½");
             Vector3 offset = targetTf.position - transform.position;
             float sqrLen = offset.sqrMagnitude;
             if (minDistance > sqrLen)
@@ -301,7 +334,7 @@ public class CameraController : MonoBehaviour
     }
     void ReleasePlayerLockOn()
     {
-        // ¶ô¿Â »óÅÂ°¡ ¾Æ´Ò °æ¿ì
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
         if(!IsLockOn)
         {
             return;

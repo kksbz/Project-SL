@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public float _rollActionCost = 15;
     public float _backStepActionCost = 12;
     public float _BlockActionCost = 30;
-    public float _sprintActionCost = 15;
+    public float _sprintActionCost = 0.1f;
     #endregion  // Action Costs
 
     #region Die Field
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
             else if(cameraController.CameraState == ECameraState.LOCKON)
                 characterBody.forward = cameraController.cameraArm.forward;
 
-            nextMove = new Move(characterController, moveDir, tempMoveSpeed);
+            nextMove = new Move(GetComponent<Rigidbody>(), moveDir, tempMoveSpeed);
         }
         else 
         {

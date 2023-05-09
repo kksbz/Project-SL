@@ -18,6 +18,7 @@ public class PlayerAttackState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        Ctx.SetCurrentMovement();
         if(Ctx.IsAttackPressed)
         {
             Ctx.CombatController.Attack();

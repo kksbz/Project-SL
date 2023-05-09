@@ -17,7 +17,7 @@ public class PlayerWalkState : PlayerBaseState
         CheckSwitchStates();
         Ctx.SetMoveDirection();
         // 임시로 걷기 속도 5 * 나중에 스탯에서 가져올수 있음
-        Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 2f);
+        Move nextMove = new Move(Ctx.Rigidbody, Ctx.AppliedMovement, 2f);
         Ctx.NextBehavior = nextMove;
     }
     public override void FixedUpdateState()

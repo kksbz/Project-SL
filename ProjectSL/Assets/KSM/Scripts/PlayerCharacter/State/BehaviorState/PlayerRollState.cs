@@ -13,6 +13,7 @@ public class PlayerRollState : PlayerBaseState
     {
         // Dodge 애니메이션 실행
         Ctx.CharacterAnimator.applyRootMotion = true;
+        
         if(Ctx.IsRollPressed)
         {
             Ctx.SetDirection(Ctx.CurrentMovement);

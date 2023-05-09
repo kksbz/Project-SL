@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerStateMachine : MonoBehaviour
 {
+    Rigidbody _rigidbody;
     CharacterController _characterController;
     Animator _animator;
     [SerializeField]
@@ -38,7 +39,6 @@ public class PlayerStateMachine : MonoBehaviour
     bool _isRunPressed;
     bool _isWalkPressed;
     float runPressedRate = 0.5f;
-
 
     // ���
     int _zero = 0;
@@ -72,6 +72,7 @@ public class PlayerStateMachine : MonoBehaviour
     // getter and setter
     public PlayerCharacter PlayerCharacter { get { return _playerCharacter; } }
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
+    public Rigidbody Rigidbody { get { return _rigidbody; } }
     public CharacterController CharacterController { get { return _characterController; } }
     public PlayerController PlayerController { get { return _playerController; } }
     public AnimationController AnimationController { get { return _animationController; } }
@@ -99,11 +100,13 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector3 AppliedMovement { get { return _appliedMovement; } }
     public Behavior NextBehavior { get { return _nextBehavior; } set { _nextBehavior = value; } }
     public PlayerInput PlayerInput { get { return _playerInput; } }
+    public bool CanRotate { get { return _canRotate; } set { _canRotate = value; } }
 
     private void Awake()
     {
         // ��ǲ, ������Ʈ �ʱ�ȭ
         _playerInput = new PlayerInput();
+        _rigidbody = GetComponent<Rigidbody>();
         _characterController = GetComponent<CharacterController>();
         _characterBody = gameObject.FindChildObj("Mesh").transform;
         _animator = _characterBody.gameObject.GetComponent<Animator>();
@@ -184,11 +187,6 @@ public class PlayerStateMachine : MonoBehaviour
         if (!_isMovementPressed)
             return;
 
-        if(_isRunPressed)
-        {
-            PlayerCharacter.HealthSys.ConsumSP(_playerController._sprintActionCost * Time.deltaTime);
-        }
-
         Vector3 newDirection = Vector3.zero;
         // ĳ���� ȸ�� * �ӽ��ϼ��� ����
         if (_cameraController.CameraState == ECameraState.DEFAULT || _isRunPressed || _combatController.IsDodging)
@@ -226,6 +224,15 @@ public class PlayerStateMachine : MonoBehaviour
         // _currentDirection = newBodyDirection;
         _characterBody.forward = newBodyDirection;
         // transform.forward = newBodyDirection;
+    }
+    public void SetDirectionByAttack()
+    {
+        if (_currentMovement == Vector3.zero)
+            return;
+        if (_cameraController.CameraState == ECameraState.LOCKON)
+            return;
+
+        _characterBody.forward = _currentMovement;
     }
 
     public void RotateCharacterBody()
@@ -283,6 +290,9 @@ public class PlayerStateMachine : MonoBehaviour
         if (!(pressRate < _dodgePressedRate))
             return;
 
+        if (CombatController.IsDodging)
+            return;
+
         if (_currentMovementInput != Vector2.zero)
         {
             Debug.LogWarning($"isRollPressed, Read Value : {context.ReadValueAsButton()}");
@@ -319,6 +329,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         UiInPutManager.Instance.Cheat_GetSoul();
     }
+    
     public void LockInput()
     {
         _playerInput.PlayerCharacterInput.Disable();

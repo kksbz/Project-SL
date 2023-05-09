@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using UnityEngine.Animations;
 using UnityEngine;
 
 public class AnimationController : MonoBehaviour
@@ -63,7 +63,7 @@ public class AnimationController : MonoBehaviour
     void Start()
     {
         controlProperty = playerController.controlProperty;
-        _defaultAnimatorController = animator.runtimeAnimatorController as AnimatorController;
+        _defaultAnimatorController = animator.runtimeAnimatorController as RuntimeAnimatorController;
         _currentAnimatorController = _defaultAnimatorController;
         // animator.
         //_torsoAnimator.runtimeAnimatorController = animator.runtimeAnimatorController;

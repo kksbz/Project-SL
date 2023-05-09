@@ -17,7 +17,7 @@ public class PlayerJogState : PlayerBaseState
         CheckSwitchStates();
         Ctx.SetMoveDirection();
         // 임시로 조깅 속도 5 * 나중에 스탯에서 가져올수 있음
-        Move nextMove = new Move(Ctx.CharacterController, Ctx.AppliedMovement, 5f);
+        Move nextMove = new Move(Ctx.Rigidbody, Ctx.AppliedMovement, 5f);
         Ctx.NextBehavior = nextMove;
     }
     public override void FixedUpdateState()
