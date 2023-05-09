@@ -321,6 +321,9 @@ public class CameraController : MonoBehaviour
         float minDistance = float.MaxValue;
         foreach (var targetTf in targetsInView)
         {
+            if(targetTf == null)
+                continue;
+
             Debug.Log("����� ĳ���� ã����");
             Vector3 offset = targetTf.position - transform.position;
             float sqrLen = offset.sqrMagnitude;

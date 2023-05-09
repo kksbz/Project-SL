@@ -151,6 +151,19 @@ public class GameManager : Singleton<GameManager>
                 UiManager.Instance.soulBag.GetSoul(-Inventory.Instance.Soul);
                 Soul.transform.position = _playerStatusData._playerPos;
             }
+            // 에스트병 보유횟수 초기화
+            for (int i = 0; i < Inventory.Instance.inventory.Count; i++)
+            {
+                if (Inventory.Instance.inventory[i].itemID == 1)
+                {
+                    Inventory.Instance.inventory[i].Quantity = Inventory.Instance.inventory[i].maxQuantity;
+                }
+                if (Inventory.Instance.inventory[i].itemID == 2)
+                {
+                    Inventory.Instance.inventory[i].Quantity = Inventory.Instance.inventory[i].maxQuantity;
+                    break;
+                }
+            }
         }
         else
         {

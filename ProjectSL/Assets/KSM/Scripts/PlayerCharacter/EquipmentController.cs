@@ -167,6 +167,8 @@ public class EquipmentController : MonoBehaviour
     public delegate void EventHandler();
     public EventHandler _onChangedEquipment;
     public EventHandler _onSwitchiedArmState;
+    public delegate void EventHandler_EC(EquipmentController equipmentController);
+    public EventHandler_EC _onChangedAbilityStat;
 
     [SerializeField]
     DamageCollider _rightHand_NotWeapon_Collider;
@@ -468,6 +470,7 @@ public class EquipmentController : MonoBehaviour
         SetArmState(EArmState.OneHanded);
 
         _onChangedEquipment();
+        _onChangedAbilityStat(this);
         // ���� ���� ������Ʈ?
         //_ring_1 = Inventory.Instance
     }
@@ -540,7 +543,7 @@ public class EquipmentController : MonoBehaviour
             pantArmorTag = _armor_Pants.itemID.ToString();
         }
         _skinnedMeshController.PantModelChanger.EquipModelByName(pantArmorTag);
-
+        _onChangedAbilityStat(this);
 
     }
     private void SetWeaponState(EWeaponState newState)

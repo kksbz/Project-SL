@@ -47,7 +47,7 @@ public class PlayerStatus
         _applied_Strength= 10;
         _applied_Dexterity= 10;
 
-        InitializeAdderValue();
+        //InitializeAdderValue();
     }
     public void AdderEquipmentValueInit(EquipmentController equipmentController)
     {
@@ -97,6 +97,7 @@ public class PlayerStatus
             _adder_Equipment_Vitality += equipmentItemData.vitality;
             _adder_Equipment_Strength += equipmentItemData.strength;
             _adder_Equipment_Dexterity += equipmentItemData.dexterity;
+            Debug.Log($"adderVital : {_adder_Equipment_Vitality}, EquipItemVital : {equipmentItemData.vitality}");
         }
 
         CalculateAppliedValue();
@@ -119,6 +120,7 @@ public class PlayerStatus
         _applied_Vitality = _vitality + _adder_Equipment_Vitality;
         _applied_Strength = _strength + _adder_Equipment_Strength;
         _applied_Dexterity = _dexterity + _adder_Equipment_Dexterity;
+        Debug.Log($"Applied Vital : {_applied_Vitality} = {_vitality} + {_adder_Equipment_Vitality}");
     }
     // property
     public string Name { get { return _name; } set { _name = value; } }

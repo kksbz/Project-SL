@@ -28,14 +28,14 @@ public class OptionPanel : MonoBehaviour
         // Ÿ��Ʋ�� ���� ��ư
         goTitleBt.onClick.AddListener(() =>
         {
-            checkText.text = "Ÿ��Ʋȭ������ ���ðڽ��ϱ�?";
+            checkText.text = "타이틀화면으로 돌아가시겠습니까?";
             isExitGame = false;
             checkPanel.SetActive(true);
         });
         // �������� ��ư
         ExitBt.onClick.AddListener(() =>
         {
-            checkText.text = "������ �����Ͻðڽ��ϱ�?";
+            checkText.text = "게임을 종료하시겠습니까?";
             isExitGame = true;
             checkPanel.SetActive(true);
         });
@@ -43,7 +43,7 @@ public class OptionPanel : MonoBehaviour
         OptionBt.onClick.AddListener(() =>
         {
             panelImage.sprite = panelSprites[1];
-            panelText.text = "���۹�";
+            panelText.text = "설정";
             manualPanel.SetActive(true);
             goBackText.SetActive(true);
         });
@@ -51,7 +51,7 @@ public class OptionPanel : MonoBehaviour
         SaveBt.onClick.AddListener(() =>
         {
             panelImage.sprite = panelSprites[2];
-            panelText.text = "�����ϱ�";
+            panelText.text = "저장하기";
             saveAndLoadPanel.isSave = true;
             saveAndLoadPanel.gameObject.SetActive(true);
             goBackText.SetActive(true);
@@ -60,7 +60,7 @@ public class OptionPanel : MonoBehaviour
         LoadBt.onClick.AddListener(() =>
         {
             panelImage.sprite = panelSprites[3];
-            panelText.text = "�ҷ�����";
+            panelText.text = "불러오기";
             saveAndLoadPanel.isSave = false;
             saveAndLoadPanel.gameObject.SetActive(true);
             goBackText.SetActive(true);
@@ -94,7 +94,7 @@ public class OptionPanel : MonoBehaviour
     private void OnEnable()
     {
         panelImage.sprite = panelSprites[0];
-        panelText.text = "����";
+        panelText.text = "설정";
         goBackText.SetActive(false);
         manualPanel.SetActive(false);
         saveAndLoadPanel.gameObject.SetActive(false);
@@ -109,7 +109,7 @@ public class OptionPanel : MonoBehaviour
                 saveAndLoadPanel.gameObject.SetActive(false);
                 manualPanel.SetActive(false);
                 panelImage.sprite = panelSprites[0];
-                panelText.text = "����";
+                panelText.text = "설정";
                 goBackText.SetActive(false);
             }
         }

@@ -27,12 +27,12 @@ public class StatusPanel : MonoBehaviour
     {
         nameText.text = _playerStatus._playerStatusData.Name;
         levelText.text = _playerStatus._playerStatusData.Level.ToString();
-        vigorText.text = _playerStatus._playerStatusData.Vigor.ToString();
-        attunementText.text = _playerStatus._playerStatusData.Attunement.ToString();
-        enduranceText.text = _playerStatus._playerStatusData.Endurance.ToString();
-        vitalityText.text = _playerStatus._playerStatusData.Vitality.ToString();
-        strengthText.text = _playerStatus._playerStatusData.Strength.ToString();
-        dexterityText.text = _playerStatus._playerStatusData.Dexterity.ToString();
+        vigorText.text = _playerStatus._playerStatusData.AppliedVigor.ToString();
+        attunementText.text = _playerStatus._playerStatusData.AppliedAttunement.ToString();
+        enduranceText.text = _playerStatus._playerStatusData.AppliedEndurance.ToString();
+        vitalityText.text = _playerStatus._playerStatusData.AppliedVitality.ToString();
+        strengthText.text = _playerStatus._playerStatusData.AppliedStrength.ToString();
+        dexterityText.text = _playerStatus._playerStatusData.AppliedDexterity.ToString();
 
         hpText.text = $"{_playerStatus._healthSystemData.HP} / {_playerStatus._healthSystemData.MaxHP}";
         mpText.text = $"{_playerStatus._healthSystemData.MP} / {_playerStatus._healthSystemData.MaxMP}";
@@ -45,12 +45,12 @@ public class StatusPanel : MonoBehaviour
         nameText.text = _playerStatus._playerStatusData.Name;
         levelText.text = _playerStatus._playerStatusData.Level.ToString();
         possessionSoul.text = Inventory.Instance.Soul.ToString();
-        vigorText.text = _playerStatus._playerStatusData.Vigor.ToString();
-        attunementText.text = _playerStatus._playerStatusData.Attunement.ToString();
-        enduranceText.text = _playerStatus._playerStatusData.Endurance.ToString();
-        vitalityText.text = _playerStatus._playerStatusData.Vitality.ToString();
-        strengthText.text = _playerStatus._playerStatusData.Strength.ToString();
-        dexterityText.text = _playerStatus._playerStatusData.Dexterity.ToString();
+        vigorText.text = _playerStatus._playerStatusData.AppliedVigor.ToString();
+        attunementText.text = _playerStatus._playerStatusData.AppliedAttunement.ToString();
+        enduranceText.text = _playerStatus._playerStatusData.AppliedEndurance.ToString();
+        vitalityText.text = _playerStatus._playerStatusData.AppliedVitality.ToString();
+        strengthText.text = _playerStatus._playerStatusData.AppliedStrength.ToString();
+        dexterityText.text = _playerStatus._playerStatusData.AppliedDexterity.ToString();
 
         hpText.text = $"{_playerStatus._healthSystemData.HP} / {_playerStatus._healthSystemData.MaxHP}";
         mpText.text = $"{_playerStatus._healthSystemData.MP} / {_playerStatus._healthSystemData.MaxMP}";

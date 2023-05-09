@@ -25,9 +25,9 @@ public class CombatStatus
     // PlayerStatus에 변화가 있을 때 마다 실행시키기 * 레벨업 같은
     public void InitializeCombatStatus(PlayerStatus playerStatus)
     {
-        _attackPoint = DataManager.Instance.statusLevelData[playerStatus.Strength].damage;
-        _defensePoint = DataManager.Instance.statusLevelData[playerStatus.Vitality].defense;
-        _damageMultiplier = DataManager.Instance.statusLevelData[playerStatus.Dexterity].damageMultiplier;
+        _attackPoint = DataManager.Instance.statusLevelData[playerStatus.AppliedStrength].damage;
+        _defensePoint = DataManager.Instance.statusLevelData[playerStatus.AppliedVitality].defense;
+        _damageMultiplier = DataManager.Instance.statusLevelData[playerStatus.AppliedDexterity].damageMultiplier;
         // 데이터 연동 후 PlayerStatus 수치에 따라 Data Table 참조하여 CombatStatus 초기화
     }
 }

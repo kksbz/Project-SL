@@ -63,11 +63,17 @@ public class ArmorSlot : MonoBehaviour, IPublicSlot, IPointerEnterHandler, IPoin
     public void AddItem(ItemData _item)
     {
         Item = _item;
+        if (_item == null)
+        {
+            return;
+        }
+        Inventory.Instance._onEquipArmorUpdated();
     } // AddItem
 
     public void RemoveItem()
     {
         Item = null;
+        Inventory.Instance._onEquipArmorUpdated();
     } // RemoveItem
 
     public bool SlotItemIsNull()

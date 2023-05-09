@@ -328,7 +328,7 @@ public class Inventory : Singleton<Inventory>
                                     }
                                 }
                             }
-                            _onEquipArmorUpdated();
+                            //_onEquipArmorUpdated();
                             break;
                     } // switch
                 }

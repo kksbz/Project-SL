@@ -35,7 +35,7 @@ public class DamageCollider : MonoBehaviour
     }
     public void SetDamage(float damageMultiplier = 1f)
     {
-        float statDamage = _ownerStats.Strength;
+        float statDamage = _ownerStats.AppliedStrength;
         float weaponDamage = 0f;
         if (_itemData != null)
             weaponDamage = _itemData.damage * _playerCharacter.CombatStat.DamageMultiplier;

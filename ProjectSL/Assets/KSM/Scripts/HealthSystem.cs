@@ -100,7 +100,8 @@ public class HealthSystem
 
     public void Damage(float damageAmount)
     {
-        _healthPoint -= damageAmount;
+        float newDamage = Mathf.Clamp(damageAmount - (_playerCharacter.CombatStat.DefensePoint * 0.2f), 1, float.MaxValue);
+        _healthPoint -= newDamage;
         onChangedHealth(EHealthType.HP, true);
         if(IsDead())
         {

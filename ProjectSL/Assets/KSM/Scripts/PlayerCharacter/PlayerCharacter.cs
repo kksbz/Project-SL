@@ -71,9 +71,28 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     void Start()
     {
         InitBehaviorStateMachine();
+        //equipmentController._onChangedAbilityStat += (EquipmentController) => Debug.Log($"app vit : {_status.AppliedVitality}");
+        //equipmentController._onChangedAbilityStat += _status.AdderEquipmentValueInit;
+        //equipmentController._onChangedAbilityStat += (EquipmentController) => Debug.Log($"app vit : {_status.AppliedVitality}");
+        //equipmentController._onChangedAbilityStat += UpdateHealthAndCombatStatusByStatus;
+        
+        equipmentController._onChangedAbilityStat += (equipmentController) =>
+        {
+            _status.AdderEquipmentValueInit(equipmentController);
+            _healthSystem.InitializeHealthSystem(_status, equipmentController);
+            _combatStatus.InitializeCombatStatus(_status);
+        };
+        
         // 테스트용 코루틴
         StartCoroutine(TestStatInit());
         // StatInitialize();
+    }
+    public void UpdateHealthAndCombatStatusByStatus(EquipmentController equipmentController)
+    {
+        // _status.AdderEquipmentValueInit(equipmentController);
+        _healthSystem.InitializeHealthSystem(_status, equipmentController);
+        _combatStatus.InitializeCombatStatus(_status);
+        Debug.Log($"Applied Vitality : {_status.AppliedVitality}");
     }
 
     [SerializeField]
@@ -81,6 +100,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log($"Applied Vital : {_status.AppliedVitality}");
         _healthSystem.RegenerationStamina();
     }
     private void FixedUpdate()
@@ -140,6 +160,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
             return;
         if (this._combatStatus == null)
             return;
+        
 
         // 체력 초기화 * 임시 아이템 스탯 정보도 추가해야되나?
         _healthSystem.InitializeHealthSystem(_status, equipmentController);
@@ -160,7 +181,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         {
             return;
         }
-        _healthSystem.Damage(damage);
+        
         string hitDir = GetHitAngle(_hitTR, damageCauser.transform);
         Debug.Log($"direction : {hitDir}");
         combatController.HitAnimationTag = hitDir;
@@ -170,6 +191,7 @@ public class PlayerCharacter : CharacterBase, IPlayerDataAccess, GData.IDamageab
         }
         else
         {
+            _healthSystem.Damage(damage);
             _stateMachine.HitFlag = true;
         }
         //float angle2 = GetAngleBetween3DVector(damageCauser.transform.position - transform.position, transform.forward);

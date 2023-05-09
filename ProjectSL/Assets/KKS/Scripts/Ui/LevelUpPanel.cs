@@ -278,6 +278,8 @@ public class LevelUpPanel : MonoBehaviour
         pStatus._playerStatusData.Level = playerStatus[6];
         // 레벨업된 스텟들의 정보를 플레이어 데이터에 저장
         GameManager.Instance.player.LoadPlayerData(pStatus);
+        GameManager.Instance.player.equipmentController._onChangedAbilityStat(GameManager.Instance.player.equipmentController);
+
 
         // 패널 초기화
         statusImages[selectStatusNum].color = new Color(1, 1, 1, 0);
@@ -300,7 +302,7 @@ public class LevelUpPanel : MonoBehaviour
         if (selectStatusNum == 5)
         {
             // 공격력 배율 텍스트 갱신
-            abilityTexts[10].text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
+            abilityTexts[10].text = DataManager.Instance.statusLevelData[pStatus.Dexterity].damageMultiplier.ToString();
             resultAbilityTexts[10].text = DataManager.Instance.statusLevelData[pStatus.Dexterity + increaseNum].damageMultiplier.ToString();
         }
         else if (selectStatusNum == 4)
@@ -323,42 +325,42 @@ public class LevelUpPanel : MonoBehaviour
         else if (selectStatusNum == 3)
         {
             // 방어력 텍스트 갱신
-            abilityTexts[selectStatusNum].text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
+            abilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Vitality].defense.ToString();
             resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Vitality + increaseNum].defense.ToString();
         }
         else if (selectStatusNum == 2)
         {
             // 스테미너 텍스트 갱신
-            abilityTexts[selectStatusNum].text = GameManager.Instance.player.HealthSys.MaxSP.ToString();
+            abilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Endurance].st.ToString();
             resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Endurance + increaseNum].st.ToString();
         }
         else if (selectStatusNum == 1)
         {
             // MP 텍스트 갱신
-            abilityTexts[selectStatusNum].text = GameManager.Instance.player.HealthSys.MaxMP.ToString();
+            abilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Attunement].mp.ToString();
             resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Attunement + increaseNum].mp.ToString();
         }
         else if (selectStatusNum == 0)
         {
             // HP 텍스트 갱신
-            abilityTexts[selectStatusNum].text = GameManager.Instance.player.HealthSys.MaxHP.ToString();
+            abilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Vigor].hp.ToString();
             resultAbilityTexts[selectStatusNum].text = DataManager.Instance.statusLevelData[pStatus.Vigor + increaseNum].hp.ToString();
         }
         else
         {
             // 현재 어빌리티 텍스트
-            abilityTexts[0].text = GameManager.Instance.player.HealthSys.MaxHP.ToString();
-            abilityTexts[1].text = GameManager.Instance.player.HealthSys.MaxMP.ToString();
-            abilityTexts[2].text = GameManager.Instance.player.HealthSys.MaxSP.ToString();
-            abilityTexts[3].text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
-            abilityTexts[10].text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
+            abilityTexts[0].text = DataManager.Instance.statusLevelData[pStatus.Vigor].hp.ToString();
+            abilityTexts[1].text = DataManager.Instance.statusLevelData[pStatus.Attunement].mp.ToString();
+            abilityTexts[2].text = DataManager.Instance.statusLevelData[pStatus.Endurance].st.ToString();
+            abilityTexts[3].text = DataManager.Instance.statusLevelData[pStatus.Vitality].defense.ToString();
+            abilityTexts[10].text = DataManager.Instance.statusLevelData[pStatus.Dexterity].damageMultiplier.ToString();
 
             // 결과 어빌리티 텍스트
-            resultAbilityTexts[0].text = GameManager.Instance.player.HealthSys.MaxHP.ToString();
-            resultAbilityTexts[1].text = GameManager.Instance.player.HealthSys.MaxMP.ToString();
-            resultAbilityTexts[2].text = GameManager.Instance.player.HealthSys.MaxSP.ToString();
-            resultAbilityTexts[3].text = GameManager.Instance.player.CombatStat.DefensePoint.ToString();
-            resultAbilityTexts[10].text = GameManager.Instance.player.CombatStat.DamageMultiplier.ToString();
+            resultAbilityTexts[0].text = DataManager.Instance.statusLevelData[pStatus.Vigor].hp.ToString();
+            resultAbilityTexts[1].text = DataManager.Instance.statusLevelData[pStatus.Attunement].mp.ToString();
+            resultAbilityTexts[2].text = DataManager.Instance.statusLevelData[pStatus.Endurance].st.ToString();
+            resultAbilityTexts[3].text = DataManager.Instance.statusLevelData[pStatus.Vitality].defense.ToString();
+            resultAbilityTexts[10].text = DataManager.Instance.statusLevelData[pStatus.Dexterity].damageMultiplier.ToString();
 
             // 오른손, 왼손 공격력 텍스트
             for (int i = 4; i < abilityTexts.Length - 1; i++)
