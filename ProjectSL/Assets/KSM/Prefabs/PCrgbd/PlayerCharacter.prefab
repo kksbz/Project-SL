@@ -1849,9 +1849,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2.5
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1.06, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &6139117726122107215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2514,6 +2514,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 30cdc3f4-a4f3-4917-bbd8-526bfd0ef961
     m_ActionName: UiInput/ESC[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 05030b8b-c250-48a3-b1be-f2c06a46a1ba
+    m_ActionName: UiInput/NUM0[/Keyboard/numpad0]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2fe214b3-c326-4b4c-986f-443e33603c13
+    m_ActionName: UiInput/NUM1[/Keyboard/numpad1]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: PlayerCharacterInput

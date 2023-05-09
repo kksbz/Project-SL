@@ -75,7 +75,7 @@ public class OptionPanel : MonoBehaviour
                 DataManager.Instance.slotNum = 0;
                 DataManager.Instance.SaveData();
                 Application.Quit();
-                UnityEditor.EditorApplication.isPlaying = false;
+                //UnityEditor.EditorApplication.isPlaying = false;
             }
             else
             {

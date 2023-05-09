@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public Transform characterBody;
     [SerializeField]
+    public Rigidbody rigidbody;
+    [SerializeField]
     public Animator animator;
     [SerializeField]
     private PlayerCharacter playerCharacter;
@@ -76,6 +78,7 @@ public class PlayerController : MonoBehaviour
         animationController = GetComponent<AnimationController>();
         playerStateMachine = GetComponent<PlayerStateMachine>();
         equipmentController = GetComponent<EquipmentController>();
+        rigidbody = GetComponent<Rigidbody>();
 
         _quickSlotBar = UiManager.Instance.quickSlotBar;
 
@@ -96,11 +99,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // SetMove();
+        // SetMove()
     }   // Update()
 
     private void FixedUpdate()
     {
+        GravityHandle();
+
         // MoveExecute();
     }   // FixedUpdate()
 
@@ -239,6 +244,11 @@ public class PlayerController : MonoBehaviour
     }
     #endregion  // UseItem
 
+    void GravityHandle()
+    {
+        float gravityValue = 9.8f * 10f;
+        rigidbody.AddForce(Vector3.down * gravityValue);
+    }
     void SetMove()
     {
         

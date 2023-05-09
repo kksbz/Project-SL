@@ -46,7 +46,7 @@ public class TitleController : MonoBehaviour
         exitBt.onClick.AddListener(() =>
         {
             Application.Quit();
-            UnityEditor.EditorApplication.isPlaying = false;
+            //UnityEditor.EditorApplication.isPlaying = false;
         });
     } // Start
 } // TitleController

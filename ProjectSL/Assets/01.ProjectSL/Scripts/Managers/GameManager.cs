@@ -164,6 +164,7 @@ public class GameManager : Singleton<GameManager>
                     break;
                 }
             }
+            Inventory.Instance.InitSlotItemData();
         }
         else
         {

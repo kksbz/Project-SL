@@ -115,6 +115,15 @@ public class Boss_Idle_State : IState
         _boss.StopCoroutine(_coroutine);
         _boss.ActiveHpBar();
 
+        if (_boss is Boss_Sevarog)
+        {
+            BgmManager.Instance.SevarogBgmPlay();
+        }
+        else if (_boss is Boss_Rampage)
+        {
+            BgmManager.Instance.RamapgeBgmPlay();
+        }
+
         AudioClip introSfx_ = _boss.FindAudioClip("Intro");
         _boss.SFX_Play(introSfx_, true);
     }
@@ -358,5 +367,6 @@ public class Boss_Die_State : IState
     public void OnAction()
     {
         _boss.OnDie();
+        BgmManager.Instance.EnvironMentPlay();
     }
 }

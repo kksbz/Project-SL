@@ -58,6 +58,7 @@ public class Bonfire : MonoBehaviour
                         break;
                     }
                 }
+                Inventory.Instance.InitSlotItemData();
             }
         }
     } // Update
